@@ -960,7 +960,13 @@
       font-size: 0.875rem;
       color: var(--muted);
       text-align: center;
-      padding: 1rem;
+      padding: 1rem 1rem 0.25rem;
+    }
+    .orb-panel-subhint {
+      font-size: 0.815rem;
+      color: hsl(20,10%,62%);
+      text-align: center;
+      margin-bottom: 0.875rem;
     }
     .orb-panel-inner {
       background: #fff;
@@ -1069,7 +1075,7 @@
   <div class="wrap" style="position:relative;z-index:1;max-width:700px;">
 
     <h1 class="hero-title">
-      Voor <em id="typing-target"></em>
+      <span data-i18n="hero.voor">Voor</span> <em id="typing-target"></em>
     </h1>
 
     <p class="hero-subtitle" data-i18n="hero.subtitle">
@@ -1211,12 +1217,6 @@
       <div class="orb-panel" id="orb-panel"></div>
     </div>
 
-    <div style="text-align:center;margin-top:2.5rem;">
-      <a href="#contact" class="btn-primary">
-        <span data-i18n="cta.btn">Start de quiz</span>
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-      </a>
-    </div>
 
   </div>
 </section>
@@ -1557,6 +1557,8 @@ const T = {
     'chat.status':  'Online',
     'chat.greeting':'Hallo! Ik ben de Sila assistent. Hoe kan ik je helpen met AI?',
     'chat.placeholder': 'Stel een vraag...',
+    'hero.voor':    'Voor',
+    'chat.you':     'JIJ',
     'chat.error':   'Sorry, er ging iets mis. Probeer het opnieuw.',
   },
   en: {
@@ -1608,6 +1610,8 @@ const T = {
     'chat.status':  'Online',
     'chat.greeting':'Hello! I am the Sila assistant. How can I help you with AI?',
     'chat.placeholder': 'Ask a question...',
+    'hero.voor':    'For',
+    'chat.you':     'YOU',
     'chat.error':   'Sorry, something went wrong. Please try again.',
   }
 };
@@ -1771,7 +1775,7 @@ function addMsg(role, text) {
     img.alt = 'Sila';
     avatar.appendChild(img);
   } else {
-    avatar.textContent = 'JIJ';
+    avatar.textContent = T[currentLang]['chat.you'];
   }
 
   const bubble = document.createElement('div');
@@ -2132,9 +2136,20 @@ function autoResize(el) {
   }
 
   function clearPanel() {
-    var l    = typeof currentLang !== 'undefined' ? currentLang : 'nl';
-    var hint = l === 'en' ? 'Click on a phase to discover more →' : 'Klik op een fase om meer te ontdekken →';
-    panel.innerHTML = '<p class="orb-panel-hint">' + hint + '</p>';
+    var l       = typeof currentLang !== 'undefined' ? currentLang : 'nl';
+    var isEN    = l === 'en';
+    var hint    = isEN ? 'Click on a phase to discover more →' : 'Klik op een fase om meer te ontdekken →';
+    var subhint = isEN ? 'Or start the quiz below' : 'Of start de quiz hieronder';
+    var btnText = isEN ? 'Start the quiz' : 'Start de quiz';
+    panel.innerHTML =
+      '<p class="orb-panel-hint">' + hint + '</p>' +
+      '<p class="orb-panel-subhint">' + subhint + '</p>' +
+      '<div style="text-align:center;">' +
+        '<a href="#contact" class="btn-primary" style="font-size:0.84rem;padding:0.58rem 1.3rem;display:inline-flex;gap:0.4rem;align-items:center;">' +
+          btnText +
+          '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>' +
+        '</a>' +
+      '</div>';
   }
 
   // Expose for language switching
