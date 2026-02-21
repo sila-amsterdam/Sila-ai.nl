@@ -155,7 +155,7 @@
       transition: background 0.2s, transform 0.15s;
       box-shadow: 0 2px 8px rgba(220,90,20,.22);
     }
-    .nav-cta:hover { background: var(--primary-h); transform: translateY(-1px); }
+    .nav-cta:hover { transform: translateY(-1px); }
 
     @media (max-width: 540px) {
       .nav-link.mob-hide { display: none; }
@@ -190,12 +190,9 @@
       text-decoration: none;
       border: none;
       cursor: pointer;
-      transition: background 0.22s, transform 0.18s, box-shadow 0.22s;
       box-shadow: 0 2px 10px rgba(220,90,20,.22);
       font-family: inherit;
     }
-    .btn-primary:hover { background: var(--primary-h); transform: translateY(-1px); box-shadow: 0 5px 18px rgba(220,90,20,.3); }
-    .btn-primary:active { transform: translateY(0); }
 
     .btn-secondary {
       display: inline-flex; align-items: center; gap: 0.5rem;
@@ -289,6 +286,45 @@
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0);    }
     }
+
+    /* ── Scroll mouse indicator ─────────────────────── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeUp 0.6s 1.2s ease-out forwards;
+    }
+    .scroll-mouse {
+      width: 26px;
+      height: 42px;
+      border: 2px solid rgba(20,12,5,0.22);
+      border-radius: 13px;
+      position: relative;
+    }
+    .scroll-wheel {
+      width: 4px;
+      height: 9px;
+      background: var(--primary);
+      border-radius: 2px;
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: scrollWheel 2.2s ease-in-out 1.5s infinite;
+    }
+    @keyframes scrollWheel {
+      0%   { opacity: 1; transform: translateX(-50%) translateY(0); }
+      75%  { opacity: 0; transform: translateX(-50%) translateY(16px); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(0); }
+    }
+    @media (max-width: 640px) { .scroll-indicator { display: none; } }
 
     /* ── Sections ──────────────────────────────────── */
     .section { padding: 5.5rem 0; }
@@ -637,7 +673,7 @@
     ════════════════════════════════════════════════ */
     #chat-btn {
       position: fixed;
-      bottom: 5.5rem;
+      bottom: 4rem;
       right: 1.5rem;
       z-index: 200;
       width: 54px; height: 54px;
@@ -660,11 +696,11 @@
 
     #chat-window {
       position: fixed;
-      bottom: 10rem;
+      bottom: 8.5rem;
       right: 1.5rem;
       z-index: 199;
-      width: min(360px, calc(100vw - 2rem));
-      height: min(520px, calc(100svh - 12rem));
+      width: min(370px, calc(100vw - 1.5rem));
+      height: min(520px, calc(100svh - 10rem));
       background: hsl(30, 18%, 98%);
       border-radius: 1.375rem;
       box-shadow: 0 20px 60px rgba(0,0,0,.14), 0 4px 16px rgba(0,0,0,.08);
@@ -721,8 +757,10 @@
       display: flex; flex-direction: column; gap: 0.75rem;
       scroll-behavior: smooth;
     }
-    .chat-messages::-webkit-scrollbar { width: 4px; }
-    .chat-messages::-webkit-scrollbar-thumb { background: rgba(0,0,0,.12); border-radius: 10px; }
+    .chat-messages::-webkit-scrollbar { width: 3px; }
+    .chat-messages::-webkit-scrollbar-track { background: transparent; }
+    .chat-messages::-webkit-scrollbar-thumb { background: rgba(0,0,0,.08); border-radius: 10px; }
+    .chat-messages::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,.15); }
 
     .msg {
       display: flex;
@@ -1035,8 +1073,14 @@
     /* ── Mobile adjustments ────────────────────────── */
     @media (max-width: 640px) {
       .top-bar { padding: 0.65rem 1.125rem; }
-      #chat-btn { bottom: 5rem; right: 1rem; width: 50px; height: 50px; }
-      #chat-window { right: 1rem; bottom: 8.5rem; }
+      #chat-btn { bottom: 3rem; right: 1rem; width: 50px; height: 50px; }
+      #chat-window {
+        right: 0; left: 0; bottom: 0;
+        width: 100%; border-radius: 1.25rem 1.25rem 0 0;
+        height: min(88svh, 600px);
+        max-height: 88svh;
+        box-shadow: 0 -8px 40px rgba(0,0,0,.14);
+      }
     }
 
     /* ── Scroll Progress Bar ────────────────────────── */
@@ -1092,63 +1136,44 @@
     }
 
     /* ── Button interactive hover ───────────────────── */
+    /* Gradient-shift approach: no pseudo-elements covering text */
     .btn-primary {
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.18s, box-shadow 0.22s;
+      background: linear-gradient(135deg, hsl(16,82%,50%) 0%, hsl(16,82%,54%) 50%, hsl(16,82%,48%) 100%);
+      background-size: 220% 100%;
+      background-position: 100% 0%;
+      transition: background-position 0.42s cubic-bezier(0.22,1,0.36,1), transform 0.18s, box-shadow 0.22s;
     }
-    .btn-primary::after {
-      content: '';
-      position: absolute;
-      bottom: 38%; left: 18%;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--primary-h);
-      transform: scale(0);
-      transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
-      pointer-events: none; z-index: 0;
+    .btn-primary:hover {
+      background-position: 0% 0%;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(220,90,20,.38);
     }
-    .btn-primary:hover::after { transform: scale(28); }
-    .btn-primary:hover { background: var(--primary); transform: translateY(-1px); box-shadow: 0 5px 18px rgba(220,90,20,.32); }
-    .btn-primary:active { transform: scale(0.97); }
-    .btn-primary > *, .btn-primary span, .btn-primary svg { position: relative; z-index: 1; }
+    .btn-primary:active { transform: scale(0.97); box-shadow: none; }
     .btn-primary svg { transition: transform 0.22s ease; }
     .btn-primary:hover svg { transform: translateX(4px); }
 
     .nav-cta {
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.15s, box-shadow 0.22s;
+      background: linear-gradient(135deg, hsl(16,82%,50%) 0%, hsl(16,82%,54%) 50%, hsl(16,82%,48%) 100%);
+      background-size: 220% 100%;
+      background-position: 100% 0%;
+      transition: background-position 0.38s cubic-bezier(0.22,1,0.36,1), transform 0.15s, box-shadow 0.2s;
     }
-    .nav-cta::after {
-      content: '';
-      position: absolute;
-      bottom: 35%; left: 18%;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--primary-h);
-      transform: scale(0);
-      transition: transform 0.45s cubic-bezier(0.22,1,0.36,1);
-      pointer-events: none; z-index: 0;
+    .nav-cta:hover {
+      background-position: 0% 0%;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(220,90,20,.3);
     }
-    .nav-cta:hover::after { transform: scale(22); }
-    .nav-cta:hover { background: var(--primary); transform: translateY(-1px); }
-    .nav-cta > *, .nav-cta span, .nav-cta svg { position: relative; z-index: 1; }
 
     .btn-secondary {
       position: relative;
       overflow: hidden;
+      transition: border-color 0.28s ease, color 0.28s ease, background 0.28s ease;
     }
-    .btn-secondary::before {
-      content: '';
-      position: absolute; inset: 0;
+    .btn-secondary:hover {
       background: var(--primary-light);
-      transform: translateX(-100%);
-      transition: transform 0.38s cubic-bezier(0.22,1,0.36,1);
-      border-radius: inherit; z-index: 0;
+      border-color: var(--primary-border);
+      color: var(--primary);
     }
-    .btn-secondary:hover::before { transform: translateX(0); }
-    .btn-secondary > *, .btn-secondary span, .btn-secondary svg { position: relative; z-index: 1; }
 
     /* ── Enhanced Scroll Reveals ────────────────────── */
     .reveal-left  { opacity:1; transform:none; transition: opacity 0.65s ease, transform 0.65s ease; }
@@ -1174,6 +1199,59 @@
       max-width: 450px; margin: 0 auto 0.875rem;
     }
     .newsletter-email-row .newsletter-input { flex: 1; min-width: 190px; }
+    /* ── Quiz modal internal ────────────────────────── */
+    .quiz-option {
+      display: flex; align-items: flex-start; gap: 0.875rem;
+      padding: 1rem 1.125rem;
+      border: 1.5px solid hsl(20,18%,91%);
+      border-radius: 0.875rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      margin-bottom: 0.625rem;
+      background: #fff;
+      text-align: left;
+      width: 100%;
+      font-family: inherit;
+    }
+    .quiz-option:hover { border-color: var(--primary-border); background: var(--primary-light); box-shadow: 0 2px 10px rgba(220,90,20,.08); }
+    .quiz-option-letter {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: hsl(20,18%,93%); color: var(--muted);
+      font-size: 0.78rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background 0.2s, color 0.2s;
+    }
+    .quiz-option:hover .quiz-option-letter { background: var(--primary); color: #fff; }
+    .quiz-option-text { font-size: 0.9375rem; color: var(--fg); line-height: 1.5; padding-top: 0.15rem; }
+    .quiz-input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1.5px solid hsl(20,18%,91%);
+      border-radius: 0.75rem;
+      font-size: 0.9375rem;
+      font-family: inherit;
+      outline: none;
+      color: var(--fg);
+      background: hsl(30,18%,99%);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: none;
+    }
+    .quiz-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(220,90,20,.1); }
+    .quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; }
+    .quiz-back {
+      padding: 0.5rem 0.875rem;
+      background: none; border: 1.5px solid hsl(20,18%,91%);
+      border-radius: 9999px; color: var(--muted);
+      font-size: 0.84rem; font-weight: 500;
+      cursor: pointer; font-family: inherit;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .quiz-back:hover { border-color: var(--primary-border); color: var(--primary); }
+    @media (max-width:540px) {
+      #quiz-card { border-radius: 1.25rem; }
+      #quiz-body { padding: 1.75rem 1.5rem 1.5rem; }
+    }
+
     #newsletter-success {
       display: none;
       padding: 2rem 1rem;
@@ -1242,6 +1320,9 @@
       Begeleiding en persoonlijke aandacht in een wereld waarin AI razendsnel verandert.
     </p>
 
+  <div class="scroll-indicator" aria-hidden="true">
+    <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+  </div>
   </div>
 </section>
 
@@ -1373,9 +1454,66 @@
       <div class="orb-panel" id="orb-panel"></div>
     </div>
 
+    <div style="text-align:center;margin-top:2.75rem;padding:0 1rem;">
+      <p class="section-lead" style="margin-bottom:1.25rem;font-size:0.9875rem;" data-i18n="quiz.cta_lead">
+        Weet je niet in welke fase je zit? Doe de test en ontdek in welke fase jij zit van de AI-reis, gratis en inclusief advies.
+      </p>
+      <button class="btn-primary" onclick="openQuiz()">
+        <span data-i18n="cta.btn">Start de quiz</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
 
   </div>
 </section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     QUIZ MODAL
+════════════════════════════════════════════════════════ -->
+<div id="quiz-modal" role="dialog" aria-modal="true" aria-label="AI Quiz" style="
+  position:fixed;inset:0;z-index:600;
+  display:flex;align-items:center;justify-content:center;
+  padding:1rem;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.3s ease;
+">
+  <div id="quiz-backdrop" onclick="closeQuiz()" style="
+    position:absolute;inset:0;
+    background:rgba(15,8,3,0.65);
+    backdrop-filter:blur(5px);
+    -webkit-backdrop-filter:blur(5px);
+  "></div>
+  <div id="quiz-card" style="
+    position:relative;
+    background:#fff;
+    border-radius:1.5rem;
+    width:min(560px,100%);
+    max-height:calc(100svh - 2rem);
+    overflow-y:auto;
+    box-shadow:0 28px 80px rgba(0,0,0,.2),0 8px 24px rgba(0,0,0,.1);
+    transform:translateY(22px) scale(0.97);
+    transition:transform 0.38s cubic-bezier(.25,.46,.45,.94);
+    scrollbar-width:thin;
+    scrollbar-color:rgba(0,0,0,.08) transparent;
+  ">
+    <!-- Progress bar -->
+    <div style="height:3px;background:hsl(20,18%,93%);border-radius:3px 3px 0 0;overflow:hidden;">
+      <div id="quiz-prog-fill" style="height:100%;background:linear-gradient(90deg,var(--primary),hsl(16,90%,68%));width:0%;transition:width 0.4s ease;border-radius:inherit;"></div>
+    </div>
+    <!-- Close button -->
+    <button onclick="closeQuiz()" style="
+      position:absolute;top:1rem;right:1rem;
+      width:32px;height:32px;border-radius:50%;
+      background:hsl(20,18%,93%);border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      color:var(--muted);font-size:1.1rem;line-height:1;
+      transition:background 0.2s;z-index:1;
+    " aria-label="Sluiten" onmouseover="this.style.background='hsl(20,18%,87%)'" onmouseout="this.style.background='hsl(20,18%,93%)'">&times;</button>
+    <!-- Content -->
+    <div id="quiz-body" style="padding:2.25rem 2.25rem 2rem;"></div>
+  </div>
+</div>
 
 
 <!-- ═══════════════════════════════════════════════════════
@@ -1539,7 +1677,7 @@
         <input type="text" id="nl-achternaam" class="newsletter-input" placeholder="Achternaam" data-i18n-ph="nl.achternaam" required aria-label="Achternaam" />
       </div>
       <div class="newsletter-email-row">
-        <input type="email" id="nl-email" class="newsletter-input" placeholder="jouw@email.com" required aria-label="E-mailadres" />
+        <input type="email" id="nl-email" class="newsletter-input" placeholder="jouw@email.com" data-i18n-ph="nl.email" required aria-label="E-mailadres" />
         <button type="submit" class="btn-primary">
           <span data-i18n="nl.btn">Inschrijven</span>
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -1592,7 +1730,7 @@
       <div>
         <p class="footer-heading" data-i18n="footer.h3">Contact</p>
         <ul class="footer-links">
-          <li><a href="mailto:info@sila-ai.be">info@sila-ai.be</a></li>
+          <li><a href="mailto:info@sila-ai.nl">info@sila-ai.nl</a></li>
           <li><a href="#" rel="noopener">LinkedIn</a></li>
           <li><a href="#" rel="noopener">Instagram</a></li>
         </ul>
@@ -1627,11 +1765,11 @@
 <!-- Chat window -->
 <div id="chat-window" role="dialog" aria-label="Sila AI Assistent">
   <div class="chat-header">
-    <div class="chat-header-avatar">
-      <img src="brand_assets/Final-small.png" alt="Sila" />
+    <div class="chat-header-avatar" style="background:none;">
+      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80" alt="Sali" style="border-radius:50%;padding:0;object-fit:cover;" />
     </div>
     <div class="chat-header-info">
-      <div class="chat-header-name">Sila Assistent</div>
+      <div class="chat-header-name">Sali</div>
       <div class="chat-header-status">
         <span class="status-dot"></span>
         <span data-i18n="chat.status">Online</span>
@@ -1698,6 +1836,7 @@ const T = {
     'cta.eyebrow':  'Weet jij waar jij staat?',
     'cta.title':    'Klaar om te ontdekken in welke fase jij zit van de AI-reis?',
     'cta.btn':      'Start de quiz',
+    'quiz.cta_lead':'Weet je niet in welke fase je zit? Doe de test en ontdek in welke fase jij zit van de AI-reis, gratis en inclusief advies.',
     'about.chip':   'Over ons',
     'about.title':  'Hier wordt AI weer menselijk',
     'about.eyebrow':'Bruggen bouwen tussen mens en technologie',
@@ -1717,6 +1856,7 @@ const T = {
     'nl.lead':      'Ontvang wekelijks de laatste AI-inzichten, praktische tips en updates die relevant zijn voor jouw bedrijf. Geen spam, alleen waarde.',
     'nl.voornaam':  'Voornaam',
     'nl.achternaam':'Achternaam',
+    'nl.email':     'jouw@email.com',
     'nl.btn':       'Inschrijven',
     'nl.note':      'Gratis & altijd opzegbaar. Privacy gegarandeerd.',
     'footer.tagline':'De menselijke verbinding tussen jouw bedrijf en AI. Begeleiding en persoonlijke aandacht op maat.',
@@ -1724,7 +1864,7 @@ const T = {
     'footer.rights':'Alle rechten voorbehouden.',
     'footer.made':  'Gemaakt door Sila',
     'chat.status':  'Online',
-    'chat.greeting':'Hallo! Ik ben de Sila assistent. Hoe kan ik je helpen met AI?',
+    'chat.greeting':'Hi! Ik ben Sali. Heb je vragen over Sila, onze diensten of wil je een afspraak inplannen? Stel je vraag gerust, ik help je graag verder!',
     'chat.placeholder': 'Stel een vraag...',
     'hero.voor':    'Voor',
     'chat.you':     'JIJ',
@@ -1754,6 +1894,7 @@ const T = {
     'cta.eyebrow':  'Do you know where you stand?',
     'cta.title':    'Ready to discover which phase of the AI journey you are in?',
     'cta.btn':      'Start the quiz',
+    'quiz.cta_lead':'Not sure which phase you are in? Take the test and discover where you stand in the AI journey, free and including personalised advice.',
     'about.chip':   'About us',
     'about.title':  'This is where AI becomes human again',
     'about.eyebrow':'Building bridges between people and technology',
@@ -1773,6 +1914,7 @@ const T = {
     'nl.lead':      'Receive weekly AI insights, practical tips and updates relevant to your business. No spam, only value.',
     'nl.voornaam':  'First name',
     'nl.achternaam':'Last name',
+    'nl.email':     'your@email.com',
     'nl.btn':       'Subscribe',
     'nl.note':      'Free & always unsubscribable. Privacy guaranteed.',
     'footer.tagline':'The human connection between your business and AI. Personal guidance tailored to you.',
@@ -1780,7 +1922,7 @@ const T = {
     'footer.rights':'All rights reserved.',
     'footer.made':  'Made by Sila',
     'chat.status':  'Online',
-    'chat.greeting':'Hello! I am the Sila assistant. How can I help you with AI?',
+    'chat.greeting':'Hi! I\'m Sali. Do you have questions about Sila, our services, or would you like to schedule an appointment? Feel free to ask, I\'m happy to help!',
     'chat.placeholder': 'Ask a question...',
     'hero.voor':    'For',
     'chat.you':     'YOU',
@@ -1996,8 +2138,10 @@ function addMsg(role, text) {
   avatar.className = 'msg-avatar';
   if (role === 'bot') {
     const img = document.createElement('img');
-    img.src = 'brand_assets/Final-small.png';
-    img.alt = 'Sila';
+    img.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80';
+    img.alt = 'Sali';
+    img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;';
+    avatar.style.background = 'none';
     avatar.appendChild(img);
   } else {
     avatar.textContent = T[currentLang]['chat.you'];
@@ -2021,9 +2165,11 @@ function showTyping() {
 
   const avatar = document.createElement('div');
   avatar.className = 'msg-avatar';
+  avatar.style.background = 'none';
   const img = document.createElement('img');
-  img.src = 'brand_assets/Final-small.png';
-  img.alt = 'Sila';
+  img.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80';
+  img.alt = 'Sali';
+  img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;';
   avatar.appendChild(img);
 
   const bubble = document.createElement('div');
@@ -2376,10 +2522,10 @@ function autoResize(el) {
       '<p class="orb-panel-hint">' + hint + '</p>' +
       '<p class="orb-panel-subhint">' + subhint + '</p>' +
       '<div style="text-align:center;">' +
-        '<a href="#contact" class="btn-primary" style="font-size:0.84rem;padding:0.58rem 1.3rem;display:inline-flex;gap:0.4rem;align-items:center;">' +
+        '<button onclick="openQuiz()" class="btn-primary" style="font-size:0.84rem;padding:0.58rem 1.5rem;display:inline-flex;gap:0.4rem;align-items:center;">' +
           btnText +
           '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>' +
-        '</a>' +
+        '</button>' +
       '</div>';
   }
 
@@ -2399,6 +2545,417 @@ function autoResize(el) {
 
   clearPanel();
   requestAnimationFrame(frame);
+})();
+
+/* ─────────────────────────────────────────────────────────
+   AI QUIZ
+───────────────────────────────────────────────────────── */
+(function initQuiz() {
+  const WEBHOOK = 'https://sila-ai.app.n8n.cloud/webhook/60da34b5-b8ec-42e8-aa69-6a7d28400b38';
+  const modal   = document.getElementById('quiz-modal');
+  const card    = document.getElementById('quiz-card');
+  const body    = document.getElementById('quiz-body');
+  const progFill= document.getElementById('quiz-prog-fill');
+  if (!modal) return;
+
+  const Q = {
+    nl: {
+      welcomeTitle: 'Waar sta jij in je AI-reis?',
+      welcomeBody:  'Met deze zes gerichte vragen brengen we scherp in beeld waar jij staat in jouw AI-reis.\n\nNa het invullen ontvang je per e-mail niet alleen je resultaat, maar ook een persoonlijk advies over wat je in deze fase het beste kunt doen. De test is eenvoudig, waardevol en duurt slechts 2 minuten.',
+      welcomeBtn:   'Laten we beginnen',
+      q_name:       'Hi! Wat is je naam?',
+      q_type:       (n) => `Oké ${n}, laten we beginnen!\n\nMag ik eerst vragen of je deze vragenlijst voor jezelf invult of namens een organisatie?`,
+      opt_personal: 'Voor mijzelf (persoonlijk)',
+      opt_org:      'Namens een organisatie',
+      q_exp_org:    'Wat is de ervaring van jouw organisatie met AI tot nu toe?',
+      q_exp_p:      'Wat is jouw ervaring met AI tot nu toe?',
+      exp_a_org:    'We weten er nog weinig van',
+      exp_b_org:    'We hebben erover gelezen of geëxperimenteerd',
+      exp_c_org:    'We hebben toepassingen en concrete plannen',
+      exp_a_p:      'Ik weet er nog weinig van',
+      exp_b_p:      'Ik heb er wat over gelezen of geëxperimenteerd',
+      exp_c_p:      'Ik heb al toepassingen of plannen',
+      q_need_org:   'Wat is op dit moment de grootste behoefte van jouw organisatie rondom AI?',
+      q_need_p:     'Wat is jouw grootste behoefte op dit moment?',
+      need_a_org:   'Begrijpen hoe AI werkt',
+      need_b_org:   'Inzicht krijgen in waar AI waarde kan toevoegen binnen onze organisatie',
+      need_c_org:   'AI-oplossingen ontwikkelen en/of implementeren binnen onze processen',
+      need_a_p:     'Ik wil snappen hoe AI werkt',
+      need_b_p:     'Ik wil weten waar AI waarde kan toevoegen voor mijzelf',
+      need_c_p:     'Ik wil een oplossing bouwen of implementeren',
+      q_plan_org:   'Hoe duidelijk is het AI-plan binnen jouw organisatie?',
+      q_plan_p:     'Hoe duidelijk is jouw plan met AI?',
+      plan_a_org:   'We hebben nog geen concreet plan voor AI',
+      plan_b_org:   'We hebben ideeën, maar twijfelen waar we moeten beginnen',
+      plan_c_org:   'We weten precies wat we willen en zijn klaar om aan de slag te gaan',
+      plan_a_p:     'Ik heb nog geen concreet plan',
+      plan_b_p:     'Ik heb ideeën, maar twijfel waar te beginnen',
+      plan_c_p:     'Ik weet wat ik wil en ben klaar om aan de slag te gaan',
+      q_role_org:   'Welke rol speelt AI momenteel in jouw organisatie?',
+      q_role_p:     'Welke rol speelt AI momenteel in jouw werk?',
+      q_goal_org:   'Wat hoopt jouw organisatie te bereiken met AI?',
+      q_goal_p:     'Wat hoop je met AI te bereiken?',
+      q_email:      'Ontvang binnen één minuut jouw resultaat, inclusief persoonlijk advies.',
+      email_sub:    'Vul je e-mailadres in om te ontdekken in welke fase je zit.',
+      ph_name:      'Jouw naam…',
+      ph_open:      'Schrijf hier je antwoord…',
+      ph_email:     'jouw@email.com',
+      btn_next:     'Volgende',
+      btn_send:     'Ontvang mijn resultaat',
+      btn_back:     '← Terug',
+      success_title:(n) => `Bedankt ${n}! Je resultaat is onderweg. 🎉`,
+      success_body: 'Je ontvangt binnen één minuut een e-mail met jouw resultaat en persoonlijk advies. Check ook je spam-map als je hem niet direct ziet.',
+      sending:      'Versturen…',
+    },
+    en: {
+      welcomeTitle: 'Where are you in your AI journey?',
+      welcomeBody:  'With these six targeted questions we\'ll map out exactly where you stand in your AI journey.\n\nAfter completing, you\'ll receive not only your result by email, but also personalised advice on what to do best in this phase. The test is simple, valuable and takes just 2 minutes.',
+      welcomeBtn:   'Let\'s get started',
+      q_name:       'Hi! What is your name?',
+      q_type:       (n) => `Okay ${n}, let\'s get started!\n\nMay I first ask whether you\'re filling this in for yourself or on behalf of an organisation?`,
+      opt_personal: 'For myself (personal)',
+      opt_org:      'On behalf of an organisation',
+      q_exp_org:    'What is your organisation\'s experience with AI so far?',
+      q_exp_p:      'What is your experience with AI so far?',
+      exp_a_org:    'We know very little about it',
+      exp_b_org:    'We have read about or experimented with it',
+      exp_c_org:    'We have applications and concrete plans',
+      exp_a_p:      'I know very little about it',
+      exp_b_p:      'I have read about or experimented with it',
+      exp_c_p:      'I already have applications or plans',
+      q_need_org:   'What is currently the biggest need of your organisation regarding AI?',
+      q_need_p:     'What is your biggest need right now?',
+      need_a_org:   'Understanding how AI works',
+      need_b_org:   'Gaining insight into where AI can add value within our organisation',
+      need_c_org:   'Developing and/or implementing AI solutions within our processes',
+      need_a_p:     'I want to understand how AI works',
+      need_b_p:     'I want to know where AI can add value for me personally',
+      need_c_p:     'I want to build or implement a solution',
+      q_plan_org:   'How clear is the AI plan within your organisation?',
+      q_plan_p:     'How clear is your plan with AI?',
+      plan_a_org:   'We do not have a concrete plan for AI yet',
+      plan_b_org:   'We have ideas but are unsure where to start',
+      plan_c_org:   'We know exactly what we want and are ready to get started',
+      plan_a_p:     'I do not have a concrete plan yet',
+      plan_b_p:     'I have ideas but am unsure where to start',
+      plan_c_p:     'I know what I want and am ready to get started',
+      q_role_org:   'What role does AI currently play in your organisation?',
+      q_role_p:     'What role does AI currently play in your work?',
+      q_goal_org:   'What does your organisation hope to achieve with AI?',
+      q_goal_p:     'What do you hope to achieve with AI?',
+      q_email:      'Receive your result within one minute, including personalised advice.',
+      email_sub:    'Enter your email address to find out which phase you are in.',
+      ph_name:      'Your name…',
+      ph_open:      'Write your answer here…',
+      ph_email:     'your@email.com',
+      btn_next:     'Next',
+      btn_send:     'Receive my result',
+      btn_back:     '← Back',
+      success_title:(n) => `Thank you ${n}! Your result is on its way. 🎉`,
+      success_body: 'You will receive an email with your result and personalised advice within one minute. Also check your spam folder if you don\'t see it straight away.',
+      sending:      'Sending…',
+    }
+  };
+
+  let state = { step: 0, answers: {}, path: null }; // step 0 = welcome
+
+  function t(k, arg) {
+    const fn = Q[currentLang][k];
+    return typeof fn === 'function' ? fn(arg) : fn;
+  }
+
+  // Total steps after type selection = 7 (name, type, exp, need, plan, role, goal, email = 8)
+  function totalSteps() { return 8; }
+  function updateProgress() {
+    const pct = state.step === 0 ? 0 : Math.round((state.step / totalSteps()) * 100);
+    progFill.style.width = pct + '%';
+  }
+
+  function render() {
+    updateProgress();
+    body.innerHTML = '';
+
+    if (state.step === 0) { renderWelcome(); return; }
+    if (state.step === 1) { renderName(); return; }
+    if (state.step === 2) { renderType(); return; }
+
+    const path = state.path;
+    if (state.step === 3) { renderExp(path); return; }
+    if (state.step === 4) { renderNeed(path); return; }
+    if (state.step === 5) { renderPlan(path); return; }
+    if (state.step === 6) { renderOpen(path === 'org' ? t('q_role_org') : t('q_role_p'), 'role'); return; }
+    if (state.step === 7) { renderOpen(path === 'org' ? t('q_goal_org') : t('q_goal_p'), 'goal'); return; }
+    if (state.step === 8) { renderEmail(); return; }
+    if (state.step === 9) { renderSuccess(); return; }
+  }
+
+  function html(tag, attrs, ...children) {
+    const el = document.createElement(tag);
+    Object.entries(attrs || {}).forEach(([k, v]) => {
+      if (k === 'style') el.style.cssText = v;
+      else if (k.startsWith('on')) el[k] = v;
+      else el.setAttribute(k, v);
+    });
+    children.forEach(c => {
+      if (typeof c === 'string') el.appendChild(document.createTextNode(c));
+      else if (c) el.appendChild(c);
+    });
+    return el;
+  }
+
+  function questionHeader(text) {
+    const p = document.createElement('p');
+    p.style.cssText = 'font-family:"Playfair Display",Georgia,serif;font-size:1.1875rem;font-weight:600;color:hsl(20,12%,10%);line-height:1.45;margin-bottom:1.375rem;white-space:pre-line;';
+    p.textContent = text;
+    return p;
+  }
+
+  function nextBtn(label, onclick) {
+    const b = document.createElement('button');
+    b.className = 'btn-primary';
+    b.style.cssText = 'font-size:0.9rem;padding:0.65rem 1.5rem;';
+    b.textContent = label;
+    b.onclick = onclick;
+    return b;
+  }
+
+  function backBtn() {
+    if (state.step <= 1) return document.createElement('span');
+    const b = document.createElement('button');
+    b.className = 'quiz-back';
+    b.textContent = t('btn_back');
+    b.onclick = () => { state.step--; scrollTop(); render(); };
+    return b;
+  }
+
+  function navRow(nextEl) {
+    const row = document.createElement('div');
+    row.className = 'quiz-nav';
+    row.appendChild(backBtn());
+    row.appendChild(nextEl);
+    return row;
+  }
+
+  function choice(letter, text, onclick) {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    const ltr = document.createElement('span');
+    ltr.className = 'quiz-option-letter';
+    ltr.textContent = letter;
+    const txt = document.createElement('span');
+    txt.className = 'quiz-option-text';
+    txt.textContent = text;
+    btn.appendChild(ltr);
+    btn.appendChild(txt);
+    btn.onclick = onclick;
+    return btn;
+  }
+
+  function scrollTop() {
+    card.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderWelcome() {
+    const title = document.createElement('p');
+    title.style.cssText = 'font-family:"Playfair Display",Georgia,serif;font-size:1.5rem;font-weight:600;color:hsl(20,12%,10%);margin-bottom:1rem;line-height:1.25;';
+    title.textContent = t('welcomeTitle');
+
+    const desc = document.createElement('p');
+    desc.style.cssText = 'color:var(--muted);font-size:0.9375rem;line-height:1.72;margin-bottom:1.75rem;white-space:pre-line;';
+    desc.textContent = t('welcomeBody');
+
+    const btn = nextBtn(t('welcomeBtn'), () => { state.step = 1; scrollTop(); render(); });
+    body.appendChild(title);
+    body.appendChild(desc);
+    body.appendChild(btn);
+  }
+
+  function renderName() {
+    const input = document.createElement('input');
+    input.type = 'text'; input.className = 'quiz-input';
+    input.placeholder = t('ph_name');
+    input.value = state.answers.name || '';
+    input.style.marginBottom = '0';
+
+    const proceed = () => {
+      const v = input.value.trim();
+      if (!v) { input.focus(); input.style.borderColor = 'var(--primary)'; return; }
+      state.answers.name = v;
+      state.step = 2; scrollTop(); render();
+    };
+
+    input.onkeydown = (e) => { if (e.key === 'Enter') proceed(); };
+    body.appendChild(questionHeader(t('q_name')));
+    body.appendChild(input);
+    body.appendChild(navRow(nextBtn(t('btn_next'), proceed)));
+    setTimeout(() => input.focus(), 80);
+  }
+
+  function renderType() {
+    body.appendChild(questionHeader(t('q_type', state.answers.name)));
+    body.appendChild(choice('A', t('opt_personal'), () => {
+      state.answers.type = 'personal'; state.path = 'personal'; state.step = 3; scrollTop(); render();
+    }));
+    body.appendChild(choice('B', t('opt_org'), () => {
+      state.answers.type = 'org'; state.path = 'org'; state.step = 3; scrollTop(); render();
+    }));
+    const nav = document.createElement('div');
+    nav.className = 'quiz-nav';
+    nav.appendChild(backBtn());
+    nav.appendChild(document.createElement('span'));
+    body.appendChild(nav);
+  }
+
+  function renderExp(path) {
+    const q = path === 'org' ? t('q_exp_org') : t('q_exp_p');
+    const opts = path === 'org'
+      ? [t('exp_a_org'), t('exp_b_org'), t('exp_c_org')]
+      : [t('exp_a_p'),   t('exp_b_p'),   t('exp_c_p')];
+    body.appendChild(questionHeader(q));
+    ['A','B','C'].forEach((l, i) => body.appendChild(choice(l, opts[i], () => {
+      state.answers.experience = opts[i]; state.step = 4; scrollTop(); render();
+    })));
+    appendBackOnly();
+  }
+
+  function renderNeed(path) {
+    const q = path === 'org' ? t('q_need_org') : t('q_need_p');
+    const opts = path === 'org'
+      ? [t('need_a_org'), t('need_b_org'), t('need_c_org')]
+      : [t('need_a_p'),   t('need_b_p'),   t('need_c_p')];
+    body.appendChild(questionHeader(q));
+    ['A','B','C'].forEach((l, i) => body.appendChild(choice(l, opts[i], () => {
+      state.answers.need = opts[i]; state.step = 5; scrollTop(); render();
+    })));
+    appendBackOnly();
+  }
+
+  function renderPlan(path) {
+    const q = path === 'org' ? t('q_plan_org') : t('q_plan_p');
+    const opts = path === 'org'
+      ? [t('plan_a_org'), t('plan_b_org'), t('plan_c_org')]
+      : [t('plan_a_p'),   t('plan_b_p'),   t('plan_c_p')];
+    body.appendChild(questionHeader(q));
+    ['A','B','C'].forEach((l, i) => body.appendChild(choice(l, opts[i], () => {
+      state.answers.plan = opts[i]; state.step = 6; scrollTop(); render();
+    })));
+    appendBackOnly();
+  }
+
+  function renderOpen(question, field) {
+    const ta = document.createElement('textarea');
+    ta.className = 'quiz-input'; ta.rows = 4;
+    ta.placeholder = t('ph_open');
+    ta.value = state.answers[field] || '';
+
+    const proceed = () => {
+      state.answers[field] = ta.value.trim();
+      state.step++; scrollTop(); render();
+    };
+    body.appendChild(questionHeader(question));
+    body.appendChild(ta);
+    body.appendChild(navRow(nextBtn(t('btn_next'), proceed)));
+    setTimeout(() => ta.focus(), 80);
+  }
+
+  function renderEmail() {
+    const header = document.createElement('div');
+    header.style.cssText = 'margin-bottom:1.25rem;';
+    const title = document.createElement('p');
+    title.style.cssText = 'font-family:"Playfair Display",Georgia,serif;font-size:1.1875rem;font-weight:600;color:hsl(20,12%,10%);line-height:1.4;margin-bottom:0.4rem;';
+    title.textContent = t('q_email');
+    const sub = document.createElement('p');
+    sub.style.cssText = 'color:var(--muted);font-size:0.875rem;';
+    sub.textContent = t('email_sub');
+    header.appendChild(title); header.appendChild(sub);
+    body.appendChild(header);
+
+    const input = document.createElement('input');
+    input.type = 'email'; input.className = 'quiz-input';
+    input.placeholder = t('ph_email');
+    input.value = state.answers.email || '';
+    input.style.marginBottom = '0';
+
+    const sendBtn = nextBtn(t('btn_send'), async () => {
+      const v = input.value.trim();
+      if (!v || !v.includes('@')) { input.focus(); input.style.borderColor = 'var(--primary)'; return; }
+      state.answers.email = v;
+      sendBtn.textContent = t('sending');
+      sendBtn.disabled = true;
+
+      try {
+        await fetch(WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name:       state.answers.name,
+            type:       state.answers.type,
+            experience: state.answers.experience,
+            need:       state.answers.need,
+            plan:       state.answers.plan,
+            role:       state.answers.role || '',
+            goal:       state.answers.goal || '',
+            email:      state.answers.email,
+            lang:       currentLang,
+          })
+        });
+      } catch (err) { console.warn('Quiz webhook error:', err); }
+
+      state.step = 9; scrollTop(); render();
+    });
+
+    input.onkeydown = (e) => { if (e.key === 'Enter') sendBtn.click(); };
+    body.appendChild(input);
+    body.appendChild(navRow(sendBtn));
+    setTimeout(() => input.focus(), 80);
+  }
+
+  function renderSuccess() {
+    progFill.style.width = '100%';
+    const emoji = document.createElement('div');
+    emoji.style.cssText = 'font-size:2.5rem;margin-bottom:1rem;';
+    emoji.textContent = '🎉';
+    const title = document.createElement('p');
+    title.style.cssText = 'font-family:"Playfair Display",Georgia,serif;font-size:1.25rem;font-weight:600;color:hsl(20,12%,10%);margin-bottom:0.75rem;';
+    title.textContent = t('success_title', state.answers.name);
+    const desc = document.createElement('p');
+    desc.style.cssText = 'color:var(--muted);font-size:0.9375rem;line-height:1.72;margin-bottom:1.5rem;';
+    desc.textContent = t('success_body');
+    const closeBtn = nextBtn(currentLang === 'nl' ? 'Sluiten' : 'Close', closeQuiz);
+    body.appendChild(emoji); body.appendChild(title); body.appendChild(desc); body.appendChild(closeBtn);
+  }
+
+  function appendBackOnly() {
+    const nav = document.createElement('div');
+    nav.className = 'quiz-nav';
+    nav.appendChild(backBtn());
+    nav.appendChild(document.createElement('span'));
+    body.appendChild(nav);
+  }
+
+  window.openQuiz = function() {
+    state = { step: 0, answers: {}, path: null };
+    render();
+    modal.style.opacity = '0';
+    modal.style.pointerEvents = 'all';
+    modal.offsetHeight; // reflow
+    modal.style.transition = 'opacity 0.3s ease';
+    modal.style.opacity = '1';
+    card.style.transform = 'translateY(0) scale(1)';
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeQuiz = function() {
+    modal.style.opacity = '0';
+    modal.style.pointerEvents = 'none';
+    card.style.transform = 'translateY(22px) scale(0.97)';
+    document.body.style.overflow = '';
+  };
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.pointerEvents !== 'none') closeQuiz();
+  });
 })();
 
 // Show welcome badge after 3s if chat hasn't been opened
