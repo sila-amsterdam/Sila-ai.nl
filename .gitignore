@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Dev tools (niet nodig voor de website)
+screenshot.mjs
+serve.mjs
+package.json
+package-lock.json
+
+# Tijdelijke bestanden
+temporary screenshots/
+
+# Grote bestanden
+Sila AI Homepage.pdf
+
+# Projectdocumentatie
+CLAUDE MD website.md
+
+# OS bestanden
+.DS_Store

@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sila — De menselijke verbinding tussen jouw bedrijf en AI</title>
+  <meta name="description" content="Sila begeleidt jouw bedrijf door elke fase van de AI-reis — van educatie en consultancy tot concrete implementatie." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans:    ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Playfair Display', 'Georgia', 'serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ── Variables ─────────────────────────────────── */
+    :root {
+      --primary:        hsl(16, 82%, 54%);
+      --primary-h:      hsl(16, 82%, 48%);
+      --primary-light:  hsl(16, 85%, 96%);
+      --primary-border: hsl(16, 60%, 84%);
+      --bg:             hsl(30, 20%, 97%);
+      --fg:             hsl(20, 12%, 13%);
+      --muted:          hsl(20, 10%, 48%);
+      --border:         hsl(20, 18%, 89%);
+      --card:           #ffffff;
+      --lavender:       hsl(280, 28%, 96%);
+      --dark:           hsl(20, 8%, 10%);
+      --dark-muted:     hsl(20, 10%, 50%);
+    }
+
+    /* ── Reset ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: hsl(20, 18%, 93%); }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,.17); border-radius: 10px; }
+
+    /* ── Layout ────────────────────────────────────── */
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    @media (min-width: 768px)  { .wrap { padding: 0 2.5rem; } }
+    @media (min-width: 1100px) { .wrap { padding: 0 3rem; } }
+
+    /* ── Top Bar ───────────────────────────────────── */
+    .top-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 2rem;
+      background: rgba(253, 251, 248, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,.05);
+    }
+
+    .top-bar-logo img {
+      height: 30px;
+      width: auto;
+    }
+
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: hsl(20, 18%, 93%);
+      border-radius: 9999px;
+      padding: 3px;
+      border: 1px solid var(--border);
+    }
+
+    .lang-btn {
+      padding: 0.28rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-family: inherit;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .lang-btn.active {
+      background: #fff;
+      color: var(--fg);
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+
+    /* ── Floating Nav ──────────────────────────────── */
+    .floating-nav {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      background: rgba(255,255,255,.93);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(0,0,0,.07);
+      border-radius: 9999px;
+      padding: 0.45rem 0.6rem;
+      box-shadow: 0 4px 28px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
+    }
+
+    .nav-link {
+      padding: 0.42rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: hsl(20, 10%, 44%);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-link:hover { background: hsl(20, 18%, 93%); color: var(--fg); }
+
+    .nav-cta {
+      padding: 0.42rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      background: var(--primary);
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 2px 8px rgba(220,90,20,.22);
+    }
+    .nav-cta:hover { background: var(--primary-h); transform: translateY(-1px); }
+
+    @media (max-width: 540px) {
+      .nav-link.mob-hide { display: none; }
+    }
+
+    /* ── Chip labels ───────────────────────────────── */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.3rem 0.875rem;
+      border-radius: 9999px;
+      font-size: 0.775rem;
+      font-weight: 500;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Buttons ───────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.78rem 1.75rem;
+      border-radius: 9999px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.22s, transform 0.18s, box-shadow 0.22s;
+      box-shadow: 0 2px 10px rgba(220,90,20,.22);
+      font-family: inherit;
+    }
+    .btn-primary:hover { background: var(--primary-h); transform: translateY(-1px); box-shadow: 0 5px 18px rgba(220,90,20,.3); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.78rem 1.75rem;
+      border-radius: 9999px;
+      background: transparent;
+      color: var(--fg);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.22s, color 0.22s;
+      font-family: inherit;
+    }
+    .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ── Hero ──────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7rem 1.5rem 6.5rem;
+      background: linear-gradient(
+        180deg,
+        hsl(280, 26%, 93%) 0%,
+        hsl(30, 22%, 97%) 55%,
+        hsl(0, 0%, 100%)  100%
+      );
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -5%; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 440px;
+      background: radial-gradient(ellipse, rgba(220,90,20,.05) 0%, transparent 68%);
+      pointer-events: none;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.25rem, 5.5vw, 4rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.022em;
+      color: hsl(20, 12%, 10%);
+      margin-bottom: 1.375rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.15s ease-out forwards;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--primary);
+    }
+
+    #typing-target::after {
+      content: '|';
+      animation: blink 0.85s step-end infinite;
+      color: var(--primary);
+      font-style: normal;
+      font-weight: 300;
+    }
+    @keyframes blink { 0%,100%{opacity:1}50%{opacity:0} }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.2vw, 1.175rem);
+      font-weight: 400;
+      color: hsl(20, 10%, 36%);
+      line-height: 1.6;
+      max-width: 500px;
+      margin: 0 auto 0.875rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.28s ease-out forwards;
+    }
+    .hero-desc {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      max-width: 430px;
+      margin: 0 auto 0;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.38s ease-out forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+
+    /* ── Sections ──────────────────────────────────── */
+    .section { padding: 5.5rem 0; }
+    .section-header { text-align: center; margin-bottom: 3.25rem; }
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.875rem, 4vw, 2.75rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.18;
+      color: hsl(20, 12%, 10%);
+      margin-top: 0.875rem;
+      margin-bottom: 1.125rem;
+    }
+    .section-lead {
+      font-size: 1.0312rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.72;
+    }
+
+    /* ── Pillar Cards ──────────────────────────────── */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(278px, 1fr));
+      gap: 1.25rem;
+    }
+    .pillar-card {
+      background: #fff;
+      border-radius: 1.375rem;
+      padding: 1.875rem;
+      border: 1px solid hsl(20, 18%, 91%);
+      transition: transform 0.32s cubic-bezier(.22,.68,0,1.25), box-shadow 0.32s ease;
+      position: relative; overflow: hidden;
+    }
+    .pillar-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2.5px;
+      background: var(--primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.32s ease;
+      border-radius: 2px 2px 0 0;
+    }
+    .pillar-card:hover { transform: translateY(-5px); box-shadow: 0 14px 38px rgba(220,90,20,.06), 0 4px 12px rgba(0,0,0,.05); }
+    .pillar-card:hover::before { transform: scaleX(1); }
+
+    .icon-box {
+      width: 46px; height: 46px;
+      border-radius: 11px;
+      background: var(--primary-light);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+      flex-shrink: 0;
+    }
+    .pillar-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.3125rem;
+      font-weight: 600;
+      color: hsl(20, 12%, 10%);
+      margin-bottom: 0.7rem;
+    }
+    .pillar-body {
+      font-size: 0.89rem;
+      color: var(--muted);
+      line-height: 1.72;
+      margin-bottom: 1.125rem;
+    }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1.25rem; }
+    .tag {
+      font-size: 0.71rem;
+      font-weight: 500;
+      padding: 0.22rem 0.65rem;
+      border-radius: 9999px;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    .meer-link {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.85rem; font-weight: 600;
+      color: var(--primary); text-decoration: none;
+      transition: gap 0.22s ease;
+    }
+    .meer-link:hover { gap: 0.6rem; }
+
+    /* ── CTA Banner ────────────────────────────────── */
+    .cta-banner {
+      background: hsl(30, 18%, 96%);
+      padding: 4.25rem 0;
+      text-align: center;
+    }
+    .cta-eyebrow { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .cta-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.1875rem);
+      font-weight: 600;
+      color: hsl(20, 12%, 10%);
+      max-width: 560px; margin: 0 auto 2rem;
+      line-height: 1.28;
+    }
+
+    /* ── Over Ons ──────────────────────────────────── */
+    .over-ons {
+      padding: 5.5rem 0;
+      background: linear-gradient(180deg, #fff 0%, hsl(280,20%,97%) 100%);
+    }
+    .over-ons-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4.5rem;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .over-ons-inner { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    .over-ons-left {}
+    .over-ons-eyebrow {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-top: 1rem;
+      margin-bottom: 0.25rem;
+      font-style: italic;
+    }
+    .over-ons-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.875rem, 4vw, 2.625rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.18;
+      color: hsl(20, 12%, 10%);
+      margin-bottom: 0;
+    }
+    .over-ons-body {
+      font-size: 0.9375rem;
+      color: hsl(20, 10%, 38%);
+      line-height: 1.75;
+      margin-bottom: 1.125rem;
+    }
+    .over-ons-body:last-child { margin-bottom: 0; }
+    .arabic-word {
+      font-size: 1.15em;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ── Values ────────────────────────────────────── */
+    .visie-section {
+      background: linear-gradient(180deg, hsl(280,20%,97%) 0%, #fff 100%);
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.0625rem;
+    }
+    .value-card {
+      background: #fff;
+      border: 1px solid hsl(20, 18%, 91%);
+      border-radius: 0.9375rem;
+      padding: 1.5rem;
+      transition: transform 0.28s ease, box-shadow 0.28s ease;
+    }
+    .value-card:hover { transform: translateY(-3px); box-shadow: 0 8px 26px rgba(0,0,0,.06); }
+    .value-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: hsl(20, 12%, 10%);
+      margin: 0.875rem 0 0.45rem;
+    }
+    .value-body {
+      font-size: 0.865rem;
+      color: var(--muted);
+      line-height: 1.67;
+    }
+
+    /* ── Testimonials ──────────────────────────────── */
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .testi-card {
+      background: #fff;
+      border: 1px solid hsl(20, 18%, 91%);
+      border-radius: 1.1875rem;
+      padding: 1.75rem;
+      display: flex; flex-direction: column;
+    }
+    .stars { color: var(--primary); font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 0.875rem; }
+    .testi-quote {
+      font-size: 0.875rem;
+      color: hsl(20, 10%, 30%);
+      line-height: 1.72;
+      flex: 1;
+      margin-bottom: 1.375rem;
+      font-style: italic;
+    }
+    .testi-author { display: flex; align-items: center; gap: 0.75rem; }
+    .author-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .author-name { font-size: 0.855rem; font-weight: 600; color: hsl(20, 12%, 13%); }
+    .author-role { font-size: 0.74rem; color: var(--muted); margin-top: 0.1rem; }
+
+    /* ── Newsletter ────────────────────────────────── */
+    .newsletter-section {
+      background: linear-gradient(155deg, var(--lavender) 0%, hsl(30, 22%, 97%) 100%);
+      padding: 5.5rem 0;
+      text-align: center;
+    }
+    .newsletter-form {
+      display: flex; flex-wrap: wrap; gap: 0.7rem;
+      justify-content: center; align-items: center;
+      max-width: 450px;
+      margin: 0 auto 0.875rem;
+    }
+    .newsletter-input {
+      flex: 1; min-width: 190px;
+      padding: 0.78rem 1.2rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 0.9375rem;
+      font-family: inherit;
+      outline: none; color: var(--fg);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .newsletter-input::placeholder { color: hsl(20,10%,63%); }
+    .newsletter-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(220,90,20,.1);
+    }
+    .newsletter-note { font-size: 0.77rem; color: hsl(20,10%,60%); }
+
+    /* ── Footer ────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      color: var(--dark-muted);
+      padding: 3.75rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
+      padding-bottom: 2.25rem;
+      border-bottom: 1px solid hsl(20,8%,18%);
+    }
+    @media (min-width: 600px)  { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+    @media (min-width: 768px)  { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+
+    .footer-logo { height: 32px; width: auto; filter: brightness(0) invert(1); opacity: .82; margin-bottom: 0.875rem; }
+    .footer-tagline { font-size: 0.855rem; line-height: 1.65; max-width: 230px; color: hsl(20,12%,48%); }
+    .footer-heading { font-size: 0.78rem; font-weight: 600; color: hsl(20,12%,72%); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.875rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .footer-links a { font-size: 0.855rem; color: hsl(20,12%,48%); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: hsl(20,14%,80%); }
+    .footer-bottom { padding-top: 1.375rem; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: space-between; align-items: center; }
+    .footer-copy { font-size: 0.77rem; color: hsl(20,8%,36%); }
+
+    /* ── Scroll Reveal ─────────────────────────────── */
+    .reveal { opacity:1; transform:none; transition: opacity 0.62s ease, transform 0.62s ease; }
+    .reveal.pre-reveal { opacity:0; transform:translateY(20px); }
+    .reveal.pre-reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* ── SVG fix ───────────────────────────────────── */
+    svg { display:inline-block; vertical-align:middle; }
+
+
+    /* ════════════════════════════════════════════════
+       CHATBOT WIDGET
+    ════════════════════════════════════════════════ */
+    #chat-btn {
+      position: fixed;
+      bottom: 5.5rem;
+      right: 1.5rem;
+      z-index: 200;
+      width: 54px; height: 54px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(220,90,20,.32);
+      transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s ease, background 0.2s;
+      color: #fff;
+    }
+    #chat-btn:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(220,90,20,.4); background: var(--primary-h); }
+    #chat-btn.open  { transform: scale(0.92) rotate(90deg); }
+    #chat-btn svg   { width: 24px; height: 24px; }
+    #chat-btn .icon-open  { display:block; }
+    #chat-btn .icon-close { display:none; }
+    #chat-btn.open .icon-open  { display:none; }
+    #chat-btn.open .icon-close { display:block; }
+
+    #chat-window {
+      position: fixed;
+      bottom: 10rem;
+      right: 1.5rem;
+      z-index: 199;
+      width: min(360px, calc(100vw - 2rem));
+      height: min(520px, calc(100svh - 12rem));
+      background: hsl(30, 18%, 98%);
+      border-radius: 1.375rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,.14), 0 4px 16px rgba(0,0,0,.08);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,.06);
+      transform: translateY(16px) scale(0.97);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), opacity 0.25s ease;
+    }
+    #chat-window.open {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .chat-header {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 1rem 1.125rem 0.875rem;
+      border-bottom: 1px solid hsl(20,18%,91%);
+      background: #fff;
+      flex-shrink: 0;
+    }
+    .chat-header-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--primary-light);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .chat-header-avatar img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+    .chat-header-info { flex: 1; }
+    .chat-header-name { font-size: 0.875rem; font-weight: 700; color: var(--fg); }
+    .chat-header-status {
+      font-size: 0.72rem; color: var(--muted);
+      display: flex; align-items: center; gap: 0.35rem; margin-top: 1px;
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #22c55e;
+      animation: pulse-dot 2.5s infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.6; transform:scale(0.85); }
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex; flex-direction: column; gap: 0.75rem;
+      scroll-behavior: smooth;
+    }
+    .chat-messages::-webkit-scrollbar { width: 4px; }
+    .chat-messages::-webkit-scrollbar-thumb { background: rgba(0,0,0,.12); border-radius: 10px; }
+
+    .msg {
+      display: flex;
+      gap: 0.5rem;
+      max-width: 88%;
+      animation: msgIn 0.3s ease-out;
+    }
+    @keyframes msgIn {
+      from { opacity:0; transform:translateY(8px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .msg.user  { align-self: flex-end; flex-direction: row-reverse; }
+    .msg.bot   { align-self: flex-start; }
+
+    .msg-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      align-self: flex-end;
+      background: var(--primary-light);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .msg-avatar img { width: 100%; height: 100%; object-fit: contain; padding: 3px; }
+    .msg.user .msg-avatar { background: hsl(16,82%,88%); font-size: 0.68rem; color: var(--primary); font-weight: 700; }
+
+    .msg-bubble {
+      padding: 0.625rem 0.875rem;
+      border-radius: 1rem;
+      font-size: 0.865rem;
+      line-height: 1.55;
+      max-width: 100%;
+      word-wrap: break-word;
+    }
+    .msg.bot  .msg-bubble { background:#fff; color:var(--fg); border:1px solid hsl(20,18%,91%); border-bottom-left-radius: 4px; box-shadow: 0 1px 4px rgba(0,0,0,.05); }
+    .msg.user .msg-bubble { background:var(--primary); color:#fff; border-bottom-right-radius: 4px; }
+
+    /* Typing indicator */
+    .typing-bubble {
+      display: flex; gap: 4px;
+      align-items: center;
+      padding: 0.625rem 0.875rem;
+    }
+    .typing-bubble span {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: hsl(20,10%,68%);
+      animation: typingDot 1.4s infinite;
+    }
+    .typing-bubble span:nth-child(2) { animation-delay: 0.22s; }
+    .typing-bubble span:nth-child(3) { animation-delay: 0.44s; }
+    @keyframes typingDot {
+      0%,80%,100% { transform:scale(1); opacity:.5; }
+      40%          { transform:scale(1.35); opacity:1; }
+    }
+
+    .chat-footer {
+      padding: 0.75rem 1rem;
+      border-top: 1px solid hsl(20,18%,91%);
+      background: #fff;
+      display: flex; gap: 0.5rem; align-items: flex-end;
+      flex-shrink: 0;
+    }
+    .chat-input {
+      flex: 1;
+      resize: none;
+      border: 1px solid var(--border);
+      border-radius: 0.875rem;
+      padding: 0.6rem 0.875rem;
+      font-size: 0.875rem;
+      font-family: inherit;
+      outline: none;
+      color: var(--fg);
+      background: hsl(30,18%,98%);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      max-height: 100px;
+      overflow-y: auto;
+      line-height: 1.4;
+    }
+    .chat-input::placeholder { color: hsl(20,10%,64%); }
+    .chat-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(220,90,20,.1); }
+
+    .chat-send {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.15s;
+      flex-shrink: 0;
+    }
+    .chat-send:hover { background: var(--primary-h); transform: scale(1.05); }
+    .chat-send:disabled { background: hsl(20,18%,78%); cursor: not-allowed; transform: none; }
+    .chat-send svg { width: 16px; height: 16px; }
+
+    /* Notification badge */
+    .chat-badge {
+      position: absolute;
+      top: -2px; right: -2px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: #ef4444;
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--bg);
+      animation: badgePop 0.3s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes badgePop {
+      from { transform: scale(0); }
+      to   { transform: scale(1); }
+    }
+
+    /* ── Mobile adjustments ────────────────────────── */
+    @media (max-width: 640px) {
+      .top-bar { padding: 0.65rem 1.125rem; }
+      #chat-btn { bottom: 5rem; right: 1rem; width: 50px; height: 50px; }
+      #chat-window { right: 1rem; bottom: 8.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     TOP BAR
+════════════════════════════════════════════════════════ -->
+<header class="top-bar">
+  <a href="/" class="top-bar-logo" aria-label="Sila – Home">
+    <img src="brand_assets/Final-small.png" alt="Sila" />
+  </a>
+
+  <div class="lang-toggle" role="group" aria-label="Taalwissel">
+    <button class="lang-btn active" data-lang="nl" onclick="setLang('nl', this)">NL</button>
+    <button class="lang-btn"        data-lang="en" onclick="setLang('en', this)">EN</button>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FLOATING NAV
+════════════════════════════════════════════════════════ -->
+<nav class="floating-nav" aria-label="Hoofdnavigatie">
+  <a href="#diensten"    class="nav-link mob-hide" data-i18n="nav.services">Diensten</a>
+  <a href="#over-ons"    class="nav-link mob-hide" data-i18n="nav.about">Over ons</a>
+  <a href="#referenties" class="nav-link mob-hide" data-i18n="nav.refs">Referenties</a>
+  <a href="#contact"     class="nav-cta"           data-i18n="nav.contact">Contact</a>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════ -->
+<section class="hero" aria-label="Hero">
+  <div class="wrap" style="position:relative;z-index:1;max-width:700px;">
+
+    <h1 class="hero-title">
+      Voor <em id="typing-target"></em>
+    </h1>
+
+    <p class="hero-subtitle" data-i18n="hero.subtitle">
+      De menselijke verbinding tussen jouw bedrijf en AI
+    </p>
+
+    <p class="hero-desc" data-i18n="hero.desc">
+      Begeleiding en persoonlijke aandacht in een wereld waarin AI razendsnel verandert.
+    </p>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     DRIE PIJLERS
+════════════════════════════════════════════════════════ -->
+<section id="diensten" class="section" style="background:#fff;">
+  <div class="wrap">
+
+    <div class="section-header">
+      <div class="chip">
+        <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/></svg>
+        <span data-i18n="pillars.chip">Onze diensten</span>
+      </div>
+      <h2 class="section-title" data-i18n="pillars.title">Drie pijlers, één missie</h2>
+      <p class="section-lead" data-i18n="pillars.lead">
+        We begeleiden jou door elke fase van de AI-reis — van inzicht en advies
+        tot concrete implementatie in jouw dagelijkse praktijk.
+      </p>
+    </div>
+
+    <div class="pillars-grid">
+
+      <article class="pillar-card reveal">
+        <div class="icon-box">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        <h3 class="pillar-title" data-i18n="edu.title">Educatie</h3>
+        <p class="pillar-body" data-i18n="edu.body">
+          Begrijp de basis van AI en wat het voor jouw sector kan betekenen.
+          Via workshops, trainingen en persoonlijke begeleiding bouwen we
+          jouw AI-kennis stap voor stap op — op jouw tempo.
+        </p>
+        <div class="tag-row">
+          <span class="tag" data-i18n="edu.t1">Workshops</span>
+          <span class="tag" data-i18n="edu.t2">Trainingen</span>
+          <span class="tag" data-i18n="edu.t3">Begeleiding</span>
+        </div>
+        <a href="#contact" class="meer-link">
+          <span data-i18n="meer">Meer info</span>
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </article>
+
+      <article class="pillar-card reveal" style="transition-delay:.1s;">
+        <div class="icon-box">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
+        </div>
+        <h3 class="pillar-title" data-i18n="cons.title">Consultancy</h3>
+        <p class="pillar-body" data-i18n="cons.body">
+          Ontdek samen met ons hoe AI specifiek voor jouw organisatie een rol
+          kan spelen. We analyseren jouw processen en brengen kansen in kaart
+          die direct relevant en toepasbaar zijn.
+        </p>
+        <div class="tag-row">
+          <span class="tag" data-i18n="cons.t1">Analyse</span>
+          <span class="tag" data-i18n="cons.t2">Strategie</span>
+          <span class="tag" data-i18n="cons.t3">Advies op maat</span>
+        </div>
+        <a href="#contact" class="meer-link">
+          <span data-i18n="meer">Meer info</span>
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </article>
+
+      <article class="pillar-card reveal" style="transition-delay:.2s;">
+        <div class="icon-box">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <h3 class="pillar-title" data-i18n="impl.title">Implementatie</h3>
+        <p class="pillar-body" data-i18n="impl.body">
+          Zet de stap naar concrete AI-oplossingen in jouw dagelijkse processen.
+          Van prototype tot volledige integratie — wij begeleiden het gehele
+          traject van begin tot eind.
+        </p>
+        <div class="tag-row">
+          <span class="tag" data-i18n="impl.t1">Integratie</span>
+          <span class="tag" data-i18n="impl.t2">Automatisering</span>
+          <span class="tag" data-i18n="impl.t3">Support</span>
+        </div>
+        <a href="#contact" class="meer-link">
+          <span data-i18n="meer">Meer info</span>
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     CTA BANNER
+════════════════════════════════════════════════════════ -->
+<section id="quiz" class="cta-banner" aria-label="Quiz CTA">
+  <div class="wrap">
+    <p class="cta-eyebrow" data-i18n="cta.eyebrow">Weet jij waar jij staat?</p>
+    <h2 class="cta-title" data-i18n="cta.title">
+      Klaar om te ontdekken in welke fase jij zit van de AI-reis?
+    </h2>
+    <a href="#contact" class="btn-primary" style="margin:0 auto;">
+      <span data-i18n="cta.btn">Start de quiz</span>
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+    </a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     OVER ONS
+════════════════════════════════════════════════════════ -->
+<section id="over-ons" class="over-ons" aria-label="Over Sila">
+  <div class="wrap">
+    <div class="over-ons-inner">
+
+      <div class="over-ons-left reveal">
+        <div class="chip" style="margin-bottom:1rem;">
+          <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/></svg>
+          <span data-i18n="about.chip">Over ons</span>
+        </div>
+        <h2 class="over-ons-title" data-i18n="about.title">Hier wordt AI weer menselijk</h2>
+        <p class="over-ons-eyebrow" data-i18n="about.eyebrow">Bruggen bouwen tussen mens en technologie</p>
+      </div>
+
+      <div class="reveal" style="transition-delay:.12s;">
+        <p class="over-ons-body" data-i18n="about.body1">
+          In een wereld waar technologie sneller verandert dan ooit, groeit de behoefte aan
+          begeleiding, duidelijkheid en échte aandacht. Vanuit die behoefte is Sila ontstaan.
+        </p>
+        <p class="over-ons-body" data-i18n="about.body2">
+          Onze naam is geïnspireerd door het Arabische woord <span class="arabic-word">Sila (صلة)</span>,
+          wat <em>verbinding</em> betekent — en precies dat is wat wij doen. We bouwen bruggen
+          tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via
+          innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     ONZE VISIE (4 waarden)
+════════════════════════════════════════════════════════ -->
+<section id="visie" class="section visie-section" aria-label="Onze visie">
+  <div class="wrap">
+
+    <div class="section-header">
+      <div class="chip">
+        <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/></svg>
+        <span data-i18n="vision.chip">Onze visie</span>
+      </div>
+      <h2 class="section-title" data-i18n="vision.title">Wat ons drijft</h2>
+      <p class="section-lead" data-i18n="vision.lead">
+        Onze aanpak combineert de nieuwste AI-mogelijkheden met een diepgaand
+        begrip van mensen en organisaties.
+      </p>
+    </div>
+
+    <div class="values-grid">
+
+      <div class="value-card reveal">
+        <div class="icon-box">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m3.343-5.657-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386z"/>
+          </svg>
+        </div>
+        <h3 class="value-title" data-i18n="v1.title">Innovatie</h3>
+        <p class="value-body" data-i18n="v1.body">AI vernieuwt constant. We helpen je stap voor stap mee te groeien met de technologie die echt relevant is voor jou.</p>
+      </div>
+
+      <div class="value-card reveal" style="transition-delay:.08s;">
+        <div class="icon-box">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3 class="value-title" data-i18n="v2.title">Verbinding</h3>
+        <p class="value-body" data-i18n="v2.body">De kracht van AI ligt in de combinatie met menselijk inzicht. Wij bouwen bruggen tussen technologie en de mensen die ermee werken.</p>
+      </div>
+
+      <div class="value-card reveal" style="transition-delay:.16s;">
+        <div class="icon-box">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+          </svg>
+        </div>
+        <h3 class="value-title" data-i18n="v3.title">Continuïteit</h3>
+        <p class="value-body" data-i18n="v3.body">We zorgen voor een duurzame aanpak die ook op lange termijn waarde blijft creëren voor jouw organisatie.</p>
+      </div>
+
+      <div class="value-card reveal" style="transition-delay:.24s;">
+        <div class="icon-box">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 11 12 14 22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+        </div>
+        <h3 class="value-title" data-i18n="v4.title">Effectiviteit</h3>
+        <p class="value-body" data-i18n="v4.body">Concrete resultaten, geen beloftes. We meten succes aan echte impact die zichtbaar is in jouw dagelijkse werk en cijfers.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     REFERENTIES
+════════════════════════════════════════════════════════ -->
+<section id="referenties" class="section" style="background:#fff;">
+  <div class="wrap">
+
+    <div class="section-header">
+      <div class="chip">
+        <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/></svg>
+        <span data-i18n="refs.chip">Referenties</span>
+      </div>
+      <h2 class="section-title" data-i18n="refs.title">Wat anderen over ons zeggen</h2>
+    </div>
+
+    <div class="testi-grid">
+
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">
+          "Voor een complex AI- en automatiseringsproject met diverse onderdelen heb ik samengewerkt met Sila. De samenwerking verliep prettig en professioneel. Niet alleen beschikt Sila over de benodigde technische expertise, maar er wordt ook snel gereageerd, efficiënt gewerkt en verantwoordelijkheid genomen voor het eindresultaat. Een betrouwbare partner die ik zeker zou aanraden."
+        </p>
+        <div class="testi-author">
+          <div class="author-avatar">ND</div>
+          <div>
+            <p class="author-name">Noah Dueck</p>
+            <p class="author-role">Founder · EverWaveAI</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal" style="transition-delay:.1s;">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">
+          "Sila heeft een complexe Voice AI Agent ontwikkeld voor een internationaal project. Het werk is van hoge kwaliteit, de communicatie is helder en afspraken worden zorgvuldig nagekomen. De samenwerking verliep soepel en professioneel. Zeker een aanrader voor elk AI-traject."
+        </p>
+        <div class="testi-author">
+          <div class="author-avatar">AY</div>
+          <div>
+            <p class="author-name">Ahmed Yahya</p>
+            <p class="author-role">Founder · AI Agent Smart</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal" style="transition-delay:.2s;">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">
+          "Het was een genoegen om met Sila te werken. De zakelijke intelligentie gecombineerd met technische expertise was verbazingwekkend. Ze overlegden met mij en begrepen mijn verzoek, maar het was veel meer dan dat. Sila identificeerde problemen en inefficiënties waarvan ik niet eens wist dat ik ze had. Dit alles in combinatie met een snelle werkethiek en voortdurende updates maakt Sila mijn 'go to' partner voor AI-automatisering."
+        </p>
+        <div class="testi-author">
+          <div class="author-avatar">AS</div>
+          <div>
+            <p class="author-name">Arianit Shala</p>
+            <p class="author-role">Co-Founder & CEO · OptiControl</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     NEWSLETTER
+════════════════════════════════════════════════════════ -->
+<section id="contact" class="newsletter-section" aria-label="Nieuwsbrief">
+  <div class="wrap">
+    <div class="chip" style="margin-bottom:1.125rem;">
+      <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/></svg>
+      <span data-i18n="nl.chip">Blijf op de hoogte</span>
+    </div>
+    <h2 class="section-title" style="margin-bottom:1rem;" data-i18n="nl.title">AI Update in je mailbox</h2>
+    <p class="section-lead" style="margin-bottom:2.25rem;" data-i18n="nl.lead">
+      Ontvang wekelijks de laatste AI-inzichten, praktische tips en updates
+      die relevant zijn voor jouw bedrijf. Geen spam, alleen waarde.
+    </p>
+    <form class="newsletter-form" id="newsletter-form" novalidate>
+      <input type="email" class="newsletter-input" placeholder="jouw@email.com" required aria-label="E-mailadres" />
+      <button type="submit" class="btn-primary">
+        <span data-i18n="nl.btn">Inschrijven</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </form>
+    <p class="newsletter-note" data-i18n="nl.note">Gratis &amp; altijd opzegbaar. Privacy gegarandeerd.</p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════ -->
+<footer aria-label="Paginavoettekst">
+  <div class="wrap">
+    <div class="footer-grid">
+
+      <div>
+        <img src="brand_assets/Final-small.png" alt="Sila" class="footer-logo" />
+        <p class="footer-tagline" data-i18n="footer.tagline">
+          De menselijke verbinding tussen jouw bedrijf en AI.
+          Begeleiding en persoonlijke aandacht op maat.
+        </p>
+      </div>
+
+      <div>
+        <p class="footer-heading" data-i18n="footer.h1">Diensten</p>
+        <ul class="footer-links">
+          <li><a href="#diensten" data-i18n="edu.title">Educatie</a></li>
+          <li><a href="#diensten" data-i18n="cons.title">Consultancy</a></li>
+          <li><a href="#diensten" data-i18n="impl.title">Implementatie</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-heading" data-i18n="footer.h2">Bedrijf</p>
+        <ul class="footer-links">
+          <li><a href="#over-ons" data-i18n="about.chip">Over ons</a></li>
+          <li><a href="#visie"    data-i18n="vision.chip">Onze visie</a></li>
+          <li><a href="#referenties" data-i18n="refs.chip">Referenties</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-heading" data-i18n="footer.h3">Contact</p>
+        <ul class="footer-links">
+          <li><a href="mailto:info@sila-ai.be">info@sila-ai.be</a></li>
+          <li><a href="#" rel="noopener">LinkedIn</a></li>
+          <li><a href="#" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Sila. <span data-i18n="footer.rights">Alle rechten voorbehouden.</span></p>
+      <p class="footer-copy" data-i18n="footer.made">Gemaakt door Sila</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     CHATBOT WIDGET
+════════════════════════════════════════════════════════ -->
+
+<!-- Toggle button -->
+<button id="chat-btn" aria-label="Chat openen" onclick="toggleChat()">
+  <!-- Open icon -->
+  <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  <!-- Close icon -->
+  <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+  </svg>
+</button>
+
+<!-- Chat window -->
+<div id="chat-window" role="dialog" aria-label="Sila AI Assistent">
+  <div class="chat-header">
+    <div class="chat-header-avatar">
+      <img src="brand_assets/Final-small.png" alt="Sila" />
+    </div>
+    <div class="chat-header-info">
+      <div class="chat-header-name">Sila Assistent</div>
+      <div class="chat-header-status">
+        <span class="status-dot"></span>
+        <span data-i18n="chat.status">Online</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-messages" id="chat-messages"></div>
+
+  <div class="chat-footer">
+    <textarea
+      class="chat-input"
+      id="chat-input"
+      rows="1"
+      placeholder="Stel een vraag..."
+      aria-label="Bericht"
+      onkeydown="chatKeydown(event)"
+      oninput="autoResize(this)"
+    ></textarea>
+    <button class="chat-send" id="chat-send" onclick="sendMessage()" aria-label="Versturen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"/>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════ -->
+<script>
+/* ─────────────────────────────────────────────────────────
+   CONFIG — vul hier jouw n8n webhook URL in
+   Voorbeeld: 'https://jouw-n8n.app.n8n.cloud/webhook/d33eb148-1a2b-48a9-a823-0f818b56cf50'
+───────────────────────────────────────────────────────── */
+const N8N_WEBHOOK_URL = 'https://sila-ai.app.n8n.cloud/webhook/d33eb148-1a2b-48a9-a823-0f818b56cf50';
+
+/* ─────────────────────────────────────────────────────────
+   TRANSLATIONS
+───────────────────────────────────────────────────────── */
+const T = {
+  nl: {
+    'nav.services': 'Diensten',
+    'nav.about':    'Over ons',
+    'nav.refs':     'Referenties',
+    'nav.contact':  'Contact',
+    'hero.subtitle':'De menselijke verbinding tussen jouw bedrijf en AI',
+    'hero.desc':    'Begeleiding en persoonlijke aandacht in een wereld waarin AI razendsnel verandert.',
+    'pillars.chip': 'Onze diensten',
+    'pillars.title':'Drie pijlers, één missie',
+    'pillars.lead': 'We begeleiden jou door elke fase van de AI-reis — van inzicht en advies tot concrete implementatie in jouw dagelijkse praktijk.',
+    'edu.title':    'Educatie',
+    'edu.body':     'Begrijp de basis van AI en wat het voor jouw sector kan betekenen. Via workshops, trainingen en persoonlijke begeleiding bouwen we jouw AI-kennis stap voor stap op — op jouw tempo.',
+    'edu.t1':       'Workshops', 'edu.t2': 'Trainingen', 'edu.t3': 'Begeleiding',
+    'cons.title':   'Consultancy',
+    'cons.body':    'Ontdek samen met ons hoe AI specifiek voor jouw organisatie een rol kan spelen. We analyseren jouw processen en brengen kansen in kaart die direct relevant en toepasbaar zijn.',
+    'cons.t1':      'Analyse', 'cons.t2': 'Strategie', 'cons.t3': 'Advies op maat',
+    'impl.title':   'Implementatie',
+    'impl.body':    'Zet de stap naar concrete AI-oplossingen in jouw dagelijkse processen. Van prototype tot volledige integratie — wij begeleiden het gehele traject van begin tot eind.',
+    'impl.t1':      'Integratie', 'impl.t2': 'Automatisering', 'impl.t3': 'Support',
+    'meer':         'Meer info',
+    'cta.eyebrow':  'Weet jij waar jij staat?',
+    'cta.title':    'Klaar om te ontdekken in welke fase jij zit van de AI-reis?',
+    'cta.btn':      'Start de quiz',
+    'about.chip':   'Over ons',
+    'about.title':  'Hier wordt AI weer menselijk',
+    'about.eyebrow':'Bruggen bouwen tussen mens en technologie',
+    'about.body1':  'In een wereld waar technologie sneller verandert dan ooit, groeit de behoefte aan begeleiding, duidelijkheid en échte aandacht. Vanuit die behoefte is Sila ontstaan.',
+    'about.body2':  'Onze naam is geïnspireerd door het Arabische woord Sila (صلة), wat verbinding betekent — en precies dat is wat wij doen. We bouwen bruggen tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.',
+    'vision.chip':  'Onze visie',
+    'vision.title': 'Wat ons drijft',
+    'vision.lead':  'Onze aanpak combineert de nieuwste AI-mogelijkheden met een diepgaand begrip van mensen en organisaties.',
+    'v1.title':'Innovatie','v1.body':'AI vernieuwt constant. We helpen je stap voor stap mee te groeien met de technologie die echt relevant is voor jou.',
+    'v2.title':'Verbinding','v2.body':'De kracht van AI ligt in de combinatie met menselijk inzicht. Wij bouwen bruggen tussen technologie en de mensen die ermee werken.',
+    'v3.title':'Continuïteit','v3.body':'We zorgen voor een duurzame aanpak die ook op lange termijn waarde blijft creëren voor jouw organisatie.',
+    'v4.title':'Effectiviteit','v4.body':'Concrete resultaten, geen beloftes. We meten succes aan echte impact die zichtbaar is in jouw dagelijkse werk en cijfers.',
+    'refs.chip':    'Referenties',
+    'refs.title':   'Wat anderen over ons zeggen',
+    'nl.chip':      'Blijf op de hoogte',
+    'nl.title':     'AI Update in je mailbox',
+    'nl.lead':      'Ontvang wekelijks de laatste AI-inzichten, praktische tips en updates die relevant zijn voor jouw bedrijf. Geen spam, alleen waarde.',
+    'nl.btn':       'Inschrijven',
+    'nl.note':      'Gratis & altijd opzegbaar. Privacy gegarandeerd.',
+    'footer.tagline':'De menselijke verbinding tussen jouw bedrijf en AI. Begeleiding en persoonlijke aandacht op maat.',
+    'footer.h1':    'Diensten', 'footer.h2': 'Bedrijf', 'footer.h3': 'Contact',
+    'footer.rights':'Alle rechten voorbehouden.',
+    'footer.made':  'Gemaakt door Sila',
+    'chat.status':  'Online',
+    'chat.greeting':'Hallo! Ik ben de Sila assistent. Hoe kan ik je helpen met AI?',
+    'chat.placeholder': 'Stel een vraag...',
+    'chat.error':   'Sorry, er ging iets mis. Probeer het opnieuw.',
+  },
+  en: {
+    'nav.services': 'Services',
+    'nav.about':    'About',
+    'nav.refs':     'References',
+    'nav.contact':  'Contact',
+    'hero.subtitle':'The human connection between your business and AI',
+    'hero.desc':    'Personal guidance and attention in a world where AI is changing at lightning speed.',
+    'pillars.chip': 'Our services',
+    'pillars.title':'Three pillars, one mission',
+    'pillars.lead': 'We guide you through every phase of the AI journey — from insight and advice to concrete implementation in your daily practice.',
+    'edu.title':    'Education',
+    'edu.body':     'Understand the basics of AI and what it can mean for your sector. Through workshops, training and personal guidance, we build your AI knowledge step by step — at your pace.',
+    'edu.t1':       'Workshops', 'edu.t2': 'Training', 'edu.t3': 'Coaching',
+    'cons.title':   'Consultancy',
+    'cons.body':    'Discover together with us how AI can play a role specifically for your organisation. We analyse your processes and map out opportunities that are directly relevant and applicable.',
+    'cons.t1':      'Analysis', 'cons.t2': 'Strategy', 'cons.t3': 'Custom advice',
+    'impl.title':   'Implementation',
+    'impl.body':    'Take the step toward concrete AI solutions in your daily processes. From prototype to full integration — we guide the entire journey from start to finish.',
+    'impl.t1':      'Integration', 'impl.t2': 'Automation', 'impl.t3': 'Support',
+    'meer':         'More info',
+    'cta.eyebrow':  'Do you know where you stand?',
+    'cta.title':    'Ready to discover which phase of the AI journey you are in?',
+    'cta.btn':      'Start the quiz',
+    'about.chip':   'About us',
+    'about.title':  'This is where AI becomes human again',
+    'about.eyebrow':'Building bridges between people and technology',
+    'about.body1':  'In a world where technology changes faster than ever, the need for guidance, clarity and genuine attention grows. It is from this need that Sila was born.',
+    'about.body2':  'Our name is inspired by the Arabic word Sila (صلة), meaning connection — and that is exactly what we do. We build bridges between people and AI. Our mission is to strengthen relationships and provide support through innovative AI solutions that people understand and truly need.',
+    'vision.chip':  'Our vision',
+    'vision.title': 'What drives us',
+    'vision.lead':  'Our approach combines the latest AI capabilities with a deep understanding of people and organisations.',
+    'v1.title':'Innovation','v1.body':'AI is constantly evolving. We help you grow step by step with technology that is truly relevant to you.',
+    'v2.title':'Connection','v2.body':'The power of AI lies in its combination with human insight. We build bridges between technology and the people who work with it.',
+    'v3.title':'Continuity','v3.body':'We ensure a sustainable approach that continues to create value for your organisation over the long term.',
+    'v4.title':'Effectiveness','v4.body':'Concrete results, no empty promises. We measure success by real impact visible in your daily work and numbers.',
+    'refs.chip':    'References',
+    'refs.title':   'What others say about us',
+    'nl.chip':      'Stay informed',
+    'nl.title':     'AI updates in your inbox',
+    'nl.lead':      'Receive weekly AI insights, practical tips and updates relevant to your business. No spam, only value.',
+    'nl.btn':       'Subscribe',
+    'nl.note':      'Free & always unsubscribable. Privacy guaranteed.',
+    'footer.tagline':'The human connection between your business and AI. Personal guidance tailored to you.',
+    'footer.h1':    'Services', 'footer.h2': 'Company', 'footer.h3': 'Contact',
+    'footer.rights':'All rights reserved.',
+    'footer.made':  'Made by Sila',
+    'chat.status':  'Online',
+    'chat.greeting':'Hello! I am the Sila assistant. How can I help you with AI?',
+    'chat.placeholder': 'Ask a question...',
+    'chat.error':   'Sorry, something went wrong. Please try again.',
+  }
+};
+
+let currentLang = 'nl';
+
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (T[lang][key] !== undefined) {
+      // Preserve child elements (like spans inside text)
+      if (el.children.length === 0) {
+        el.textContent = T[lang][key];
+      }
+    }
+  });
+
+  // Update chat placeholder
+  const ci = document.getElementById('chat-input');
+  if (ci) ci.placeholder = T[lang]['chat.placeholder'];
+
+  // Update lang buttons
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+
+  // Update typing words
+  currentWords = lang === 'nl' ? wordsNL : wordsEN;
+}
+
+function setLang(lang, btn) {
+  applyLang(lang);
+}
+
+/* ─────────────────────────────────────────────────────────
+   TYPING EFFECT
+───────────────────────────────────────────────────────── */
+const wordsNL = [
+  'jouw bedrijf.', 'de ondernemer.', 'de innovator.', 'de groeimaker.',
+  'de strateeg.', 'de leider.', 'de denker.', 'de MKB\'er.',
+  'de visionair.', 'de doener.', 'de pionier.'
+];
+const wordsEN = [
+  'your business.', 'the entrepreneur.', 'the innovator.', 'the growth maker.',
+  'the strategist.', 'the leader.', 'the thinker.', 'the SME owner.',
+  'the visionary.', 'the doer.', 'the pioneer.'
+];
+
+let currentWords = wordsNL;
+let wi = 0, ci = 0, deleting = false;
+const typingEl = document.getElementById('typing-target');
+
+function tick() {
+  const word = currentWords[wi];
+  typingEl.textContent = deleting ? word.slice(0, ci - 1) : word.slice(0, ci + 1);
+  ci += deleting ? -1 : 1;
+
+  if (!deleting && ci > word.length) {
+    setTimeout(() => { deleting = true; tick(); }, 2400);
+    return;
+  }
+  if (deleting && ci < 0) {
+    deleting = false;
+    wi = (wi + 1) % currentWords.length;
+    ci = 0;
+  }
+  setTimeout(tick, deleting ? 52 : 95);
+}
+setTimeout(tick, 700);
+
+/* ─────────────────────────────────────────────────────────
+   NEWSLETTER
+───────────────────────────────────────────────────────── */
+document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = this.querySelector('button[type="submit"]');
+  const orig = btn.innerHTML;
+  btn.textContent = currentLang === 'nl' ? '✓ Verstuurd!' : '✓ Sent!';
+  btn.style.background = '#16a34a';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.innerHTML = orig;
+    btn.style.background = '';
+    btn.disabled = false;
+    this.reset();
+  }, 3500);
+});
+
+/* ─────────────────────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────────────────────── */
+document.querySelectorAll('.reveal').forEach(el => el.classList.add('pre-reveal'));
+
+const ro = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      ro.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* ─────────────────────────────────────────────────────────
+   SMOOTH SCROLL
+───────────────────────────────────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+
+/* ─────────────────────────────────────────────────────────
+   CHATBOT
+───────────────────────────────────────────────────────── */
+const chatBtn    = document.getElementById('chat-btn');
+const chatWindow = document.getElementById('chat-window');
+const chatInput  = document.getElementById('chat-input');
+const chatSend   = document.getElementById('chat-send');
+const chatMsgs   = document.getElementById('chat-messages');
+
+let chatOpen = false;
+let chatInitialised = false;
+const sessionId = 'sila-' + Math.random().toString(36).slice(2);
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  chatBtn.classList.toggle('open', chatOpen);
+  chatWindow.classList.toggle('open', chatOpen);
+
+  // Remove badge on open
+  const badge = chatBtn.querySelector('.chat-badge');
+  if (badge && chatOpen) badge.remove();
+
+  if (chatOpen && !chatInitialised) {
+    chatInitialised = true;
+    addMsg('bot', T[currentLang]['chat.greeting']);
+    setTimeout(() => chatInput.focus(), 350);
+  }
+}
+
+function addMsg(role, text) {
+  const msg = document.createElement('div');
+  msg.className = `msg ${role}`;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  if (role === 'bot') {
+    const img = document.createElement('img');
+    img.src = 'brand_assets/Final-small.png';
+    img.alt = 'Sila';
+    avatar.appendChild(img);
+  } else {
+    avatar.textContent = 'JIJ';
+  }
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.textContent = text;
+
+  msg.appendChild(avatar);
+  msg.appendChild(bubble);
+  chatMsgs.appendChild(msg);
+  chatMsgs.scrollTop = chatMsgs.scrollHeight;
+  return msg;
+}
+
+function showTyping() {
+  const msg = document.createElement('div');
+  msg.className = 'msg bot';
+  msg.id = 'typing-indicator';
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  const img = document.createElement('img');
+  img.src = 'brand_assets/Final-small.png';
+  img.alt = 'Sila';
+  avatar.appendChild(img);
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.innerHTML = '<div class="typing-bubble"><span></span><span></span><span></span></div>';
+
+  msg.appendChild(avatar);
+  msg.appendChild(bubble);
+  chatMsgs.appendChild(msg);
+  chatMsgs.scrollTop = chatMsgs.scrollHeight;
+}
+
+function hideTyping() {
+  const ind = document.getElementById('typing-indicator');
+  if (ind) ind.remove();
+}
+
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+
+  chatInput.value = '';
+  autoResize(chatInput);
+  chatSend.disabled = true;
+  addMsg('user', text);
+  showTyping();
+
+  try {
+    const res = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, sessionId, lang: currentLang }),
+    });
+
+    hideTyping();
+
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    // Try JSON first, fall back to text
+    let reply = '';
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      const data = await res.json();
+      reply = data.response || data.text || data.message || data.output || JSON.stringify(data);
+    } else {
+      reply = await res.text();
+    }
+
+    addMsg('bot', reply || T[currentLang]['chat.error']);
+  } catch (err) {
+    hideTyping();
+    addMsg('bot', T[currentLang]['chat.error']);
+    console.warn('Chatbot error:', err);
+  } finally {
+    chatSend.disabled = false;
+    chatInput.focus();
+  }
+}
+
+function chatKeydown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+// Show welcome badge after 3s if chat hasn't been opened
+setTimeout(() => {
+  if (!chatOpen && !chatInitialised) {
+    const badge = document.createElement('span');
+    badge.className = 'chat-badge';
+    badge.textContent = '1';
+    chatBtn.style.position = 'fixed'; // already fixed
+    chatBtn.appendChild(badge);
+  }
+}, 3000);
+</script>
+</body>
+</html>
