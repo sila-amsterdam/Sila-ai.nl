@@ -469,41 +469,104 @@
       line-height: 1.67;
     }
 
-    /* ── Testimonials ──────────────────────────────── */
-    .testi-grid {
+    /* ── Animated Testimonials ─────────────────────────── */
+    .at-outer { max-width: 860px; margin: 0 auto; }
+    .at-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 4.5rem;
+      align-items: center;
+      padding: 1.5rem 0;
     }
-    .testi-card {
-      background: #fff;
-      border: 1px solid hsl(20, 18%, 91%);
-      border-radius: 1.1875rem;
-      padding: 1.75rem;
-      display: flex; flex-direction: column;
+    @media (max-width: 768px) {
+      .at-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     }
-    .stars { color: var(--primary); font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 0.875rem; }
-    .testi-quote {
+    .at-stack {
+      position: relative;
+      height: 390px;
+    }
+    @media (max-width: 768px) {
+      .at-stack { height: 260px; }
+    }
+    .at-card {
+      position: absolute;
+      inset: 0;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transform-origin: bottom center;
+      will-change: transform, opacity;
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(.25,.46,.45,.94);
+      background: hsl(210, 22%, 83%);
+    }
+    .at-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      pointer-events: none;
+      user-select: none;
+    }
+    .at-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(20,10,3,.48) 0%, transparent 55%);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+    .at-content { display: flex; flex-direction: column; }
+    .at-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.5625rem;
+      font-weight: 600;
+      color: hsl(20, 12%, 10%);
+      margin-bottom: 0.3rem;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    .at-designation {
       font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 1.875rem;
+      transition: opacity 0.18s ease;
+    }
+    .at-quote {
+      font-size: 1rem;
       color: hsl(20, 10%, 30%);
-      line-height: 1.72;
-      flex: 1;
-      margin-bottom: 1.375rem;
+      line-height: 1.8;
       font-style: italic;
+      margin-bottom: 2.25rem;
+      min-height: 140px;
     }
-    .testi-author { display: flex; align-items: center; gap: 0.75rem; }
-    .author-avatar {
-      width: 38px; height: 38px;
+    .at-word {
+      display: inline-block;
+      opacity: 0;
+      filter: blur(8px);
+      transform: translateY(4px);
+      animation: atWordReveal 0.22s ease-out forwards;
+    }
+    @keyframes atWordReveal {
+      to { opacity: 1; filter: blur(0); transform: translateY(0); }
+    }
+    .at-nav { display: flex; gap: 0.625rem; }
+    .at-nav-btn {
+      width: 34px; height: 34px;
       border-radius: 50%;
-      background: var(--primary-light);
-      color: var(--primary);
-      font-size: 0.78rem;
-      font-weight: 700;
+      background: hsl(20, 18%, 93%);
+      border: 1px solid var(--border);
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+      cursor: pointer;
+      color: hsl(20, 10%, 30%);
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
     }
-    .author-name { font-size: 0.855rem; font-weight: 600; color: hsl(20, 12%, 13%); }
-    .author-role { font-size: 0.74rem; color: var(--muted); margin-top: 0.1rem; }
+    .at-nav-btn:hover { background: var(--primary-light); color: var(--primary); border-color: var(--primary-border); }
+    .at-nav-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .at-nav-btn:active { transform: scale(0.9); }
+    .at-nav-btn svg { width: 15px; height: 15px; pointer-events: none; transition: transform 0.3s ease; }
+    #at-prev:hover svg { transform: rotate(12deg); }
+    #at-next:hover svg { transform: rotate(-12deg); }
+    @keyframes atBounce {
+      0%   { transform: scale(1) rotate(0deg) translateY(0); }
+      42%  { transform: scale(1) rotate(0deg) translateY(-34px); }
+      100% { transform: scale(1) rotate(0deg) translateY(0); }
+    }
 
     /* ── Newsletter ────────────────────────────────── */
     .newsletter-section {
@@ -776,6 +839,193 @@
       to   { transform: scale(1); }
     }
 
+    /* ── Orbital Timeline ──────────────────────────── */
+    .orb-section {
+      background: hsl(30, 18%, 96%);
+      padding: 4.5rem 0 5.5rem;
+      text-align: center;
+    }
+    .orb-wrapper { max-width: 600px; margin: 0 auto; }
+
+    .orb-canvas {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      margin: 0 auto;
+      cursor: default;
+      overflow: visible;
+    }
+    @media (max-width: 540px) { .orb-canvas { height: 320px; } }
+
+    .orb-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      pointer-events: none;
+    }
+    .orb-center-core {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 9px rgba(220,90,20,.1), 0 5px 24px rgba(220,90,20,.35);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      position: relative; z-index: 1;
+    }
+    .orb-center-pulse {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(220,90,20,.1);
+      animation: orbPulse 2.8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .orb-center-pulse2 {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      background: rgba(220,90,20,.05);
+      animation: orbPulse 2.8s ease-in-out 0.9s infinite;
+      pointer-events: none;
+    }
+    @keyframes orbPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      50%       { transform: translate(-50%, -50%) scale(1.45); opacity: 0.18; }
+    }
+
+    .orb-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px dashed rgba(220,90,20,.2);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      width: 320px; height: 320px;
+    }
+    @media (max-width: 540px) { .orb-ring { width: 240px; height: 240px; } }
+
+    .orb-node {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      will-change: transform, opacity;
+    }
+    .orb-node-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--primary-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--primary);
+      box-shadow: 0 4px 14px rgba(220,90,20,.1);
+      transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+    }
+    .orb-node:hover .orb-node-icon,
+    .orb-node.orb-active .orb-node-icon {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      box-shadow: 0 6px 22px rgba(220,90,20,.42);
+    }
+    .orb-node-label {
+      font-size: 0.73rem;
+      font-weight: 600;
+      color: var(--fg);
+      white-space: nowrap;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      padding: 0.2rem 0.65rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      letter-spacing: 0.02em;
+      transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+    }
+    .orb-node.orb-active .orb-node-label {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary-border);
+    }
+
+    .orb-panel { min-height: 52px; margin-top: 0.5rem; }
+    .orb-panel-hint {
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-align: center;
+      padding: 1rem;
+    }
+    .orb-panel-inner {
+      background: #fff;
+      border-radius: 1.25rem;
+      padding: 1.5rem 1.75rem;
+      border: 1px solid hsl(20, 18%, 91%);
+      text-align: left;
+      box-shadow: 0 8px 32px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.03);
+      animation: orbPanelIn 0.32s cubic-bezier(.25,.46,.45,.94) forwards;
+    }
+    @media (max-width: 540px) { .orb-panel-inner { padding: 1.25rem 1.25rem; } }
+
+    @keyframes orbPanelIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .orb-panel-header {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .orb-panel-phase {
+      font-size: 0.72rem; font-weight: 600;
+      color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .orb-panel-status {
+      font-size: 0.7rem; font-weight: 600;
+      padding: 0.2rem 0.7rem; border-radius: 20px;
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .orb-status-completed  { background: hsl(142,68%,91%); color: hsl(142,60%,28%); }
+    .orb-status-in-progress { background: var(--primary-light); color: var(--primary); }
+    .orb-status-pending    { background: hsl(20,18%,92%); color: var(--muted); }
+
+    .orb-panel-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.3125rem; font-weight: 600;
+      color: hsl(20, 12%, 10%); margin-bottom: 0.625rem;
+    }
+    .orb-panel-body {
+      font-size: 0.89rem; color: var(--muted);
+      line-height: 1.72; margin-bottom: 1rem;
+    }
+    .orb-panel-energy-row {
+      display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;
+    }
+    .orb-panel-energy-bar {
+      flex: 1; height: 5px;
+      background: hsl(20,18%,91%); border-radius: 9999px; overflow: hidden;
+    }
+    .orb-panel-energy-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--primary-h), var(--primary));
+      border-radius: 9999px;
+      transition: width 0.85s cubic-bezier(.25,.46,.45,.94);
+    }
+    .orb-panel-energy-label {
+      font-size: 0.78rem; font-weight: 600; color: var(--muted); flex-shrink: 0;
+    }
+    .orb-panel-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .orb-panel-tag {
+      font-size: 0.71rem; font-weight: 500;
+      padding: 0.22rem 0.65rem; border-radius: 9999px;
+      background: var(--primary-light); color: var(--primary);
+    }
+
     /* ── Mobile adjustments ────────────────────────── */
     @media (max-width: 640px) {
       .top-bar { padding: 0.65rem 1.125rem; }
@@ -931,18 +1181,43 @@
 
 
 <!-- ═══════════════════════════════════════════════════════
-     CTA BANNER
+     ORBITAL TIMELINE / QUIZ CTA
 ════════════════════════════════════════════════════════ -->
-<section id="quiz" class="cta-banner" aria-label="Quiz CTA">
+<section id="quiz" class="orb-section" aria-label="AI Reis Fases">
   <div class="wrap">
-    <p class="cta-eyebrow" data-i18n="cta.eyebrow">Weet jij waar jij staat?</p>
-    <h2 class="cta-title" data-i18n="cta.title">
-      Klaar om te ontdekken in welke fase jij zit van de AI-reis?
-    </h2>
-    <a href="#contact" class="btn-primary" style="margin:0 auto;">
-      <span data-i18n="cta.btn">Start de quiz</span>
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-    </a>
+
+    <div class="section-header">
+      <div class="chip">
+        <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/></svg>
+        <span data-i18n="cta.eyebrow">Weet jij waar jij staat?</span>
+      </div>
+      <h2 class="section-title" data-i18n="cta.title">
+        Klaar om te ontdekken in welke fase jij zit van de AI-reis?
+      </h2>
+    </div>
+
+    <div class="orb-wrapper">
+      <div class="orb-canvas" id="orb-canvas">
+        <div class="orb-center">
+          <div class="orb-center-pulse2"></div>
+          <div class="orb-center-pulse"></div>
+          <div class="orb-center-core">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+        </div>
+        <div class="orb-ring"></div>
+        <!-- nodes injected by JS -->
+      </div>
+      <div class="orb-panel" id="orb-panel"></div>
+    </div>
+
+    <div style="text-align:center;margin-top:2.5rem;">
+      <a href="#contact" class="btn-primary">
+        <span data-i18n="cta.btn">Start de quiz</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
   </div>
 </section>
 
@@ -1062,50 +1337,27 @@
       <h2 class="section-title" data-i18n="refs.title">Wat anderen over ons zeggen</h2>
     </div>
 
-    <div class="testi-grid">
-
-      <div class="testi-card reveal">
-        <div class="stars">★★★★★</div>
-        <p class="testi-quote">
-          "Voor een complex AI- en automatiseringsproject met diverse onderdelen heb ik samengewerkt met Sila. De samenwerking verliep prettig en professioneel. Niet alleen beschikt Sila over de benodigde technische expertise, maar er wordt ook snel gereageerd, efficiënt gewerkt en verantwoordelijkheid genomen voor het eindresultaat. Een betrouwbare partner die ik zeker zou aanraden."
-        </p>
-        <div class="testi-author">
-          <div class="author-avatar">ND</div>
+    <div class="at-outer">
+      <div class="at-grid">
+        <div>
+          <div class="at-stack" id="at-stack"></div>
+        </div>
+        <div class="at-content">
           <div>
-            <p class="author-name">Noah Dueck</p>
-            <p class="author-role">Founder · EverWaveAI</p>
+            <h3 class="at-name" id="at-name"></h3>
+            <p class="at-designation" id="at-designation"></p>
+          </div>
+          <p class="at-quote" id="at-quote"></p>
+          <div class="at-nav">
+            <button class="at-nav-btn" id="at-prev" aria-label="Vorige testimonial">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+            </button>
+            <button class="at-nav-btn" id="at-next" aria-label="Volgende testimonial">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
           </div>
         </div>
       </div>
-
-      <div class="testi-card reveal" style="transition-delay:.1s;">
-        <div class="stars">★★★★★</div>
-        <p class="testi-quote">
-          "Sila heeft een complexe Voice AI Agent ontwikkeld voor een internationaal project. Het werk is van hoge kwaliteit, de communicatie is helder en afspraken worden zorgvuldig nagekomen. De samenwerking verliep soepel en professioneel. Zeker een aanrader voor elk AI-traject."
-        </p>
-        <div class="testi-author">
-          <div class="author-avatar">AY</div>
-          <div>
-            <p class="author-name">Ahmed Yahya</p>
-            <p class="author-role">Founder · AI Agent Smart</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testi-card reveal" style="transition-delay:.2s;">
-        <div class="stars">★★★★★</div>
-        <p class="testi-quote">
-          "Het was een genoegen om met Sila te werken. De zakelijke intelligentie gecombineerd met technische expertise was verbazingwekkend. Ze overlegden met mij en begrepen mijn verzoek, maar het was veel meer dan dat. Sila identificeerde problemen en inefficiënties waarvan ik niet eens wist dat ik ze had. Dit alles in combinatie met een snelle werkethiek en voortdurende updates maakt Sila mijn 'go to' partner voor AI-automatisering."
-        </p>
-        <div class="testi-author">
-          <div class="author-avatar">AS</div>
-          <div>
-            <p class="author-name">Arianit Shala</p>
-            <p class="author-role">Co-Founder & CEO · OptiControl</p>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -1391,6 +1643,7 @@ function applyLang(lang) {
 
 function setLang(lang, btn) {
   applyLang(lang);
+  if (window._orbUpdateLang) window._orbUpdateLang(lang);
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -1413,17 +1666,21 @@ const typingEl = document.getElementById('typing-target');
 
 function tick() {
   const word = currentWords[wi];
-  typingEl.textContent = deleting ? word.slice(0, ci - 1) : word.slice(0, ci + 1);
-  ci += deleting ? -1 : 1;
-
-  if (!deleting && ci > word.length) {
-    setTimeout(() => { deleting = true; tick(); }, 2400);
-    return;
-  }
-  if (deleting && ci < 0) {
-    deleting = false;
-    wi = (wi + 1) % currentWords.length;
-    ci = 0;
+  if (!deleting) {
+    ci++;
+    typingEl.textContent = word.slice(0, ci);
+    if (ci >= word.length) {
+      setTimeout(() => { deleting = true; tick(); }, 2400);
+      return;
+    }
+  } else {
+    ci--;
+    typingEl.textContent = word.slice(0, ci);
+    if (ci <= 0) {
+      deleting = false;
+      wi = (wi + 1) % currentWords.length;
+      ci = 0;
+    }
   }
   setTimeout(tick, deleting ? 52 : 95);
 }
@@ -1608,6 +1865,295 @@ function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = Math.min(el.scrollHeight, 100) + 'px';
 }
+
+/* ─────────────────────────────────────────────────────────
+   ANIMATED TESTIMONIALS
+───────────────────────────────────────────────────────── */
+(function () {
+  const testiData = [
+    {
+      name: 'Noah Dueck',
+      designation: 'Founder · EverWaveAI',
+      quote: 'Voor een complex AI- en automatiseringsproject met diverse onderdelen heb ik samengewerkt met Sila. De samenwerking verliep prettig en professioneel. Niet alleen beschikt Sila over de benodigde technische expertise, maar er wordt ook snel gereageerd, efficiënt gewerkt en verantwoordelijkheid genomen voor het eindresultaat. Een betrouwbare partner die ik zeker zou aanraden.',
+      src: 'Noah.png',
+    },
+    {
+      name: 'Ahmed Yahya',
+      designation: 'Founder · AI Agent Smart',
+      quote: 'Sila heeft een complexe Voice AI Agent ontwikkeld voor een internationaal project. Het werk is van hoge kwaliteit, de communicatie is helder en afspraken worden zorgvuldig nagekomen. De samenwerking verliep soepel en professioneel. Zeker een aanrader voor elk AI-traject.',
+      src: 'Ahmed.png',
+    },
+    {
+      name: 'Arianit Shala',
+      designation: 'Co-Founder & CEO · OptiControl',
+      quote: 'Het was een genoegen om met Sila te werken. De zakelijke intelligentie gecombineerd met technische expertise was verbazingwekkend. Sila identificeerde problemen en inefficiënties waarvan ik niet eens wist dat ik ze had. Dit alles in combinatie met een snelle werkethiek en voortdurende updates maakt Sila mijn go-to partner voor AI-automatisering.',
+      src: 'Ari.png',
+    },
+  ];
+
+  const ROTATIONS = [-7, 5, -4];
+  let atActive = 0;
+  let atTimer  = null;
+
+  const stackEl = document.getElementById('at-stack');
+  const nameEl  = document.getElementById('at-name');
+  const desigEl = document.getElementById('at-designation');
+  const quoteEl = document.getElementById('at-quote');
+  const prevBtn = document.getElementById('at-prev');
+  const nextBtn = document.getElementById('at-next');
+
+  if (!stackEl) return;
+
+  // Build image cards
+  const atCards = testiData.map((t) => {
+    const card = document.createElement('div');
+    card.className = 'at-card';
+    const img = document.createElement('img');
+    img.src = t.src;
+    img.alt = t.name;
+    img.draggable = false;
+    card.appendChild(img);
+    stackEl.appendChild(card);
+    return card;
+  });
+
+  // Distance behind active (0 = active, 1 = one behind, 2 = two behind)
+  function depthBehind(i) {
+    return ((i - atActive) + testiData.length) % testiData.length;
+  }
+
+  function applyCardStyles() {
+    atCards.forEach((card, i) => {
+      const depth = depthBehind(i);
+      card.style.zIndex  = depth === 0 ? '999' : String(testiData.length + 2 - depth);
+      card.style.opacity = depth === 0 ? '1' : depth === 1 ? '0.75' : '0.55';
+      if (depth !== 0) {
+        const offset = depth * 10;
+        card.style.transform = `translateY(${offset}px) scale(${1 - depth * 0.04}) rotate(${ROTATIONS[i]}deg)`;
+      }
+    });
+  }
+
+  function bounceActive() {
+    const card = atCards[atActive];
+    card.style.animation = 'none';
+    card.style.transform  = 'scale(1) rotate(0deg)';
+    void card.offsetWidth; // force reflow
+    card.style.animation  = 'atBounce 0.44s cubic-bezier(.22,.68,0,1.15) forwards';
+    card.addEventListener('animationend', () => {
+      card.style.animation = 'none';
+      card.style.transform  = 'scale(1) rotate(0deg)';
+    }, { once: true });
+  }
+
+  function renderWords(text) {
+    quoteEl.innerHTML = '';
+    text.split(' ').forEach((word, i) => {
+      const span = document.createElement('span');
+      span.className = 'at-word';
+      span.style.animationDelay = (i * 0.025) + 's';
+      span.textContent = word + '\u00A0';
+      quoteEl.appendChild(span);
+    });
+  }
+
+  function renderContent() {
+    const t = testiData[atActive];
+    nameEl.style.opacity   = '0';
+    nameEl.style.transform = 'translateY(8px)';
+    desigEl.style.opacity  = '0';
+    setTimeout(() => {
+      nameEl.textContent   = t.name;
+      desigEl.textContent  = t.designation;
+      nameEl.style.opacity   = '1';
+      nameEl.style.transform = 'translateY(0)';
+      desigEl.style.opacity  = '1';
+      renderWords(t.quote);
+    }, 170);
+  }
+
+  function goTo(i) {
+    atActive = ((i % testiData.length) + testiData.length) % testiData.length;
+    applyCardStyles();
+    bounceActive();
+    renderContent();
+  }
+
+  function resetTimer() {
+    clearInterval(atTimer);
+    atTimer = setInterval(() => goTo(atActive + 1), 5000);
+  }
+
+  prevBtn.addEventListener('click', () => { goTo(atActive - 1); resetTimer(); });
+  nextBtn.addEventListener('click', () => { goTo(atActive + 1); resetTimer(); });
+
+  goTo(0);
+  resetTimer();
+})();
+
+/* ─────────────────────────────────────────────────────────
+   ORBITAL TIMELINE
+───────────────────────────────────────────────────────── */
+(function initOrbital() {
+  const canvas = document.getElementById('orb-canvas');
+  const panel  = document.getElementById('orb-panel');
+  if (!canvas || !panel) return;
+
+  const phases = [
+    {
+      id: 1, title: 'Educatie', titleEN: 'Education',
+      phase: 'Fase 1', phaseEN: 'Phase 1',
+      content: 'Begrijp de basis van AI en wat het voor jouw sector kan betekenen. Via workshops, trainingen en persoonlijke begeleiding bouwen we jouw AI-kennis stap voor stap op — op jouw tempo.',
+      contentEN: 'Understand the basics of AI and what it can mean for your sector. Through workshops, training and personal guidance we build your AI knowledge step by step — at your pace.',
+      status: 'Gereed', statusEN: 'Complete', statusClass: 'completed', energy: 95,
+      tags: ['Workshops','Trainingen','Begeleiding'], tagsEN: ['Workshops','Training','Coaching'],
+      icon: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'
+    },
+    {
+      id: 2, title: 'Consultancy', titleEN: 'Consultancy',
+      phase: 'Fase 2', phaseEN: 'Phase 2',
+      content: 'Ontdek samen met ons hoe AI specifiek voor jouw organisatie een rol kan spelen. We analyseren jouw processen en brengen kansen in kaart die direct relevant en toepasbaar zijn.',
+      contentEN: 'Discover together with us how AI can play a role specifically for your organisation. We analyse your processes and map out opportunities that are directly relevant.',
+      status: 'In uitvoering', statusEN: 'In Progress', statusClass: 'in-progress', energy: 70,
+      tags: ['Analyse','Strategie','Advies op maat'], tagsEN: ['Analysis','Strategy','Custom advice'],
+      icon: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>'
+    },
+    {
+      id: 3, title: 'Implementatie', titleEN: 'Implementation',
+      phase: 'Fase 3', phaseEN: 'Phase 3',
+      content: 'Zet de stap naar concrete AI-oplossingen in jouw dagelijkse processen. Van prototype tot volledige integratie — wij begeleiden het gehele traject van begin tot eind.',
+      contentEN: 'Take the step toward concrete AI solutions in your daily processes. From prototype to full integration — we guide the entire journey from start to finish.',
+      status: 'Volgend', statusEN: 'Upcoming', statusClass: 'pending', energy: 45,
+      tags: ['Integratie','Automatisering','Support'], tagsEN: ['Integration','Automation','Support'],
+      icon: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>'
+    }
+  ];
+
+  let rotAngle  = 270; // node 1 starts at top
+  let autoRot   = true;
+  let activeId  = null;
+  let lastTs    = 0;
+
+  // Build nodes
+  const nodes = phases.map((phase, i) => {
+    const el = document.createElement('div');
+    el.className = 'orb-node';
+    el.dataset.id = phase.id;
+    el.innerHTML =
+      `<div class="orb-node-icon">${phase.icon}</div>` +
+      `<div class="orb-node-label" data-nl="${phase.title}" data-en="${phase.titleEN}">${phase.title}</div>`;
+    canvas.appendChild(el);
+
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (activeId === phase.id) {
+        activeId = null; autoRot = true;
+        nodes.forEach(function(n) { n.el.classList.remove('orb-active'); });
+        clearPanel();
+      } else {
+        activeId = phase.id; autoRot = false;
+        nodes.forEach(function(n) { n.el.classList.remove('orb-active'); });
+        el.classList.add('orb-active');
+        showPanel(phase);
+      }
+    });
+
+    return { el: el, phase: phase, baseAngle: (i / phases.length) * 360 };
+  });
+
+  canvas.addEventListener('click', function() {
+    if (activeId !== null) {
+      activeId = null; autoRot = true;
+      nodes.forEach(function(n) { n.el.classList.remove('orb-active'); });
+      clearPanel();
+    }
+  });
+
+  function getR() {
+    var w = canvas.offsetWidth;
+    return w < 380 ? 112 : w < 520 ? 138 : 155;
+  }
+
+  function frame(ts) {
+    var dt = lastTs ? Math.min(ts - lastTs, 50) : 16;
+    lastTs = ts;
+    if (autoRot) rotAngle = (rotAngle + dt * 0.02) % 360;
+
+    var cx = canvas.offsetWidth  / 2;
+    var cy = canvas.offsetHeight / 2;
+    var r  = getR();
+
+    nodes.forEach(function(node) {
+      var a   = (node.baseAngle + rotAngle) % 360;
+      var rad = a * Math.PI / 180;
+      var x   = cx + r * Math.cos(rad);
+      var y   = cy + r * Math.sin(rad);
+      var depth   = (Math.sin(rad) + 1) / 2;
+      var isActive = node.el.classList.contains('orb-active');
+
+      node.el.style.left      = x + 'px';
+      node.el.style.top       = y + 'px';
+      node.el.style.zIndex    = isActive ? '500' : Math.round(50 + 50 * depth);
+      node.el.style.opacity   = isActive ? '1' : String(0.4 + 0.6 * depth);
+      node.el.style.transform = 'translate(-50%, -50%) scale(' + (isActive ? 1.08 : 0.8 + 0.2 * depth) + ')';
+    });
+
+    requestAnimationFrame(frame);
+  }
+
+  function showPanel(phase, lang) {
+    var l      = lang || (typeof currentLang !== 'undefined' ? currentLang : 'nl');
+    var isEN   = l === 'en';
+    var title  = isEN ? phase.titleEN   : phase.title;
+    var ph     = isEN ? phase.phaseEN   : phase.phase;
+    var body   = isEN ? phase.contentEN : phase.content;
+    var status = isEN ? phase.statusEN  : phase.status;
+    var tags   = isEN ? phase.tagsEN    : phase.tags;
+
+    panel.innerHTML =
+      '<div class="orb-panel-inner">' +
+        '<div class="orb-panel-header">' +
+          '<span class="orb-panel-phase">' + ph + '</span>' +
+          '<span class="orb-panel-status orb-status-' + phase.statusClass + '">' + status + '</span>' +
+        '</div>' +
+        '<h4 class="orb-panel-title">' + title + '</h4>' +
+        '<p class="orb-panel-body">' + body + '</p>' +
+        '<div class="orb-panel-energy-row">' +
+          '<div class="orb-panel-energy-bar"><div class="orb-panel-energy-fill" id="orb-fill-' + phase.id + '"></div></div>' +
+          '<span class="orb-panel-energy-label">' + phase.energy + '%</span>' +
+        '</div>' +
+        '<div class="orb-panel-tags">' + tags.map(function(t) { return '<span class="orb-panel-tag">' + t + '</span>'; }).join('') + '</div>' +
+      '</div>';
+
+    requestAnimationFrame(function() {
+      var fill = document.getElementById('orb-fill-' + phase.id);
+      if (fill) fill.style.width = phase.energy + '%';
+    });
+  }
+
+  function clearPanel() {
+    var l    = typeof currentLang !== 'undefined' ? currentLang : 'nl';
+    var hint = l === 'en' ? 'Click on a phase to discover more →' : 'Klik op een fase om meer te ontdekken →';
+    panel.innerHTML = '<p class="orb-panel-hint">' + hint + '</p>';
+  }
+
+  // Expose for language switching
+  window._orbUpdateLang = function(lang) {
+    nodes.forEach(function(n) {
+      var lbl = n.el.querySelector('.orb-node-label');
+      if (lbl) lbl.textContent = lang === 'en' ? n.phase.titleEN : n.phase.title;
+    });
+    if (activeId !== null) {
+      var phase = phases.find(function(p) { return p.id === activeId; });
+      if (phase) showPanel(phase, lang);
+    } else {
+      clearPanel();
+    }
+  };
+
+  clearPanel();
+  requestAnimationFrame(frame);
+})();
 
 // Show welcome badge after 3s if chat hasn't been opened
 setTimeout(() => {
