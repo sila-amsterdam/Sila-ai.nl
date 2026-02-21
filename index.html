@@ -1038,9 +1038,162 @@
       #chat-btn { bottom: 5rem; right: 1rem; width: 50px; height: 50px; }
       #chat-window { right: 1rem; bottom: 8.5rem; }
     }
+
+    /* ── Scroll Progress Bar ────────────────────────── */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), hsl(16,90%,68%));
+      z-index: 300;
+      width: 0%;
+      transition: width 0.08s linear;
+      pointer-events: none;
+    }
+
+    /* ── Hero Orbs (CSS-only, GPU-accelerated) ──────── */
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      will-change: transform;
+    }
+    .hero-orb-1 {
+      width: 560px; height: 560px;
+      top: -140px; right: -100px;
+      background: radial-gradient(circle at 40% 40%, rgba(220,90,20,0.11) 0%, transparent 68%);
+      animation: orbDrift1 10s ease-in-out infinite;
+    }
+    .hero-orb-2 {
+      width: 420px; height: 420px;
+      bottom: -120px; left: -80px;
+      background: radial-gradient(circle at 60% 60%, rgba(160,80,210,0.09) 0%, transparent 68%);
+      animation: orbDrift2 13s ease-in-out infinite;
+    }
+    .hero-orb-3 {
+      width: 260px; height: 260px;
+      top: 38%; left: 52%;
+      background: radial-gradient(circle at 50% 50%, rgba(220,90,20,0.07) 0%, transparent 70%);
+      animation: orbDrift3 8s ease-in-out infinite;
+    }
+    @keyframes orbDrift1 {
+      0%,100% { transform: translate(0,0); }
+      50%      { transform: translate(-28px, 22px); }
+    }
+    @keyframes orbDrift2 {
+      0%,100% { transform: translate(0,0); }
+      50%      { transform: translate(22px,-28px); }
+    }
+    @keyframes orbDrift3 {
+      0%,100% { transform: translate(0,0); }
+      33%      { transform: translate(-12px, 10px); }
+      66%      { transform: translate(14px,-8px); }
+    }
+
+    /* ── Button interactive hover ───────────────────── */
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.18s, box-shadow 0.22s;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      bottom: 38%; left: 18%;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--primary-h);
+      transform: scale(0);
+      transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
+      pointer-events: none; z-index: 0;
+    }
+    .btn-primary:hover::after { transform: scale(28); }
+    .btn-primary:hover { background: var(--primary); transform: translateY(-1px); box-shadow: 0 5px 18px rgba(220,90,20,.32); }
+    .btn-primary:active { transform: scale(0.97); }
+    .btn-primary > *, .btn-primary span, .btn-primary svg { position: relative; z-index: 1; }
+    .btn-primary svg { transition: transform 0.22s ease; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+
+    .nav-cta {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s, box-shadow 0.22s;
+    }
+    .nav-cta::after {
+      content: '';
+      position: absolute;
+      bottom: 35%; left: 18%;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--primary-h);
+      transform: scale(0);
+      transition: transform 0.45s cubic-bezier(0.22,1,0.36,1);
+      pointer-events: none; z-index: 0;
+    }
+    .nav-cta:hover::after { transform: scale(22); }
+    .nav-cta:hover { background: var(--primary); transform: translateY(-1px); }
+    .nav-cta > *, .nav-cta span, .nav-cta svg { position: relative; z-index: 1; }
+
+    .btn-secondary {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-secondary::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--primary-light);
+      transform: translateX(-100%);
+      transition: transform 0.38s cubic-bezier(0.22,1,0.36,1);
+      border-radius: inherit; z-index: 0;
+    }
+    .btn-secondary:hover::before { transform: translateX(0); }
+    .btn-secondary > *, .btn-secondary span, .btn-secondary svg { position: relative; z-index: 1; }
+
+    /* ── Enhanced Scroll Reveals ────────────────────── */
+    .reveal-left  { opacity:1; transform:none; transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal-right { opacity:1; transform:none; transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal-scale { opacity:1; transform:none; transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal-left.pre-reveal  { opacity:0; transform:translateX(-30px); }
+    .reveal-right.pre-reveal { opacity:0; transform:translateX(30px); }
+    .reveal-scale.pre-reveal { opacity:0; transform:scale(0.93); }
+    .reveal-left.pre-reveal.visible,
+    .reveal-right.pre-reveal.visible,
+    .reveal-scale.pre-reveal.visible { opacity:1; transform:none; }
+
+    /* ── Newsletter new layout ──────────────────────── */
+    .newsletter-name-row {
+      display: flex; flex-wrap: wrap; gap: 0.7rem;
+      justify-content: center;
+      max-width: 450px; margin: 0 auto 0.7rem;
+    }
+    .newsletter-name-row .newsletter-input { flex: 1; min-width: 140px; }
+    .newsletter-email-row {
+      display: flex; flex-wrap: wrap; gap: 0.7rem;
+      justify-content: center; align-items: center;
+      max-width: 450px; margin: 0 auto 0.875rem;
+    }
+    .newsletter-email-row .newsletter-input { flex: 1; min-width: 190px; }
+    #newsletter-success {
+      display: none;
+      padding: 2rem 1rem;
+      animation: fadeUp 0.5s ease-out forwards;
+    }
+    .newsletter-success-emoji { font-size: 2.25rem; margin-bottom: 0.75rem; display: block; }
+    .newsletter-success-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.3125rem; font-weight: 600;
+      color: hsl(20,12%,10%); margin-bottom: 0.6rem;
+    }
+    .newsletter-success-body {
+      font-size: 0.9375rem; color: var(--muted);
+      line-height: 1.72; max-width: 440px; margin: 0 auto;
+    }
   </style>
 </head>
 <body>
+
+<div id="scroll-progress" aria-hidden="true"></div>
 
 <!-- ═══════════════════════════════════════════════════════
      TOP BAR
@@ -1072,6 +1225,9 @@
      HERO
 ════════════════════════════════════════════════════════ -->
 <section class="hero" aria-label="Hero">
+  <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-3" aria-hidden="true"></div>
   <div class="wrap" style="position:relative;z-index:1;max-width:700px;">
 
     <h1 class="hero-title">
@@ -1229,7 +1385,7 @@
   <div class="wrap">
     <div class="over-ons-inner">
 
-      <div class="over-ons-left reveal">
+      <div class="over-ons-left reveal reveal-left">
         <div class="chip" style="margin-bottom:1rem;">
           <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/></svg>
           <span data-i18n="about.chip">Over ons</span>
@@ -1238,12 +1394,12 @@
         <p class="over-ons-eyebrow" data-i18n="about.eyebrow">Bruggen bouwen tussen mens en technologie</p>
       </div>
 
-      <div class="reveal" style="transition-delay:.12s;">
+      <div class="reveal reveal-right" style="transition-delay:.12s;">
         <p class="over-ons-body" data-i18n="about.body1">
           In een wereld waar technologie sneller verandert dan ooit, groeit de behoefte aan
           begeleiding, duidelijkheid en échte aandacht. Vanuit die behoefte is Sila ontstaan.
         </p>
-        <p class="over-ons-body" data-i18n="about.body2">
+        <p class="over-ons-body" data-i18n-html="about.body2">
           Onze naam is geïnspireerd door het Arabische woord <span class="arabic-word">Sila (صلة)</span>,
           wat <em>verbinding</em> betekent — en precies dat is wat wij doen. We bouwen bruggen
           tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via
@@ -1377,13 +1533,24 @@
       Ontvang wekelijks de laatste AI-inzichten, praktische tips en updates
       die relevant zijn voor jouw bedrijf. Geen spam, alleen waarde.
     </p>
-    <form class="newsletter-form" id="newsletter-form" novalidate>
-      <input type="email" class="newsletter-input" placeholder="jouw@email.com" required aria-label="E-mailadres" />
-      <button type="submit" class="btn-primary">
-        <span data-i18n="nl.btn">Inschrijven</span>
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-      </button>
+    <form id="newsletter-form" novalidate>
+      <div class="newsletter-name-row">
+        <input type="text" id="nl-voornaam" class="newsletter-input" placeholder="Voornaam" data-i18n-ph="nl.voornaam" required aria-label="Voornaam" />
+        <input type="text" id="nl-achternaam" class="newsletter-input" placeholder="Achternaam" data-i18n-ph="nl.achternaam" required aria-label="Achternaam" />
+      </div>
+      <div class="newsletter-email-row">
+        <input type="email" id="nl-email" class="newsletter-input" placeholder="jouw@email.com" required aria-label="E-mailadres" />
+        <button type="submit" class="btn-primary">
+          <span data-i18n="nl.btn">Inschrijven</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </button>
+      </div>
     </form>
+    <div id="newsletter-success">
+      <span class="newsletter-success-emoji">🎉</span>
+      <p class="newsletter-success-title" id="nl-success-title"></p>
+      <p class="newsletter-success-body" id="nl-success-body"></p>
+    </div>
     <p class="newsletter-note" data-i18n="nl.note">Gratis &amp; altijd opzegbaar. Privacy gegarandeerd.</p>
   </div>
 </section>
@@ -1548,6 +1715,8 @@ const T = {
     'nl.chip':      'Blijf op de hoogte',
     'nl.title':     'AI Update in je mailbox',
     'nl.lead':      'Ontvang wekelijks de laatste AI-inzichten, praktische tips en updates die relevant zijn voor jouw bedrijf. Geen spam, alleen waarde.',
+    'nl.voornaam':  'Voornaam',
+    'nl.achternaam':'Achternaam',
     'nl.btn':       'Inschrijven',
     'nl.note':      'Gratis & altijd opzegbaar. Privacy gegarandeerd.',
     'footer.tagline':'De menselijke verbinding tussen jouw bedrijf en AI. Begeleiding en persoonlijke aandacht op maat.',
@@ -1560,6 +1729,7 @@ const T = {
     'hero.voor':    'Voor',
     'chat.you':     'JIJ',
     'chat.error':   'Sorry, er ging iets mis. Probeer het opnieuw.',
+    'about.body2':  'Onze naam is geïnspireerd door het Arabische woord <span class="arabic-word">Sila (صلة)</span>, wat <em>verbinding</em> betekent — en precies dat is wat wij doen. We bouwen bruggen tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.',
   },
   en: {
     'nav.services': 'Services',
@@ -1601,6 +1771,8 @@ const T = {
     'nl.chip':      'Stay informed',
     'nl.title':     'AI updates in your inbox',
     'nl.lead':      'Receive weekly AI insights, practical tips and updates relevant to your business. No spam, only value.',
+    'nl.voornaam':  'First name',
+    'nl.achternaam':'Last name',
     'nl.btn':       'Subscribe',
     'nl.note':      'Free & always unsubscribable. Privacy guaranteed.',
     'footer.tagline':'The human connection between your business and AI. Personal guidance tailored to you.',
@@ -1613,6 +1785,7 @@ const T = {
     'hero.voor':    'For',
     'chat.you':     'YOU',
     'chat.error':   'Sorry, something went wrong. Please try again.',
+    'about.body2':  'Our name is inspired by the Arabic word <span class="arabic-word">Sila (صلة)</span>, meaning <em>connection</em> — and that is exactly what we do. We build bridges between people and AI. Our mission is to strengthen relationships and provide support through innovative AI solutions that people understand and truly need.',
   }
 };
 
@@ -1625,10 +1798,25 @@ function applyLang(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (T[lang][key] !== undefined) {
-      // Preserve child elements (like spans inside text)
       if (el.children.length === 0) {
         el.textContent = T[lang][key];
       }
+    }
+  });
+
+  // Handle innerHTML translations (elements with child spans/em)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (T[lang][key] !== undefined) {
+      el.innerHTML = T[lang][key];
+    }
+  });
+
+  // Handle placeholder translations
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if (T[lang][key] !== undefined) {
+      el.placeholder = T[lang][key];
     }
   });
 
@@ -1643,6 +1831,9 @@ function applyLang(lang) {
 
   // Update typing words
   currentWords = lang === 'nl' ? wordsNL : wordsEN;
+
+  // Update testimonials
+  if (window._testiUpdateLang) window._testiUpdateLang(lang);
 }
 
 function setLang(lang, btn) {
@@ -1693,25 +1884,51 @@ setTimeout(tick, 700);
 /* ─────────────────────────────────────────────────────────
    NEWSLETTER
 ───────────────────────────────────────────────────────── */
-document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+document.getElementById('newsletter-form').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const btn = this.querySelector('button[type="submit"]');
-  const orig = btn.innerHTML;
-  btn.textContent = currentLang === 'nl' ? '✓ Verstuurd!' : '✓ Sent!';
-  btn.style.background = '#16a34a';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.innerHTML = orig;
-    btn.style.background = '';
-    btn.disabled = false;
-    this.reset();
-  }, 3500);
+  const voornaam   = document.getElementById('nl-voornaam').value.trim();
+  const achternaam = document.getElementById('nl-achternaam').value.trim();
+  const email      = document.getElementById('nl-email').value.trim();
+
+  if (!voornaam || !achternaam || !email) return;
+
+  const btn     = this.querySelector('button[type="submit"]');
+  const origHTML = btn.innerHTML;
+  btn.disabled  = true;
+  btn.querySelector('span[data-i18n]').textContent = currentLang === 'nl' ? 'Bezig…' : 'Sending…';
+
+  try {
+    await fetch('https://sila-ai.app.n8n.cloud/webhook/c7b9db6b-c928-4a07-8cf9-5aa862f07c88', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ voornaam, achternaam, email, lang: currentLang }),
+    });
+  } catch (err) {
+    console.warn('Newsletter webhook error:', err);
+  }
+
+  // Show personalised success — always, regardless of webhook result
+  this.style.display = 'none';
+  const successEl = document.getElementById('newsletter-success');
+  const titleEl   = document.getElementById('nl-success-title');
+  const bodyEl    = document.getElementById('nl-success-body');
+
+  if (currentLang === 'nl') {
+    titleEl.textContent = `Dankjewel ${voornaam}, je bent aangemeld!`;
+    bodyEl.textContent  = 'Vanaf nu ontvang je elke week onze AI-update met de belangrijkste ontwikkelingen, in begrijpelijke taal. Welkom!';
+  } else {
+    titleEl.textContent = `Thank you ${voornaam}, you\'re subscribed!`;
+    bodyEl.textContent  = 'From now on you\'ll receive our weekly AI update with the most important developments, in plain language. Welcome!';
+  }
+
+  successEl.style.display = 'block';
 });
 
 /* ─────────────────────────────────────────────────────────
-   SCROLL REVEAL
+   SCROLL REVEAL + PROGRESS
 ───────────────────────────────────────────────────────── */
-document.querySelectorAll('.reveal').forEach(el => el.classList.add('pre-reveal'));
+const revealSelectors = '.reveal, .reveal-left, .reveal-right, .reveal-scale';
+document.querySelectorAll(revealSelectors).forEach(el => el.classList.add('pre-reveal'));
 
 const ro = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -1720,9 +1937,17 @@ const ro = new IntersectionObserver((entries) => {
       ro.unobserve(e.target);
     }
   });
-}, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+}, { threshold: 0.07, rootMargin: '0px 0px -24px 0px' });
 
-document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+document.querySelectorAll(revealSelectors).forEach(el => ro.observe(el));
+
+// Scroll progress bar
+const scrollBar = document.getElementById('scroll-progress');
+window.addEventListener('scroll', function() {
+  const scrollTop  = window.scrollY;
+  const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+  scrollBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+}, { passive: true });
 
 /* ─────────────────────────────────────────────────────────
    SMOOTH SCROLL
@@ -1879,18 +2104,21 @@ function autoResize(el) {
       name: 'Noah Dueck',
       designation: 'Founder · EverWaveAI',
       quote: 'Voor een complex AI- en automatiseringsproject met diverse onderdelen heb ik samengewerkt met Sila. De samenwerking verliep prettig en professioneel. Niet alleen beschikt Sila over de benodigde technische expertise, maar er wordt ook snel gereageerd, efficiënt gewerkt en verantwoordelijkheid genomen voor het eindresultaat. Een betrouwbare partner die ik zeker zou aanraden.',
+      quoteEN: 'For a complex AI and automation project with various components, I collaborated with Sila. The cooperation was pleasant and professional. Not only does Sila have the necessary technical expertise, but responses are quick, work is efficient, and responsibility is taken for the final result. A reliable partner I would definitely recommend.',
       src: 'Noah.png',
     },
     {
       name: 'Ahmed Yahya',
       designation: 'Founder · AI Agent Smart',
       quote: 'Sila heeft een complexe Voice AI Agent ontwikkeld voor een internationaal project. Het werk is van hoge kwaliteit, de communicatie is helder en afspraken worden zorgvuldig nagekomen. De samenwerking verliep soepel en professioneel. Zeker een aanrader voor elk AI-traject.',
+      quoteEN: 'Sila developed a complex Voice AI Agent for an international project. The work is of high quality, communication is clear and agreements are carefully adhered to. The collaboration went smoothly and professionally. Definitely recommended for any AI project.',
       src: 'Ahmed.png',
     },
     {
       name: 'Arianit Shala',
       designation: 'Co-Founder & CEO · OptiControl',
       quote: 'Het was een genoegen om met Sila te werken. De zakelijke intelligentie gecombineerd met technische expertise was verbazingwekkend. Sila identificeerde problemen en inefficiënties waarvan ik niet eens wist dat ik ze had. Dit alles in combinatie met een snelle werkethiek en voortdurende updates maakt Sila mijn go-to partner voor AI-automatisering.',
+      quoteEN: 'It was a pleasure working with Sila. The business intelligence combined with technical expertise was remarkable. Sila identified problems and inefficiencies I did not even know I had. All this combined with a fast work ethic and continuous updates makes Sila my go-to partner for AI automation.',
       src: 'Ari.png',
     },
   ];
@@ -1963,6 +2191,7 @@ function autoResize(el) {
 
   function renderContent() {
     const t = testiData[atActive];
+    const q = (typeof currentLang !== 'undefined' && currentLang === 'en' && t.quoteEN) ? t.quoteEN : t.quote;
     nameEl.style.opacity   = '0';
     nameEl.style.transform = 'translateY(8px)';
     desigEl.style.opacity  = '0';
@@ -1972,9 +2201,11 @@ function autoResize(el) {
       nameEl.style.opacity   = '1';
       nameEl.style.transform = 'translateY(0)';
       desigEl.style.opacity  = '1';
-      renderWords(t.quote);
+      renderWords(q);
     }, 170);
   }
+
+  window._testiUpdateLang = function() { renderContent(); };
 
   function goTo(i) {
     atActive = ((i % testiData.length) + testiData.length) % testiData.length;
