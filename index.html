@@ -83,6 +83,14 @@
       height: 30px;
       width: auto;
     }
+    .top-bar-logo-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: var(--fg);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
 
     .lang-toggle {
       display: flex;
@@ -289,15 +297,11 @@
 
     /* ── Scroll mouse indicator ─────────────────────── */
     .scroll-indicator {
-      position: absolute;
-      bottom: 2.25rem;
-      left: 50%;
-      transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
-      z-index: 1;
+      margin-top: 2rem;
       opacity: 0;
       animation: fadeUp 0.6s 1.2s ease-out forwards;
     }
@@ -837,7 +841,7 @@
       background: hsl(30,18%,98%);
       transition: border-color 0.2s, box-shadow 0.2s;
       max-height: 100px;
-      overflow-y: auto;
+      overflow-y: hidden;
       line-height: 1.4;
     }
     .chat-input::placeholder { color: hsl(20,10%,64%); }
@@ -1277,9 +1281,7 @@
      TOP BAR
 ════════════════════════════════════════════════════════ -->
 <header class="top-bar">
-  <a href="/" class="top-bar-logo" aria-label="Sila – Home">
-    <img src="brand_assets/Final-small.png" alt="Sila" />
-  </a>
+  <a href="/" class="top-bar-logo-text" aria-label="Sila – Home">sila</a>
 
   <div class="lang-toggle" role="group" aria-label="Taalwissel">
     <button class="lang-btn active" data-lang="nl" onclick="setLang('nl', this)">NL</button>
@@ -1294,7 +1296,8 @@
 <nav class="floating-nav" aria-label="Hoofdnavigatie">
   <a href="#diensten"    class="nav-link mob-hide" data-i18n="nav.services">Diensten</a>
   <a href="#over-ons"    class="nav-link mob-hide" data-i18n="nav.about">Over ons</a>
-  <a href="#referenties" class="nav-link mob-hide" data-i18n="nav.refs">Referenties</a>
+  <a href="#referenties"  class="nav-link mob-hide" data-i18n="nav.refs">Referenties</a>
+  <a href="#nieuwsbrief" class="nav-link mob-hide" data-i18n="nav.newsletter">Nieuwsbrief</a>
   <a href="#contact"     class="nav-cta"           data-i18n="nav.contact">Contact</a>
 </nav>
 
@@ -1660,7 +1663,7 @@
 <!-- ═══════════════════════════════════════════════════════
      NEWSLETTER
 ════════════════════════════════════════════════════════ -->
-<section id="contact" class="newsletter-section" aria-label="Nieuwsbrief">
+<section id="nieuwsbrief" class="newsletter-section" aria-label="Nieuwsbrief">
   <div class="wrap">
     <div class="chip" style="margin-bottom:1.125rem;">
       <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/></svg>
@@ -1697,12 +1700,12 @@
 <!-- ═══════════════════════════════════════════════════════
      FOOTER
 ════════════════════════════════════════════════════════ -->
-<footer aria-label="Paginavoettekst">
+<footer id="contact" aria-label="Paginavoettekst">
   <div class="wrap">
     <div class="footer-grid">
 
       <div>
-        <img src="brand_assets/Final-small.png" alt="Sila" class="footer-logo" />
+        <p style="font-family:'Playfair Display',Georgia,serif;font-size:1.25rem;font-weight:600;color:hsl(20,14%,80%);letter-spacing:-0.02em;margin-bottom:0.875rem;">sila</p>
         <p class="footer-tagline" data-i18n="footer.tagline">
           De menselijke verbinding tussen jouw bedrijf en AI.
           Begeleiding en persoonlijke aandacht op maat.
@@ -1731,7 +1734,7 @@
         <p class="footer-heading" data-i18n="footer.h3">Contact</p>
         <ul class="footer-links">
           <li><a href="mailto:info@sila-ai.nl">info@sila-ai.nl</a></li>
-          <li><a href="#" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://www.linkedin.com/company/sila-ai-nl" target="_blank" rel="noopener">LinkedIn</a></li>
           <li><a href="#" rel="noopener">Instagram</a></li>
         </ul>
       </div>
@@ -1739,8 +1742,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-copy">© 2025 Sila. <span data-i18n="footer.rights">Alle rechten voorbehouden.</span></p>
-      <p class="footer-copy" data-i18n="footer.made">Gemaakt door Sila</p>
+      <p class="footer-copy">© 2026 Sila. All rights reserved.</p>
     </div>
   </div>
 </footer>
@@ -1816,8 +1818,9 @@ const T = {
   nl: {
     'nav.services': 'Diensten',
     'nav.about':    'Over ons',
-    'nav.refs':     'Referenties',
-    'nav.contact':  'Contact',
+    'nav.refs':        'Referenties',
+    'nav.newsletter':  'Nieuwsbrief',
+    'nav.contact':     'Contact',
     'hero.subtitle':'De menselijke verbinding tussen jouw bedrijf en AI',
     'hero.desc':    'Begeleiding en persoonlijke aandacht in een wereld waarin AI razendsnel verandert.',
     'pillars.chip': 'Onze diensten',
@@ -1874,8 +1877,9 @@ const T = {
   en: {
     'nav.services': 'Services',
     'nav.about':    'About',
-    'nav.refs':     'References',
-    'nav.contact':  'Contact',
+    'nav.refs':        'References',
+    'nav.newsletter':  'Newsletter',
+    'nav.contact':     'Contact',
     'hero.subtitle':'The human connection between your business and AI',
     'hero.desc':    'Personal guidance and attention in a world where AI is changing at lightning speed.',
     'pillars.chip': 'Our services',
@@ -2513,20 +2517,10 @@ function autoResize(el) {
   }
 
   function clearPanel() {
-    var l       = typeof currentLang !== 'undefined' ? currentLang : 'nl';
-    var isEN    = l === 'en';
-    var hint    = isEN ? 'Click on a phase to discover more →' : 'Klik op een fase om meer te ontdekken →';
-    var subhint = isEN ? 'Or start the quiz below' : 'Of start de quiz hieronder';
-    var btnText = isEN ? 'Start the quiz' : 'Start de quiz';
-    panel.innerHTML =
-      '<p class="orb-panel-hint">' + hint + '</p>' +
-      '<p class="orb-panel-subhint">' + subhint + '</p>' +
-      '<div style="text-align:center;">' +
-        '<button onclick="openQuiz()" class="btn-primary" style="font-size:0.84rem;padding:0.58rem 1.5rem;display:inline-flex;gap:0.4rem;align-items:center;">' +
-          btnText +
-          '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>' +
-        '</button>' +
-      '</div>';
+    var l    = typeof currentLang !== 'undefined' ? currentLang : 'nl';
+    var isEN = l === 'en';
+    var hint = isEN ? 'Click on a phase to discover more →' : 'Klik op een fase om meer te ontdekken →';
+    panel.innerHTML = '<p class="orb-panel-hint">' + hint + '</p>';
   }
 
   // Expose for language switching
