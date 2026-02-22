@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Educatie — Sila AI</title>
+  <meta name="description" content="Onze cursussen en workshops maken AI toegankelijk voor iedereen. Van basiskennis tot geavanceerde toepassingen." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans:    ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Playfair Display', 'Georgia', 'serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ── Variables ─────────────────────────────────── */
+    :root {
+      --primary:        hsl(16, 82%, 54%);
+      --primary-h:      hsl(16, 82%, 48%);
+      --primary-light:  hsl(16, 85%, 96%);
+      --primary-border: hsl(16, 60%, 84%);
+      --bg:             hsl(30, 20%, 97%);
+      --fg:             hsl(20, 12%, 13%);
+      --muted:          hsl(20, 10%, 48%);
+      --border:         hsl(20, 18%, 89%);
+      --card:           #ffffff;
+      --lavender:       hsl(280, 28%, 96%);
+      --dark:           hsl(20, 8%, 10%);
+      --dark-muted:     hsl(20, 10%, 50%);
+    }
+
+    /* ── Reset ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: hsl(20, 18%, 93%); }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,.17); border-radius: 10px; }
+
+    /* ── Layout ────────────────────────────────────── */
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    @media (min-width: 768px)  { .wrap { padding: 0 2.5rem; } }
+    @media (min-width: 1100px) { .wrap { padding: 0 3rem; } }
+
+    /* ── Top Bar ───────────────────────────────────── */
+    .top-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 2rem;
+      background: rgba(253, 251, 248, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,.05);
+    }
+    @media (max-width: 540px) { .top-bar { padding: 0.65rem 1.125rem; } }
+
+    .top-bar-logo-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: var(--fg);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8375rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease, gap 0.2s ease;
+    }
+    .back-link:hover { color: var(--fg); gap: 0.6rem; }
+    .back-link svg { transition: transform 0.2s ease; }
+    .back-link:hover svg { transform: translateX(-3px); }
+
+    /* ── Floating Nav ──────────────────────────────── */
+    .floating-nav {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      background: rgba(255,255,255,.93);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(0,0,0,.07);
+      border-radius: 9999px;
+      padding: 0.45rem 0.6rem;
+      box-shadow: 0 4px 28px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
+    }
+
+    .nav-link {
+      padding: 0.42rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: hsl(20, 10%, 44%);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-link:hover { background: hsl(20, 18%, 93%); color: var(--fg); }
+
+    .nav-cta {
+      padding: 0.42rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, hsl(16,82%,50%) 0%, hsl(16,82%,54%) 50%, hsl(16,82%,48%) 100%);
+      background-size: 220% 100%;
+      background-position: 100% 0%;
+      color: #fff;
+      text-decoration: none;
+      transition: background-position 0.38s cubic-bezier(0.22,1,0.36,1), transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(220,90,20,.22);
+    }
+    .nav-cta:hover {
+      background-position: 0% 0%;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(220,90,20,.3);
+    }
+    .nav-cta:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+    @media (max-width: 540px) {
+      .nav-link.mob-hide { display: none; }
+    }
+
+    /* ── Scroll Progress Bar ────────────────────────── */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), hsl(16,90%,68%));
+      z-index: 300;
+      width: 0%;
+      transition: width 0.08s linear;
+      pointer-events: none;
+    }
+
+    /* ── Chip labels ───────────────────────────────── */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.3rem 0.875rem;
+      border-radius: 9999px;
+      font-size: 0.775rem;
+      font-weight: 500;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Buttons ───────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.78rem 1.75rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, hsl(16,82%,50%) 0%, hsl(16,82%,54%) 50%, hsl(16,82%,48%) 100%);
+      background-size: 220% 100%;
+      background-position: 100% 0%;
+      color: #fff;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(220,90,20,.22);
+      font-family: inherit;
+      transition: background-position 0.42s cubic-bezier(0.22,1,0.36,1), transform 0.18s, box-shadow 0.22s;
+    }
+    .btn-primary:hover {
+      background-position: 0% 0%;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(220,90,20,.38);
+    }
+    .btn-primary:active { transform: scale(0.97); box-shadow: none; }
+    .btn-primary:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+    .btn-primary svg { transition: transform 0.22s ease; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.72rem 1.5rem;
+      border-radius: 9999px;
+      background: transparent;
+      color: var(--fg);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-family: inherit;
+      transition: border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+    .btn-outline:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .btn-outline:active { transform: scale(0.97); }
+
+    /* ── Hero ──────────────────────────────────────── */
+    .page-hero {
+      min-height: 78vh;
+      display: flex;
+      align-items: center;
+      padding: 9rem 1.5rem 7rem;
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Layered warm radial gradients on dark bg */
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 15% 110%, rgba(217, 92, 33, 0.28) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 45% at 85% -10%, rgba(217, 92, 33, 0.14) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 50% at 50% 50%, rgba(140, 60, 190, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Grain texture overlay */
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* Floating orbs */
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      will-change: transform;
+    }
+    .hero-orb-1 {
+      width: 500px; height: 500px;
+      top: -160px; right: -80px;
+      background: radial-gradient(circle at 40% 40%, rgba(217,92,33,0.13) 0%, transparent 65%);
+      animation: orbDrift1 11s ease-in-out infinite;
+    }
+    .hero-orb-2 {
+      width: 360px; height: 360px;
+      bottom: -100px; left: -60px;
+      background: radial-gradient(circle at 60% 60%, rgba(160,80,210,0.07) 0%, transparent 65%);
+      animation: orbDrift2 14s ease-in-out infinite;
+    }
+    @keyframes orbDrift1 {
+      0%,100% { transform: translate(0,0); }
+      50%      { transform: translate(-22px, 18px); }
+    }
+    @keyframes orbDrift2 {
+      0%,100% { transform: translate(0,0); }
+      50%      { transform: translate(18px,-22px); }
+    }
+
+    .page-hero .wrap { position: relative; z-index: 1; }
+
+    .hero-service-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.42);
+      margin-bottom: 1.5rem;
+    }
+    .hero-service-label span {
+      color: var(--primary);
+    }
+
+    .hero-number {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.32);
+      letter-spacing: 0.02em;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.5rem, 6.5vw, 4.5rem);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.028em;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.72s 0.1s cubic-bezier(0.22,1,0.36,1) forwards;
+      max-width: 640px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: hsl(16, 85%, 68%);
+    }
+
+    .hero-lead {
+      font-size: clamp(0.9875rem, 2vw, 1.1rem);
+      color: rgba(255,255,255,0.58);
+      line-height: 1.72;
+      max-width: 520px;
+      margin-bottom: 2.25rem;
+      opacity: 0;
+      animation: fadeUp 0.72s 0.22s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.72s 0.34s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+
+    /* ── Courses Section ────────────────────────────── */
+    .courses-section {
+      padding: 6rem 0 5.5rem;
+      background: var(--bg);
+    }
+
+    .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.875rem, 4vw, 2.75rem);
+      font-weight: 600;
+      letter-spacing: -0.022em;
+      line-height: 1.18;
+      color: hsl(20, 12%, 10%);
+      margin-top: 0.875rem;
+      margin-bottom: 1rem;
+    }
+    .section-lead {
+      font-size: 1.0125rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.72;
+    }
+
+    /* ── Course Cards Grid ──────────────────────────── */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.375rem;
+      align-items: start;
+    }
+
+    .course-card {
+      background: #fff;
+      border-radius: 1.5rem;
+      border: 1px solid hsl(20, 18%, 91%);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.34s cubic-bezier(.22,.68,0,1.25), box-shadow 0.34s ease;
+    }
+    .course-card:hover {
+      transform: translateY(-6px);
+      box-shadow:
+        0 18px 48px rgba(217, 92, 33, 0.07),
+        0 6px 16px rgba(0,0,0,.06),
+        0 1px 3px rgba(0,0,0,.04);
+    }
+
+    /* Top accent line animates on hover */
+    .course-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2.5px;
+      background: linear-gradient(90deg, var(--primary), hsl(16, 90%, 68%));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.34s ease;
+      border-radius: 2px 2px 0 0;
+    }
+    .course-card:hover::before { transform: scaleX(1); }
+
+    /* Featured card gets accent top always visible */
+    .course-card.featured {
+      border-color: var(--primary-border);
+      box-shadow: 0 4px 24px rgba(217, 92, 33, 0.08), 0 1px 4px rgba(0,0,0,.04);
+    }
+    .course-card.featured::before { transform: scaleX(1); }
+
+    .card-header {
+      padding: 1.875rem 1.875rem 1.375rem;
+      border-bottom: 1px solid hsl(20, 18%, 94%);
+    }
+
+    .course-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.22rem 0.7rem;
+      border-radius: 9999px;
+      font-size: 0.71rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      background: hsl(20, 18%, 93%);
+      color: hsl(20, 10%, 38%);
+      margin-bottom: 1.125rem;
+    }
+    .course-badge svg { flex-shrink: 0; }
+
+    .course-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.3125rem;
+      font-weight: 600;
+      color: hsl(20, 12%, 10%);
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+      margin-bottom: 0.7rem;
+    }
+    .course-body {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    .card-body {
+      padding: 1.5rem 1.875rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* Feature list */
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.855rem;
+      color: hsl(20, 10%, 30%);
+      line-height: 1.5;
+    }
+    .feature-list li .check-icon {
+      flex-shrink: 0;
+      width: 17px; height: 17px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      border: 1px solid var(--primary-border);
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+      color: var(--primary);
+    }
+    .feature-list li .check-icon svg {
+      width: 9px; height: 9px;
+      stroke-width: 2.5;
+    }
+
+    .card-footer {
+      padding: 1.375rem 1.875rem 1.875rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border-top: 1px solid hsl(20, 18%, 94%);
+    }
+
+    .price-block {}
+    .price-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+    }
+    .price-value {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.625rem;
+      font-weight: 700;
+      color: hsl(20, 12%, 10%);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .price-value.on-request {
+      font-size: 1.0625rem;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--muted);
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    .card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: 9999px;
+      font-size: 0.8375rem;
+      font-weight: 600;
+      background: var(--primary-light);
+      color: var(--primary);
+      text-decoration: none;
+      border: 1px solid var(--primary-border);
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease, transform 0.18s ease, box-shadow 0.22s ease;
+    }
+    .card-cta:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(217,92,33,.28);
+    }
+    .card-cta:active { transform: scale(0.96); }
+    .card-cta:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .card-cta svg { transition: transform 0.2s ease; }
+    .card-cta:hover svg { transform: translateX(3px); }
+
+    /* ── Custom CTA Banner ──────────────────────────── */
+    .cta-banner {
+      padding: 5.5rem 0;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(
+        135deg,
+        hsl(280, 28%, 96%) 0%,
+        hsl(280, 22%, 98%) 40%,
+        hsl(30, 22%, 97%) 70%,
+        hsl(16, 40%, 97%) 100%
+      );
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 10% 50%, rgba(217,92,33,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 90% 30%, rgba(140,80,200,0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    /* Decorative large circle */
+    .cta-banner::after {
+      content: '';
+      position: absolute;
+      width: 480px; height: 480px;
+      right: -180px; top: 50%;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      border: 1.5px solid rgba(217, 92, 33, 0.08);
+      pointer-events: none;
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .cta-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.625rem, 3.5vw, 2.375rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.22;
+      color: hsl(20, 12%, 10%);
+      margin-bottom: 1rem;
+    }
+    .cta-lead {
+      font-size: 0.9875rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto 2rem;
+    }
+
+    /* ── Footer ────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      color: var(--dark-muted);
+      padding: 3.75rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
+      padding-bottom: 2.25rem;
+      border-bottom: 1px solid hsl(20,8%,18%);
+    }
+    @media (min-width: 600px)  { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+    @media (min-width: 768px)  { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+
+    .footer-logo-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: hsl(20,14%,80%);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.875rem;
+    }
+    .footer-tagline { font-size: 0.855rem; line-height: 1.65; max-width: 230px; color: hsl(20,12%,48%); }
+    .footer-heading { font-size: 0.78rem; font-weight: 600; color: hsl(20,12%,72%); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.875rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .footer-links a { font-size: 0.855rem; color: hsl(20,12%,48%); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: hsl(20,14%,80%); }
+    .footer-bottom { padding-top: 1.375rem; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: space-between; align-items: center; }
+    .footer-copy { font-size: 0.77rem; color: hsl(20,8%,36%); }
+
+    /* ── Scroll Reveal ─────────────────────────────── */
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.62s ease, transform 0.62s ease;
+    }
+    .reveal.pre-reveal { opacity: 0; transform: translateY(20px); }
+    .reveal.pre-reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── SVG fix ───────────────────────────────────── */
+    svg { display: inline-block; vertical-align: middle; }
+
+    /* ── Mobile floating nav overflow ──────────────── */
+    @media (max-width: 540px) {
+      .floating-nav {
+        bottom: 1rem;
+        padding: 0.4rem 0.5rem;
+        max-width: calc(100vw - 2rem);
+      }
+      .nav-link { padding: 0.38rem 0.65rem; font-size: 0.75rem; }
+      .nav-cta  { padding: 0.38rem 0.85rem; font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Scroll progress bar -->
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TOP BAR
+════════════════════════════════════════════════════════ -->
+<header class="top-bar">
+  <a href="index.html" class="back-link" aria-label="Terug naar hoofdpagina">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M13 8H3M7 4l-4 4 4 4"/>
+    </svg>
+    Terug
+  </a>
+  <a href="index.html" class="top-bar-logo-text" aria-label="Sila – Home">sila</a>
+</header>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FLOATING NAV
+════════════════════════════════════════════════════════ -->
+<nav class="floating-nav" aria-label="Hoofdnavigatie">
+  <a href="index.html#diensten"   class="nav-link mob-hide">Diensten</a>
+  <a href="index.html#over-ons"   class="nav-link mob-hide">Over ons</a>
+  <a href="index.html#referenties" class="nav-link mob-hide">Referenties</a>
+  <a href="index.html#contact"    class="nav-cta">Contact</a>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════ -->
+<section class="page-hero" aria-label="Educatie – hero">
+  <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="hero-service-label" aria-hidden="true">
+      <span class="hero-number">01</span>
+      <span style="color:rgba(255,255,255,0.22);">—</span>
+      <span>Educatie</span>
+    </div>
+
+    <h1 class="hero-title">
+      Leer AI begrijpen<br>
+      en <em>toepassen</em>
+    </h1>
+
+    <p class="hero-lead">
+      Onze cursussen en workshops maken AI toegankelijk voor iedereen. Van basiskennis tot geavanceerde toepassingen, wij helpen jou en je team om AI effectief in te zetten.
+    </p>
+
+    <div class="hero-cta-row">
+      <a href="index.html#contact" class="btn-primary">
+        Plan een gesprek
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     COURSES SECTION
+════════════════════════════════════════════════════════ -->
+<section class="courses-section" aria-label="Onze cursussen">
+  <div class="wrap">
+
+    <header class="section-header">
+      <div class="chip">
+        <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true">
+          <polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/>
+        </svg>
+        Onze cursussen
+      </div>
+      <h2 class="section-title">Kies jouw leerpad</h2>
+      <p class="section-lead">Van eerste kennismaking tot diepgaande expertise — voor elk niveau is er een passend programma.</p>
+    </header>
+
+    <div class="courses-grid">
+
+      <!-- Course 1: AI Basics -->
+      <article class="course-card reveal">
+        <div class="card-header">
+          <div class="course-badge">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            4 weken &nbsp;•&nbsp; Online
+          </div>
+          <h3 class="course-title">AI Basics voor Ondernemers</h3>
+          <p class="course-body">Leer de fundamenten van AI en hoe je het kunt toepassen in jouw bedrijf. Geen technische kennis vereist.</p>
+        </div>
+
+        <div class="card-body">
+          <ul class="feature-list" aria-label="Wat je krijgt">
+            <li>
+              <span class="check-icon" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="2,6 5,9 10,3"/>
+                </svg>
+              </span>
+              Praktische voorbeelden
+            </li>
+            <li>
+              <span class="check-icon" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="2,6 5,9 10,3"/>
+                </svg>
+              </span>
+              Wekelijkse Q&amp;A
+            </li>
+            <li>
+              <span class="check-icon" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="2,6 5,9 10,3"/>
+                </svg>
+              </span>
+              Certificaat
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-footer">
+          <div class="price-block">
+            <p class="price-label">Investering</p>
+            <p class="price-value">€497</p>
+          </div>
+          <a href="index.html#contact" class="card-cta">
+            Meer info
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Course 2: ChatGPT Masterclass -->
+      <article class="course-card featured reveal" style="transition-delay: .1s;">
+        <div class="card-header">
+          <div class="course-badge">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            2 weken &nbsp;•&nbsp; Online
+          </div>
+          <h3 class="course-title">ChatGPT Masterclass</h3>
+          <p class="course-body">Van beginner tot expert. Leer effectieve prompts schrijven en ChatGPT inzetten voor dagelijkse taken.</p>
+        </div>
+
+        <div class="card-body">
+          <ul class="feature-list" aria-label="Wat je krijgt">
+            <li>
+              <span class="check-icon" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="2,6 5,9 10,3"/>
+                </svg>
+              </span>
+              50+ prompt templates
+            </li>
+            <li>
+              <span class="check-icon" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="2,6 5,9 10,3"/>
+                </svg>
+              </span>
+              Live workshops
+            </li>
+            <li>
+              <span class="check-icon" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="2,6 5,9 10,3"/>
+                </svg>
+              </span>
+              Community toegang
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-footer">
+          <div class="price-block">
+            <p class="price-label">Investering</p>
+            <p class="price-value">€297</p>
+          </div>
+          <a href="index.html#contact" class="card-cta">
+            Meer info
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Course 3: Workshop op Locatie -->
+      <article class="course-card reveal" style="transition-delay: .2s;">
+        <div class="card-header">
+          <div class="course-badge">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            1 dag &nbsp;•&nbsp; Op locatie
+          </div>
+          <h3 class="course-title">AI Workshop op Locatie</h3>
+          <p class="course-body">Een intensieve dag waarin we met jouw team aan de slag gaan met AI-tools relevant voor jullie sector.</p>
+        </div>
+
+        <div class="card-body">
+          <ul class="feature-list" aria-label="Wat je krijgt">
+            <li>
+              <span class="check-icon" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="2,6 5,9 10,3"/>
+                </svg>
+              </span>
+              Maatwerk programma
+            </li>
+            <li>
+              <span class="check-icon" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="2,6 5,9 10,3"/>
+                </svg>
+              </span>
+              Hands-on oefeningen
+            </li>
+            <li>
+              <span class="check-icon" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="2,6 5,9 10,3"/>
+                </svg>
+              </span>
+              Actieplan
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-footer">
+          <div class="price-block">
+            <p class="price-label">Investering</p>
+            <p class="price-value on-request">Op aanvraag</p>
+          </div>
+          <a href="index.html#contact" class="card-cta">
+            Meer info
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     CUSTOM CTA BANNER
+════════════════════════════════════════════════════════ -->
+<section class="cta-banner" aria-label="Op maat">
+  <div class="wrap">
+    <div class="cta-inner reveal">
+
+      <div class="chip" style="margin-bottom: 1.375rem;">
+        <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true">
+          <polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/>
+        </svg>
+        Op maat
+      </div>
+
+      <h2 class="cta-title">Liever iets op maat?</h2>
+      <p class="cta-lead">
+        We maken graag een programma dat perfect aansluit bij jouw team en doelen.
+      </p>
+
+      <a href="index.html#contact" class="btn-primary">
+        Neem contact op
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════ -->
+<footer id="contact-footer" aria-label="Paginavoettekst">
+  <div class="wrap">
+    <div class="footer-grid">
+
+      <div>
+        <p class="footer-logo-text">sila</p>
+        <p class="footer-tagline">Jouw AI transformatiepartner. Begeleiding en persoonlijke aandacht op maat.</p>
+      </div>
+
+      <div>
+        <p class="footer-heading">Diensten</p>
+        <ul class="footer-links">
+          <li><a href="educatie.html">Educatie</a></li>
+          <li><a href="index.html#diensten">Consultancy</a></li>
+          <li><a href="index.html#diensten">Implementatie</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-heading">Bedrijf</p>
+        <ul class="footer-links">
+          <li><a href="index.html#over-ons">Over ons</a></li>
+          <li><a href="index.html#referenties">Referenties</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-heading">Contact</p>
+        <ul class="footer-links">
+          <li><a href="mailto:info@sila-ai.nl">info@sila-ai.nl</a></li>
+          <li><a href="https://www.linkedin.com/company/sila-ai-nl" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="#" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Sila. Alle rechten voorbehouden.</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════ -->
+<script>
+/* ─────────────────────────────────────────────────────────
+   SCROLL PROGRESS BAR
+───────────────────────────────────────────────────────── */
+const progressBar = document.getElementById('scroll-progress');
+function updateProgress() {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = total > 0 ? (scrolled / total) * 100 : 0;
+  progressBar.style.width = pct + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+
+/* ─────────────────────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────────────────────── */
+const revealEls = document.querySelectorAll('.reveal');
+
+revealEls.forEach(el => el.classList.add('pre-reveal'));
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+revealEls.forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

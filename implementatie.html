@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Implementatie — Sila AI</title>
+  <meta name="description" content="Kant-en-klare AI-workflows die je direct kunt gebruiken, of laat ons iets op maat bouwen. Van automatiseringen tot slimme chatbots." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans:    ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Playfair Display', 'Georgia', 'serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ── Variables ─────────────────────────────────── */
+    :root {
+      --primary:        hsl(16, 82%, 54%);
+      --primary-h:      hsl(16, 82%, 48%);
+      --primary-light:  hsl(16, 85%, 96%);
+      --primary-border: hsl(16, 60%, 84%);
+      --bg:             hsl(30, 20%, 97%);
+      --fg:             hsl(20, 12%, 13%);
+      --muted:          hsl(20, 10%, 48%);
+      --border:         hsl(20, 18%, 89%);
+      --card:           #ffffff;
+      --lavender:       hsl(280, 28%, 96%);
+      --dark:           hsl(20, 8%, 10%);
+    }
+
+    /* ── Reset ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: hsl(20, 18%, 93%); }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,.17); border-radius: 10px; }
+
+    /* ── Layout ────────────────────────────────────── */
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    @media (min-width: 768px)  { .wrap { padding: 0 2.5rem; } }
+    @media (min-width: 1100px) { .wrap { padding: 0 3rem; } }
+
+    /* ── Top Bar ───────────────────────────────────── */
+    .top-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 2rem;
+      background: rgba(253, 251, 248, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,.05);
+    }
+    .top-bar-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: var(--fg);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .top-bar-logo:hover { color: var(--primary); }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.4rem 0.9rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .back-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary-h);
+      border-color: var(--primary-border);
+    }
+    .back-btn:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+    .back-btn:active { transform: scale(0.97); }
+
+    /* ── Floating Nav ──────────────────────────────── */
+    .floating-nav {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      background: rgba(255,255,255,.93);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(0,0,0,.07);
+      border-radius: 9999px;
+      padding: 0.45rem 0.6rem;
+      box-shadow:
+        0 4px 28px rgba(0,0,0,.08),
+        0 1px 4px rgba(0,0,0,.04);
+    }
+    .nav-link {
+      padding: 0.42rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: hsl(20, 10%, 44%);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-link:hover { background: hsl(20, 18%, 93%); color: var(--fg); }
+    .nav-link:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .nav-cta {
+      padding: 0.42rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      background: var(--primary);
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 2px 8px rgba(220,90,20,.22);
+    }
+    .nav-cta:hover { background: var(--primary-h); transform: translateY(-1px); }
+    .nav-cta:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+    .nav-cta:active { transform: scale(0.97); }
+    @media (max-width: 540px) {
+      .nav-link.mob-hide { display: none; }
+      .floating-nav { bottom: 1rem; }
+    }
+
+    /* ── Hero ──────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--dark);
+      padding-top: 80px;
+    }
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+    }
+    .hero-glow-1 {
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, hsl(16, 82%, 54%, 0.22) 0%, transparent 70%);
+      top: -200px; right: -100px;
+      pointer-events: none;
+    }
+    .hero-glow-2 {
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, hsl(280, 40%, 50%, 0.10) 0%, transparent 70%);
+      bottom: -150px; left: -100px;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+    .hero-label-line {
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: var(--primary);
+      opacity: 0.6;
+    }
+    .hero-heading {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 600;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 1.75rem;
+    }
+    .hero-heading em {
+      font-style: italic;
+      color: var(--primary);
+    }
+    .hero-body {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      line-height: 1.7;
+      color: hsl(20, 10%, 68%);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 2rem;
+      border-radius: 9999px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      background: var(--primary);
+      color: #fff;
+      text-decoration: none;
+      box-shadow:
+        0 4px 24px rgba(220,90,20,.35),
+        0 1px 4px rgba(220,90,20,.2);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .hero-cta:hover {
+      background: var(--primary-h);
+      transform: translateY(-2px);
+      box-shadow:
+        0 8px 32px rgba(220,90,20,.40),
+        0 2px 8px rgba(220,90,20,.22);
+    }
+    .hero-cta:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+    .hero-cta:active { transform: scale(0.97); }
+    .hero-cta-arrow {
+      transition: transform 0.2s;
+    }
+    .hero-cta:hover .hero-cta-arrow { transform: translateY(3px); }
+
+    /* ── Section base ──────────────────────────────── */
+    .section {
+      padding: 6rem 0;
+    }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.9rem, 4vw, 2.75rem);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      color: var(--fg);
+      margin-bottom: 0.875rem;
+    }
+    .section-subtitle {
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    /* ── Workflow Cards ─────────────────────────────── */
+    .workflows-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    @media (min-width: 900px) {
+      .workflows-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .workflow-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      box-shadow:
+        0 2px 8px rgba(160,80,20,.05),
+        0 1px 2px rgba(0,0,0,.04);
+    }
+    .workflow-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary-border);
+      box-shadow:
+        0 12px 40px rgba(160,80,20,.10),
+        0 2px 8px rgba(160,80,20,.06),
+        0 1px 2px rgba(0,0,0,.04);
+    }
+    .workflow-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.22rem 0.7rem;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .badge-auto {
+      background: hsl(200, 80%, 94%);
+      color: hsl(200, 60%, 35%);
+      border: 1px solid hsl(200, 60%, 84%);
+    }
+    .badge-chatbot {
+      background: hsl(140, 60%, 93%);
+      color: hsl(140, 50%, 30%);
+      border: 1px solid hsl(140, 50%, 80%);
+    }
+    .badge-content {
+      background: hsl(280, 50%, 95%);
+      color: hsl(280, 40%, 40%);
+      border: 1px solid hsl(280, 40%, 83%);
+    }
+    .badge-sales {
+      background: hsl(35, 90%, 93%);
+      color: hsl(35, 60%, 35%);
+      border: 1px solid hsl(35, 60%, 80%);
+    }
+    .badge-ready {
+      background: var(--primary-light);
+      color: var(--primary-h);
+      border: 1px solid var(--primary-border);
+    }
+    .workflow-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+    }
+    .workflow-body {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--muted);
+      flex: 1;
+    }
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .tech-tag {
+      padding: 0.2rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      background: hsl(20, 15%, 94%);
+      color: hsl(20, 12%, 38%);
+      border: 1px solid var(--border);
+      font-family: 'Inter', monospace;
+      letter-spacing: 0.01em;
+    }
+    .workflow-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      gap: 1rem;
+    }
+    .workflow-price {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--fg);
+      letter-spacing: -0.03em;
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+    .workflow-price span {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0;
+    }
+    .workflow-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: var(--primary-light);
+      color: var(--primary-h);
+      border: 1px solid var(--primary-border);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+    .workflow-cta:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+    .workflow-cta:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .workflow-cta:active { transform: scale(0.96); }
+
+    /* ── Custom solutions ───────────────────────────── */
+    .custom-section {
+      padding: 5rem 0;
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+    .custom-noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+    }
+    .custom-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, hsl(16, 82%, 54%, 0.12) 0%, transparent 70%);
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .custom-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.9rem, 4vw, 2.75rem);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      color: #fff;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+    .custom-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    @media (min-width: 768px) {
+      .custom-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .custom-card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 16px;
+      padding: 2rem 1.75rem;
+      transition: background 0.25s, border-color 0.25s, transform 0.25s;
+    }
+    .custom-card:hover {
+      background: rgba(255,255,255,.08);
+      border-color: rgba(220,90,20,.35);
+      transform: translateY(-3px);
+    }
+    .custom-card-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(220,90,20,.15);
+      border: 1px solid rgba(220,90,20,.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+    .custom-card-icon svg {
+      width: 22px; height: 22px;
+      color: var(--primary);
+    }
+    .custom-card-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.625rem;
+      letter-spacing: -0.02em;
+    }
+    .custom-card-body {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: hsl(20, 10%, 65%);
+    }
+
+    /* ── Case Studies Carousel ─────────────────────── */
+    .carousel-section {
+      padding: 6rem 0;
+      overflow: hidden;
+    }
+    .carousel-header {
+      margin-bottom: 2.5rem;
+    }
+    .carousel-wrapper {
+      position: relative;
+    }
+    .carousel-track-outer {
+      overflow: hidden;
+      border-radius: 20px;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .carousel-track-outer:active { cursor: grabbing; }
+    .carousel-track {
+      display: flex;
+      gap: 1.25rem;
+      transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+    .carousel-track.is-dragging {
+      transition: none;
+    }
+    .case-card {
+      flex: 0 0 320px;
+      height: 420px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      box-shadow:
+        0 8px 32px rgba(0,0,0,.16),
+        0 2px 8px rgba(0,0,0,.10);
+    }
+    @media (min-width: 768px) {
+      .case-card { flex: 0 0 360px; height: 460px; }
+    }
+    .case-card-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      pointer-events: none;
+    }
+    .case-card:hover .case-card-img { transform: scale(1.04); }
+    .case-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(10, 6, 4, 0.88) 0%,
+        rgba(10, 6, 4, 0.45) 45%,
+        rgba(10, 6, 4, 0.08) 100%
+      );
+    }
+    .case-card-color {
+      position: absolute;
+      inset: 0;
+      background: hsl(16, 60%, 30%, 0.22);
+      mix-blend-mode: multiply;
+    }
+    .case-card-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.75rem;
+    }
+    .case-card-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.625rem;
+    }
+    .case-card-desc {
+      font-size: 0.845rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,.72);
+      margin-bottom: 1rem;
+    }
+    .case-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s, gap 0.2s;
+    }
+    .case-card-link:hover { color: hsl(16, 90%, 70%); gap: 0.55rem; }
+    .case-card-link:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 3px; }
+
+    /* Carousel controls */
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1.75rem;
+    }
+    .carousel-dots {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .carousel-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s, transform 0.2s, width 0.25s;
+    }
+    .carousel-dot.active {
+      background: var(--primary);
+      width: 24px;
+      border-radius: 9999px;
+    }
+    .carousel-dot:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+    .carousel-arrows {
+      display: flex;
+      gap: 0.625rem;
+    }
+    .carousel-arrow {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .carousel-arrow:hover {
+      background: var(--primary-light);
+      border-color: var(--primary-border);
+      transform: scale(1.06);
+    }
+    .carousel-arrow:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .carousel-arrow:active { transform: scale(0.94); }
+    .carousel-arrow svg {
+      width: 18px; height: 18px;
+      color: var(--fg);
+      transition: color 0.2s;
+    }
+    .carousel-arrow:hover svg { color: var(--primary-h); }
+    .carousel-arrow:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ── Bottom CTA ─────────────────────────────────── */
+    .bottom-cta {
+      padding: 7rem 0 10rem;
+      text-align: center;
+    }
+    .bottom-cta-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+    }
+    .bottom-cta-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--fg);
+      margin-bottom: 1rem;
+    }
+    .bottom-cta-body {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+    }
+    .bottom-cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.875rem 2rem;
+      border-radius: 9999px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      background: var(--primary);
+      color: #fff;
+      text-decoration: none;
+      box-shadow:
+        0 4px 20px rgba(220,90,20,.30),
+        0 1px 4px rgba(220,90,20,.18);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--primary-h);
+      transform: translateY(-2px);
+      box-shadow:
+        0 8px 28px rgba(220,90,20,.36),
+        0 2px 8px rgba(220,90,20,.20);
+    }
+    .btn-primary:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+    .btn-primary:active { transform: scale(0.97); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.875rem 2rem;
+      border-radius: 9999px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      background: transparent;
+      color: var(--fg);
+      border: 1.5px solid var(--border);
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+    .btn-secondary:hover {
+      background: var(--primary-light);
+      border-color: var(--primary-border);
+      color: var(--primary-h);
+      transform: translateY(-1px);
+    }
+    .btn-secondary:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+    .btn-secondary:active { transform: scale(0.97); }
+
+    /* ── Divider ─────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 1.5rem;
+    }
+    @media (min-width: 768px) { .divider { margin: 0 2.5rem; } }
+
+    /* ── Scroll entrance animations ─────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up-delay-1 { transition-delay: 0.1s; }
+    .fade-up-delay-2 { transition-delay: 0.2s; }
+    .fade-up-delay-3 { transition-delay: 0.3s; }
+    .fade-up-delay-4 { transition-delay: 0.4s; }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <a href="index.html" class="top-bar-logo">sila</a>
+    <a href="index.html" class="back-btn">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 2 4 7 9 12"/>
+      </svg>
+      Terug
+    </a>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-noise" aria-hidden="true"></div>
+    <div class="hero-glow-1" aria-hidden="true"></div>
+    <div class="hero-glow-2" aria-hidden="true"></div>
+    <div class="wrap hero-content">
+      <div class="hero-label">
+        <span class="hero-label-line"></span>
+        03 — Implementatie
+      </div>
+      <h1 class="hero-heading">
+        Van idee naar<br>
+        <em>werkende AI</em>
+      </h1>
+      <p class="hero-body">
+        Kant-en-klare AI-workflows die je direct kunt gebruiken, of laat ons iets op maat bouwen. Van automatiseringen tot slimme chatbots.
+      </p>
+      <a href="#workflows" class="hero-cta">
+        Bekijk workflows
+        <svg class="hero-cta-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="8" y1="3" x2="8" y2="13"/>
+          <polyline points="4 9 8 13 12 9"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Kant-en-klare Workflows Section -->
+  <section class="section" id="workflows">
+    <div class="wrap">
+      <div class="fade-up">
+        <div class="section-label">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="4"/></svg>
+          Workflows
+        </div>
+        <h2 class="section-title">Kant-en-klare workflows</h2>
+        <p class="section-subtitle">Bewezen oplossingen die je direct kunt inzetten. Wij installeren en configureren alles voor jou.</p>
+      </div>
+
+      <div class="workflows-grid">
+
+        <!-- Workflow 1 -->
+        <article class="workflow-card fade-up fade-up-delay-1">
+          <div class="workflow-badges">
+            <span class="badge badge-auto">Automatisering</span>
+            <span class="badge badge-ready">Kant-en-klaar</span>
+          </div>
+          <h3 class="workflow-title">Automatische Lead Kwalificatie</h3>
+          <p class="workflow-body">Een workflow die inkomende leads automatisch scoort en doorstuurt naar de juiste persoon. Bespaart uren handmatig werk per week.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">n8n</span>
+            <span class="tech-tag">OpenAI</span>
+            <span class="tech-tag">Google Sheets</span>
+          </div>
+          <div class="workflow-footer">
+            <div class="workflow-price">€750 <span>eenmalig</span></div>
+            <a href="index.html#contact" class="workflow-cta">
+              Bekijk details
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 9 6 6 3"/><polyline points="6 9 9 6"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Workflow 2 -->
+        <article class="workflow-card fade-up fade-up-delay-2">
+          <div class="workflow-badges">
+            <span class="badge badge-chatbot">Chatbot</span>
+            <span class="badge badge-ready">Kant-en-klaar</span>
+          </div>
+          <h3 class="workflow-title">AI Klantenservice Bot</h3>
+          <p class="workflow-body">Een slimme chatbot die 80% van de veelgestelde vragen beantwoordt, getraind op jouw kennisbank en FAQ's.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">ChatGPT API</span>
+            <span class="tech-tag">Voiceflow</span>
+            <span class="tech-tag">Zapier</span>
+          </div>
+          <div class="workflow-footer">
+            <div class="workflow-price">€1.250 <span>eenmalig</span></div>
+            <a href="index.html#contact" class="workflow-cta">
+              Bekijk details
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 9 6 6 3"/><polyline points="6 9 9 6"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Workflow 3 -->
+        <article class="workflow-card fade-up fade-up-delay-3">
+          <div class="workflow-badges">
+            <span class="badge badge-content">Content</span>
+            <span class="badge badge-ready">Kant-en-klaar</span>
+          </div>
+          <h3 class="workflow-title">Content Repurposing Pipeline</h3>
+          <p class="workflow-body">Eén blogpost wordt automatisch omgezet naar LinkedIn posts, tweets, een nieuwsbrief en Instagram captions.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">Make</span>
+            <span class="tech-tag">Claude API</span>
+            <span class="tech-tag">Buffer</span>
+          </div>
+          <div class="workflow-footer">
+            <div class="workflow-price">€500 <span>eenmalig</span></div>
+            <a href="index.html#contact" class="workflow-cta">
+              Bekijk details
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 9 6 6 3"/><polyline points="6 9 9 6"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Workflow 4 -->
+        <article class="workflow-card fade-up fade-up-delay-4">
+          <div class="workflow-badges">
+            <span class="badge badge-sales">Sales</span>
+            <span class="badge badge-ready">Kant-en-klaar</span>
+          </div>
+          <h3 class="workflow-title">Offertes Generator</h3>
+          <p class="workflow-body">Genereer professionele offertes op basis van een kort gesprek of formulier. Inclusief automatische follow-ups.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">n8n</span>
+            <span class="tech-tag">OpenAI</span>
+            <span class="tech-tag">PDF Generator</span>
+          </div>
+          <div class="workflow-footer">
+            <div class="workflow-price">€900 <span>eenmalig</span></div>
+            <a href="index.html#contact" class="workflow-cta">
+              Bekijk details
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 9 6 6 3"/><polyline points="6 9 9 6"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Custom Solutions Section -->
+  <section class="custom-section">
+    <div class="custom-noise" aria-hidden="true"></div>
+    <div class="custom-glow" aria-hidden="true"></div>
+    <div class="wrap" style="position:relative;z-index:2;">
+      <h2 class="custom-title fade-up">Of liever maatwerk?</h2>
+      <div class="custom-grid">
+
+        <!-- Card 1 -->
+        <div class="custom-card fade-up fade-up-delay-1">
+          <div class="custom-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <h3 class="custom-card-title">Custom AI Chatbots</h3>
+          <p class="custom-card-body">Op maat gemaakte conversatie-assistenten voor jouw specifieke use case.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="custom-card fade-up fade-up-delay-2">
+          <div class="custom-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 3 21 3 21 8"/>
+              <line x1="4" y1="20" x2="21" y2="3"/>
+              <polyline points="21 16 21 21 16 21"/>
+              <line x1="15" y1="15" x2="21" y2="21"/>
+            </svg>
+          </div>
+          <h3 class="custom-card-title">Workflow Automatisering</h3>
+          <p class="custom-card-body">We bouwen automatiseringen die jouw handmatige processen overnemen.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="custom-card fade-up fade-up-delay-3">
+          <div class="custom-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+            </svg>
+          </div>
+          <h3 class="custom-card-title">AI Integraties</h3>
+          <p class="custom-card-body">Koppel AI-modellen aan jouw bestaande software en systemen.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Studies Carousel Section -->
+  <section class="carousel-section">
+    <div class="wrap">
+      <div class="carousel-header fade-up">
+        <div class="section-label">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="4"/></svg>
+          Voorbeelden
+        </div>
+        <h2 class="section-title">Wat we al hebben gebouwd</h2>
+        <p class="section-subtitle">Bekijk wat we al hebben gebouwd voor onze klanten.</p>
+      </div>
+
+      <div class="carousel-wrapper fade-up fade-up-delay-1">
+        <div class="carousel-track-outer" id="carouselOuter">
+          <div class="carousel-track" id="carouselTrack">
+
+            <!-- Case 1 -->
+            <article class="case-card" data-id="voice-ai">
+              <img
+                class="case-card-img"
+                src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&q=80"
+                alt="Voice AI Agent voor Internationale Klant"
+                draggable="false"
+              />
+              <div class="case-card-overlay"></div>
+              <div class="case-card-color"></div>
+              <div class="case-card-content">
+                <h3 class="case-card-title">Voice AI Agent voor Internationale Klant</h3>
+                <p class="case-card-desc">Een geavanceerde Voice AI Agent die klantvragen afhandelt in meerdere talen. Hoge kwaliteit, snelle oplevering.</p>
+                <a href="index.html#contact" class="case-card-link">
+                  Lees meer
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 7 11 7 8 4"/><polyline points="8 10 11 7"/>
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Case 2 -->
+            <article class="case-card" data-id="lead-kwalificatie">
+              <img
+                class="case-card-img"
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+                alt="Automatische Lead Kwalificatie"
+                draggable="false"
+              />
+              <div class="case-card-overlay"></div>
+              <div class="case-card-color"></div>
+              <div class="case-card-content">
+                <h3 class="case-card-title">Automatische Lead Kwalificatie</h3>
+                <p class="case-card-desc">Een volledig geautomatiseerde workflow die leads scoort en distribueert. Bespaart het team 10+ uur per week.</p>
+                <a href="index.html#contact" class="case-card-link">
+                  Lees meer
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 7 11 7 8 4"/><polyline points="8 10 11 7"/>
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Case 3 -->
+            <article class="case-card" data-id="content-pipeline">
+              <img
+                class="case-card-img"
+                src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80"
+                alt="Content Repurposing op Schaal"
+                draggable="false"
+              />
+              <div class="case-card-overlay"></div>
+              <div class="case-card-color"></div>
+              <div class="case-card-content">
+                <h3 class="case-card-title">Content Repurposing op Schaal</h3>
+                <p class="case-card-desc">Van één blogpost naar 5 kanalen automatisch. De klant publiceert nu 4x meer content zonder extra werk.</p>
+                <a href="index.html#contact" class="case-card-link">
+                  Lees meer
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 7 11 7 8 4"/><polyline points="8 10 11 7"/>
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Case 4 -->
+            <article class="case-card" data-id="chatbot">
+              <img
+                class="case-card-img"
+                src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&q=80"
+                alt="AI Klantenservice Chatbot"
+                draggable="false"
+              />
+              <div class="case-card-overlay"></div>
+              <div class="case-card-color"></div>
+              <div class="case-card-content">
+                <h3 class="case-card-title">AI Klantenservice Chatbot</h3>
+                <p class="case-card-desc">Een intelligente chatbot die 80% van de klantvragen zelfstandig afhandelt, 24/7 beschikbaar.</p>
+                <a href="index.html#contact" class="case-card-link">
+                  Lees meer
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 7 11 7 8 4"/><polyline points="8 10 11 7"/>
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Case 5 -->
+            <article class="case-card" data-id="offertes">
+              <img
+                class="case-card-img"
+                src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80"
+                alt="Automatische Offertes Generator"
+                draggable="false"
+              />
+              <div class="case-card-overlay"></div>
+              <div class="case-card-color"></div>
+              <div class="case-card-content">
+                <h3 class="case-card-title">Automatische Offertes Generator</h3>
+                <p class="case-card-desc">Op basis van een 5-minuten gesprek genereert het systeem een professionele offerte inclusief follow-up email.</p>
+                <a href="index.html#contact" class="case-card-link">
+                  Lees meer
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 7 11 7 8 4"/><polyline points="8 10 11 7"/>
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- Carousel Controls -->
+        <div class="carousel-controls">
+          <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Case study navigatie">
+            <button class="carousel-dot active" role="tab" aria-selected="true" aria-label="Case 1" data-index="0"></button>
+            <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Case 2" data-index="1"></button>
+            <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Case 3" data-index="2"></button>
+            <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Case 4" data-index="3"></button>
+            <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Case 5" data-index="4"></button>
+          </div>
+          <div class="carousel-arrows">
+            <button class="carousel-arrow" id="prevBtn" aria-label="Vorige" disabled>
+              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="11 4 6 9 11 14"/>
+              </svg>
+            </button>
+            <button class="carousel-arrow" id="nextBtn" aria-label="Volgende">
+              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="7 4 12 9 7 14"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="bottom-cta">
+    <div class="wrap">
+      <div class="fade-up">
+        <div class="bottom-cta-eyebrow">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="4"/></svg>
+          Klaar om te starten
+        </div>
+        <h2 class="bottom-cta-title">Klaar om te automatiseren?</h2>
+        <p class="bottom-cta-body">Laat ons weten wat je wilt bereiken. We denken graag met je mee.</p>
+        <div class="bottom-cta-actions">
+          <a href="index.html#contact" class="btn-primary">
+            Start een project
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="5 8 10 8 7 5"/><polyline points="7 11 10 8"/>
+            </svg>
+          </a>
+          <a href="index.html#contact" class="btn-secondary">
+            Bespreek jouw idee
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating Bottom Nav -->
+  <nav class="floating-nav" aria-label="Hoofdnavigatie">
+    <a href="index.html#diensten" class="nav-link mob-hide">Diensten</a>
+    <a href="index.html#over-ons" class="nav-link mob-hide">Over ons</a>
+    <a href="index.html#referenties" class="nav-link mob-hide">Referenties</a>
+    <a href="index.html#contact" class="nav-cta">Contact</a>
+  </nav>
+
+  <script>
+    /* ── Scroll-triggered fade-up ─────────────────── */
+    (function () {
+      const els = document.querySelectorAll('.fade-up');
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('visible');
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      );
+      els.forEach((el) => observer.observe(el));
+    })();
+
+    /* ── Carousel ──────────────────────────────────── */
+    (function () {
+      const outer  = document.getElementById('carouselOuter');
+      const track  = document.getElementById('carouselTrack');
+      const dots   = document.querySelectorAll('.carousel-dot');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      const TOTAL = 5;
+      let current = 0;
+      let cardWidth = 0;
+      let gap = 20; // 1.25rem in px
+
+      /* pointer drag state */
+      let startX = 0;
+      let startTranslate = 0;
+      let isDragging = false;
+      let hasDragged = false;
+      let currentTranslate = 0;
+
+      function getCardWidth() {
+        const card = track.querySelector('.case-card');
+        return card ? card.getBoundingClientRect().width : 320;
+      }
+
+      function getTranslateForIndex(idx) {
+        // Calculate offset so that cards have a small peek from the edge
+        const outerWidth = outer.getBoundingClientRect().width;
+        cardWidth = getCardWidth();
+        const offset = Math.min(24, (outerWidth - cardWidth) / 2);
+        return -(idx * (cardWidth + gap)) + offset;
+      }
+
+      function clampIndex(idx) {
+        return Math.max(0, Math.min(TOTAL - 1, idx));
+      }
+
+      function goTo(idx) {
+        current = clampIndex(idx);
+        const tx = getTranslateForIndex(current);
+        currentTranslate = tx;
+        track.style.transform = `translateX(${tx}px)`;
+        dots.forEach((d, i) => {
+          const active = i === current;
+          d.classList.toggle('active', active);
+          d.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        prevBtn.disabled = current === 0;
+        nextBtn.disabled = current === TOTAL - 1;
+      }
+
+      prevBtn.addEventListener('click', () => goTo(current - 1));
+      nextBtn.addEventListener('click', () => goTo(current + 1));
+
+      dots.forEach((dot) => {
+        dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index, 10)));
+      });
+
+      /* Pointer (touch + mouse) drag */
+      outer.addEventListener('pointerdown', (e) => {
+        if (e.button !== 0 && e.pointerType === 'mouse') return;
+        outer.setPointerCapture(e.pointerId);
+        isDragging = true;
+        hasDragged = false;
+        startX = e.clientX;
+        startTranslate = currentTranslate;
+        track.classList.add('is-dragging');
+      });
+
+      outer.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) > 4) hasDragged = true;
+        const tx = startTranslate + dx;
+        track.style.transform = `translateX(${tx}px)`;
+        currentTranslate = tx;
+      });
+
+      function endDrag(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        track.classList.remove('is-dragging');
+
+        const dx = e.clientX - startX;
+        const threshold = 60;
+
+        if (Math.abs(dx) > threshold) {
+          if (dx < 0) goTo(current + 1);
+          else         goTo(current - 1);
+        } else {
+          goTo(current); // snap back
+        }
+      }
+
+      outer.addEventListener('pointerup',     endDrag);
+      outer.addEventListener('pointercancel', endDrag);
+
+      /* Prevent click on drag */
+      outer.addEventListener('click', (e) => {
+        if (hasDragged) e.stopPropagation();
+      }, true);
+
+      /* Keyboard navigation */
+      outer.setAttribute('tabindex', '0');
+      outer.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current - 1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+      });
+
+      /* Init + resize */
+      function init() {
+        goTo(0);
+      }
+
+      window.addEventListener('resize', () => goTo(current));
+      init();
+    })();
+  </script>
+
+</body>
+</html>

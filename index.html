@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sila — De menselijke verbinding tussen jouw bedrijf en AI</title>
+  <title>Sila — Jouw AI transformatiepartner</title>
   <meta name="description" content="Sila begeleidt jouw bedrijf door elke fase van de AI-reis — van educatie en consultancy tot concrete implementatie." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -349,6 +350,19 @@
       max-width: 540px;
       margin: 0 auto;
       line-height: 1.72;
+    }
+    .pillars-headline {
+      font-size: clamp(1.0625rem, 2vw, 1.1875rem);
+      font-weight: 600;
+      color: hsl(20, 12%, 16%);
+      max-width: 560px;
+      margin: 0.625rem auto 0.75rem;
+      line-height: 1.55;
+    }
+    .pillars-sub {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      margin: 0 auto;
     }
 
     /* ── Pillar Cards ──────────────────────────────── */
@@ -1099,6 +1113,16 @@
       pointer-events: none;
     }
 
+    /* ── Hero WebGL Canvas ──────────────────────────── */
+    #hero-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
     /* ── Hero Orbs (CSS-only, GPU-accelerated) ──────── */
     .hero-orb {
       position: absolute;
@@ -1306,6 +1330,7 @@
      HERO
 ════════════════════════════════════════════════════════ -->
 <section class="hero" aria-label="Hero">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
   <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
   <div class="hero-orb hero-orb-3" aria-hidden="true"></div>
@@ -1316,7 +1341,7 @@
     </h1>
 
     <p class="hero-subtitle" data-i18n="hero.subtitle">
-      De menselijke verbinding tussen jouw bedrijf en AI
+      Jouw AI transformatiepartner.
     </p>
 
     <p class="hero-desc" data-i18n="hero.desc">
@@ -1341,11 +1366,9 @@
         <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/></svg>
         <span data-i18n="pillars.chip">Onze diensten</span>
       </div>
-      <h2 class="section-title" data-i18n="pillars.title">Drie pijlers, één missie</h2>
-      <p class="section-lead" data-i18n="pillars.lead">
-        We begeleiden jou door elke fase van de AI-reis — van inzicht en advies
-        tot concrete implementatie in jouw dagelijkse praktijk.
-      </p>
+      <h2 class="section-title" data-i18n="pillars.title">Drie pijlers. Eén missie.</h2>
+      <p class="pillars-headline" data-i18n="pillars.headline">Bedrijven helpen AI op een menselijke, strategische en duurzame manier te omarmen.</p>
+      <p class="pillars-sub" data-i18n="pillars.sub">Dat doen we op 3 manieren:</p>
     </div>
 
     <div class="pillars-grid">
@@ -1368,7 +1391,7 @@
           <span class="tag" data-i18n="edu.t2">Trainingen</span>
           <span class="tag" data-i18n="edu.t3">Begeleiding</span>
         </div>
-        <a href="#contact" class="meer-link">
+        <a href="educatie.html" class="meer-link">
           <span data-i18n="meer">Meer info</span>
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
@@ -1392,7 +1415,7 @@
           <span class="tag" data-i18n="cons.t2">Strategie</span>
           <span class="tag" data-i18n="cons.t3">Advies op maat</span>
         </div>
-        <a href="#contact" class="meer-link">
+        <a href="consultancy.html" class="meer-link">
           <span data-i18n="meer">Meer info</span>
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
@@ -1415,7 +1438,7 @@
           <span class="tag" data-i18n="impl.t2">Automatisering</span>
           <span class="tag" data-i18n="impl.t3">Support</span>
         </div>
-        <a href="#contact" class="meer-link">
+        <a href="implementatie.html" class="meer-link">
           <span data-i18n="meer">Meer info</span>
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
@@ -1540,11 +1563,8 @@
           In een wereld waar technologie sneller verandert dan ooit, groeit de behoefte aan
           begeleiding, duidelijkheid en échte aandacht. Vanuit die behoefte is Sila ontstaan.
         </p>
-        <p class="over-ons-body" data-i18n-html="about.body2">
-          Onze naam is geïnspireerd door het Arabische woord <span class="arabic-word">Sila (صلة)</span>,
-          wat <em>verbinding</em> betekent — en precies dat is wat wij doen. We bouwen bruggen
-          tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via
-          innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.
+        <p class="over-ons-body" data-i18n="about.body2">
+          Al meer dan 3 jaar bouwen we bruggen tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.
         </p>
       </div>
 
@@ -1707,8 +1727,7 @@
       <div>
         <p style="font-family:'Playfair Display',Georgia,serif;font-size:1.25rem;font-weight:600;color:hsl(20,14%,80%);letter-spacing:-0.02em;margin-bottom:0.875rem;">sila</p>
         <p class="footer-tagline" data-i18n="footer.tagline">
-          De menselijke verbinding tussen jouw bedrijf en AI.
-          Begeleiding en persoonlijke aandacht op maat.
+          Jouw AI transformatiepartner. Begeleiding en persoonlijke aandacht op maat.
         </p>
       </div>
 
@@ -1821,11 +1840,12 @@ const T = {
     'nav.refs':        'Referenties',
     'nav.newsletter':  'Nieuwsbrief',
     'nav.contact':     'Contact',
-    'hero.subtitle':'De menselijke verbinding tussen jouw bedrijf en AI',
+    'hero.subtitle':'Jouw AI transformatiepartner.',
     'hero.desc':    'Begeleiding en persoonlijke aandacht in een wereld waarin AI razendsnel verandert.',
     'pillars.chip': 'Onze diensten',
-    'pillars.title':'Drie pijlers, één missie',
-    'pillars.lead': 'We begeleiden jou door elke fase van de AI-reis — van inzicht en advies tot concrete implementatie in jouw dagelijkse praktijk.',
+    'pillars.title':    'Drie pijlers. Eén missie.',
+    'pillars.headline': 'Bedrijven helpen AI op een menselijke, strategische en duurzame manier te omarmen.',
+    'pillars.sub':      'Dat doen we op 3 manieren:',
     'edu.title':    'Educatie',
     'edu.body':     'Begrijp de basis van AI en wat het voor jouw sector kan betekenen. Via workshops, trainingen en persoonlijke begeleiding bouwen we jouw AI-kennis stap voor stap op — op jouw tempo.',
     'edu.t1':       'Workshops', 'edu.t2': 'Trainingen', 'edu.t3': 'Begeleiding',
@@ -1844,7 +1864,7 @@ const T = {
     'about.title':  'Hier wordt AI weer menselijk',
     'about.eyebrow':'Bruggen bouwen tussen mens en technologie',
     'about.body1':  'In een wereld waar technologie sneller verandert dan ooit, groeit de behoefte aan begeleiding, duidelijkheid en échte aandacht. Vanuit die behoefte is Sila ontstaan.',
-    'about.body2':  'Onze naam is geïnspireerd door het Arabische woord Sila (صلة), wat verbinding betekent — en precies dat is wat wij doen. We bouwen bruggen tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.',
+    'about.body2':  'Al meer dan 3 jaar bouwen we bruggen tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.',
     'vision.chip':  'Onze visie',
     'vision.title': 'Wat ons drijft',
     'vision.lead':  'Onze aanpak combineert de nieuwste AI-mogelijkheden met een diepgaand begrip van mensen en organisaties.',
@@ -1862,7 +1882,7 @@ const T = {
     'nl.email':     'jouw@email.com',
     'nl.btn':       'Inschrijven',
     'nl.note':      'Gratis & altijd opzegbaar. Privacy gegarandeerd.',
-    'footer.tagline':'De menselijke verbinding tussen jouw bedrijf en AI. Begeleiding en persoonlijke aandacht op maat.',
+    'footer.tagline':'Jouw AI transformatiepartner. Begeleiding en persoonlijke aandacht op maat.',
     'footer.h1':    'Diensten', 'footer.h2': 'Bedrijf', 'footer.h3': 'Contact',
     'footer.rights':'Alle rechten voorbehouden.',
     'footer.made':  'Gemaakt door Sila',
@@ -1872,7 +1892,7 @@ const T = {
     'hero.voor':    'Voor',
     'chat.you':     'JIJ',
     'chat.error':   'Sorry, er ging iets mis. Probeer het opnieuw.',
-    'about.body2':  'Onze naam is geïnspireerd door het Arabische woord <span class="arabic-word">Sila (صلة)</span>, wat <em>verbinding</em> betekent — en precies dat is wat wij doen. We bouwen bruggen tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.',
+    'about.body2':  'Al meer dan 3 jaar bouwen we bruggen tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.',
   },
   en: {
     'nav.services': 'Services',
@@ -1880,11 +1900,12 @@ const T = {
     'nav.refs':        'References',
     'nav.newsletter':  'Newsletter',
     'nav.contact':     'Contact',
-    'hero.subtitle':'The human connection between your business and AI',
+    'hero.subtitle':'Your AI transformation partner.',
     'hero.desc':    'Personal guidance and attention in a world where AI is changing at lightning speed.',
     'pillars.chip': 'Our services',
-    'pillars.title':'Three pillars, one mission',
-    'pillars.lead': 'We guide you through every phase of the AI journey — from insight and advice to concrete implementation in your daily practice.',
+    'pillars.title':    'Three pillars. One mission.',
+    'pillars.headline': 'Helping companies embrace AI in a human, strategic and sustainable way.',
+    'pillars.sub':      'We do this in 3 ways:',
     'edu.title':    'Education',
     'edu.body':     'Understand the basics of AI and what it can mean for your sector. Through workshops, training and personal guidance, we build your AI knowledge step by step — at your pace.',
     'edu.t1':       'Workshops', 'edu.t2': 'Training', 'edu.t3': 'Coaching',
@@ -1903,7 +1924,7 @@ const T = {
     'about.title':  'This is where AI becomes human again',
     'about.eyebrow':'Building bridges between people and technology',
     'about.body1':  'In a world where technology changes faster than ever, the need for guidance, clarity and genuine attention grows. It is from this need that Sila was born.',
-    'about.body2':  'Our name is inspired by the Arabic word Sila (صلة), meaning connection — and that is exactly what we do. We build bridges between people and AI. Our mission is to strengthen relationships and provide support through innovative AI solutions that people understand and truly need.',
+    'about.body2':  'For over 3 years we have been building bridges between people and AI. Our mission is to strengthen relationships and provide support through innovative AI solutions that people understand and truly need.',
     'vision.chip':  'Our vision',
     'vision.title': 'What drives us',
     'vision.lead':  'Our approach combines the latest AI capabilities with a deep understanding of people and organisations.',
@@ -1921,7 +1942,7 @@ const T = {
     'nl.email':     'your@email.com',
     'nl.btn':       'Subscribe',
     'nl.note':      'Free & always unsubscribable. Privacy guaranteed.',
-    'footer.tagline':'The human connection between your business and AI. Personal guidance tailored to you.',
+    'footer.tagline':'Your AI transformation partner. Personal guidance tailored to you.',
     'footer.h1':    'Services', 'footer.h2': 'Company', 'footer.h3': 'Contact',
     'footer.rights':'All rights reserved.',
     'footer.made':  'Made by Sila',
@@ -1931,7 +1952,7 @@ const T = {
     'hero.voor':    'For',
     'chat.you':     'YOU',
     'chat.error':   'Sorry, something went wrong. Please try again.',
-    'about.body2':  'Our name is inspired by the Arabic word <span class="arabic-word">Sila (صلة)</span>, meaning <em>connection</em> — and that is exactly what we do. We build bridges between people and AI. Our mission is to strengthen relationships and provide support through innovative AI solutions that people understand and truly need.',
+    'about.body2':  'For over 3 years we have been building bridges between people and AI. Our mission is to strengthen relationships and provide support through innovative AI solutions that people understand and truly need.',
   }
 };
 
@@ -2519,7 +2540,7 @@ function autoResize(el) {
   function clearPanel() {
     var l    = typeof currentLang !== 'undefined' ? currentLang : 'nl';
     var isEN = l === 'en';
-    var hint = isEN ? 'Click on a phase to discover more →' : 'Klik op een fase om meer te ontdekken →';
+    var hint = isEN ? 'Click on a phase to discover more' : 'Klik op een fase om meer te ontdekken';
     panel.innerHTML = '<p class="orb-panel-hint">' + hint + '</p>';
   }
 
@@ -2950,6 +2971,153 @@ function autoResize(el) {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.style.pointerEvents !== 'none') closeQuiz();
   });
+})();
+
+// ── GLSL Hills Hero Background ───────────────────────
+(function initHeroHills() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas || typeof THREE === 'undefined') return;
+
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: false,
+    alpha: true,
+    powerPreference: 'low-power'
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.setClearColor(0x000000, 0);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 1, 10000);
+  camera.position.set(0, 16, 125);
+  camera.lookAt(new THREE.Vector3(0, 28, 0));
+
+  const clock = new THREE.Clock();
+  const SPEED = 0.5;
+  const PLANE = 256;
+
+  const uniforms = { time: { type: 'f', value: 0 } };
+
+  const mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(PLANE, PLANE, PLANE, PLANE),
+    new THREE.RawShaderMaterial({
+      uniforms,
+      transparent: true,
+      vertexShader: `
+        #define GLSLIFY 1
+        attribute vec3 position;
+        uniform mat4 projectionMatrix;
+        uniform mat4 modelViewMatrix;
+        uniform float time;
+        varying vec3 vPosition;
+
+        mat4 rotateMatrixX(float r) {
+          return mat4(1,0,0,0, 0,cos(r),-sin(r),0, 0,sin(r),cos(r),0, 0,0,0,1);
+        }
+
+        vec3 mod289v3(vec3 x){return x-floor(x*(1./289.))*289.;}
+        vec4 mod289v4(vec4 x){return x-floor(x*(1./289.))*289.;}
+        vec4 permute(vec4 x){return mod289v4(((x*34.)+1.)*x);}
+        vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
+        vec3 fade(vec3 t){return t*t*t*(t*(t*6.-15.)+10.);}
+
+        float cnoise(vec3 P){
+          vec3 Pi0=floor(P),Pi1=Pi0+1.;
+          Pi0=mod289v3(Pi0);Pi1=mod289v3(Pi1);
+          vec3 Pf0=fract(P),Pf1=Pf0-1.;
+          vec4 ix=vec4(Pi0.x,Pi1.x,Pi0.x,Pi1.x);
+          vec4 iy=vec4(Pi0.yy,Pi1.yy);
+          vec4 iz0=Pi0.zzzz,iz1=Pi1.zzzz;
+          vec4 ixy=permute(permute(ix)+iy);
+          vec4 ixy0=permute(ixy+iz0),ixy1=permute(ixy+iz1);
+          vec4 gx0=ixy0*(1./7.),gy0=fract(floor(gx0)*(1./7.))-.5;
+          gx0=fract(gx0);
+          vec4 gz0=vec4(.5)-abs(gx0)-abs(gy0);
+          vec4 sz0=step(gz0,vec4(0.));
+          gx0-=sz0*(step(0.,gx0)-.5);gy0-=sz0*(step(0.,gy0)-.5);
+          vec4 gx1=ixy1*(1./7.),gy1=fract(floor(gx1)*(1./7.))-.5;
+          gx1=fract(gx1);
+          vec4 gz1=vec4(.5)-abs(gx1)-abs(gy1);
+          vec4 sz1=step(gz1,vec4(0.));
+          gx1-=sz1*(step(0.,gx1)-.5);gy1-=sz1*(step(0.,gy1)-.5);
+          vec3 g000=vec3(gx0.x,gy0.x,gz0.x),g100=vec3(gx0.y,gy0.y,gz0.y);
+          vec3 g010=vec3(gx0.z,gy0.z,gz0.z),g110=vec3(gx0.w,gy0.w,gz0.w);
+          vec3 g001=vec3(gx1.x,gy1.x,gz1.x),g101=vec3(gx1.y,gy1.y,gz1.y);
+          vec3 g011=vec3(gx1.z,gy1.z,gz1.z),g111=vec3(gx1.w,gy1.w,gz1.w);
+          vec4 norm0=taylorInvSqrt(vec4(dot(g000,g000),dot(g010,g010),dot(g100,g100),dot(g110,g110)));
+          g000*=norm0.x;g010*=norm0.y;g100*=norm0.z;g110*=norm0.w;
+          vec4 norm1=taylorInvSqrt(vec4(dot(g001,g001),dot(g011,g011),dot(g101,g101),dot(g111,g111)));
+          g001*=norm1.x;g011*=norm1.y;g101*=norm1.z;g111*=norm1.w;
+          float n000=dot(g000,Pf0),n100=dot(g100,vec3(Pf1.x,Pf0.yz));
+          float n010=dot(g010,vec3(Pf0.x,Pf1.y,Pf0.z)),n110=dot(g110,vec3(Pf1.xy,Pf0.z));
+          float n001=dot(g001,vec3(Pf0.xy,Pf1.z)),n101=dot(g101,vec3(Pf1.x,Pf0.y,Pf1.z));
+          float n011=dot(g011,vec3(Pf0.x,Pf1.yz)),n111=dot(g111,Pf1);
+          vec3 fade_xyz=fade(Pf0);
+          vec4 n_z=mix(vec4(n000,n100,n010,n110),vec4(n001,n101,n011,n111),fade_xyz.z);
+          vec2 n_yz=mix(n_z.xy,n_z.zw,fade_xyz.y);
+          return 2.2*mix(n_yz.x,n_yz.y,fade_xyz.x);
+        }
+
+        void main(void){
+          vec3 p=(rotateMatrixX(radians(90.))*vec4(position,1.)).xyz;
+          float s1=sin(radians(p.x/128.*90.));
+          vec3 np=p+vec3(0.,0.,time*-30.);
+          float n1=cnoise(np*0.08),n2=cnoise(np*0.06),n3=cnoise(np*0.4);
+          vec3 last=p+vec3(0.,
+            n1*s1*8.+n2*s1*8.+n3*(abs(s1)*2.+.5)+pow(s1,2.)*40.
+          ,0.);
+          vPosition=last;
+          gl_Position=projectionMatrix*modelViewMatrix*vec4(last,1.);
+        }
+      `,
+      fragmentShader: `
+        precision highp float;
+        varying vec3 vPosition;
+        void main(void){
+          float opacity=(96.-length(vPosition))/256.*0.5;
+          vec3 color=vec3(0.82,0.48,0.22);
+          gl_FragColor=vec4(color,max(opacity,0.));
+        }
+      `
+    })
+  );
+  scene.add(mesh);
+
+  function resize() {
+    const hero = canvas.parentElement;
+    const w = hero.offsetWidth;
+    const h = hero.offsetHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  }
+
+  let animating = false;
+  let raf;
+
+  function tick() {
+    uniforms.time.value += clock.getDelta() * SPEED;
+    renderer.render(scene, camera);
+    raf = requestAnimationFrame(tick);
+  }
+
+  // Pause when hero scrolls out of view — saves GPU/battery
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      if (!animating) {
+        animating = true;
+        clock.start();
+        tick();
+      }
+    } else {
+      animating = false;
+      cancelAnimationFrame(raf);
+    }
+  }, { threshold: 0.01 });
+
+  observer.observe(canvas.parentElement);
+  window.addEventListener('resize', resize);
+  resize();
 })();
 
 // Show welcome badge after 3s if chat hasn't been opened
