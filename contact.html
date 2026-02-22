@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Sila AI</title>
+  <meta name="description" content="Neem contact op met Sila. We horen graag van je." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans:    ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Playfair Display', 'Georgia', 'serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      --primary:        hsl(16, 82%, 54%);
+      --primary-h:      hsl(16, 82%, 48%);
+      --primary-light:  hsl(16, 85%, 96%);
+      --primary-border: hsl(16, 60%, 84%);
+      --bg:             hsl(30, 20%, 97%);
+      --fg:             hsl(20, 12%, 13%);
+      --muted:          hsl(20, 10%, 48%);
+      --border:         hsl(20, 18%, 89%);
+      --dark:           hsl(20, 8%, 10%);
+      --dark-muted:     hsl(20, 10%, 50%);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: hsl(20, 18%, 93%); }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,.17); border-radius: 10px; }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    @media (min-width: 768px)  { .wrap { padding: 0 2.5rem; } }
+    @media (min-width: 1100px) { .wrap { padding: 0 3rem; } }
+
+    /* ── Top Bar ── */
+    .top-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 2rem;
+      background: rgba(253, 251, 248, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,.05);
+    }
+    @media (max-width: 540px) { .top-bar { padding: 0.65rem 1.125rem; } }
+
+    .top-bar-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: var(--fg);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .top-bar-logo:hover { color: var(--primary); }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8375rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.38rem 0.9rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .back-btn:hover { background: var(--primary-light); color: var(--primary); border-color: var(--primary-border); }
+    .back-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+    /* ── Lang Toggle ── */
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: hsl(20, 18%, 93%);
+      border-radius: 9999px;
+      padding: 3px;
+      border: 1px solid var(--border);
+    }
+    .lang-btn {
+      padding: 0.28rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-family: inherit;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .lang-btn.active {
+      background: #fff;
+      color: var(--fg);
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+
+    /* ── Main Content ── */
+    .page-body {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7rem 1.5rem 5rem;
+      position: relative;
+    }
+
+    .page-body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 10% 30%, rgba(217,92,33,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 90% 70%, rgba(140,80,200,0.04) 0%, transparent 60%),
+        var(--bg);
+      pointer-events: none;
+    }
+
+    .contact-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* Eyebrow chip */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.3rem 0.875rem;
+      border-radius: 9999px;
+      font-size: 0.775rem;
+      font-weight: 500;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      letter-spacing: 0.01em;
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: hsl(20, 12%, 10%);
+      margin-bottom: 0.875rem;
+    }
+    .contact-title em { font-style: italic; color: var(--primary); }
+
+    .contact-lead {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── Form Card ── */
+    .form-card {
+      background: #fff;
+      border-radius: 1.5rem;
+      padding: 2.25rem;
+      border: 1px solid hsl(20, 18%, 91%);
+      box-shadow:
+        0 4px 24px rgba(0,0,0,.04),
+        0 1px 4px rgba(0,0,0,.03);
+    }
+    @media (max-width: 540px) {
+      .form-card { padding: 1.625rem 1.375rem; border-radius: 1.25rem; }
+    }
+
+    /* ── Form Elements ── */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+    .form-group:last-of-type { margin-bottom: 0; }
+
+    label {
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: hsl(20, 12%, 22%);
+      letter-spacing: 0.01em;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 0.78rem 1rem;
+      border-radius: 0.75rem;
+      border: 1.5px solid hsl(20, 18%, 89%);
+      background: hsl(30, 18%, 99%);
+      font-size: 0.9375rem;
+      font-family: inherit;
+      color: var(--fg);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: hsl(20, 10%, 62%); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(220, 90, 20, 0.1);
+    }
+
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='none' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    /* ── Submit Button ── */
+    .btn-submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.9rem 2rem;
+      margin-top: 1.625rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, hsl(16,82%,50%) 0%, hsl(16,82%,54%) 50%, hsl(16,82%,48%) 100%);
+      background-size: 220% 100%;
+      background-position: 100% 0%;
+      color: #fff;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 2px 10px rgba(220,90,20,.22);
+      transition: background-position 0.42s cubic-bezier(0.22,1,0.36,1), transform 0.18s, box-shadow 0.22s;
+    }
+    .btn-submit:hover {
+      background-position: 0% 0%;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(220,90,20,.38);
+    }
+    .btn-submit:active { transform: scale(0.97); box-shadow: none; }
+    .btn-submit:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn-submit svg { transition: transform 0.22s ease; }
+    .btn-submit:hover svg { transform: translateX(4px); }
+
+    /* ── Success ── */
+    #contact-success {
+      display: none;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      animation: fadeUp 0.5s ease-out forwards;
+    }
+    .success-icon {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: hsl(142, 68%, 91%);
+      border: 1px solid hsl(142, 50%, 78%);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+      color: hsl(142, 60%, 28%);
+    }
+    .success-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: hsl(20, 12%, 10%);
+      margin-bottom: 0.625rem;
+    }
+    .success-body {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 380px;
+      margin: 0 auto 1.5rem;
+    }
+    .back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--primary);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+    .back-home:hover { gap: 0.65rem; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Floating Nav ── */
+    .floating-nav {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      background: rgba(255,255,255,.93);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(0,0,0,.07);
+      border-radius: 9999px;
+      padding: 0.45rem 0.6rem;
+      box-shadow: 0 4px 28px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
+    }
+    .nav-link {
+      padding: 0.42rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: hsl(20, 10%, 44%);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-link:hover { background: hsl(20, 18%, 93%); color: var(--fg); }
+    .nav-cta {
+      padding: 0.42rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, hsl(16,82%,50%) 0%, hsl(16,82%,54%) 50%, hsl(16,82%,48%) 100%);
+      background-size: 220% 100%;
+      background-position: 100% 0%;
+      color: #fff;
+      text-decoration: none;
+      transition: background-position 0.38s cubic-bezier(0.22,1,0.36,1), transform 0.15s;
+      box-shadow: 0 2px 8px rgba(220,90,20,.22);
+    }
+    .nav-cta:hover { background-position: 0% 0%; transform: translateY(-1px); }
+    @media (max-width: 540px) {
+      .nav-link.mob-hide { display: none; }
+      .floating-nav { bottom: 1rem; }
+    }
+    svg { display: inline-block; vertical-align: middle; }
+
+    /* Required indicator */
+    .req { color: var(--primary); margin-left: 2px; }
+  </style>
+</head>
+<body>
+
+<!-- ── Top Bar ── -->
+<header class="top-bar">
+  <a href="javascript:history.back()" class="back-btn" id="back-btn-el" aria-label="Terug">
+    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M13 8H3M7 4l-4 4 4 4"/>
+    </svg>
+    <span data-i18n="back">Terug</span>
+  </a>
+  <a href="index.html" class="top-bar-logo" aria-label="Sila – Home">sila</a>
+  <div class="lang-toggle" role="group" aria-label="Taalwissel">
+    <button class="lang-btn active" data-lang="nl" onclick="setLang('nl', this)">NL</button>
+    <button class="lang-btn"        data-lang="en" onclick="setLang('en', this)">EN</button>
+  </div>
+</header>
+
+<!-- ── Floating Nav ── -->
+<nav class="floating-nav" aria-label="Hoofdnavigatie">
+  <a href="index.html#diensten"    class="nav-link mob-hide" data-i18n="nav.services">Diensten</a>
+  <a href="index.html#over-ons"    class="nav-link mob-hide" data-i18n="nav.about">Over ons</a>
+  <a href="index.html#referenties" class="nav-link mob-hide" data-i18n="nav.refs">Referenties</a>
+  <a href="index.html#nieuwsbrief" class="nav-link mob-hide" data-i18n="nav.newsletter">Nieuwsbrief</a>
+  <a href="contact.html"           class="nav-cta"           data-i18n="nav.contact">Contact</a>
+</nav>
+
+<!-- ── Main Content ── -->
+<main class="page-body">
+  <div class="contact-wrapper">
+
+    <div class="chip">
+      <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true">
+        <polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/>
+      </svg>
+      <span data-i18n="contact.chip">Contact</span>
+    </div>
+
+    <h1 class="contact-title" data-i18n-html="contact.title">Laten we <em>kennismaken</em></h1>
+    <p class="contact-lead" data-i18n="contact.lead">
+      Vul het formulier in en we nemen zo snel mogelijk contact met je op.
+    </p>
+
+    <div class="form-card">
+
+      <form id="contact-form" novalidate>
+
+        <div class="form-row">
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="cf-voornaam"><span data-i18n="contact.voornaam">Voornaam</span><span class="req">*</span></label>
+            <input
+              type="text"
+              id="cf-voornaam"
+              class="form-input"
+              data-i18n-ph="contact.voornaam_ph"
+              placeholder="Sophie"
+              required
+              autocomplete="given-name"
+              aria-required="true"
+            />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="cf-achternaam"><span data-i18n="contact.achternaam">Achternaam</span><span class="req">*</span></label>
+            <input
+              type="text"
+              id="cf-achternaam"
+              class="form-input"
+              data-i18n-ph="contact.achternaam_ph"
+              placeholder="van den Berg"
+              required
+              autocomplete="family-name"
+              aria-required="true"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cf-email"><span data-i18n="contact.email">E-mailadres</span><span class="req">*</span></label>
+          <input
+            type="email"
+            id="cf-email"
+            class="form-input"
+            data-i18n-ph="contact.email_ph"
+            placeholder="jouw@email.com"
+            required
+            autocomplete="email"
+            aria-required="true"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="cf-onderwerp"><span data-i18n="contact.onderwerp">Onderwerp</span><span class="req">*</span></label>
+          <select id="cf-onderwerp" class="form-select" required aria-required="true">
+            <option value="" data-i18n="contact.onderwerp_ph">Selecteer een onderwerp</option>
+            <option value="Educatie" data-i18n="contact.edu">Educatie</option>
+            <option value="Consultancy" data-i18n="contact.cons">Consultancy</option>
+            <option value="Implementatie" data-i18n="contact.impl">Implementatie</option>
+            <option value="Samenwerking" data-i18n="contact.samenw">Samenwerking</option>
+            <option value="Overig" data-i18n="contact.overig">Overig</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="cf-bedrijf"><span data-i18n="contact.bedrijf">Bedrijfsnaam</span> <span style="font-weight:400;color:var(--muted);font-size:0.75rem;" data-i18n="contact.optioneel">(optioneel)</span></label>
+          <input
+            type="text"
+            id="cf-bedrijf"
+            class="form-input"
+            data-i18n-ph="contact.bedrijf_ph"
+            placeholder="Jouw bedrijf"
+            autocomplete="organization"
+          />
+        </div>
+
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="cf-bericht"><span data-i18n="contact.bericht">Bericht</span><span class="req">*</span></label>
+          <textarea
+            id="cf-bericht"
+            class="form-textarea"
+            data-i18n-ph="contact.bericht_ph"
+            placeholder="Vertel ons kort waarmee we je kunnen helpen..."
+            required
+            aria-required="true"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" id="contact-submit-btn">
+          <span id="contact-btn-text" data-i18n="contact.btn">Verstuur bericht</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </button>
+
+      </form>
+
+      <!-- Success State -->
+      <div id="contact-success">
+        <div class="success-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h2 class="success-title" id="success-title"></h2>
+        <p class="success-body" id="success-body"></p>
+        <a href="index.html" class="back-home">
+          <span data-i18n="contact.terug_home">Terug naar home</span>
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<script>
+/* ─────────────────────────────────────────────────────────
+   TRANSLATIONS
+───────────────────────────────────────────────────────── */
+const T = {
+  nl: {
+    'back': 'Terug',
+    'nav.services': 'Diensten',
+    'nav.about':    'Over ons',
+    'nav.refs':     'Referenties',
+    'nav.newsletter': 'Nieuwsbrief',
+    'nav.contact':  'Contact',
+    'contact.chip': 'Contact',
+    'contact.title': 'Laten we <em>kennismaken</em>',
+    'contact.lead': 'Vul het formulier in en we nemen zo snel mogelijk contact met je op.',
+    'contact.voornaam': 'Voornaam',
+    'contact.voornaam_ph': 'Sophie',
+    'contact.achternaam': 'Achternaam',
+    'contact.achternaam_ph': 'van den Berg',
+    'contact.email': 'E-mailadres',
+    'contact.email_ph': 'jouw@email.com',
+    'contact.onderwerp': 'Onderwerp',
+    'contact.onderwerp_ph': 'Selecteer een onderwerp',
+    'contact.edu': 'Educatie',
+    'contact.cons': 'Consultancy',
+    'contact.impl': 'Implementatie',
+    'contact.samenw': 'Samenwerking',
+    'contact.overig': 'Overig',
+    'contact.bedrijf': 'Bedrijfsnaam',
+    'contact.bedrijf_ph': 'Jouw bedrijf',
+    'contact.optioneel': '(optioneel)',
+    'contact.bericht': 'Bericht',
+    'contact.bericht_ph': 'Vertel ons kort waarmee we je kunnen helpen...',
+    'contact.btn': 'Verstuur bericht',
+    'contact.sending': 'Verzenden…',
+    'contact.terug_home': 'Terug naar home',
+    'contact.success_title': 'Bericht ontvangen!',
+    'contact.success_body': 'Bedankt voor je bericht. We nemen zo snel mogelijk contact met je op — meestal binnen één werkdag.',
+  },
+  en: {
+    'back': 'Back',
+    'nav.services': 'Services',
+    'nav.about':    'About',
+    'nav.refs':     'References',
+    'nav.newsletter': 'Newsletter',
+    'nav.contact':  'Contact',
+    'contact.chip': 'Contact',
+    'contact.title': 'Let\'s <em>connect</em>',
+    'contact.lead': 'Fill in the form and we\'ll get back to you as soon as possible.',
+    'contact.voornaam': 'First name',
+    'contact.voornaam_ph': 'John',
+    'contact.achternaam': 'Last name',
+    'contact.achternaam_ph': 'Smith',
+    'contact.email': 'Email address',
+    'contact.email_ph': 'your@email.com',
+    'contact.onderwerp': 'Subject',
+    'contact.onderwerp_ph': 'Select a subject',
+    'contact.edu': 'Education',
+    'contact.cons': 'Consultancy',
+    'contact.impl': 'Implementation',
+    'contact.samenw': 'Collaboration',
+    'contact.overig': 'Other',
+    'contact.bedrijf': 'Company name',
+    'contact.bedrijf_ph': 'Your company',
+    'contact.optioneel': '(optional)',
+    'contact.bericht': 'Message',
+    'contact.bericht_ph': 'Tell us briefly how we can help you...',
+    'contact.btn': 'Send message',
+    'contact.sending': 'Sending…',
+    'contact.terug_home': 'Back to home',
+    'contact.success_title': 'Message received!',
+    'contact.success_body': 'Thank you for your message. We\'ll get back to you as soon as possible — usually within one business day.',
+  }
+};
+
+let currentLang = 'nl';
+
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (T[lang][key] !== undefined) el.textContent = T[lang][key];
+  });
+
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (T[lang][key] !== undefined) el.innerHTML = T[lang][key];
+  });
+
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if (T[lang][key] !== undefined) el.placeholder = T[lang][key];
+  });
+
+  // Options for select
+  document.querySelectorAll('option[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (T[lang][key] !== undefined) el.textContent = T[lang][key];
+  });
+
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+}
+
+function setLang(lang) { applyLang(lang); }
+
+/* Detect if URL has lang param or referrer lang */
+const urlLang = new URLSearchParams(window.location.search).get('lang');
+if (urlLang === 'en') applyLang('en');
+
+/* Pre-fill subject from URL param */
+const subjectParam = new URLSearchParams(window.location.search).get('subject');
+if (subjectParam) {
+  const sel = document.getElementById('cf-onderwerp');
+  if (sel) {
+    for (const opt of sel.options) {
+      if (opt.value === subjectParam) { sel.value = subjectParam; break; }
+    }
+  }
+}
+
+/* Pre-fill bericht from URL param */
+const berichtParam = new URLSearchParams(window.location.search).get('bericht');
+if (berichtParam) {
+  const ta = document.getElementById('cf-bericht');
+  if (ta) ta.value = berichtParam;
+}
+
+/* ─────────────────────────────────────────────────────────
+   FORM SUBMIT
+───────────────────────────────────────────────────────── */
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const voornaam   = document.getElementById('cf-voornaam').value.trim();
+  const achternaam = document.getElementById('cf-achternaam').value.trim();
+  const email      = document.getElementById('cf-email').value.trim();
+  const onderwerp  = document.getElementById('cf-onderwerp').value;
+  const bedrijf    = document.getElementById('cf-bedrijf').value.trim();
+  const bericht    = document.getElementById('cf-bericht').value.trim();
+
+  if (!voornaam || !achternaam || !email || !onderwerp || !bericht) {
+    // Basic validation — highlight empty required fields
+    [
+      { id: 'cf-voornaam', val: voornaam },
+      { id: 'cf-achternaam', val: achternaam },
+      { id: 'cf-email', val: email },
+      { id: 'cf-onderwerp', val: onderwerp },
+      { id: 'cf-bericht', val: bericht },
+    ].forEach(({ id, val }) => {
+      const el = document.getElementById(id);
+      if (!val) {
+        el.style.borderColor = 'hsl(0,72%,60%)';
+        el.style.boxShadow   = '0 0 0 3px rgba(220,50,30,.1)';
+      }
+    });
+    return;
+  }
+
+  const btn = document.getElementById('contact-submit-btn');
+  const btnText = document.getElementById('contact-btn-text');
+  btn.disabled = true;
+  btnText.textContent = T[currentLang]['contact.sending'];
+
+  const payload = { voornaam, achternaam, email, onderwerp, bedrijf, bericht, lang: currentLang };
+
+  try {
+    await fetch('https://sila-ai.app.n8n.cloud/webhook/contact-form', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } catch (err) {
+    console.warn('Contact webhook error:', err);
+  }
+
+  // Always show success
+  this.style.display = 'none';
+  const successEl = document.getElementById('contact-success');
+  document.getElementById('success-title').textContent = T[currentLang]['contact.success_title'];
+  document.getElementById('success-body').textContent  = T[currentLang]['contact.success_body'];
+  successEl.style.display = 'block';
+});
+
+/* Reset error border on input */
+document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(el => {
+  el.addEventListener('input', function() {
+    this.style.borderColor = '';
+    this.style.boxShadow   = '';
+  });
+});
+</script>
+</body>
+</html>

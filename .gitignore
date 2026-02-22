@@ -10,11 +10,11 @@ package-lock.json
 # Tijdelijke bestanden
 temporary screenshots/
 
-# Grote bestanden
-Sila AI Homepage.pdf
+# Referentiemateriaal (niet nodig voor de website)
+references/
 
 # Projectdocumentatie
-CLAUDE MD website.md
+Claude.md
 
 # OS bestanden
 .DS_Store
