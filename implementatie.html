@@ -298,6 +298,41 @@
     }
     .hero-cta:hover .hero-cta-arrow { transform: translateY(3px); }
 
+    /* ── Scroll hint ────────────────────────────────── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.9s ease-out forwards;
+    }
+    .scroll-hint span {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      font-weight: 500;
+    }
+    .scroll-arrow {
+      width: 1px;
+      height: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,.25), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(0.8); }
+      50%       { opacity: 1;   transform: scaleY(1); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
     /* ── Section base ──────────────────────────────── */
     .section {
       padding: 6rem 0;
@@ -959,14 +994,19 @@
         03 — Implementatie
       </div>
       <h1 class="hero-heading">
-        Van idee naar<br>
-        <em>uitvoering</em>
+        Van concept tot<br>
+        <em>werkend product</em>
       </h1>
       <p class="hero-body" data-i18n="impl.hero_body">
-        Laat je idee op maat bouwen zodat je direct gebruik kunt maken van AI.
+        Van idee naar praktijk.
       </p>
     </div>
+  <div class="scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
   </section>
+
 
   <!-- Custom Solutions Section -->
   <section class="custom-section">
@@ -986,7 +1026,9 @@
         <span class="ticker-item"><span class="ticker-dot"></span>Workflows</span>
         <span class="ticker-item"><span class="ticker-dot"></span>Voice Agents</span>
         <span class="ticker-item"><span class="ticker-dot"></span>Websites</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Nieuwsbrieven automatiseren</span>
         <span class="ticker-item"><span class="ticker-dot"></span>AI video's</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Dashboards bouwen</span>
         <span class="ticker-item"><span class="ticker-dot"></span>AI animaties</span>
         <span class="ticker-item"><span class="ticker-dot"></span>Voice Cloning</span>
         <span class="ticker-item"><span class="ticker-dot"></span>RAG Systemen</span>
@@ -999,7 +1041,9 @@
         <span class="ticker-item"><span class="ticker-dot"></span>Workflows</span>
         <span class="ticker-item"><span class="ticker-dot"></span>Voice Agents</span>
         <span class="ticker-item"><span class="ticker-dot"></span>Websites</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Nieuwsbrieven automatiseren</span>
         <span class="ticker-item"><span class="ticker-dot"></span>AI video's</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Dashboards bouwen</span>
         <span class="ticker-item"><span class="ticker-dot"></span>AI animaties</span>
         <span class="ticker-item"><span class="ticker-dot"></span>Voice Cloning</span>
         <span class="ticker-item"><span class="ticker-dot"></span>RAG Systemen</span>
@@ -1060,10 +1104,10 @@
       <div class="carousel-header fade-up">
         <div class="section-label">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="4"/></svg>
-          Voorbeelden
+          Inspiratie
         </div>
         <h2 class="section-title">Wat we al hebben gebouwd</h2>
-        <p class="section-subtitle">Bekijk wat we al hebben gebouwd voor onze klanten.</p>
+        <p class="section-subtitle">Laat je inspireren met wat we al eerder hebben gebouwd voor onze klanten.</p>
       </div>
 
       <div class="carousel-wrapper fade-up fade-up-delay-1">
@@ -1220,7 +1264,7 @@
           Workflows
         </div>
         <h2 class="section-title">Kant-en-klare workflows</h2>
-        <p class="section-subtitle">Bewezen oplossingen die je direct kunt inzetten. Wij installeren en configureren alles voor jou.</p>
+        <p class="section-subtitle">Heb je behoefte aan een kant-en-klare workflow, of eentje die toevallig bij jouw proces past? Check hieronder of er eentje voor jou tussenzit!</p>
       </div>
 
       <div class="workflows-grid">
@@ -1234,8 +1278,7 @@
           <h3 class="workflow-title">Automatische Lead Kwalificatie</h3>
           <p class="workflow-body">Een workflow die inkomende leads automatisch scoort en doorstuurt naar de juiste persoon. Bespaart uren handmatig werk per week.</p>
           <div class="tech-tags">
-            <span class="tech-tag">n8n</span>
-            <span class="tech-tag">OpenAI</span>
+            <span class="tech-tag">AI Model</span>
             <span class="tech-tag">Google Sheets</span>
           </div>
           <div class="workflow-footer" style="justify-content:flex-end;">
@@ -1257,7 +1300,7 @@
           <h3 class="workflow-title">AI Klantenservice Bot</h3>
           <p class="workflow-body">Een slimme chatbot die 80% van de veelgestelde vragen beantwoordt, getraind op jouw kennisbank en FAQ's.</p>
           <div class="tech-tags">
-            <span class="tech-tag">ChatGPT API</span>
+            <span class="tech-tag">AI Model</span>
             <span class="tech-tag">Voiceflow</span>
             <span class="tech-tag">Zapier</span>
           </div>
@@ -1303,8 +1346,7 @@
           <h3 class="workflow-title">Offertes Generator</h3>
           <p class="workflow-body">Genereer professionele offertes op basis van een kort gesprek of formulier. Inclusief automatische follow-ups.</p>
           <div class="tech-tags">
-            <span class="tech-tag">n8n</span>
-            <span class="tech-tag">OpenAI</span>
+            <span class="tech-tag">AI Model</span>
             <span class="tech-tag">PDF Generator</span>
           </div>
           <div class="workflow-footer" style="justify-content:flex-end;">
@@ -1329,16 +1371,16 @@
           <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="4"/></svg>
           Klaar om te starten
         </div>
-        <h2 class="bottom-cta-title" data-i18n="impl.cta_title">Klaar om te automatiseren?</h2>
+        <h2 class="bottom-cta-title" data-i18n="impl.cta_title">Klaar om je AI idee in werking te brengen?</h2>
         <p class="bottom-cta-body" data-i18n="impl.cta_body">Laat ons weten wat je wilt bereiken. We denken graag met je mee.</p>
         <div class="bottom-cta-actions">
-          <a href="contact.html" class="btn-primary">
+          <a href="contact.html?bericht=Hi+Sila%2C+ik+wil+met+jou+een+implementatie+project+starten.+Kan+dat%3F" class="btn-primary">
             <span data-i18n="impl.cta_start">Start een project</span>
             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="5 8 10 8 7 5"/><polyline points="7 11 10 8"/>
             </svg>
           </a>
-          <a href="contact.html" class="btn-secondary" data-i18n="impl.cta_discuss">
+          <a href="contact.html?bericht=Hi+Sila%2C+ik+wil+met+jou+een+implementatie+project+starten.+Kan+dat%3F" class="btn-secondary" data-i18n="impl.cta_discuss">
             Bespreek jouw idee
           </a>
         </div>
@@ -1349,7 +1391,7 @@
   <!-- Floating Bottom Nav -->
   <nav class="floating-nav" aria-label="Hoofdnavigatie">
     <a href="index.html#diensten" class="nav-link mob-hide" data-i18n="nav.services">Diensten</a>
-    <a href="index.html#over-ons" class="nav-link mob-hide" data-i18n="nav.about">Over ons</a>
+    <a href="over-ons.html" class="nav-link mob-hide" data-i18n="nav.about">Over ons</a>
     <a href="index.html#referenties" class="nav-link mob-hide" data-i18n="nav.references">Referenties</a>
     <a href="index.html#nieuwsbrief" class="nav-link mob-hide" data-i18n="nav.newsletter">Nieuwsbrief</a>
     <a href="contact.html" class="nav-cta" data-i18n="nav.contact">Contact</a>
@@ -1571,15 +1613,22 @@
 
 /* ── Chatbot ───────────────────────────────────────── */
 const N8N_WEBHOOK_URL = 'https://sila-ai.app.n8n.cloud/webhook/d33eb148-1a2b-48a9-a823-0f818b56cf50';
-const chatBtn    = document.getElementById('chat-btn');
-const chatWindow = document.getElementById('chat-window');
-const chatInput  = document.getElementById('chat-input');
-const chatSend   = document.getElementById('chat-send');
-const chatMsgs   = document.getElementById('chat-messages');
+let chatBtn, chatWindow, chatInput, chatSend, chatMsgs;
 let chatOpen = false, chatInitialised = false;
 const sessionId = 'sila-' + Math.random().toString(36).slice(2);
 
+function initChatEls() {
+  if (!chatBtn) {
+    chatBtn    = document.getElementById('chat-btn');
+    chatWindow = document.getElementById('chat-window');
+    chatInput  = document.getElementById('chat-input');
+    chatSend   = document.getElementById('chat-send');
+    chatMsgs   = document.getElementById('chat-messages');
+  }
+}
+
 function toggleChat() {
+  initChatEls();
   chatOpen = !chatOpen;
   chatBtn.classList.toggle('open', chatOpen);
   chatWindow.classList.toggle('open', chatOpen);
@@ -1616,6 +1665,7 @@ function showTyping() {
 }
 function hideTyping() { const i = document.getElementById('typing-indicator'); if (i) i.remove(); }
 async function sendMessage() {
+  initChatEls();
   const text = chatInput.value.trim(); if (!text) return;
   chatInput.value = ''; autoResize(chatInput); chatSend.disabled = true;
   addMsg('user', text); showTyping();

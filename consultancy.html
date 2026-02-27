@@ -1114,8 +1114,8 @@
           <div class="process-step-top">
             <div class="process-number">01</div>
             <div class="process-step-content">
-              <div class="process-step-name">Boek</div>
-              <p class="process-step-desc">Kies een sessie en plan een moment dat past bij jouw agenda.</p>
+              <div class="process-step-name">Inplannen</div>
+              <p class="process-step-desc">We plannen een sessie in die past bij onze agenda.</p>
             </div>
           </div>
         </div>
@@ -1181,7 +1181,7 @@
   <!-- ── Floating Nav ─────────────────────────────────── -->
   <nav class="floating-nav" aria-label="Hoofdnavigatie">
     <a href="index.html#diensten"    class="nav-link mob-hide" data-i18n="nav.services">Diensten</a>
-    <a href="index.html#over-ons"    class="nav-link mob-hide" data-i18n="nav.about">Over ons</a>
+    <a href="over-ons.html"          class="nav-link mob-hide" data-i18n="nav.about">Over ons</a>
     <a href="index.html#referenties" class="nav-link mob-hide" data-i18n="nav.refs">Referenties</a>
     <a href="index.html#nieuwsbrief" class="nav-link mob-hide" data-i18n="nav.newsletter">Nieuwsbrief</a>
     <a href="contact.html"           class="nav-cta"           data-i18n="nav.contact">Contact</a>
@@ -1237,15 +1237,22 @@ function setLang(lang) { applyLang(lang); }
 
 /* ── Chatbot ───────────────────────────────────────── */
 const N8N_WEBHOOK_URL = 'https://sila-ai.app.n8n.cloud/webhook/d33eb148-1a2b-48a9-a823-0f818b56cf50';
-const chatBtn    = document.getElementById('chat-btn');
-const chatWindow = document.getElementById('chat-window');
-const chatInput  = document.getElementById('chat-input');
-const chatSend   = document.getElementById('chat-send');
-const chatMsgs   = document.getElementById('chat-messages');
+let chatBtn, chatWindow, chatInput, chatSend, chatMsgs;
 let chatOpen = false, chatInitialised = false;
 const sessionId = 'sila-' + Math.random().toString(36).slice(2);
 
+function initChatEls() {
+  if (!chatBtn) {
+    chatBtn    = document.getElementById('chat-btn');
+    chatWindow = document.getElementById('chat-window');
+    chatInput  = document.getElementById('chat-input');
+    chatSend   = document.getElementById('chat-send');
+    chatMsgs   = document.getElementById('chat-messages');
+  }
+}
+
 function toggleChat() {
+  initChatEls();
   chatOpen = !chatOpen;
   chatBtn.classList.toggle('open', chatOpen);
   chatWindow.classList.toggle('open', chatOpen);
@@ -1282,6 +1289,7 @@ function showTyping() {
 }
 function hideTyping() { const i = document.getElementById('typing-indicator'); if (i) i.remove(); }
 async function sendMessage() {
+  initChatEls();
   const text = chatInput.value.trim(); if (!text) return;
   chatInput.value = ''; autoResize(chatInput); chatSend.disabled = true;
   addMsg('user', text); showTyping();
