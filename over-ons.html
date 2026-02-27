@@ -596,10 +596,16 @@
       gap: 2rem;
       text-align: center;
     }
-    @media (max-width: 720px) {
+    @media (max-width: 900px) {
       .stats-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 2.5rem 1.5rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem 1rem;
       }
     }
 
@@ -705,6 +711,78 @@
       max-width: 480px;
       margin-left: auto;
       margin-right: auto;
+    }
+
+    /* ── Google Calendar Boekingskaart ────────────── */
+    .cal-book-card {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin-top: 2rem;
+      padding: 1.25rem 1.5rem;
+      background: #fff;
+      border: 1px solid var(--primary-border);
+      border-radius: 16px;
+      text-decoration: none;
+      color: var(--text);
+      max-width: 480px;
+      width: 100%;
+      box-shadow:
+        0 4px 20px rgba(0,0,0,.06),
+        0 1px 4px rgba(0,0,0,.04);
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 0.2s ease;
+    }
+    .cal-book-card:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 8px 32px rgba(0,0,0,.1),
+        0 2px 8px rgba(0,0,0,.06);
+      border-color: var(--primary);
+    }
+    .cal-book-card:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 3px;
+    }
+    .cal-book-card:active { transform: translateY(0); }
+    .cal-book-icon {
+      flex-shrink: 0;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+    }
+    .cal-book-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      text-align: left;
+    }
+    .cal-book-title {
+      font-weight: 600;
+      font-size: 0.9375rem;
+      color: var(--text);
+    }
+    .cal-book-sub {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .cal-book-arrow {
+      flex-shrink: 0;
+      color: var(--primary);
+      opacity: 0.7;
+      transition: opacity 0.18s, transform 0.18s;
+    }
+    .cal-book-card:hover .cal-book-arrow {
+      opacity: 1;
+      transform: translateX(3px);
     }
 
     /* ── Footer ───────────────────────────────────── */
@@ -1014,23 +1092,23 @@
     <div class="stats-grid">
 
       <div class="reveal reveal-delay-1" style="transition-delay:.05s;">
-        <div class="stat-number">3<span>+</span></div>
+        <div class="stat-number"><span class="stat-counter" data-target="3" data-suffix="+">0</span><span>+</span></div>
         <div class="stat-label">jaar bezig<br>met AI</div>
       </div>
 
       <div class="reveal reveal-delay-2" style="transition-delay:.12s;">
-        <div class="stat-number">15<span>+</span></div>
+        <div class="stat-number"><span class="stat-counter" data-target="35" data-suffix="+">0</span><span>+</span></div>
         <div class="stat-label">projecten<br>gerealiseerd</div>
       </div>
 
       <div class="reveal reveal-delay-3" style="transition-delay:.19s;">
-        <div class="stat-number">3</div>
-        <div class="stat-label">sectoren<br>bediend</div>
+        <div class="stat-number"><span class="stat-counter" data-target="100" data-suffix="%">0</span><span>%</span></div>
+        <div class="stat-label">op maat<br>gemaakt</div>
       </div>
 
       <div class="reveal reveal-delay-4" style="transition-delay:.26s;">
-        <div class="stat-number">100<span>%</span></div>
-        <div class="stat-label">op maat<br>gemaakt</div>
+        <div class="stat-number"><span class="stat-counter" data-target="1000" data-suffix="+">0</span><span>+</span></div>
+        <div class="stat-label">uren bespaard<br>voor klanten</div>
       </div>
 
     </div>
@@ -1051,8 +1129,28 @@
       <h2 class="cta-title">Klaar om samen te <em>werken</em>?</h2>
       <p class="cta-body">Samen kijken we wat AI voor jouw organisatie kan betekenen. Vrijblijvend, eerlijk en op maat.</p>
       <a href="contact.html?bericht=Hi+Sila%2C+ik+wil+graag+kennismaken+en+bespreken+wat+AI+voor+mij+kan+betekenen." class="btn-primary">
-        Plan een gesprek
+        Neem contact op
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+
+      <!-- Google Calendar Booking -->
+      <a
+        href="https://calendar.app.google/ChK3GTUb3qX93V6Y7"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="cal-book-card"
+        aria-label="Plan een gesprek via Google Calendar"
+      >
+        <span class="cal-book-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </span>
+        <span class="cal-book-text">
+          <span class="cal-book-title">Kies een moment</span>
+          <span class="cal-book-sub">Gratis kennismakingsgesprek — direct in je agenda</span>
+        </span>
+        <span class="cal-book-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </span>
       </a>
     </div>
   </div>
@@ -1124,6 +1222,30 @@ const revealObs = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 reveals.forEach(el => revealObs.observe(el));
+
+/* ── Stat counter animaties ── */
+document.querySelectorAll('.stat-counter').forEach(el => {
+  const target = parseInt(el.dataset.target, 10);
+  const duration = target >= 500 ? 2000 : target >= 50 ? 1600 : 1200;
+  let started = false;
+  const obs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !started) {
+      started = true;
+      obs.disconnect();
+      const startTime = performance.now();
+      function tick(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = Math.round(eased * target);
+        el.textContent = value >= 1000 ? value.toLocaleString('nl-NL') : value;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+  }, { threshold: 0.3 });
+  obs.observe(el.closest('.reveal') || el);
+});
 
 /* ── Chatbot ── */
 const N8N_WEBHOOK_URL = 'https://sila-ai.app.n8n.cloud/webhook/d33eb148-1a2b-48a9-a823-0f818b56cf50';
