@@ -16,5 +16,9 @@ references/
 # Projectdocumentatie
 Claude.md
 
+# Omgevingsvariabelen (nooit pushen)
+.env
+.env.local
+
 # OS bestanden
 .DS_Store
