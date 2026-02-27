@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NGBWZBXYP2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NGBWZBXYP2');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sila — Jouw AI transformatiepartner</title>
@@ -1324,7 +1332,7 @@
   <a href="#over-ons" class="nav-link mob-hide" data-i18n="nav.about">Over ons</a>
   <a href="#referenties"  class="nav-link mob-hide" data-i18n="nav.refs">Referenties</a>
   <a href="#nieuwsbrief" class="nav-link mob-hide" data-i18n="nav.newsletter">Nieuwsbrief</a>
-  <a href="contact.html" class="nav-cta"           data-i18n="nav.contact">Contact</a>
+  <a href="contact.html" class="nav-cta" data-i18n="nav.contact" onclick="gtag('event','cta_click',{event_category:'nav',event_label:'Contact nav'})">Contact</a>
 </nav>
 
 
@@ -1393,7 +1401,7 @@
           <span class="tag" data-i18n="edu.t2">Trainingen</span>
           <span class="tag" data-i18n="edu.t3">Begeleiding</span>
         </div>
-        <a href="educatie.html" class="meer-link">
+        <a href="educatie.html" class="meer-link" onclick="gtag('event','cta_click',{event_category:'diensten',event_label:'Educatie meer info'})"
           <span data-i18n="meer">Meer info</span>
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
@@ -1417,7 +1425,7 @@
           <span class="tag" data-i18n="cons.t2">Strategie</span>
           <span class="tag" data-i18n="cons.t3">Advies op maat</span>
         </div>
-        <a href="consultancy.html" class="meer-link">
+        <a href="consultancy.html" class="meer-link" onclick="gtag('event','cta_click',{event_category:'diensten',event_label:'Consultancy meer info'})"
           <span data-i18n="meer">Meer info</span>
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
@@ -1439,7 +1447,7 @@
           <span class="tag" data-i18n="impl.t2">Automatisering</span>
           <span class="tag" data-i18n="impl.t3">Support</span>
         </div>
-        <a href="implementatie.html" class="meer-link">
+        <a href="implementatie.html" class="meer-link" onclick="gtag('event','cta_click',{event_category:'diensten',event_label:'Implementatie meer info'})"
           <span data-i18n="meer">Meer info</span>
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
@@ -1485,7 +1493,7 @@
       <p class="section-lead" style="margin-bottom:1.25rem;font-size:0.9875rem;" data-i18n="quiz.cta_lead">
         Weet je niet in welke fase je zit? Doe de test en ontdek in welke fase jij zit van de AI-reis, gratis en inclusief advies.
       </p>
-      <button class="btn-primary" onclick="openQuiz()">
+      <button class="btn-primary" onclick="gtag('event','cta_click',{event_category:'quiz',event_label:'Start de quiz'}); openQuiz()">
         <span data-i18n="cta.btn">Start de quiz</span>
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </button>
@@ -1667,7 +1675,7 @@
             <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 5.5 10.5 12 3.5"/></svg> Maandelijks overzicht van gesprekken</li>
             <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 5.5 10.5 12 3.5"/></svg> Binnen een paar dagen live</li>
           </ul>
-          <a href="contact.html?bericht=Hi+Sila%2C+ik+wil+graag+meer+weten+over+de+chatbot+voor+%E2%82%AC99+per+maand." class="btn-primary uitgelicht-cta">
+          <a href="contact.html?bericht=Hi+Sila%2C+ik+wil+graag+meer+weten+over+de+chatbot+voor+%E2%82%AC99+per+maand." class="btn-primary uitgelicht-cta" onclick="gtag('event','cta_click',{event_category:'uitgelicht',event_label:'Chatbot interesse'})">
             Interesse? Laat het weten
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>
@@ -2014,7 +2022,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       <div class="newsletter-email-row">
         <input type="email" id="nl-email" class="newsletter-input" placeholder="jouw@email.com" data-i18n-ph="nl.email" required aria-label="E-mailadres" />
-        <button type="submit" class="btn-primary">
+        <button type="submit" class="btn-primary" onclick="gtag('event','cta_click',{event_category:'nieuwsbrief',event_label:'Inschrijven'})">
           <span data-i18n="nl.btn">Inschrijven</span>
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </button>
