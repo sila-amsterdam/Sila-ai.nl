@@ -713,6 +713,64 @@
       margin-right: auto;
     }
 
+    /* ── CTA keuze-opties ─────────────────────────── */
+    .cta-options {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 2rem;
+    }
+    .cta-opt {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      border-radius: 16px;
+      text-decoration: none;
+      border: 1.5px solid transparent;
+      min-width: 240px;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 0.2s ease;
+    }
+    .cta-opt-primary {
+      background: var(--primary);
+      box-shadow: 0 2px 12px rgba(220,90,20,.28), 0 6px 28px rgba(220,90,20,.12);
+    }
+    .cta-opt-primary:hover { background: var(--primary-h); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(220,90,20,.38), 0 8px 36px rgba(220,90,20,.16); }
+    .cta-opt-secondary {
+      background: #fff;
+      border-color: hsl(20,18%,89%);
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    }
+    .cta-opt-secondary:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: 0 6px 24px rgba(0,0,0,.1); }
+    .cta-opt:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+    .cta-opt:active { transform: translateY(0); }
+    .cta-opt-icon {
+      flex-shrink: 0; width: 42px; height: 42px;
+      border-radius: 11px; display: flex; align-items: center; justify-content: center;
+    }
+    .cta-opt-primary .cta-opt-icon { background: rgba(255,255,255,.18); color: #fff; }
+    .cta-opt-secondary .cta-opt-icon { background: hsl(16,85%,96%); color: var(--primary); }
+    .cta-opt-text { flex: 1; text-align: left; }
+    .cta-opt-title { display: block; font-weight: 600; font-size: 0.9375rem; line-height: 1.2; }
+    .cta-opt-primary .cta-opt-title { color: #fff; }
+    .cta-opt-secondary .cta-opt-title { color: hsl(20,12%,13%); }
+    .cta-opt-sub { display: block; font-size: 0.8rem; line-height: 1.4; margin-top: 0.2rem; }
+    .cta-opt-primary .cta-opt-sub { color: rgba(255,255,255,.75); }
+    .cta-opt-secondary .cta-opt-sub { color: var(--muted); }
+    .cta-opt-arrow { flex-shrink: 0; transition: transform 0.18s; }
+    .cta-opt-primary .cta-opt-arrow { color: rgba(255,255,255,.75); }
+    .cta-opt-secondary .cta-opt-arrow { color: var(--primary); }
+    .cta-opt:hover .cta-opt-arrow { transform: translateX(3px); }
+    .cta-or {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); flex-shrink: 0; padding: 0 0.25rem;
+    }
+
     /* ── Google Calendar Boekingskaart ────────────── */
     .cal-book-card {
       display: flex;
@@ -1128,30 +1186,35 @@
       </div>
       <h2 class="cta-title">Klaar om samen te <em>werken</em>?</h2>
       <p class="cta-body">Samen kijken we wat AI voor jouw organisatie kan betekenen. Vrijblijvend, eerlijk en op maat.</p>
-      <a href="contact.html?bericht=Hi+Sila%2C+ik+wil+graag+kennismaken+en+bespreken+wat+AI+voor+mij+kan+betekenen." class="btn-primary">
-        Neem contact op
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-      </a>
+      <div class="cta-options">
+        <a href="contact.html?bericht=Hi+Sila%2C+ik+wil+graag+kennismaken+en+bespreken+wat+AI+voor+mij+kan+betekenen." class="cta-opt cta-opt-primary">
+          <span class="cta-opt-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </span>
+          <span class="cta-opt-text">
+            <span class="cta-opt-title">Neem contact op</span>
+            <span class="cta-opt-sub">Stel je vraag of vertel je verhaal</span>
+          </span>
+          <span class="cta-opt-arrow" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </span>
+        </a>
 
-      <!-- Google Calendar Booking -->
-      <a
-        href="https://calendar.app.google/ChK3GTUb3qX93V6Y7"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="cal-book-card"
-        aria-label="Plan een gesprek via Google Calendar"
-      >
-        <span class="cal-book-icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-        </span>
-        <span class="cal-book-text">
-          <span class="cal-book-title">Kies een moment</span>
-          <span class="cal-book-sub">Gratis kennismakingsgesprek — direct in je agenda</span>
-        </span>
-        <span class="cal-book-arrow" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-        </span>
-      </a>
+        <span class="cta-or" aria-hidden="true">OF</span>
+
+        <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" class="cta-opt cta-opt-secondary">
+          <span class="cta-opt-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          </span>
+          <span class="cta-opt-text">
+            <span class="cta-opt-title">Kies een moment</span>
+            <span class="cta-opt-sub">Gratis kennismakingsgesprek — direct in je agenda</span>
+          </span>
+          <span class="cta-opt-arrow" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </span>
+        </a>
+      </div>
     </div>
   </div>
 </section>

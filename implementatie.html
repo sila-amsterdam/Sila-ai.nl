@@ -341,49 +341,6 @@
       to   { opacity: 1; transform: translateX(-50%) translateY(0); }
     }
 
-    /* ── Stats Section ──────────────────────────────── */
-    .stats-section {
-      background: var(--dark);
-      padding: 4.5rem 0;
-      position: relative;
-      overflow: hidden;
-    }
-    .stats-glow {
-      position: absolute;
-      width: 600px; height: 300px;
-      background: radial-gradient(ellipse, hsla(16,82%,54%,.12) 0%, transparent 70%);
-      top: -50px; left: 50%;
-      transform: translateX(-50%);
-      pointer-events: none;
-    }
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
-      text-align: center;
-    }
-    @media (max-width: 900px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 1.5rem; }
-    }
-    @media (max-width: 480px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1rem; }
-    }
-    .stat-number {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.25rem, 5vw, 3.25rem);
-      font-weight: 700;
-      line-height: 1;
-      color: #fff;
-      margin-bottom: 0.5rem;
-    }
-    .stat-number span { color: var(--primary); }
-    .stat-label {
-      font-size: 0.825rem;
-      color: hsl(20, 10%, 55%);
-      line-height: 1.5;
-      font-weight: 400;
-    }
-
     /* ── Section base ──────────────────────────────── */
     .section {
       padding: 6rem 0;
@@ -1113,36 +1070,6 @@
   </div>
   </section>
 
-  <!-- Stats Section -->
-  <section class="stats-section" aria-label="Cijfers">
-    <div class="stats-glow" aria-hidden="true"></div>
-    <div class="wrap" style="position:relative;z-index:1;">
-      <div class="stats-grid">
-
-        <div class="fade-up">
-          <div class="stat-number"><span class="stat-counter" data-target="3">0</span><span>+</span></div>
-          <div class="stat-label">jaar bezig<br>met AI</div>
-        </div>
-
-        <div class="fade-up fade-up-delay-1">
-          <div class="stat-number"><span class="stat-counter" data-target="35">0</span><span>+</span></div>
-          <div class="stat-label">projecten<br>gerealiseerd</div>
-        </div>
-
-        <div class="fade-up fade-up-delay-2">
-          <div class="stat-number"><span class="stat-counter" data-target="100">0</span><span>%</span></div>
-          <div class="stat-label">op maat<br>gemaakt</div>
-        </div>
-
-        <div class="fade-up fade-up-delay-3">
-          <div class="stat-number"><span class="stat-counter" data-target="1000">0</span><span>+</span></div>
-          <div class="stat-label">uren bespaard<br>voor klanten</div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- Custom Solutions Section -->
   <section class="custom-section">
     <div class="custom-noise" aria-hidden="true"></div>
@@ -1568,29 +1495,6 @@
       els.forEach((el) => observer.observe(el));
     })();
 
-    /* ── Stat counter animaties ─────────────────────── */
-    document.querySelectorAll('.stat-counter').forEach(function(el) {
-      var target = parseInt(el.dataset.target, 10);
-      var duration = target >= 500 ? 2000 : target >= 50 ? 1600 : 1200;
-      var started = false;
-      var obs = new IntersectionObserver(function(entries) {
-        if (entries[0].isIntersecting && !started) {
-          started = true;
-          obs.disconnect();
-          var startTime = performance.now();
-          function tick(now) {
-            var elapsed = now - startTime;
-            var progress = Math.min(elapsed / duration, 1);
-            var eased = 1 - Math.pow(1 - progress, 3);
-            var value = Math.round(eased * target);
-            el.textContent = value >= 1000 ? value.toLocaleString('nl-NL') : value;
-            if (progress < 1) requestAnimationFrame(tick);
-          }
-          requestAnimationFrame(tick);
-        }
-      }, { threshold: 0.3 });
-      obs.observe(el.closest('.fade-up') || el);
-    });
 
     /* ── Carousel ──────────────────────────────────── */
     (function () {
