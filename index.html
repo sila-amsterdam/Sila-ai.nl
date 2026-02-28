@@ -436,11 +436,24 @@
     }
     .meer-link {
       display: inline-flex; align-items: center; gap: 0.35rem;
-      font-size: 0.85rem; font-weight: 600;
+      font-size: 0.875rem; font-weight: 600;
       color: var(--primary); text-decoration: none;
-      transition: gap 0.22s ease;
+      padding: 0.45rem 0.875rem;
+      border-radius: 9999px;
+      border: 1.5px solid var(--primary-border);
+      background: var(--primary-light);
+      transition: gap 0.22s ease, background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.18s;
     }
-    .meer-link:hover { gap: 0.6rem; }
+    .meer-link:hover {
+      gap: 0.55rem;
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(217,92,33,.28);
+      transform: translateY(-1px);
+    }
+    .meer-link:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+    .meer-link:active { transform: translateY(0); }
 
     /* ── CTA Banner ────────────────────────────────── */
     .cta-banner {
@@ -1497,6 +1510,10 @@
         <span data-i18n="cta.btn">Start de quiz</span>
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </button>
+      <p style="margin-top:1.25rem;font-size:0.875rem;color:var(--muted);">
+        of liever direct contact?
+        <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" style="color:var(--primary);font-weight:600;text-decoration:none;border-bottom:1.5px solid var(--primary-border);transition:border-color 0.18s,color 0.18s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--primary-border)'">Plan een gesprek in</a>
+      </p>
     </div>
 
   </div>
