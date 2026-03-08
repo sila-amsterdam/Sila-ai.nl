@@ -1066,8 +1066,8 @@
   </a>
   <a href="index.html" class="top-bar-logo-text" aria-label="Sila – Home">sila</a>
   <div class="lang-toggle" role="group" aria-label="Taalwissel">
-    <button class="lang-btn active" data-lang="nl">NL</button>
-    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn active" data-lang="nl" onclick="setLang('nl')">NL</button>
+    <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
   </div>
 </header>
 
@@ -1099,15 +1099,15 @@
   <div class="wrap">
     <div class="hero-label">
       <span class="hero-label-line"></span>
-      Over Sila
+      <span data-i18n="hero-label">Over Sila</span>
     </div>
 
-    <h1 class="hero-title">
+    <h1 class="hero-title" data-i18n="hero-title">
       Bij Sila staat <em>jouw</em><br>
       organisatie centraal
     </h1>
 
-    <p class="hero-lead">
+    <p class="hero-lead" data-i18n="hero-lead">
       Geen standaardoplossingen, geen holle beloften. Sila begeleidt organisaties stap voor stap naar AI die écht werkt — passend bij hun mensen, processen en doelen.
     </p>
 
@@ -1136,19 +1136,19 @@
       <div class="reveal reveal-right" style="transition-delay:.1s;">
         <div class="chip" style="margin-bottom:1.25rem;">
           <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/></svg>
-          De mens achter Sila
+          <span data-i18n="chip-mens">De mens achter Sila</span>
         </div>
 
         <h2 class="bio-name">Jamal Allam</h2>
-        <p class="bio-role">AI specialist</p>
+        <p class="bio-role" data-i18n="bio-role">AI specialist</p>
 
-        <p class="bio-body">
+        <p class="bio-body" data-i18n="bio-body-1">
           Mijn naam is Jamal Allam, geboren en getogen in Amsterdam-Oost. Vanuit die Amsterdamse mentaliteit, nuchter, oplossingsgericht en altijd een beetje eigenwijs, ben ik al vroeg gaan experimenteren met AI.
         </p>
-        <p class="bio-body">
+        <p class="bio-body" data-i18n="bio-body-2">
           Wat begon als nieuwsgierigheid groeide uit tot een passie: organisaties helpen om AI op een slimme en realistische manier toe te passen. Niet met standaardoplossingen, maar met een aanpak die past bij hun mensen, processen en doelen.
         </p>
-        <p class="bio-body">
+        <p class="bio-body" data-i18n="bio-body-3">
           Want ieder AI-project vraagt om maatwerk — omdat geen enkele organisatie hetzelfde is.
         </p>
       </div>
@@ -1168,22 +1168,22 @@
 
       <div class="reveal reveal-delay-1" style="transition-delay:.05s;">
         <div class="stat-number"><span class="stat-counter" data-target="3" data-suffix="+">0</span><span>+</span></div>
-        <div class="stat-label">jaar bezig<br>met AI</div>
+        <div class="stat-label" data-i18n="stat-label-1">jaar bezig<br>met AI</div>
       </div>
 
       <div class="reveal reveal-delay-2" style="transition-delay:.12s;">
         <div class="stat-number"><span class="stat-counter" data-target="35" data-suffix="+">0</span><span>+</span></div>
-        <div class="stat-label">projecten<br>gerealiseerd</div>
+        <div class="stat-label" data-i18n="stat-label-2">projecten<br>gerealiseerd</div>
       </div>
 
       <div class="reveal reveal-delay-3" style="transition-delay:.19s;">
         <div class="stat-number"><span class="stat-counter" data-target="100" data-suffix="%">0</span><span>%</span></div>
-        <div class="stat-label">op maat<br>gemaakt</div>
+        <div class="stat-label" data-i18n="stat-label-3">op maat<br>gemaakt</div>
       </div>
 
       <div class="reveal reveal-delay-4" style="transition-delay:.26s;">
         <div class="stat-number"><span class="stat-counter" data-target="1000" data-suffix="+">0</span><span>+</span></div>
-        <div class="stat-label">uren bespaard<br>voor klanten</div>
+        <div class="stat-label" data-i18n="stat-label-4">uren bespaard<br>voor klanten</div>
       </div>
 
     </div>
@@ -1199,33 +1199,33 @@
     <div class="reveal" style="display:flex;flex-direction:column;align-items:center;">
       <div class="chip" style="margin-bottom:1.5rem;">
         <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/></svg>
-        Aan de slag
+        <span data-i18n="cta-chip">Aan de slag</span>
       </div>
-      <h2 class="cta-title">Klaar om samen te <em>werken</em>?</h2>
-      <p class="cta-body">Samen kijken we wat AI voor jouw organisatie kan betekenen. Vrijblijvend, eerlijk en op maat.</p>
+      <h2 class="cta-title" data-i18n="cta-title">Klaar om samen te <em>werken</em>?</h2>
+      <p class="cta-body" data-i18n="cta-body">Samen kijken we wat AI voor jouw organisatie kan betekenen. Vrijblijvend, eerlijk en op maat.</p>
       <div class="cta-options">
         <a href="contact.html?bericht=Hi+Sila%2C+ik+wil+graag+kennismaken+en+bespreken+wat+AI+voor+mij+kan+betekenen." class="cta-opt cta-opt-primary">
           <span class="cta-opt-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </span>
           <span class="cta-opt-text">
-            <span class="cta-opt-title">Neem contact op</span>
-            <span class="cta-opt-sub">Stel je vraag of vertel je verhaal</span>
+            <span class="cta-opt-title" data-i18n="cta-contact-title">Neem contact op</span>
+            <span class="cta-opt-sub" data-i18n="cta-contact-sub">Stel je vraag of vertel je verhaal</span>
           </span>
           <span class="cta-opt-arrow" aria-hidden="true">
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </span>
         </a>
 
-        <span class="cta-or" aria-hidden="true">OF</span>
+        <span class="cta-or" aria-hidden="true" data-i18n="cta-or">OF</span>
 
         <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" class="cta-opt cta-opt-secondary">
           <span class="cta-opt-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
           </span>
           <span class="cta-opt-text">
-            <span class="cta-opt-title">Kies een moment</span>
-            <span class="cta-opt-sub">Gratis kennismakingsgesprek — direct in je agenda</span>
+            <span class="cta-opt-title" data-i18n="cta-calendar-title">Kies een moment</span>
+            <span class="cta-opt-sub" data-i18n="cta-calendar-sub">Gratis kennismakingsgesprek — direct in je agenda</span>
           </span>
           <span class="cta-opt-arrow" aria-hidden="true">
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -1244,11 +1244,11 @@
 
       <div>
         <p class="footer-logo-text">sila</p>
-        <p class="footer-tagline">Jouw AI transformatiepartner. Begeleiding en persoonlijke aandacht op maat.</p>
+        <p class="footer-tagline" data-i18n="footer-tagline">Jouw AI transformatiepartner. Begeleiding en persoonlijke aandacht op maat.</p>
       </div>
 
       <div>
-        <p class="footer-heading">Diensten</p>
+        <p class="footer-heading" data-i18n="footer-diensten">Diensten</p>
         <ul class="footer-links">
           <li><a href="educatie.html">Educatie</a></li>
           <li><a href="consultancy.html">Consultancy</a></li>
@@ -1257,7 +1257,7 @@
       </div>
 
       <div>
-        <p class="footer-heading">Bedrijf</p>
+        <p class="footer-heading" data-i18n="footer-bedrijf">Bedrijf</p>
         <ul class="footer-links">
           <li><a href="over-ons.html">Over ons</a></li>
           <li><a href="index.html#referenties">Referenties</a></li>
@@ -1265,18 +1265,18 @@
       </div>
 
       <div>
-        <p class="footer-heading">Contact</p>
+        <p class="footer-heading" data-i18n="footer-contact">Contact</p>
         <ul class="footer-links">
           <li><a href="mailto:info@sila-ai.nl">info@sila-ai.nl</a></li>
           <li><a href="https://www.linkedin.com/company/sila-ai-nl" target="_blank" rel="noopener">LinkedIn</a></li>
-          <li><a href="#" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.instagram.com/silaai.nl/" target="_blank" rel="noopener">Instagram</a></li>
         </ul>
       </div>
 
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-copy">© 2026 Sila. Alle rechten voorbehouden.</p>
+      <p class="footer-copy" data-i18n="footer-copy">© 2026 Sila. Alle rechten voorbehouden.</p>
     </div>
   </div>
 </footer>
@@ -1453,6 +1453,86 @@ function autoResize(el) {
   el.style.height = Math.min(el.scrollHeight, 100) + 'px';
 }
 (function(){const b=document.getElementById('mob-menu-btn'),d=document.getElementById('mob-drawer');if(!b||!d)return;b.addEventListener('click',function(e){e.stopPropagation();const o=d.classList.toggle('open');b.setAttribute('aria-expanded',o);});document.addEventListener('click',function(e){if(!b.contains(e.target)&&!d.contains(e.target)){d.classList.remove('open');b.setAttribute('aria-expanded','false');}});})();
+
+/* ── Translations ── */
+const T_OO = {
+  nl: {
+    'hero-label':        'Over Sila',
+    'hero-title':        'Bij Sila staat <em>jouw</em><br>organisatie centraal',
+    'hero-lead':         'Geen standaardoplossingen, geen holle beloften. Sila begeleidt organisaties stap voor stap naar AI die écht werkt — passend bij hun mensen, processen en doelen.',
+    'chip-mens':         'De mens achter Sila',
+    'bio-role':          'AI specialist',
+    'bio-body-1':        'Mijn naam is Jamal Allam, geboren en getogen in Amsterdam-Oost. Vanuit die Amsterdamse mentaliteit, nuchter, oplossingsgericht en altijd een beetje eigenwijs, ben ik al vroeg gaan experimenteren met AI.',
+    'bio-body-2':        'Wat begon als nieuwsgierigheid groeide uit tot een passie: organisaties helpen om AI op een slimme en realistische manier toe te passen. Niet met standaardoplossingen, maar met een aanpak die past bij hun mensen, processen en doelen.',
+    'bio-body-3':        'Want ieder AI-project vraagt om maatwerk — omdat geen enkele organisatie hetzelfde is.',
+    'stat-label-1':      'jaar bezig<br>met AI',
+    'stat-label-2':      'projecten<br>gerealiseerd',
+    'stat-label-3':      'op maat<br>gemaakt',
+    'stat-label-4':      'uren bespaard<br>voor klanten',
+    'cta-chip':          'Aan de slag',
+    'cta-title':         'Klaar om samen te <em>werken</em>?',
+    'cta-body':          'Samen kijken we wat AI voor jouw organisatie kan betekenen. Vrijblijvend, eerlijk en op maat.',
+    'cta-contact-title': 'Neem contact op',
+    'cta-contact-sub':   'Stel je vraag of vertel je verhaal',
+    'cta-or':            'OF',
+    'cta-calendar-title':'Kies een moment',
+    'cta-calendar-sub':  'Gratis kennismakingsgesprek — direct in je agenda',
+    'footer-tagline':    'Jouw AI transformatiepartner. Begeleiding en persoonlijke aandacht op maat.',
+    'footer-diensten':   'Diensten',
+    'footer-bedrijf':    'Bedrijf',
+    'footer-contact':    'Contact',
+    'footer-copy':       '© 2026 Sila. Alle rechten voorbehouden.',
+  },
+  en: {
+    'hero-label':        'About Sila',
+    'hero-title':        'At Sila, <em>your</em><br>organisation comes first',
+    'hero-lead':         'No standard solutions, no empty promises. Sila guides organisations step by step toward AI that truly works — tailored to their people, processes and goals.',
+    'chip-mens':         'The person behind Sila',
+    'bio-role':          'AI specialist',
+    'bio-body-1':        'My name is Jamal Allam, born and raised in Amsterdam-Oost. With that Amsterdam mentality — straightforward, solution-oriented, and always a little headstrong — I started experimenting with AI early on.',
+    'bio-body-2':        'What started as curiosity grew into a passion: helping organisations apply AI in a smart and realistic way. Not with standard solutions, but with an approach that fits their people, processes and goals.',
+    'bio-body-3':        'Because every AI project requires a custom approach — no two organisations are the same.',
+    'stat-label-1':      'years working<br>with AI',
+    'stat-label-2':      'projects<br>delivered',
+    'stat-label-3':      'custom<br>made',
+    'stat-label-4':      'hours saved<br>for clients',
+    'cta-chip':          'Get started',
+    'cta-title':         'Ready to work <em>together</em>?',
+    'cta-body':          "Together we'll explore what AI can mean for your organisation. No obligation, honest and tailored.",
+    'cta-contact-title': 'Get in touch',
+    'cta-contact-sub':   'Ask your question or share your story',
+    'cta-or':            'OR',
+    'cta-calendar-title':'Pick a time',
+    'cta-calendar-sub':  'Free introductory call — straight to your calendar',
+    'footer-tagline':    'Your AI transformation partner. Guidance and personal attention, tailored to you.',
+    'footer-diensten':   'Services',
+    'footer-bedrijf':    'Company',
+    'footer-contact':    'Contact',
+    'footer-copy':       '© 2026 Sila. All rights reserved.',
+  }
+};
+
+function applyLang(lang) {
+  const dict = T_OO[lang] || T_OO.nl;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  document.documentElement.lang = lang;
+}
+
+function setLang(lang) {
+  applyLang(lang);
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  localStorage.setItem('sila-lang', lang);
+}
+
+(function() {
+  const saved = localStorage.getItem('sila-lang');
+  if (saved && saved !== 'nl') setLang(saved);
+})();
 </script>
 
 
