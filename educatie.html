@@ -963,6 +963,102 @@
     .chat-send:hover { background:var(--primary-h); transform:scale(1.05); }
     .chat-send:disabled { background:hsl(20,18%,78%); cursor:not-allowed; transform:none; }
     .chat-send svg { width:16px; height:16px; }
+
+  /* ── PDF Preview knop ───────────────────────────────── */
+  .btn-preview {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #DC5A14;
+    background: none;
+    border: 1.5px solid #DC5A14;
+    border-radius: 9999px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: background .18s, color .18s;
+    white-space: nowrap;
+  }
+  .btn-preview:hover { background: #F5E6DD; }
+
+  /* ── PDF Preview modal ──────────────────────────────── */
+  #preview-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9100;
+    background: rgba(26,20,16,.7);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  #preview-modal {
+    background: #fff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 680px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    overflow: hidden;
+  }
+  #preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #E3DDD5;
+    flex-shrink: 0;
+  }
+  #preview-header h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.125rem;
+    color: #231D18;
+    margin: 0;
+  }
+  #preview-header p {
+    font-size: 0.8125rem;
+    color: #7A7167;
+    margin: 2px 0 0;
+  }
+  #preview-pages {
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+  }
+  #preview-pages canvas {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.1);
+    display: block;
+  }
+  #preview-loader {
+    text-align: center;
+    padding: 3rem;
+    color: #7A7167;
+    font-size: 0.9rem;
+  }
+  #preview-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #E3DDD5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    gap: 1rem;
+  }
+  #preview-footer p {
+    font-size: 0.8125rem;
+    color: #7A7167;
+    margin: 0;
+  }
   </style>
 </head>
 <body>
@@ -1093,6 +1189,10 @@
               <p class="price-label">Prijs</p>
               <p class="price-value">€199,–</p>
             </div>
+            <button class="btn-preview" data-preview-id="ai-basics-ondernemers">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Preview
+            </button>
             <button class="card-cta btn-koop" data-cursus-id="ai-basics-ondernemers">
               Nu kopen
               <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -1126,6 +1226,10 @@
               <p class="price-label">Prijs</p>
               <p class="price-value">€149,–</p>
             </div>
+            <button class="btn-preview" data-preview-id="chatgpt-masterclass">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Preview
+            </button>
             <button class="card-cta btn-koop" data-cursus-id="chatgpt-masterclass">
               Nu kopen
               <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -1211,6 +1315,10 @@
               <p class="price-label">Prijs</p>
               <p class="price-value">€79,–</p>
             </div>
+            <button class="btn-preview" data-preview-id="starten-met-automatiseren">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Preview
+            </button>
             <button class="card-cta btn-koop" data-cursus-id="starten-met-automatiseren">
               Nu kopen
               <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -1244,6 +1352,10 @@
               <p class="price-label">Prijs</p>
               <p class="price-value">€79,–</p>
             </div>
+            <button class="btn-preview" data-preview-id="ai-tools-vandaag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Preview
+            </button>
             <button class="card-cta btn-koop" data-cursus-id="ai-tools-vandaag">
               Nu kopen
               <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -1277,6 +1389,10 @@
               <p class="price-label">Prijs</p>
               <p class="price-value">€129,–</p>
             </div>
+            <button class="btn-preview" data-preview-id="hoe-gebruik-ik-n8n">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Preview
+            </button>
             <button class="card-cta btn-koop" data-cursus-id="hoe-gebruik-ik-n8n">
               Nu kopen
               <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -1310,6 +1426,10 @@
               <p class="price-label">Prijs</p>
               <p class="price-value">€179,–</p>
             </div>
+            <button class="btn-preview" data-preview-id="crm-koppelen-n8n">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Preview
+            </button>
             <button class="card-cta btn-koop" data-cursus-id="crm-koppelen-n8n">
               Nu kopen
               <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -1704,6 +1824,33 @@ function autoResize(el) {
 
 
 <!-- ═══════════════════════════════════════════════════════
+     PDF PREVIEW MODAL
+════════════════════════════════════════════════════════ -->
+<div id="preview-overlay" role="dialog" aria-modal="true" aria-label="Cursus preview">
+  <div id="preview-modal">
+    <div id="preview-header">
+      <div>
+        <h2 id="preview-titel">Preview</h2>
+        <p>Eerste 3 pagina's — gratis inkijken</p>
+      </div>
+      <button onclick="sluitPreview()" aria-label="Sluiten" style="background:none;border:none;cursor:pointer;color:#7A7167;padding:4px;flex-shrink:0;">
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg>
+      </button>
+    </div>
+    <div id="preview-pages">
+      <div id="preview-loader">Preview laden…</div>
+    </div>
+    <div id="preview-footer">
+      <p>Wil je de volledige cursus?</p>
+      <button id="preview-koop-btn" class="card-cta btn-koop" style="margin:0;">
+        Nu kopen
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
      E-MAIL MODAL (voor 'Nu kopen' flow)
 ════════════════════════════════════════════════════════ -->
 <div id="koop-overlay" role="dialog" aria-modal="true" aria-labelledby="koop-cursus-naam" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(26,20,16,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:1rem;">
@@ -1802,5 +1949,72 @@ async function bevestigKoop() {
 }
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+// ── PDF Preview ───────────────────────────────────────────────────
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+const CURSUS_NAMEN_PREVIEW = {
+  'ai-basics-ondernemers':    'AI Basics voor Ondernemers',
+  'chatgpt-masterclass':      'ChatGPT Masterclass',
+  'starten-met-automatiseren':'Hoe begin ik met automatiseren?',
+  'ai-tools-vandaag':         'Welke AI tools zijn vandaag nodig?',
+  'hoe-gebruik-ik-n8n':       'Hoe gebruik ik n8n?',
+  'crm-koppelen-n8n':         'CRM koppelen aan n8n',
+};
+
+let actievePreviewId = null;
+
+document.querySelectorAll('.btn-preview').forEach(btn => {
+  btn.addEventListener('click', () => openPreview(btn.dataset.previewId));
+});
+
+document.getElementById('preview-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) sluitPreview();
+});
+
+document.getElementById('preview-koop-btn').addEventListener('click', () => {
+  sluitPreview();
+  if (actievePreviewId) {
+    const koopBtn = document.querySelector(`.btn-koop[data-cursus-id="${actievePreviewId}"]`);
+    if (koopBtn) koopBtn.click();
+  }
+});
+
+async function openPreview(cursusId) {
+  actievePreviewId = cursusId;
+  document.getElementById('preview-titel').textContent = CURSUS_NAMEN_PREVIEW[cursusId] || cursusId;
+  const pagesEl = document.getElementById('preview-pages');
+  pagesEl.innerHTML = '<div id="preview-loader">Preview laden…</div>';
+
+  const overlay = document.getElementById('preview-overlay');
+  overlay.style.display = 'flex';
+
+  const pdfUrl = `/pdf-previews/${cursusId}-preview.pdf`;
+
+  try {
+    const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+    pagesEl.innerHTML = '';
+    const aantalPaginas = Math.min(pdf.numPages, 3);
+
+    for (let i = 1; i <= aantalPaginas; i++) {
+      const pagina = await pdf.getPage(i);
+      const viewport = pagina.getViewport({ scale: 1.5 });
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      pagesEl.appendChild(canvas);
+      await pagina.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+    }
+  } catch {
+    pagesEl.innerHTML = '<div id="preview-loader">Preview is nog niet beschikbaar voor deze cursus.</div>';
+  }
+}
+
+function sluitPreview() {
+  document.getElementById('preview-overlay').style.display = 'none';
+  actievePreviewId = null;
+}
+</script>
 </body>
 </html>
