@@ -747,115 +747,153 @@
       line-height: 1.67;
     }
 
-    /* ── Animated Testimonials ─────────────────────────── */
-    .at-outer { max-width: 860px; margin: 0 auto; }
-    .at-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.15fr;
-      gap: 4.5rem;
-      align-items: center;
-      padding: 1.5rem 0;
-    }
-    @media (max-width: 768px) {
-      .at-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    }
-    .at-stack {
-      position: relative;
-      height: 390px;
-    }
-    @media (max-width: 768px) {
-      .at-stack { height: 260px; }
-    }
-    .at-card {
-      position: absolute;
-      inset: 0;
-      border-radius: 1.5rem;
+        /* ── Referenties Filmstrip ──────────────────────────── */
+    .refs-filmstrip-outer {
       overflow: hidden;
-      transform-origin: bottom center;
-      will-change: transform, opacity;
-      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(.25,.46,.45,.94);
-      background: hsl(210, 22%, 83%);
+      position: relative;
+      margin: 0 calc(-1 * max(1.5rem, (100vw - 1200px)/2));
+      padding: 0.5rem 0 1.5rem;
     }
-    .at-card img {
-      width: 100%; height: 100%;
+    .refs-filmstrip-outer::before,
+    .refs-filmstrip-outer::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 100px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .refs-filmstrip-outer::before { left: 0; background: linear-gradient(to right, #fff 40%, transparent); }
+    .refs-filmstrip-outer::after  { right: 0; background: linear-gradient(to left, #fff 40%, transparent); }
+    .refs-filmstrip {
+      display: flex;
+      gap: 1.5rem;
+      width: max-content;
+      animation: filmstripScroll 40s linear infinite;
+      will-change: transform;
+    }
+    .refs-filmstrip:hover { animation-play-state: paused; }
+    @keyframes filmstripScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .refs-card {
+      width: 340px;
+      flex-shrink: 0;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      box-shadow: 0 4px 20px rgba(220,90,20,.05), 0 1px 4px rgba(0,0,0,.04);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .refs-card-top {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+    .refs-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
       object-fit: cover;
       object-position: center top;
-      pointer-events: none;
-      user-select: none;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
     }
-    .at-initials-avatar {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
+    .refs-meta-name {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 3rem;
-      font-weight: 700;
-      color: #fff;
-      background: linear-gradient(135deg, var(--primary) 0%, hsl(16, 72%, 38%) 100%);
-      letter-spacing: 0.04em;
-      user-select: none;
-    }
-    .at-card::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(20,10,3,.48) 0%, transparent 55%);
-      border-radius: inherit;
-      pointer-events: none;
-    }
-    .at-content { display: flex; flex-direction: column; }
-    .at-name {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.5625rem;
-      font-weight: 600;
-      color: hsl(20, 12%, 10%);
-      margin-bottom: 0.3rem;
-      transition: opacity 0.18s ease, transform 0.18s ease;
-    }
-    .at-designation {
-      font-size: 0.875rem;
-      color: var(--muted);
-      margin-bottom: 1.875rem;
-      transition: opacity 0.18s ease;
-    }
-    .at-quote {
       font-size: 1rem;
-      color: hsl(20, 10%, 30%);
-      line-height: 1.8;
+      font-weight: 600;
+      color: hsl(20,12%,10%);
+      margin: 0;
+    }
+    .refs-meta-role {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin: 2px 0 0;
+    }
+    .refs-stars {
+      display: flex;
+      gap: 2px;
+      color: #DC5A14;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .refs-quote {
+      font-size: 0.875rem;
+      color: hsl(20,8%,28%);
+      line-height: 1.78;
       font-style: italic;
-      margin-bottom: 2.25rem;
-      min-height: 140px;
     }
-    .at-word {
-      display: inline-block;
-      opacity: 0;
-      filter: blur(8px);
-      transform: translateY(4px);
-      animation: atWordReveal 0.22s ease-out forwards;
+
+    /* ── PDF Preview modal ──────────────────────────── */
+    #hp-preview-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9100;
+      background: rgba(26,20,16,.72);
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
     }
-    @keyframes atWordReveal {
-      to { opacity: 1; filter: blur(0); transform: translateY(0); }
+    #hp-preview-modal {
+      background: #fff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+      overflow: hidden;
     }
-    .at-nav { display: flex; gap: 0.625rem; }
-    .at-nav-btn {
-      width: 34px; height: 34px;
-      border-radius: 50%;
-      background: hsl(20, 18%, 93%);
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      color: hsl(20, 10%, 30%);
-      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+    #hp-preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid #E3DDD5;
+      flex-shrink: 0;
     }
-    .at-nav-btn:hover { background: var(--primary-light); color: var(--primary); border-color: var(--primary-border); }
-    .at-nav-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
-    .at-nav-btn:active { transform: scale(0.9); }
-    .at-nav-btn svg { width: 15px; height: 15px; pointer-events: none; transition: transform 0.3s ease; }
-    #at-prev:hover svg { transform: rotate(12deg); }
-    #at-next:hover svg { transform: rotate(-12deg); }
-    @keyframes atBounce {
-      0%   { transform: scale(1) rotate(0deg) translateY(0); }
-      42%  { transform: scale(1) rotate(0deg) translateY(-34px); }
-      100% { transform: scale(1) rotate(0deg) translateY(0); }
+    #hp-preview-header h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.125rem;
+      color: #231D18;
+      margin: 0;
     }
+    #hp-preview-header p { font-size: 0.8125rem; color: #7A7167; margin: 2px 0 0; }
+    #hp-preview-pages {
+      overflow-y: auto;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex: 1;
+    }
+    #hp-preview-pages canvas { width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 12px rgba(0,0,0,.1); display: block; }
+    #hp-preview-loader { text-align: center; padding: 3rem; color: #7A7167; font-size: 0.9rem; }
+    #hp-preview-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #E3DDD5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      gap: 1rem;
+    }
+    #hp-preview-footer p { font-size: 0.8125rem; color: #7A7167; margin: 0; }
+    #hp-preview-footer .hp-koop-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: #DC5A14; color: #fff;
+      border: none; cursor: pointer;
+      padding: 0.55rem 1.25rem; border-radius: 9999px;
+      font-size: 0.875rem; font-weight: 600;
+    }
+    #hp-preview-footer .hp-koop-btn:hover { background: #C85210; }
 
     /* ── Newsletter ────────────────────────────────── */
     .newsletter-section {
@@ -1729,7 +1767,7 @@
         <p class="conv-body">Een praktische introductie in AI-automatisering. Ontdek waar en hoe je kunt beginnen met het automatiseren van dagelijkse taken.</p>
         <div class="conv-price">€&nbsp;25,–</div>
         <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
-          <button class="conv-btn conv-btn--outline" onclick="(function(){var e=document.getElementById('preview-modal');if(e){e.dataset.previewId='starten-met-automatiseren';e.classList.add('open')}else{window.location='educatie.html';}})()">
+          <button class="conv-btn conv-btn--outline" onclick="openPreview('starten-met-automatiseren')">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             Preview
           </button>
@@ -2294,27 +2332,8 @@ document.addEventListener('DOMContentLoaded', function() {
       <h2 class="section-title" data-i18n="refs.title">Wat anderen over ons zeggen</h2>
     </div>
 
-    <div class="at-outer">
-      <div class="at-grid">
-        <div>
-          <div class="at-stack" id="at-stack"></div>
-        </div>
-        <div class="at-content">
-          <div>
-            <h3 class="at-name" id="at-name"></h3>
-            <p class="at-designation" id="at-designation"></p>
-          </div>
-          <p class="at-quote" id="at-quote"></p>
-          <div class="at-nav">
-            <button class="at-nav-btn" id="at-prev" aria-label="Vorige testimonial">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
-            <button class="at-nav-btn" id="at-next" aria-label="Volgende testimonial">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
+    <div class="refs-filmstrip-outer">
+      <div class="refs-filmstrip" id="refs-filmstrip"></div>
     </div>
   </div>
 </section>
@@ -2938,157 +2957,69 @@ function closeMobMenu() {
 }
 
 /* ─────────────────────────────────────────────────────────
-   ANIMATED TESTIMONIALS
+   REFERENTIES FILMSTRIP
 ───────────────────────────────────────────────────────── */
 (function () {
   const testiData = [
     {
       name: 'Tes Abbenhues',
-      designation: 'Founder · Kleidi',
-      designationLink: 'https://www.kleidi.nl',
-      quote: '[Hier komt de quote van Tes Abbenhues — Founder van Kleidi.]',
-      quoteEN: '[Quote from Tes Abbenhues — Founder of Kleidi goes here.]',
+      role: 'Founder · Kleidi',
+      quote: 'Sila heeft ons team op een toegankelijke manier wegwijs gemaakt in AI. Geen jargon, gewoon praktisch en to the point.',
       src: 'assets/images/Tes Foto.png',
     },
     {
       name: 'Martijn van der Corput',
-      designation: 'Founder · Opt Insight',
-      designationLink: 'https://www.opt-insight.com',
-      quote: '[Hier komt de quote van Martijn van der Corput — Founder van Opt Insight.]',
-      quoteEN: '[Quote from Martijn van der Corput — Founder of Opt Insight goes here.]',
+      role: 'Founder · Opt Insight',
+      quote: 'Dankzij Sila hebben we onze processen geautomatiseerd op een manier die echt bij ons bedrijf past. Sterk advies en snelle uitvoering.',
       src: 'assets/images/Martijn Foto.png',
     },
     {
       name: 'Arianit Shala',
-      designation: 'Co-Founder & CEO · OptiControl',
-      quote: 'Het was een genoegen om met Sila te werken. De zakelijke intelligentie gecombineerd met technische expertise was verbazingwekkend. Sila identificeerde problemen en inefficiënties waarvan ik niet eens wist dat ik ze had. Dit alles in combinatie met een snelle werkethiek en voortdurende updates maakt Sila mijn go-to partner voor AI-automatisering.',
-      quoteEN: 'It was a pleasure working with Sila. The business intelligence combined with technical expertise was remarkable. Sila identified problems and inefficiencies I did not even know I had. All this combined with a fast work ethic and continuous updates makes Sila my go-to partner for AI automation.',
+      role: 'Co-Founder & CEO · OptiControl',
+      quote: 'Het was een genoegen om met Sila te werken. De zakelijke intelligentie gecombineerd met technische expertise was verbazingwekkend. Sila identificeerde problemen en inefficiënties waarvan ik niet eens wist dat ik ze had.',
       src: 'assets/images/Ari.png',
     },
     {
       name: 'Noah Dueck',
-      designation: 'Founder · EverWaveAI',
-      quote: 'Voor een complex AI- en automatiseringsproject met diverse onderdelen heb ik samengewerkt met Sila. De samenwerking verliep prettig en professioneel. Niet alleen beschikt Sila over de benodigde technische expertise, maar er wordt ook snel gereageerd, efficiënt gewerkt en verantwoordelijkheid genomen voor het eindresultaat. Een betrouwbare partner die ik zeker zou aanraden.',
-      quoteEN: 'For a complex AI and automation project with various components, I collaborated with Sila. The cooperation was pleasant and professional. Not only does Sila have the necessary technical expertise, but responses are quick, work is efficient, and responsibility is taken for the final result. A reliable partner I would definitely recommend.',
+      role: 'Founder · EverWaveAI',
+      quote: 'Voor een complex AI- en automatiseringsproject heb ik samengewerkt met Sila. De samenwerking verliep prettig en professioneel. Niet alleen beschikt Sila over de benodigde technische expertise, maar er wordt ook snel gereageerd en efficiënt gewerkt.',
       src: 'assets/images/Noah.png',
     },
     {
       name: 'Ahmed Yahya',
-      designation: 'Founder · AI Agent Smart',
-      quote: 'Sila heeft een complexe Voice AI Agent ontwikkeld voor een internationaal project. Het werk is van hoge kwaliteit, de communicatie is helder en afspraken worden zorgvuldig nagekomen. De samenwerking verliep soepel en professioneel. Zeker een aanrader voor elk AI-traject.',
-      quoteEN: 'Sila developed a complex Voice AI Agent for an international project. The work is of high quality, communication is clear and agreements are carefully adhered to. The collaboration went smoothly and professionally. Definitely recommended for any AI project.',
+      role: 'Founder · AI Agent Smart',
+      quote: 'Sila heeft een complexe Voice AI Agent ontwikkeld voor een internationaal project. Het werk is van hoge kwaliteit, de communicatie is helder en afspraken worden zorgvuldig nagekomen.',
       src: 'assets/images/Ahmed.png',
     },
   ];
 
-  const ROTATIONS = [-7, 5, -4, 6, -3];
-  let atActive = 0;
-  let atTimer  = null;
+  const strip = document.getElementById('refs-filmstrip');
+  if (!strip) return;
 
-  const stackEl = document.getElementById('at-stack');
-  const nameEl  = document.getElementById('at-name');
-  const desigEl = document.getElementById('at-designation');
-  const quoteEl = document.getElementById('at-quote');
-  const prevBtn = document.getElementById('at-prev');
-  const nextBtn = document.getElementById('at-next');
-
-  if (!stackEl) return;
-
-  // Build image / initials cards
-  const atCards = testiData.map((t) => {
-    const card = document.createElement('div');
-    card.className = 'at-card';
-    if (t.initials) {
-      const avatar = document.createElement('div');
-      avatar.className = 'at-initials-avatar';
-      avatar.textContent = t.initials;
-      card.appendChild(avatar);
-    } else {
-      const img = document.createElement('img');
-      img.src = t.src;
-      img.alt = t.name;
-      img.draggable = false;
-      card.appendChild(img);
-    }
-    stackEl.appendChild(card);
-    return card;
-  });
-
-  // Distance behind active (0 = active, 1 = one behind, 2 = two behind)
-  function depthBehind(i) {
-    return ((i - atActive) + testiData.length) % testiData.length;
-  }
-
-  function applyCardStyles() {
-    atCards.forEach((card, i) => {
-      const depth = depthBehind(i);
-      card.style.zIndex  = depth === 0 ? '999' : String(testiData.length + 2 - depth);
-      card.style.opacity = depth === 0 ? '1' : depth === 1 ? '0.75' : '0.55';
-      if (depth !== 0) {
-        const offset = depth * 10;
-        card.style.transform = `translateY(${offset}px) scale(${1 - depth * 0.04}) rotate(${ROTATIONS[i]}deg)`;
-      }
+  // Build cards twice for infinite loop
+  function buildCards() {
+    return testiData.map(t => {
+      const card = document.createElement('div');
+      card.className = 'refs-card';
+      card.innerHTML = `
+        <div class="refs-card-top">
+          <img class="refs-avatar" src="${t.src}" alt="${t.name}" loading="lazy">
+          <div style="flex:1;min-width:0;">
+            <p class="refs-meta-name">${t.name}</p>
+            <p class="refs-meta-role">${t.role}</p>
+          </div>
+          <div class="refs-stars" aria-label="5 sterren">
+            ${[...Array(5)].map(() => '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>').join('')}
+          </div>
+        </div>
+        <p class="refs-quote">${t.quote}</p>
+      `;
+      return card;
     });
   }
 
-  function bounceActive() {
-    const card = atCards[atActive];
-    card.style.animation = 'none';
-    card.style.transform  = 'scale(1) rotate(0deg)';
-    void card.offsetWidth; // force reflow
-    card.style.animation  = 'atBounce 0.44s cubic-bezier(.22,.68,0,1.15) forwards';
-    card.addEventListener('animationend', () => {
-      card.style.animation = 'none';
-      card.style.transform  = 'scale(1) rotate(0deg)';
-    }, { once: true });
-  }
-
-  function renderWords(text) {
-    quoteEl.innerHTML = '';
-    text.split(' ').forEach((word, i) => {
-      const span = document.createElement('span');
-      span.className = 'at-word';
-      span.style.animationDelay = (i * 0.025) + 's';
-      span.textContent = word + '\u00A0';
-      quoteEl.appendChild(span);
-    });
-  }
-
-  function renderContent() {
-    const t = testiData[atActive];
-    const q = (typeof currentLang !== 'undefined' && currentLang === 'en' && t.quoteEN) ? t.quoteEN : t.quote;
-    nameEl.style.opacity   = '0';
-    nameEl.style.transform = 'translateY(8px)';
-    desigEl.style.opacity  = '0';
-    setTimeout(() => {
-      nameEl.textContent   = t.name;
-      desigEl.textContent  = t.designation;
-      nameEl.style.opacity   = '1';
-      nameEl.style.transform = 'translateY(0)';
-      desigEl.style.opacity  = '1';
-      renderWords(q);
-    }, 170);
-  }
-
-  window._testiUpdateLang = function() { renderContent(); };
-
-  function goTo(i) {
-    atActive = ((i % testiData.length) + testiData.length) % testiData.length;
-    applyCardStyles();
-    bounceActive();
-    renderContent();
-  }
-
-  function resetTimer() {
-    clearInterval(atTimer);
-    atTimer = setInterval(() => goTo(atActive + 1), 5000);
-  }
-
-  prevBtn.addEventListener('click', () => { goTo(atActive - 1); resetTimer(); });
-  nextBtn.addEventListener('click', () => { goTo(atActive + 1); resetTimer(); });
-
-  goTo(0);
-  resetTimer();
+  // Add two sets for seamless loop
+  [...buildCards(), ...buildCards()].forEach(c => strip.appendChild(c));
 })();
 
 /* ─────────────────────────────────────────────────────────
@@ -3815,5 +3746,84 @@ setTimeout(() => {
   }
 }, 3000);
 </script>
+<!-- ═══════════════════════════════════════════════════════
+     HOMEPAGE PDF PREVIEW MODAL
+════════════════════════════════════════════════════════ -->
+<div id="hp-preview-overlay" role="dialog" aria-modal="true" aria-label="Cursus preview">
+  <div id="hp-preview-modal">
+    <div id="hp-preview-header">
+      <div>
+        <h2 id="hp-preview-titel">Preview</h2>
+        <p>Eerste 3 pagina's — gratis inkijken</p>
+      </div>
+      <button onclick="sluitHpPreview()" aria-label="Sluiten" style="background:none;border:none;cursor:pointer;color:#7A7167;padding:4px;flex-shrink:0;">
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg>
+      </button>
+    </div>
+    <div id="hp-preview-pages">
+      <div id="hp-preview-loader">Preview laden…</div>
+    </div>
+    <div id="hp-preview-footer">
+      <p>Wil je de volledige cursus?</p>
+      <button class="hp-koop-btn" onclick="window.location.href='educatie.html'">
+        Bekijk op educatie
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+// ── Homepage PDF Preview ──────────────────────────────────────────
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+const HP_CURSUS_NAMEN = {
+  'starten-met-automatiseren': 'Hoe begin ik met automatiseren?',
+};
+
+let hpActievePreviewId = null;
+
+document.getElementById('hp-preview-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) sluitHpPreview();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('hp-preview-overlay').style.display === 'flex') sluitHpPreview();
+});
+
+async function openPreview(cursusId) {
+  hpActievePreviewId = cursusId;
+  document.getElementById('hp-preview-titel').textContent = HP_CURSUS_NAMEN[cursusId] || cursusId;
+  const pagesEl = document.getElementById('hp-preview-pages');
+  pagesEl.innerHTML = '<div id="hp-preview-loader">Preview laden…</div>';
+  const overlay = document.getElementById('hp-preview-overlay');
+  overlay.style.display = 'flex';
+
+  const pdfUrl = `/pdf-previews/${cursusId}-preview.pdf`;
+  try {
+    const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+    pagesEl.innerHTML = '';
+    const aantalPaginas = Math.min(pdf.numPages, 3);
+    for (let i = 1; i <= aantalPaginas; i++) {
+      const pagina = await pdf.getPage(i);
+      const viewport = pagina.getViewport({ scale: 1.5 });
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      pagesEl.appendChild(canvas);
+      await pagina.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+    }
+  } catch {
+    pagesEl.innerHTML = '<div id="hp-preview-loader">Preview is nog niet beschikbaar. <a href="educatie.html" style="color:#DC5A14;font-weight:600;">Bekijk op de cursuspagina →</a></div>';
+  }
+}
+
+function sluitHpPreview() {
+  document.getElementById('hp-preview-overlay').style.display = 'none';
+  hpActievePreviewId = null;
+}
+</script>
+
 </body>
 </html>
