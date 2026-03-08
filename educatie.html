@@ -638,10 +638,18 @@
     .card-footer {
       padding: 1.375rem 1.875rem 1.875rem;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
+      flex-direction: column;
+      gap: 0.75rem;
       border-top: 1px solid hsl(20, 18%, 94%);
+    }
+    .card-btns {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .card-btns .btn-preview,
+    .card-btns .btn-koop {
+      flex: 1;
+      justify-content: center;
     }
 
     .price-block {}
@@ -968,19 +976,22 @@
   .btn-preview {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    font-size: 0.8125rem;
+    gap: 0.4rem;
+    font-size: 0.8375rem;
     font-weight: 600;
-    color: #DC5A14;
+    color: var(--primary);
     background: none;
-    border: 1.5px solid #DC5A14;
+    border: 1px solid var(--primary-border);
     border-radius: 9999px;
-    padding: 7px 14px;
+    padding: 0.6rem 1.25rem;
     cursor: pointer;
-    transition: background .18s, color .18s;
+    transition: background .22s, color .22s, border-color .22s, transform .18s;
     white-space: nowrap;
   }
-  .btn-preview:hover { background: #F5E6DD; }
+  .btn-preview:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+  }
 
   /* ── PDF Preview modal ──────────────────────────────── */
   #preview-overlay {
@@ -1189,14 +1200,16 @@
               <p class="price-label">Prijs</p>
               <p class="price-value">€199,–</p>
             </div>
-            <button class="btn-preview" data-preview-id="ai-basics-ondernemers">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              Preview
-            </button>
-            <button class="card-cta btn-koop" data-cursus-id="ai-basics-ondernemers">
-              Nu kopen
-              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-            </button>
+            <div class="card-btns">
+              <button class="btn-preview" data-preview-id="ai-basics-ondernemers">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Preview
+              </button>
+              <button class="card-cta btn-koop" data-cursus-id="ai-basics-ondernemers">
+                Nu kopen
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </button>
+            </div>
           </div>
         </article>
 
@@ -1226,14 +1239,16 @@
               <p class="price-label">Prijs</p>
               <p class="price-value">€149,–</p>
             </div>
-            <button class="btn-preview" data-preview-id="chatgpt-masterclass">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              Preview
-            </button>
-            <button class="card-cta btn-koop" data-cursus-id="chatgpt-masterclass">
-              Nu kopen
-              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-            </button>
+            <div class="card-btns">
+              <button class="btn-preview" data-preview-id="chatgpt-masterclass">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Preview
+              </button>
+              <button class="card-cta btn-koop" data-cursus-id="chatgpt-masterclass">
+                Nu kopen
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </button>
+            </div>
           </div>
         </article>
 
@@ -1315,14 +1330,16 @@
               <p class="price-label">Prijs</p>
               <p class="price-value">€79,–</p>
             </div>
-            <button class="btn-preview" data-preview-id="starten-met-automatiseren">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              Preview
-            </button>
-            <button class="card-cta btn-koop" data-cursus-id="starten-met-automatiseren">
-              Nu kopen
-              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-            </button>
+            <div class="card-btns">
+              <button class="btn-preview" data-preview-id="starten-met-automatiseren">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Preview
+              </button>
+              <button class="card-cta btn-koop" data-cursus-id="starten-met-automatiseren">
+                Nu kopen
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </button>
+            </div>
           </div>
         </article>
 
@@ -1352,14 +1369,16 @@
               <p class="price-label">Prijs</p>
               <p class="price-value">€79,–</p>
             </div>
-            <button class="btn-preview" data-preview-id="ai-tools-vandaag">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              Preview
-            </button>
-            <button class="card-cta btn-koop" data-cursus-id="ai-tools-vandaag">
-              Nu kopen
-              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-            </button>
+            <div class="card-btns">
+              <button class="btn-preview" data-preview-id="ai-tools-vandaag">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Preview
+              </button>
+              <button class="card-cta btn-koop" data-cursus-id="ai-tools-vandaag">
+                Nu kopen
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </button>
+            </div>
           </div>
         </article>
 
@@ -1389,14 +1408,16 @@
               <p class="price-label">Prijs</p>
               <p class="price-value">€129,–</p>
             </div>
-            <button class="btn-preview" data-preview-id="hoe-gebruik-ik-n8n">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              Preview
-            </button>
-            <button class="card-cta btn-koop" data-cursus-id="hoe-gebruik-ik-n8n">
-              Nu kopen
-              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-            </button>
+            <div class="card-btns">
+              <button class="btn-preview" data-preview-id="hoe-gebruik-ik-n8n">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Preview
+              </button>
+              <button class="card-cta btn-koop" data-cursus-id="hoe-gebruik-ik-n8n">
+                Nu kopen
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </button>
+            </div>
           </div>
         </article>
 
@@ -1426,14 +1447,16 @@
               <p class="price-label">Prijs</p>
               <p class="price-value">€179,–</p>
             </div>
-            <button class="btn-preview" data-preview-id="crm-koppelen-n8n">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              Preview
-            </button>
-            <button class="card-cta btn-koop" data-cursus-id="crm-koppelen-n8n">
-              Nu kopen
-              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-            </button>
+            <div class="card-btns">
+              <button class="btn-preview" data-preview-id="crm-koppelen-n8n">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Preview
+              </button>
+              <button class="card-cta btn-koop" data-cursus-id="crm-koppelen-n8n">
+                Nu kopen
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </button>
+            </div>
           </div>
         </article>
 
