@@ -611,6 +611,49 @@
       transform: translateY(-1px);
     }
     .conv-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+    .conv-btn--outline {
+      background: transparent;
+      color: var(--primary);
+      border: 1.5px solid var(--primary-border, #e8c4a8);
+      cursor: pointer;
+    }
+    .conv-btn--outline:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      gap: 0.6rem;
+      transform: translateY(-1px);
+    }
+    /* ── Service labels (Educatie / Consultancy / Implementatie) */
+    .conv-service-label {
+      display: inline-flex;
+      align-self: flex-start;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.6rem;
+      border-radius: 9999px;
+      margin-bottom: 0.85rem;
+      border: 1.5px solid;
+      white-space: nowrap;
+    }
+    .conv-service-label--educatie {
+      background: #eef7ed;
+      color: #2d7a27;
+      border-color: #b8ddb5;
+    }
+    .conv-service-label--consultancy {
+      background: #eff4ff;
+      color: #2d55bb;
+      border-color: #b5c8f5;
+    }
+    .conv-service-label--implementatie {
+      background: #fdf3e7;
+      color: #b85c00;
+      border-color: #f0c990;
+    }
     .meer-link:active { transform: translateY(0); }
 
     /* ── CTA Banner ────────────────────────────────── */
@@ -1672,23 +1715,37 @@
       <!-- Uitgelichte cursus -->
       <div class="conv-card conv-card--cursus reveal">
         <span class="conv-badge">Meest gevraagd</span>
+        <span class="conv-service-label conv-service-label--educatie">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Educatie
+        </span>
         <div class="conv-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
           </svg>
         </div>
-        <h3 class="conv-title">AI Basics voor Ondernemers</h3>
-        <p class="conv-body">De ideale startcursus als je AI wilt begrijpen zonder technische achtergrond. Leer hoe AI werkt, wat het voor jou kan doen en hoe je er direct mee aan de slag gaat.</p>
-        <div class="conv-price">€&nbsp;199,–</div>
-        <a href="educatie.html" class="conv-btn conv-btn--primary" onclick="gtag('event','cta_click',{event_category:'conversie',event_label:'AI Basics cursus'})">
-          Bekijk cursus
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-        </a>
+        <h3 class="conv-title">Hoe begin ik met automatiseren?</h3>
+        <p class="conv-body">Een praktische introductie in AI-automatisering. Ontdek waar en hoe je kunt beginnen met het automatiseren van dagelijkse taken.</p>
+        <div class="conv-price">€&nbsp;25,–</div>
+        <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+          <button class="conv-btn conv-btn--outline" onclick="(function(){var e=document.getElementById('preview-modal');if(e){e.dataset.previewId='starten-met-automatiseren';e.classList.add('open')}else{window.location='educatie.html';}})()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Preview
+          </button>
+          <a href="educatie.html" class="conv-btn conv-btn--primary" onclick="gtag('event','cta_click',{event_category:'conversie',event_label:'Automatiseren cursus'})">
+            Bekijk cursus
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
       </div>
 
       <!-- Consultancy teaser -->
       <div class="conv-card conv-card--consult reveal" style="transition-delay:.1s;">
+        <span class="conv-service-label conv-service-label--consultancy">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Consultancy
+        </span>
         <div class="conv-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
@@ -1922,6 +1979,10 @@
         <svg width="11" height="11" viewBox="0 0 11 11" fill="currentColor" aria-hidden="true"><polygon points="5.5,0 6.8,3.9 11,5.5 6.8,7.1 5.5,11 4.2,7.1 0,5.5 4.2,3.9"/></svg>
         Deze week uitgelicht
       </div>
+      <span class="conv-service-label conv-service-label--implementatie" style="margin-bottom:0.75rem;display:inline-flex;">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Implementatie
+      </span>
       <div class="uitgelicht-inner">
         <div class="uitgelicht-content">
           <h2 class="uitgelicht-title">Jouw eigen chatbot<br>voor <span class="uitgelicht-price">€99<span class="uitgelicht-period">/mnd</span></span></h2>
