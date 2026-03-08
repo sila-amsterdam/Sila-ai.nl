@@ -180,6 +180,59 @@
       .nav-link.mob-hide { display: none; }
     }
 
+    /* ── Mobile hamburger ──────────────────────────────── */
+    .mob-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.42rem 0.7rem;
+      color: hsl(20,10%,44%);
+      border-radius: 9999px;
+      align-items: center;
+      justify-content: center;
+    }
+    .mob-menu-btn:hover { background: hsl(20,18%,93%); color: var(--fg); }
+    @media (max-width: 540px) { .mob-menu-btn { display: flex; } }
+
+    .mob-drawer {
+      position: fixed;
+      bottom: 5.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      z-index: 99;
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(0,0,0,.07);
+      border-radius: 1.25rem;
+      padding: 0.5rem;
+      box-shadow: 0 8px 40px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.06);
+      min-width: 200px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      flex-direction: column;
+      display: none;
+    }
+    @media (max-width: 540px) { .mob-drawer { display: flex; } }
+    .mob-drawer.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(-50%) translateY(0);
+    }
+    .mob-drawer a {
+      padding: 0.7rem 1.1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0.75rem;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .mob-drawer a:hover { background: hsl(20,18%,93%); }
+
     /* ── Chip labels ───────────────────────────────── */
     .chip {
       display: inline-flex;
@@ -1461,7 +1514,19 @@
   <a href="#over-ons" class="nav-link mob-hide" data-i18n="nav.about">Over ons</a>
   <a href="#referenties"  class="nav-link mob-hide" data-i18n="nav.refs">Referenties</a>
   <a href="#nieuwsbrief" class="nav-link mob-hide" data-i18n="nav.newsletter">Nieuwsbrief</a>
+  <button class="mob-menu-btn" id="mob-menu-btn" aria-label="Menu openen" aria-expanded="false">
+    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <line x1="0" y1="1" x2="18" y2="1"/><line x1="0" y1="7" x2="18" y2="7"/><line x1="0" y1="13" x2="18" y2="13"/>
+    </svg>
+  </button>
   <a href="contact.html" class="nav-cta" data-i18n="nav.contact" onclick="gtag('event','cta_click',{event_category:'nav',event_label:'Contact nav'})">Contact</a>
+</nav>
+
+<nav class="mob-drawer" id="mob-drawer" aria-label="Mobiel menu">
+  <a href="#diensten"   onclick="closeMobMenu()" data-i18n="nav.services">Diensten</a>
+  <a href="#over-ons"   onclick="closeMobMenu()" data-i18n="nav.about">Over ons</a>
+  <a href="#referenties" onclick="closeMobMenu()" data-i18n="nav.refs">Referenties</a>
+  <a href="#nieuwsbrief" onclick="closeMobMenu()" data-i18n="nav.newsletter">Nieuwsbrief</a>
 </nav>
 
 
@@ -2268,7 +2333,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <ul class="footer-links">
           <li><a href="mailto:info@sila-ai.nl">info@sila-ai.nl</a></li>
           <li><a href="https://www.linkedin.com/company/sila-ai-nl" target="_blank" rel="noopener">LinkedIn</a></li>
-          <li><a href="#" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.instagram.com/silaai.nl/" target="_blank" rel="noopener">Instagram</a></li>
         </ul>
       </div>
 
@@ -2789,6 +2854,28 @@ function autoResize(el) {
   el.style.height = Math.min(el.scrollHeight, 100) + 'px';
 }
 
+/* ── Mobile menu ─────────────────────────────────────── */
+(function () {
+  const btn    = document.getElementById('mob-menu-btn');
+  const drawer = document.getElementById('mob-drawer');
+  if (!btn || !drawer) return;
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    const open = drawer.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.addEventListener('click', function (e) {
+    if (!btn.contains(e.target) && !drawer.contains(e.target)) {
+      drawer.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
+function closeMobMenu() {
+  document.getElementById('mob-drawer')?.classList.remove('open');
+  document.getElementById('mob-menu-btn')?.setAttribute('aria-expanded', 'false');
+}
+
 /* ─────────────────────────────────────────────────────────
    ANIMATED TESTIMONIALS
 ───────────────────────────────────────────────────────── */
@@ -2800,7 +2887,7 @@ function autoResize(el) {
       designationLink: 'https://www.kleidi.nl',
       quote: '[Hier komt de quote van Tes Abbenhues — Founder van Kleidi.]',
       quoteEN: '[Quote from Tes Abbenhues — Founder of Kleidi goes here.]',
-      initials: 'TA',
+      src: 'assets/images/Tes Foto.png',
     },
     {
       name: 'Martijn van der Corput',
@@ -2808,7 +2895,7 @@ function autoResize(el) {
       designationLink: 'https://www.opt-insight.com',
       quote: '[Hier komt de quote van Martijn van der Corput — Founder van Opt Insight.]',
       quoteEN: '[Quote from Martijn van der Corput — Founder of Opt Insight goes here.]',
-      initials: 'MvC',
+      src: 'assets/images/Martijn Foto.png',
     },
     {
       name: 'Arianit Shala',

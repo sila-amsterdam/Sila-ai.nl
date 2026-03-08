@@ -189,6 +189,29 @@
       transition: background-position 0.38s cubic-bezier(0.22,1,0.36,1), transform 0.15s, box-shadow 0.2s;
       box-shadow: 0 2px 8px rgba(220,90,20,.22);
     }
+    .mob-menu-btn {
+      display: none; background: none; border: none; cursor: pointer;
+      padding: 0.42rem 0.7rem; color: hsl(20,10%,44%);
+      border-radius: 9999px; align-items: center; justify-content: center;
+    }
+    .mob-menu-btn:hover { background: hsl(20,18%,93%); color: var(--fg); }
+    .mob-drawer {
+      position: fixed; bottom: 5.5rem; left: 50%;
+      transform: translateX(-50%) translateY(10px); z-index: 99;
+      background: rgba(255,255,255,.97); backdrop-filter: blur(18px);
+      border: 1px solid rgba(0,0,0,.07); border-radius: 1.25rem;
+      padding: 0.5rem; box-shadow: 0 8px 40px rgba(0,0,0,.12);
+      min-width: 200px; opacity: 0; pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      flex-direction: column; display: none;
+    }
+    .mob-drawer.open { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .mob-drawer a {
+      padding: 0.7rem 1.1rem; font-size: 0.9rem; font-weight: 500;
+      color: var(--fg); text-decoration: none; border-radius: 0.75rem;
+      transition: background 0.15s; white-space: nowrap;
+    }
+    .mob-drawer a:hover { background: hsl(20,18%,93%); }
     .nav-cta:hover {
       background-position: 0% 0%;
       transform: translateY(-1px);
@@ -198,6 +221,8 @@
 
     @media (max-width: 540px) {
       .nav-link.mob-hide { display: none; }
+      .mob-menu-btn { display: flex; }
+      .mob-drawer { display: flex; bottom: 5rem; }
     }
 
     /* ── Scroll Progress Bar ────────────────────────── */
@@ -1103,7 +1128,19 @@
   <a href="over-ons.html"          class="nav-link mob-hide" data-i18n="nav.about">Over ons</a>
   <a href="index.html#referenties" class="nav-link mob-hide" data-i18n="nav.refs">Referenties</a>
   <a href="index.html#nieuwsbrief" class="nav-link mob-hide" data-i18n="nav.newsletter">Nieuwsbrief</a>
+  <button class="mob-menu-btn" id="mob-menu-btn" aria-label="Menu openen" aria-expanded="false">
+    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <line x1="0" y1="1" x2="18" y2="1"/><line x1="0" y1="7" x2="18" y2="7"/><line x1="0" y1="13" x2="18" y2="13"/>
+    </svg>
+  </button>
   <a href="contact.html"           class="nav-cta"           data-i18n="nav.contact">Contact</a>
+</nav>
+
+<nav class="mob-drawer" id="mob-drawer" aria-label="Mobiel menu">
+  <a href="index.html#diensten" data-i18n="nav.services">Diensten</a>
+  <a href="over-ons.html" data-i18n="nav.about">Over ons</a>
+  <a href="index.html#referenties" data-i18n="nav.refs">Referenties</a>
+  <a href="index.html#nieuwsbrief" data-i18n="nav.newsletter">Nieuwsbrief</a>
 </nav>
 
 
@@ -1195,21 +1232,11 @@
               <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Certificaat</li>
             </ul>
           </div>
-          <div class="card-footer">
-            <div class="price-block">
-              <p class="price-label">Prijs</p>
-              <p class="price-value">€199,–</p>
-            </div>
-            <div class="card-btns">
-              <button class="btn-preview" data-preview-id="ai-basics-ondernemers">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                Preview
-              </button>
-              <button class="card-cta btn-koop" data-cursus-id="ai-basics-ondernemers">
-                Nu kopen
-                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-              </button>
-            </div>
+          <div class="card-footer" style="justify-content:flex-end;">
+            <a href="contact.html?bericht=Hi+Sila%2C+ik+zou+graag+meer+informatie+willen+over+de+AI+Basics+voor+Ondernemers+workshop." class="card-cta">
+              Iets inplannen
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
           </div>
         </article>
 
@@ -1234,21 +1261,11 @@
               <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Community toegang</li>
             </ul>
           </div>
-          <div class="card-footer">
-            <div class="price-block">
-              <p class="price-label">Prijs</p>
-              <p class="price-value">€149,–</p>
-            </div>
-            <div class="card-btns">
-              <button class="btn-preview" data-preview-id="chatgpt-masterclass">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                Preview
-              </button>
-              <button class="card-cta btn-koop" data-cursus-id="chatgpt-masterclass">
-                Nu kopen
-                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-              </button>
-            </div>
+          <div class="card-footer" style="justify-content:flex-end;">
+            <a href="contact.html?bericht=Hi+Sila%2C+ik+zou+graag+meer+informatie+willen+over+de+ChatGPT+Masterclass+workshop." class="card-cta">
+              Iets inplannen
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
           </div>
         </article>
 
@@ -1304,8 +1321,43 @@
 
       <div class="courses-grid" id="grid-cursus">
 
-        <!-- Cursus Start: Hoe begin ik met automatiseren -->
+        <!-- Cursus Start: Word een prompt expert -->
         <article class="course-card reveal" data-tier="start">
+          <div class="card-header">
+            <span class="tier-badge tier-start">Start</span>
+            <div class="course-badge">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              Zelfstandig &nbsp;•&nbsp; Online
+            </div>
+            <h3 class="course-title">Word een prompt expert</h3>
+            <p class="course-body">Leer hoe je AI precies vertelt wat je wilt. Met de juiste prompts haal je drie keer zoveel uit elke AI-tool — van ChatGPT tot Claude.</p>
+          </div>
+          <div class="card-body">
+            <ul class="feature-list" aria-label="Wat je krijgt">
+              <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Bewezen prompttechnieken</li>
+              <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>30+ praktijkvoorbeelden</li>
+              <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Direct toepasbaar</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <div class="price-block">
+              <p class="price-label">Prijs</p>
+              <p class="price-value">€20,–</p>
+            </div>
+            <div class="card-btns">
+              <button class="card-cta btn-koop" data-cursus-id="word-een-prompt-expert">
+                Nu kopen
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Cursus Start: Hoe begin ik met automatiseren -->
+        <article class="course-card reveal" style="transition-delay:.1s;" data-tier="start">
           <div class="card-header">
             <span class="tier-badge tier-start">Start</span>
             <div class="course-badge">
@@ -1328,7 +1380,7 @@
           <div class="card-footer">
             <div class="price-block">
               <p class="price-label">Prijs</p>
-              <p class="price-value">€79,–</p>
+              <p class="price-value">€25,–</p>
             </div>
             <div class="card-btns">
               <button class="btn-preview" data-preview-id="starten-met-automatiseren">
@@ -1344,7 +1396,7 @@
         </article>
 
         <!-- Cursus Start: Welke AI tools zijn vandaag nodig -->
-        <article class="course-card reveal" style="transition-delay:.1s;" data-tier="start">
+        <article class="course-card reveal" style="transition-delay:.2s;" data-tier="start">
           <div class="card-header">
             <span class="tier-badge tier-start">Start</span>
             <div class="course-badge">
@@ -1361,13 +1413,13 @@
             <ul class="feature-list" aria-label="Wat je krijgt">
               <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Tool-voor-tool vergelijking</li>
               <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Use case overzicht</li>
-              <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Persoonlijk advies</li>
+              <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Up to date: april 2026</li>
             </ul>
           </div>
           <div class="card-footer">
             <div class="price-block">
               <p class="price-label">Prijs</p>
-              <p class="price-value">€79,–</p>
+              <p class="price-value">€10,–</p>
             </div>
             <div class="card-btns">
               <button class="btn-preview" data-preview-id="ai-tools-vandaag">
@@ -1406,7 +1458,7 @@
           <div class="card-footer">
             <div class="price-block">
               <p class="price-label">Prijs</p>
-              <p class="price-value">€129,–</p>
+              <p class="price-value">€35,–</p>
             </div>
             <div class="card-btns">
               <button class="btn-preview" data-preview-id="hoe-gebruik-ik-n8n">
@@ -1421,10 +1473,10 @@
           </div>
         </article>
 
-        <!-- Cursus Expert: CRM koppelen aan n8n -->
-        <article class="course-card reveal" style="transition-delay:.3s;" data-tier="expert">
+        <!-- Cursus Groei: Hoe gebruik ik Claude Code -->
+        <article class="course-card reveal" style="transition-delay:.3s;" data-tier="groei">
           <div class="card-header">
-            <span class="tier-badge tier-expert">Expert</span>
+            <span class="tier-badge tier-groei">Groei</span>
             <div class="course-badge">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <circle cx="12" cy="12" r="10"/>
@@ -1432,27 +1484,23 @@
               </svg>
               Zelfstandig &nbsp;•&nbsp; Online
             </div>
-            <h3 class="course-title">CRM koppelen aan n8n</h3>
-            <p class="course-body">Verbind jouw CRM-systeem met n8n en automatiseer je volledige salesproces. Van lead tot klant, volledig geautomatiseerd.</p>
+            <h3 class="course-title">Hoe gebruik ik Claude Code?</h3>
+            <p class="course-body">Leer werken met Claude Code — de krachtigste AI-assistent voor het bouwen van software. Van je eerste project tot het automatiseren van complexe taken.</p>
           </div>
           <div class="card-body">
             <ul class="feature-list" aria-label="Wat je krijgt">
-              <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>CRM integratie workshop</li>
-              <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Kant-en-klare flows</li>
-              <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>1-op-1 begeleiding</li>
+              <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Installatie & instellingen</li>
+              <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Praktische use cases</li>
+              <li><span class="check-icon" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Tips & tricks van Sila</li>
             </ul>
           </div>
           <div class="card-footer">
             <div class="price-block">
               <p class="price-label">Prijs</p>
-              <p class="price-value">€179,–</p>
+              <p class="price-value">€35,–</p>
             </div>
             <div class="card-btns">
-              <button class="btn-preview" data-preview-id="crm-koppelen-n8n">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                Preview
-              </button>
-              <button class="card-cta btn-koop" data-cursus-id="crm-koppelen-n8n">
+              <button class="card-cta btn-koop" data-cursus-id="hoe-gebruik-ik-claude-code">
                 Nu kopen
                 <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
               </button>
@@ -1630,6 +1678,24 @@ function applyLang(lang) {
 }
 
 function setLang(lang) { applyLang(lang); }
+
+/* ── Mobile menu ─────────────────────────────────────── */
+(function () {
+  const btn    = document.getElementById('mob-menu-btn');
+  const drawer = document.getElementById('mob-drawer');
+  if (!btn || !drawer) return;
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    const open = drawer.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.addEventListener('click', function (e) {
+    if (!btn.contains(e.target) && !drawer.contains(e.target)) {
+      drawer.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
 
 /* ─────────────────────────────────────────────────────────
    SCROLL PROGRESS BAR

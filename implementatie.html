@@ -193,11 +193,38 @@
       box-shadow: 0 2px 8px rgba(220,90,20,.22);
     }
     .nav-cta:hover { background: var(--primary-h); transform: translateY(-1px); }
+    .mob-menu-btn {
+      display: none;
+      background: none; border: none; cursor: pointer;
+      padding: 0.42rem 0.7rem; color: hsl(20,10%,44%);
+      border-radius: 9999px; align-items: center; justify-content: center;
+    }
+    .mob-menu-btn:hover { background: hsl(20,18%,93%); color: var(--fg); }
+    .mob-drawer {
+      position: fixed; bottom: 5.5rem; left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      z-index: 99; background: rgba(255,255,255,.97);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(0,0,0,.07); border-radius: 1.25rem;
+      padding: 0.5rem; box-shadow: 0 8px 40px rgba(0,0,0,.12);
+      min-width: 200px; opacity: 0; pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      flex-direction: column; display: none;
+    }
+    .mob-drawer.open { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .mob-drawer a {
+      padding: 0.7rem 1.1rem; font-size: 0.9rem; font-weight: 500;
+      color: var(--fg); text-decoration: none; border-radius: 0.75rem;
+      transition: background 0.15s; white-space: nowrap;
+    }
+    .mob-drawer a:hover { background: hsl(20,18%,93%); }
     .nav-cta:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
     .nav-cta:active { transform: scale(0.97); }
     @media (max-width: 540px) {
       .nav-link.mob-hide { display: none; }
       .floating-nav { bottom: 1rem; }
+      .mob-menu-btn { display: flex; }
+      .mob-drawer { display: flex; bottom: 5rem; }
     }
 
     /* ── Hero ──────────────────────────────────────── */
@@ -517,6 +544,24 @@
     }
     .workflow-cta:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
     .workflow-cta:active { transform: scale(0.96); }
+    .workflow-cta-buy {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(220,90,20,.22);
+    }
+    .workflow-cta-buy:hover { background: #C85210; transform: translateY(-1px); }
+    .workflow-cta-buy:active { transform: scale(0.96); }
 
     /* ── Custom solutions ───────────────────────────── */
     .custom-section {
@@ -1123,17 +1168,6 @@
         <div class="custom-card fade-up fade-up-delay-1">
           <div class="custom-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-            </svg>
-          </div>
-          <h3 class="custom-card-title">Conversational AI</h3>
-          <p class="custom-card-body">Wij ontwikkelen op maat gemaakte AI-assistenten die communiceren in lijn met jouw organisatie. Deze digitale assistenten worden gevoed met jouw bedrijfskennis en ondersteunen zowel klanten als interne teams op een efficiënte en schaalbare manier.</p>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="custom-card fade-up fade-up-delay-2">
-          <div class="custom-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="16 3 21 3 21 8"/>
               <line x1="4" y1="20" x2="21" y2="3"/>
               <polyline points="21 16 21 21 16 21"/>
@@ -1144,16 +1178,28 @@
           <p class="custom-card-body">We automatiseren terugkerende en tijdrovende processen met behulp van AI. Door slimme workflow-oplossingen nemen we handmatig werk uit handen en zorgen we voor meer snelheid, structuur en consistentie binnen je organisatie.</p>
         </div>
 
+        <!-- Card 2 -->
+        <div class="custom-card fade-up fade-up-delay-2">
+          <div class="custom-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"/>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+            </svg>
+          </div>
+          <h3 class="custom-card-title">AI Content</h3>
+          <p class="custom-card-body">Van social media tot nieuwsbrieven — wij bouwen AI-systemen die content produceren in jouw stijl en toon. Geen generieke teksten, maar output die klinkt alsof jij het zelf geschreven hebt. Meer bereik, minder tijd.</p>
+        </div>
+
         <!-- Card 3 -->
         <div class="custom-card fade-up fade-up-delay-3">
           <div class="custom-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="3" width="20" height="14" rx="2"/>
-              <path d="M8 21h8M12 17v4"/>
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M3 9h18M9 21V9"/>
             </svg>
           </div>
-          <h3 class="custom-card-title">AI Integraties</h3>
-          <p class="custom-card-body">We koppelen AI-oplossingen aan jouw bestaande systemen en software. Hierdoor ontstaat een naadloze samenwerking tussen technologie en jouw huidige werkomgeving, zonder dat processen versnipperd raken.</p>
+          <h3 class="custom-card-title">Websites &amp; Dashboards</h3>
+          <p class="custom-card-body">Of het nu een landingspagina is, een slim dashboard of een klantportaal — wij bouwen digitale omgevingen die er niet alleen prachtig uitzien, maar ook direct koppelen aan jouw automatiseringen en databronnen.</p>
         </div>
 
       </div>
@@ -1177,20 +1223,20 @@
           <div class="carousel-track" id="carouselTrack">
 
             <!-- Case 1 -->
-            <article class="case-card" data-id="voice-ai">
+            <article class="case-card" data-id="lead-management">
               <img
                 class="case-card-img"
-                src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&q=80"
-                alt="Voice AI Agent voor Internationale Klant"
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+                alt="Lead Management en Follow Up Automation"
                 draggable="false"
               />
               <div class="case-card-overlay"></div>
               <div class="case-card-color"></div>
               <div class="case-card-content">
-                <h3 class="case-card-title">Voice AI Agent voor Internationale Klant</h3>
-                <p class="case-card-desc">Een geavanceerde Voice AI Agent die klantvragen afhandelt in meerdere talen. Hoge kwaliteit, snelle oplevering.</p>
+                <h3 class="case-card-title">Lead Management &amp; Follow Up Automation</h3>
+                <p class="case-card-desc">Van eerste contact tot klant — volledig geautomatiseerd. Leads worden automatisch gescoord, ingedeeld en persoonlijk opgevolgd op het juiste moment.</p>
                 <a href="contact.html" class="case-card-link">
-                  Lees meer
+                  Meer weten
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="3 7 11 7 8 4"/><polyline points="8 10 11 7"/>
                   </svg>
@@ -1199,20 +1245,20 @@
             </article>
 
             <!-- Case 2 -->
-            <article class="case-card" data-id="lead-kwalificatie">
+            <article class="case-card" data-id="marketing-agent">
               <img
                 class="case-card-img"
-                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
-                alt="Automatische Lead Kwalificatie"
+                src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80"
+                alt="Marketing Agent en AI Content"
                 draggable="false"
               />
               <div class="case-card-overlay"></div>
               <div class="case-card-color"></div>
               <div class="case-card-content">
-                <h3 class="case-card-title">Automatische Lead Kwalificatie</h3>
-                <p class="case-card-desc">Een volledig geautomatiseerde workflow die leads scoort en distribueert. Bespaart het team 10+ uur per week.</p>
+                <h3 class="case-card-title">Marketing Agent &amp; AI Content</h3>
+                <p class="case-card-desc">Een AI-agent die marketing content produceert in de stijl van de klant — van LinkedIn posts tot e-mailcampagnes. Meer output, zonder extra uren.</p>
                 <a href="contact.html" class="case-card-link">
-                  Lees meer
+                  Meer weten
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="3 7 11 7 8 4"/><polyline points="8 10 11 7"/>
                   </svg>
@@ -1221,20 +1267,20 @@
             </article>
 
             <!-- Case 3 -->
-            <article class="case-card" data-id="content-pipeline">
+            <article class="case-card" data-id="voice-agent">
               <img
                 class="case-card-img"
-                src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80"
-                alt="Content Repurposing op Schaal"
+                src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&q=80"
+                alt="Voice Agent"
                 draggable="false"
               />
               <div class="case-card-overlay"></div>
               <div class="case-card-color"></div>
               <div class="case-card-content">
-                <h3 class="case-card-title">Content Repurposing op Schaal</h3>
-                <p class="case-card-desc">Van één blogpost naar 5 kanalen automatisch. De klant publiceert nu 4x meer content zonder extra werk.</p>
+                <h3 class="case-card-title">Voice Agent</h3>
+                <p class="case-card-desc">Een geavanceerde AI-spraakassistent die klantvragen afhandelt in meerdere talen. Altijd beschikbaar, altijd professioneel — zonder dat er iemand aan de lijn hoeft te zitten.</p>
                 <a href="contact.html" class="case-card-link">
-                  Lees meer
+                  Meer weten
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="3 7 11 7 8 4"/><polyline points="8 10 11 7"/>
                   </svg>
@@ -1243,20 +1289,20 @@
             </article>
 
             <!-- Case 4 -->
-            <article class="case-card" data-id="chatbot">
+            <article class="case-card" data-id="ai-chatbots">
               <img
                 class="case-card-img"
                 src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&q=80"
-                alt="AI Klantenservice Chatbot"
+                alt="AI Chatbots"
                 draggable="false"
               />
               <div class="case-card-overlay"></div>
               <div class="case-card-color"></div>
               <div class="case-card-content">
-                <h3 class="case-card-title">AI Klantenservice Chatbot</h3>
-                <p class="case-card-desc">Een intelligente chatbot die 80% van de klantvragen zelfstandig afhandelt, 24/7 beschikbaar.</p>
+                <h3 class="case-card-title">AI Chatbots</h3>
+                <p class="case-card-desc">Op maat gemaakte chatbots gevoed met jouw bedrijfskennis. Ze beantwoorden vragen, begeleiden bezoekers en sturen gesprekken de juiste kant op — 24/7.</p>
                 <a href="contact.html" class="case-card-link">
-                  Lees meer
+                  Meer weten
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="3 7 11 7 8 4"/><polyline points="8 10 11 7"/>
                   </svg>
@@ -1265,20 +1311,20 @@
             </article>
 
             <!-- Case 5 -->
-            <article class="case-card" data-id="offertes">
+            <article class="case-card" data-id="nieuws-analyse">
               <img
                 class="case-card-img"
-                src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80"
-                alt="Automatische Offertes Generator"
+                src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80"
+                alt="Concurrentie en Nieuws Analyse Automation"
                 draggable="false"
               />
               <div class="case-card-overlay"></div>
               <div class="case-card-color"></div>
               <div class="case-card-content">
-                <h3 class="case-card-title">Automatische Offertes Generator</h3>
-                <p class="case-card-desc">Op basis van een 5-minuten gesprek genereert het systeem een professionele offerte inclusief follow-up email.</p>
+                <h3 class="case-card-title">Concurrentie &amp; Nieuws Analyse</h3>
+                <p class="case-card-desc">Een geautomatiseerd systeem dat dagelijks concurrenten en branchenieuws monitort en samenvat in een helder rapport. Altijd op de hoogte, zonder uren zoekwerk.</p>
                 <a href="contact.html" class="case-card-link">
-                  Lees meer
+                  Meer weten
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="3 7 11 7 8 4"/><polyline points="8 10 11 7"/>
                   </svg>
@@ -1331,93 +1377,75 @@
 
       <div class="workflows-grid">
 
-        <!-- Workflow 1 -->
+        <!-- Workflow 1: Chatbot Workflow -->
         <article class="workflow-card fade-up fade-up-delay-1">
-          <div class="workflow-badges">
-            <span class="badge badge-auto">Automatisering</span>
-            <span class="badge badge-ready">Kant-en-klaar</span>
-          </div>
-          <h3 class="workflow-title">Automatische Lead Kwalificatie</h3>
-          <p class="workflow-body">Een workflow die inkomende leads automatisch scoort en doorstuurt naar de juiste persoon. Bespaart uren handmatig werk per week.</p>
-          <div class="tech-tags">
-            <span class="tech-tag">AI Model</span>
-            <span class="tech-tag">Google Sheets</span>
-          </div>
-          <div class="workflow-footer" style="justify-content:flex-end;">
-            <a href="contact.html?bericht=Hi+Sila%2C+ik+zou+graag+meer+informatie+willen+over+Automatische+Lead+Kwalificatie." class="workflow-cta" data-i18n="impl.contact">
-              Neem contact op
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="3 6 9 6 6 3"/><polyline points="6 9 9 6"/>
-              </svg>
-            </a>
-          </div>
-        </article>
-
-        <!-- Workflow 2 -->
-        <article class="workflow-card fade-up fade-up-delay-2">
           <div class="workflow-badges">
             <span class="badge badge-chatbot">Chatbot</span>
             <span class="badge badge-ready">Kant-en-klaar</span>
           </div>
-          <h3 class="workflow-title">AI Klantenservice Bot</h3>
-          <p class="workflow-body">Een slimme chatbot die 80% van de veelgestelde vragen beantwoordt, getraind op jouw kennisbank en FAQ's.</p>
+          <h3 class="workflow-title">Chatbot Workflow</h3>
+          <p class="workflow-body">De volledige achterkant van een professionele chatbot, gebouwd in n8n. Koppel je eigen kennisbank, breng context in en laat je chatbot meteen live gaan op jouw website.</p>
           <div class="tech-tags">
+            <span class="tech-tag">n8n</span>
             <span class="tech-tag">AI Model</span>
-            <span class="tech-tag">Voiceflow</span>
-            <span class="tech-tag">Zapier</span>
+            <span class="tech-tag">Webhook</span>
           </div>
-          <div class="workflow-footer" style="justify-content:flex-end;">
-            <a href="contact.html?bericht=Hi+Sila%2C+ik+zou+graag+meer+informatie+willen+over+de+AI+Klantenservice+Bot." class="workflow-cta" data-i18n="impl.contact">
-              Neem contact op
+          <div class="workflow-footer">
+            <div class="workflow-price">€50,– <span>eenmalig</span></div>
+            <button class="workflow-cta-buy btn-koop" data-cursus-id="chatbot-workflow" data-workflow-prijs="€50,–" data-workflow-naam="Chatbot Workflow">
+              Nu kopen
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="3 6 9 6 6 3"/><polyline points="6 9 9 6"/>
               </svg>
-            </a>
+            </button>
           </div>
         </article>
 
-        <!-- Workflow 3 -->
-        <article class="workflow-card fade-up fade-up-delay-3">
+        <!-- Workflow 2: Geautomatiseerde nieuwsbrieven -->
+        <article class="workflow-card fade-up fade-up-delay-2">
           <div class="workflow-badges">
             <span class="badge badge-content">Content</span>
             <span class="badge badge-ready">Kant-en-klaar</span>
           </div>
-          <h3 class="workflow-title">Content Repurposing Pipeline</h3>
-          <p class="workflow-body">Eén blogpost wordt automatisch omgezet naar LinkedIn posts, tweets, een nieuwsbrief en Instagram captions.</p>
+          <h3 class="workflow-title">Geautomatiseerd nieuwsbrieven maken</h3>
+          <p class="workflow-body">Een workflow die automatisch nieuwsbrieven genereert op basis van jouw huisstijl en recentste content. Nooit meer een blanco scherm — gewoon instellen en versturen.</p>
           <div class="tech-tags">
-            <span class="tech-tag">Make</span>
+            <span class="tech-tag">n8n</span>
             <span class="tech-tag">Claude API</span>
-            <span class="tech-tag">Buffer</span>
+            <span class="tech-tag">E-mail</span>
           </div>
-          <div class="workflow-footer" style="justify-content:flex-end;">
-            <a href="contact.html?bericht=Hi+Sila%2C+ik+zou+graag+meer+informatie+willen+over+de+Content+Repurposing+Pipeline." class="workflow-cta" data-i18n="impl.contact">
-              Neem contact op
+          <div class="workflow-footer">
+            <div class="workflow-price">€20,– <span>eenmalig</span></div>
+            <button class="workflow-cta-buy btn-koop" data-cursus-id="nieuwsbrieven-automatisering" data-workflow-prijs="€20,–" data-workflow-naam="Geautomatiseerd nieuwsbrieven maken">
+              Nu kopen
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="3 6 9 6 6 3"/><polyline points="6 9 9 6"/>
               </svg>
-            </a>
+            </button>
           </div>
         </article>
 
-        <!-- Workflow 4 -->
-        <article class="workflow-card fade-up fade-up-delay-4">
+        <!-- Workflow 3: AI nieuws naar Google Sheet -->
+        <article class="workflow-card fade-up fade-up-delay-3">
           <div class="workflow-badges">
-            <span class="badge badge-sales">Sales</span>
+            <span class="badge badge-auto">Automatisering</span>
             <span class="badge badge-ready">Kant-en-klaar</span>
           </div>
-          <h3 class="workflow-title">Offertes Generator</h3>
-          <p class="workflow-body">Genereer professionele offertes op basis van een kort gesprek of formulier. Inclusief automatische follow-ups.</p>
+          <h3 class="workflow-title">AI nieuws opslaan in Google Sheet</h3>
+          <p class="workflow-body">Ontvang je AI-nieuws via Gmail? Deze workflow leest je inbox automatisch, filtert relevante berichten en slaat ze gestructureerd op in een Google Sheet.</p>
           <div class="tech-tags">
-            <span class="tech-tag">AI Model</span>
-            <span class="tech-tag">PDF Generator</span>
+            <span class="tech-tag">n8n</span>
+            <span class="tech-tag">Gmail</span>
+            <span class="tech-tag">Google Sheets</span>
           </div>
-          <div class="workflow-footer" style="justify-content:flex-end;">
-            <a href="contact.html?bericht=Hi+Sila%2C+ik+zou+graag+meer+informatie+willen+over+de+Offertes+Generator." class="workflow-cta" data-i18n="impl.contact">
-              Neem contact op
+          <div class="workflow-footer">
+            <div class="workflow-price">€20,– <span>eenmalig</span></div>
+            <button class="workflow-cta-buy btn-koop" data-cursus-id="ai-nieuws-google-sheet" data-workflow-prijs="€20,–" data-workflow-naam="AI nieuws opslaan in Google Sheet">
+              Nu kopen
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="3 6 9 6 6 3"/><polyline points="6 9 9 6"/>
               </svg>
-            </a>
+            </button>
           </div>
         </article>
 
@@ -1474,7 +1502,19 @@
     <a href="over-ons.html" class="nav-link mob-hide" data-i18n="nav.about">Over ons</a>
     <a href="index.html#referenties" class="nav-link mob-hide" data-i18n="nav.references">Referenties</a>
     <a href="index.html#nieuwsbrief" class="nav-link mob-hide" data-i18n="nav.newsletter">Nieuwsbrief</a>
+    <button class="mob-menu-btn" id="mob-menu-btn" aria-label="Menu openen" aria-expanded="false">
+      <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <line x1="0" y1="1" x2="18" y2="1"/><line x1="0" y1="7" x2="18" y2="7"/><line x1="0" y1="13" x2="18" y2="13"/>
+      </svg>
+    </button>
     <a href="contact.html" class="nav-cta" data-i18n="nav.contact">Contact</a>
+  </nav>
+
+  <nav class="mob-drawer" id="mob-drawer" aria-label="Mobiel menu">
+    <a href="index.html#diensten" data-i18n="nav.services">Diensten</a>
+    <a href="over-ons.html" data-i18n="nav.about">Over ons</a>
+    <a href="index.html#referenties" data-i18n="nav.references">Referenties</a>
+    <a href="index.html#nieuwsbrief" data-i18n="nav.newsletter">Nieuwsbrief</a>
   </nav>
 
   <script>
@@ -1692,6 +1732,24 @@
       applyLangImpl(saved);
     })();
 
+/* ── Mobile menu ─────────────────────────────────────── */
+(function () {
+  const btn    = document.getElementById('mob-menu-btn');
+  const drawer = document.getElementById('mob-drawer');
+  if (!btn || !drawer) return;
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    const open = drawer.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.addEventListener('click', function (e) {
+    if (!btn.contains(e.target) && !drawer.contains(e.target)) {
+      drawer.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
+
 /* ── Chatbot ───────────────────────────────────────── */
 const N8N_WEBHOOK_URL = 'https://sila-ai.app.n8n.cloud/webhook/d33eb148-1a2b-48a9-a823-0f818b56cf50';
 let chatBtn, chatWindow, chatInput, chatSend, chatMsgs;
@@ -1787,6 +1845,100 @@ function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.sc
     </button>
   </div>
 </div>
+
+<!-- ── Koop Modal (Mollie betaling) ─────────────────────── -->
+<div id="koop-overlay" role="dialog" aria-modal="true" aria-labelledby="koop-item-naam" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(26,20,16,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:1rem;">
+  <div style="background:#fff;border-radius:16px;padding:2rem;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative;">
+    <button onclick="sluitKoopModal()" aria-label="Sluiten" style="position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;color:#7A7167;padding:4px;">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg>
+    </button>
+    <p style="margin:0 0 4px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#7A7167;">Bijna klaar</p>
+    <h2 id="koop-item-naam" style="margin:0 0 6px;font-family:'Playfair Display',Georgia,serif;font-size:1.375rem;color:#231D18;font-weight:700;">Workflow</h2>
+    <p id="koop-prijs-label" style="margin:0 0 20px;font-size:1.5rem;font-weight:700;font-family:'Playfair Display',Georgia,serif;color:#DC5A14;"></p>
+    <label for="koop-email" style="display:block;font-size:13px;font-weight:600;color:#231D18;margin-bottom:6px;">Jouw e-mailadres</label>
+    <input type="email" id="koop-email" placeholder="naam@bedrijf.nl" autocomplete="email"
+      style="width:100%;box-sizing:border-box;padding:10px 14px;border:1.5px solid #E3DDD5;border-radius:8px;font-size:15px;color:#231D18;outline:none;transition:border-color .18s;"
+      onfocus="this.style.borderColor='#DC5A14'" onblur="this.style.borderColor='#E3DDD5'"
+      onkeydown="if(event.key==='Enter')bevestigKoop()">
+    <p id="koop-email-fout" style="display:none;margin:6px 0 0;font-size:12px;color:#c0392b;"></p>
+    <p style="margin:10px 0 20px;font-size:12px;color:#7A7167;">Je ontvangt de workflow op dit adres na betaling.</p>
+    <button id="koop-bevestig-btn" onclick="bevestigKoop()" style="width:100%;padding:13px;background:#DC5A14;color:#fff;border:none;border-radius:9999px;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s;">
+      Doorgaan naar betaling →
+    </button>
+  </div>
+</div>
+
+<script>
+/* ── Workflow koop flow ──────────────────────────────────── */
+let actieveWorkflowId   = null;
+let actieveWorkflowNaam = null;
+let actieveWorkflowPrijs = null;
+
+document.querySelectorAll('.btn-koop').forEach(btn => {
+  btn.addEventListener('click', () => {
+    actieveWorkflowId   = btn.dataset.cursusId;
+    actieveWorkflowPrijs = btn.dataset.workflowPrijs || '';
+    actieveWorkflowNaam  = btn.dataset.workflowNaam  || 'Workflow';
+
+    document.getElementById('koop-item-naam').textContent  = actieveWorkflowNaam;
+    document.getElementById('koop-prijs-label').textContent = actieveWorkflowPrijs;
+    document.getElementById('koop-email').value = '';
+    document.getElementById('koop-email-fout').style.display = 'none';
+
+    const overlay = document.getElementById('koop-overlay');
+    overlay.style.display = 'flex';
+    setTimeout(() => document.getElementById('koop-email').focus(), 100);
+  });
+});
+
+document.getElementById('koop-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) sluitKoopModal();
+});
+
+function sluitKoopModal() {
+  document.getElementById('koop-overlay').style.display = 'none';
+  actieveWorkflowId = null;
+}
+
+async function bevestigKoop() {
+  const emailInput = document.getElementById('koop-email');
+  const foutEl     = document.getElementById('koop-email-fout');
+  const btn        = document.getElementById('koop-bevestig-btn');
+  const email      = emailInput.value.trim();
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    foutEl.textContent = 'Vul een geldig e-mailadres in.';
+    foutEl.style.display = 'block';
+    emailInput.focus();
+    return;
+  }
+  foutEl.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'Even wachten…';
+
+  try {
+    const res  = await fetch('https://sila-backend-payments.onrender.com/api/betaling/aanmaken', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cursusId: actieveWorkflowId, email }),
+    });
+    const data = await res.json();
+    if (data.checkoutUrl) {
+      window.location.href = data.checkoutUrl;
+    } else {
+      foutEl.textContent = data.fout || 'Er ging iets mis. Probeer het opnieuw.';
+      foutEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Doorgaan naar betaling →';
+    }
+  } catch {
+    foutEl.textContent = 'Verbindingsfout. Controleer je internet en probeer opnieuw.';
+    foutEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Doorgaan naar betaling →';
+  }
+}
+</script>
 
 </body>
 </html>
