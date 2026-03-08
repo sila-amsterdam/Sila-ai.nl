@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NGBWZBXYP2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NGBWZBXYP2');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Betaling geslaagd — Sila AI</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: hsl(16, 82%, 54%);
+      --primary-light: hsl(16, 85%, 96%);
+      --bg: hsl(30, 20%, 97%);
+      --fg: hsl(20, 12%, 13%);
+      --muted: hsl(20, 10%, 48%);
+      --border: hsl(20, 18%, 89%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Navbar ────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(249,247,244,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--fg);
+      text-decoration: none;
+    }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .18s;
+    }
+    .nav-back:hover { color: var(--primary); }
+
+    /* ── Main ──────────────────────────────────────── */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 32px rgba(0,0,0,.08);
+      padding: 3rem 2.5rem;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .icon-wrapper {
+      width: 72px;
+      height: 72px;
+      background: #e8fbf0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+    .icon-spinner {
+      width: 72px;
+      height: 72px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 1.5rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--fg);
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .cursus-box {
+      background: var(--primary-light);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.75rem;
+      text-align: left;
+    }
+    .cursus-box-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+    .cursus-box-naam {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--fg);
+    }
+
+    .email-hint {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 9999px;
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+      margin-bottom: 1rem;
+    }
+    .btn-download:hover { background: hsl(16, 82%, 48%); transform: translateY(-1px); }
+
+    .btn-terug {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .18s;
+    }
+    .btn-terug:hover { color: var(--primary); }
+
+    /* ── Footer ────────────────────────────────────── */
+    footer {
+      background: hsl(20, 8%, 10%);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    footer p { font-size: 0.8125rem; color: hsl(20, 10%, 50%); }
+    footer a { color: var(--primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Sila</a>
+    <a href="educatie.html" class="nav-back">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>
+      Terug naar cursussen
+    </a>
+  </div>
+</nav>
+
+<main>
+  <div class="card" id="kaart">
+
+    <!-- Status: Wachten op bevestiging -->
+    <div id="status-wachten">
+      <div class="icon-spinner"></div>
+      <h1>Betaling verwerken…</h1>
+      <p class="subtitle">We bevestigen je betaling. Dit duurt meestal maar een paar seconden.</p>
+    </div>
+
+    <!-- Status: Bevestigd -->
+    <div id="status-bevestigd" style="display:none;">
+      <div class="icon-wrapper">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h1>Betaald!</h1>
+      <p class="subtitle">Bedankt voor je aankoop. Download je cursus hieronder.</p>
+      <div class="cursus-box">
+        <p class="cursus-box-label">Jouw cursus</p>
+        <p class="cursus-box-naam" id="cursus-naam-display">—</p>
+      </div>
+      <p class="email-hint">Er is ook een downloadlink verstuurd naar je e-mailadres.</p>
+      <a id="download-knop" href="#" class="btn-download">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download je cursus
+      </a>
+      <br>
+      <a href="educatie.html" class="btn-terug">← Terug naar cursussen</a>
+    </div>
+
+    <!-- Status: Time-out (webhook duurt te lang) -->
+    <div id="status-timeout" style="display:none;">
+      <div class="icon-wrapper" style="background:#fff3e0;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <h1>Betaling verwerkt</h1>
+      <p class="subtitle">Je betaling is ontvangen maar de bevestiging duurt iets langer. Je ontvangt de downloadlink zo per e-mail.<br><br>Sluit deze pagina niet — of check je inbox over een minuutje.</p>
+      <a href="educatie.html" class="btn-terug">← Terug naar cursussen</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 Sila — <a href="https://www.sila-ai.nl">sila-ai.nl</a></p>
+</footer>
+
+<script>
+const CURSUS_NAMEN = {
+  'ai-basics-ondernemers': 'AI Basics voor Ondernemers',
+  'chatgpt-masterclass': 'ChatGPT Masterclass',
+  'starten-met-automatiseren': 'Hoe begin ik met automatiseren?',
+  'ai-tools-vandaag': 'Welke AI tools zijn vandaag nodig?',
+  'hoe-gebruik-ik-n8n': 'Hoe gebruik ik n8n?',
+  'crm-koppelen-n8n': 'CRM koppelen aan n8n',
+};
+
+const params = new URLSearchParams(location.search);
+const token = params.get('token');
+
+if (!token) {
+  document.getElementById('status-wachten').style.display = 'none';
+  document.getElementById('status-timeout').style.display = 'block';
+} else {
+  let pogingen = 0;
+  const maxPogingen = 20; // 20 × 2s = 40s
+
+  async function controleerStatus() {
+    pogingen++;
+    try {
+      const res = await fetch(`/api/betaling/status?token=${encodeURIComponent(token)}`);
+      const data = await res.json();
+
+      if (data.status === 'active') {
+        const cursusNaam = CURSUS_NAMEN[data.cursusId] || data.cursusId;
+        document.getElementById('cursus-naam-display').textContent = cursusNaam;
+        document.getElementById('download-knop').href = `/api/download?token=${encodeURIComponent(token)}`;
+        document.getElementById('status-wachten').style.display = 'none';
+        document.getElementById('status-bevestigd').style.display = 'block';
+        return;
+      }
+
+      if (data.status === 'verlopen' || data.status === 'niet_gevonden') {
+        document.getElementById('status-wachten').style.display = 'none';
+        document.getElementById('status-timeout').style.display = 'block';
+        return;
+      }
+
+      if (pogingen >= maxPogingen) {
+        document.getElementById('status-wachten').style.display = 'none';
+        document.getElementById('status-timeout').style.display = 'block';
+        return;
+      }
+
+      setTimeout(controleerStatus, 2000);
+    } catch {
+      if (pogingen >= maxPogingen) {
+        document.getElementById('status-wachten').style.display = 'none';
+        document.getElementById('status-timeout').style.display = 'block';
+      } else {
+        setTimeout(controleerStatus, 2000);
+      }
+    }
+  }
+
+  controleerStatus();
+}
+</script>
+
+</body>
+</html>

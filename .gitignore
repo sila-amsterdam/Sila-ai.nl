@@ -20,5 +20,11 @@ Claude.md
 .env
 .env.local
 
+# Betaaldata (bevat klantgegevens)
+betalingen.json
+
+# PDF cursussen (niet publiek via git)
+pdf-cursussen/*.pdf
+
 # OS bestanden
 .DS_Store

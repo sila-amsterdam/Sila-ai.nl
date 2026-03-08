@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NGBWZBXYP2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NGBWZBXYP2');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Betaling niet afgerond — Sila AI</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: hsl(16, 82%, 54%);
+      --primary-light: hsl(16, 85%, 96%);
+      --bg: hsl(30, 20%, 97%);
+      --fg: hsl(20, 12%, 13%);
+      --muted: hsl(20, 10%, 48%);
+      --border: hsl(20, 18%, 89%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Navbar ────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(249,247,244,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--fg);
+      text-decoration: none;
+    }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .18s;
+    }
+    .nav-back:hover { color: var(--primary); }
+
+    /* ── Main ──────────────────────────────────────── */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 32px rgba(0,0,0,.08);
+      padding: 3rem 2.5rem;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+    }
+    .icon-wrapper {
+      width: 72px;
+      height: 72px;
+      background: #f5f5f5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--fg);
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 9999px;
+      padding: 13px 24px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+      margin-bottom: 0.75rem;
+    }
+    .btn-primary:hover { background: hsl(16, 82%, 48%); transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: none;
+      color: var(--muted);
+      border: 1.5px solid var(--border);
+      border-radius: 9999px;
+      padding: 12px 24px;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color .18s, border-color .18s;
+    }
+    .btn-secondary:hover { color: var(--primary); border-color: var(--primary); }
+    .btn-groep {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .gerust-stellen {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg);
+      border-radius: 8px;
+    }
+
+    /* ── Footer ────────────────────────────────────── */
+    footer {
+      background: hsl(20, 8%, 10%);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    footer p { font-size: 0.8125rem; color: hsl(20, 10%, 50%); }
+    footer a { color: var(--primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Sila</a>
+    <a href="educatie.html" class="nav-back">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>
+      Terug naar cursussen
+    </a>
+  </div>
+</nav>
+
+<main>
+  <div class="card">
+    <div class="icon-wrapper">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="15" y1="9" x2="9" y2="15"/>
+        <line x1="9" y1="9" x2="15" y2="15"/>
+      </svg>
+    </div>
+
+    <h1>Betaling niet afgerond</h1>
+    <p class="subtitle">Geen zorgen — er is niets in rekening gebracht. Je kunt het altijd opnieuw proberen.</p>
+
+    <p class="gerust-stellen">
+      💳 Jouw gegevens zijn niet opgeslagen en je betaalmethode is niet belast.
+    </p>
+
+    <div class="btn-groep">
+      <a href="educatie.html" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>
+        Terug naar cursussen
+      </a>
+      <a href="contact.html?bericht=Hoi%2C+ik+had+moeite+met+het+afronden+van+mijn+betaling.+Kunnen+jullie+helpen%3F" class="btn-secondary">
+        Hulp nodig? Neem contact op
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 Sila — <a href="https://www.sila-ai.nl">sila-ai.nl</a></p>
+</footer>
+
+</body>
+</html>
