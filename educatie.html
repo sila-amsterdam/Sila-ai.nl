@@ -1778,7 +1778,7 @@ async function bevestigKoop() {
   btn.textContent = 'Even wachten…';
 
   try {
-    const res = await fetch('/api/betaling/aanmaken', {
+    const res = await fetch('https://sila-backend-payments.onrender.com/api/betaling/aanmaken', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ cursusId: actieveCursusId, email }),

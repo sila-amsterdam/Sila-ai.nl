@@ -277,13 +277,13 @@ if (!token) {
   async function controleerStatus() {
     pogingen++;
     try {
-      const res = await fetch(`/api/betaling/status?token=${encodeURIComponent(token)}`);
+      const res = await fetch(`https://sila-backend-payments.onrender.com/api/betaling/status?token=${encodeURIComponent(token)}`);
       const data = await res.json();
 
       if (data.status === 'active') {
         const cursusNaam = CURSUS_NAMEN[data.cursusId] || data.cursusId;
         document.getElementById('cursus-naam-display').textContent = cursusNaam;
-        document.getElementById('download-knop').href = `/api/download?token=${encodeURIComponent(token)}`;
+        document.getElementById('download-knop').href = `https://sila-backend-payments.onrender.com/api/download?token=${encodeURIComponent(token)}`;
         document.getElementById('status-wachten').style.display = 'none';
         document.getElementById('status-bevestigd').style.display = 'block';
         return;
