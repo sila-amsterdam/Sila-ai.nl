@@ -3,9 +3,6 @@ node_modules/
 
 # Dev tools (niet nodig voor de website)
 screenshot.mjs
-serve.mjs
-package.json
-package-lock.json
 
 # Tijdelijke bestanden
 temporary screenshots/
