@@ -714,7 +714,6 @@
     }
     .carousel-track-outer {
       overflow: hidden;
-      border-radius: 20px;
       cursor: grab;
       user-select: none;
       -webkit-user-select: none;
@@ -730,17 +729,29 @@
       transition: none;
     }
     .case-card {
-      flex: 0 0 320px;
-      height: 420px;
+      flex: 0 0 300px;
       border-radius: 20px;
       overflow: hidden;
       position: relative;
-      box-shadow:
-        0 8px 32px rgba(0,0,0,.16),
-        0 2px 8px rgba(0,0,0,.10);
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,.05), 0 1px 4px rgba(0,0,0,.04);
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: flex;
+      flex-direction: column;
+    }
+    .case-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 48px rgba(220,90,20,.11), 0 4px 16px rgba(0,0,0,.08);
     }
     @media (min-width: 768px) {
-      .case-card { flex: 0 0 360px; height: 460px; }
+      .case-card { flex: 0 0 336px; }
+    }
+    .case-card-img-wrap {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
     }
     .case-card-img {
       width: 100%; height: 100%;
@@ -749,42 +760,43 @@
       transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       pointer-events: none;
     }
-    .case-card:hover .case-card-img { transform: scale(1.04); }
+    .case-card:hover .case-card-img { transform: scale(1.06); }
     .case-card-overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(
-        to top,
-        rgba(10, 6, 4, 0.88) 0%,
-        rgba(10, 6, 4, 0.45) 45%,
-        rgba(10, 6, 4, 0.08) 100%
+        to bottom,
+        transparent 40%,
+        rgba(249, 247, 244, 0.85) 100%
       );
     }
     .case-card-color {
       position: absolute;
       inset: 0;
-      background: hsl(16, 60%, 30%, 0.22);
+      background: hsl(16, 60%, 28%, 0.18);
       mix-blend-mode: multiply;
     }
     .case-card-content {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 1.75rem;
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
     .case-card-title {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       font-weight: 600;
-      color: #fff;
+      color: var(--fg);
       line-height: 1.3;
       letter-spacing: -0.02em;
-      margin-bottom: 0.625rem;
+      margin-bottom: 0.5rem;
     }
     .case-card-desc {
       font-size: 0.845rem;
-      line-height: 1.6;
-      color: rgba(255,255,255,.72);
-      margin-bottom: 1rem;
+      line-height: 1.65;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      flex: 1;
     }
     .case-card-link {
       display: inline-flex;
@@ -796,7 +808,7 @@
       text-decoration: none;
       transition: color 0.2s, gap 0.2s;
     }
-    .case-card-link:hover { color: hsl(16, 90%, 70%); gap: 0.55rem; }
+    .case-card-link:hover { color: hsl(16, 82%, 42%); gap: 0.55rem; }
     .case-card-link:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 3px; }
 
     /* Carousel controls */
@@ -1126,10 +1138,6 @@
         Van idee naar praktijk.
       </p>
     </div>
-  <div class="scroll-hint" aria-hidden="true">
-    <span>Scroll</span>
-    <div class="scroll-arrow"></div>
-  </div>
   </section>
 
   <!-- Custom Solutions Section -->
@@ -1241,14 +1249,16 @@
 
             <!-- Case 1 -->
             <article class="case-card" data-id="lead-management">
-              <img
-                class="case-card-img"
-                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
-                alt="Lead Management en Follow Up Automation"
-                draggable="false"
-              />
-              <div class="case-card-overlay"></div>
-              <div class="case-card-color"></div>
+              <div class="case-card-img-wrap">
+                <img
+                  class="case-card-img"
+                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+                  alt="Lead Management en Follow Up Automation"
+                  draggable="false"
+                />
+                <div class="case-card-overlay"></div>
+                <div class="case-card-color"></div>
+              </div>
               <div class="case-card-content">
                 <h3 class="case-card-title">Lead Management &amp; Follow Up Automation</h3>
                 <p class="case-card-desc">Van eerste contact tot klant — volledig geautomatiseerd. Leads worden automatisch gescoord, ingedeeld en persoonlijk opgevolgd op het juiste moment.</p>
@@ -1263,14 +1273,16 @@
 
             <!-- Case 2 -->
             <article class="case-card" data-id="marketing-agent">
-              <img
-                class="case-card-img"
-                src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80"
-                alt="Marketing Agent en AI Content"
-                draggable="false"
-              />
-              <div class="case-card-overlay"></div>
-              <div class="case-card-color"></div>
+              <div class="case-card-img-wrap">
+                <img
+                  class="case-card-img"
+                  src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80"
+                  alt="Marketing Agent en AI Content"
+                  draggable="false"
+                />
+                <div class="case-card-overlay"></div>
+                <div class="case-card-color"></div>
+              </div>
               <div class="case-card-content">
                 <h3 class="case-card-title">Marketing Agent &amp; AI Content</h3>
                 <p class="case-card-desc">Een AI-agent die marketing content produceert in de stijl van de klant — van LinkedIn posts tot e-mailcampagnes. Meer output, zonder extra uren.</p>
@@ -1285,14 +1297,16 @@
 
             <!-- Case 3 -->
             <article class="case-card" data-id="voice-agent">
-              <img
-                class="case-card-img"
-                src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&q=80"
-                alt="Voice Agent"
-                draggable="false"
-              />
-              <div class="case-card-overlay"></div>
-              <div class="case-card-color"></div>
+              <div class="case-card-img-wrap">
+                <img
+                  class="case-card-img"
+                  src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&q=80"
+                  alt="Voice Agent"
+                  draggable="false"
+                />
+                <div class="case-card-overlay"></div>
+                <div class="case-card-color"></div>
+              </div>
               <div class="case-card-content">
                 <h3 class="case-card-title">Voice Agent</h3>
                 <p class="case-card-desc">Een geavanceerde AI-spraakassistent die klantvragen afhandelt in meerdere talen. Altijd beschikbaar, altijd professioneel — zonder dat er iemand aan de lijn hoeft te zitten.</p>
@@ -1307,14 +1321,16 @@
 
             <!-- Case 4 -->
             <article class="case-card" data-id="ai-chatbots">
-              <img
-                class="case-card-img"
-                src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&q=80"
-                alt="AI Chatbots"
-                draggable="false"
-              />
-              <div class="case-card-overlay"></div>
-              <div class="case-card-color"></div>
+              <div class="case-card-img-wrap">
+                <img
+                  class="case-card-img"
+                  src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&q=80"
+                  alt="AI Chatbots"
+                  draggable="false"
+                />
+                <div class="case-card-overlay"></div>
+                <div class="case-card-color"></div>
+              </div>
               <div class="case-card-content">
                 <h3 class="case-card-title">AI Chatbots</h3>
                 <p class="case-card-desc">Op maat gemaakte chatbots gevoed met jouw bedrijfskennis. Ze beantwoorden vragen, begeleiden bezoekers en sturen gesprekken de juiste kant op — 24/7.</p>
@@ -1329,14 +1345,16 @@
 
             <!-- Case 5 -->
             <article class="case-card" data-id="nieuws-analyse">
-              <img
-                class="case-card-img"
-                src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80"
-                alt="Concurrentie en Nieuws Analyse Automation"
-                draggable="false"
-              />
-              <div class="case-card-overlay"></div>
-              <div class="case-card-color"></div>
+              <div class="case-card-img-wrap">
+                <img
+                  class="case-card-img"
+                  src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80"
+                  alt="Concurrentie en Nieuws Analyse Automation"
+                  draggable="false"
+                />
+                <div class="case-card-overlay"></div>
+                <div class="case-card-color"></div>
+              </div>
               <div class="case-card-content">
                 <h3 class="case-card-title">Concurrentie &amp; Nieuws Analyse</h3>
                 <p class="case-card-desc">Een geautomatiseerd systeem dat dagelijks concurrenten en branchenieuws monitort en samenvat in een helder rapport. Altijd op de hoogte, zonder uren zoekwerk.</p>
@@ -1696,7 +1714,7 @@
         'impl.cta_start':      'Start een project',
         'impl.cta_discuss':    'Bespreek jouw idee',
         'nav.newsletter':      'Nieuwsbrief',
-        'chat.greeting': 'Hi! Ik ben Sali. Heb je vragen over Sila, onze diensten of wil je een afspraak inplannen? Stel je vraag gerust, ik help je graag verder!',
+        'chat.greeting': 'Hi! Ik ben Eva. Heb je vragen over Sila, onze diensten of wil je een afspraak inplannen? Stel je vraag gerust, ik help je graag verder!',
         'chat.you': 'Jij', 'chat.error': 'Er ging iets mis. Probeer het later opnieuw.', 'chat.status': 'Online',
       },
       en: {
@@ -1722,7 +1740,7 @@
         'impl.cta_start':      'Start a project',
         'impl.cta_discuss':    'Discuss your idea',
         'nav.newsletter':      'Newsletter',
-        'chat.greeting': 'Hi! I\'m Sali. Do you have questions about Sila, our services, or would you like to schedule an appointment? Feel free to ask, I\'m happy to help!',
+        'chat.greeting': 'Hi! I\'m Eva. Do you have questions about Sila, our services, or would you like to schedule an appointment? Feel free to ask, I\'m happy to help!',
         'chat.you': 'You', 'chat.error': 'Something went wrong. Please try again later.', 'chat.status': 'Online',
       }
     };
@@ -1802,7 +1820,7 @@ function addMsg(role, text) {
   if (role === 'bot') {
     const img = document.createElement('img');
     img.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80';
-    img.alt = 'Sali'; img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;';
+    img.alt = 'Eva'; img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;';
     av.style.background = 'none'; av.appendChild(img);
   } else { av.textContent = T_IMPL[currentLang]['chat.you']; }
   const bub = document.createElement('div'); bub.className = 'msg-bubble'; bub.textContent = text;
@@ -1814,7 +1832,7 @@ function showTyping() {
   const av = document.createElement('div'); av.className = 'msg-avatar'; av.style.background = 'none';
   const img = document.createElement('img');
   img.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80';
-  img.alt = 'Sali'; img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;'; av.appendChild(img);
+  img.alt = 'Eva'; img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;'; av.appendChild(img);
   const bub = document.createElement('div'); bub.className = 'msg-bubble';
   bub.innerHTML = '<div class="typing-bubble"><span></span><span></span><span></span></div>';
   msg.appendChild(av); msg.appendChild(bub); chatMsgs.appendChild(msg); chatMsgs.scrollTop = chatMsgs.scrollHeight;
@@ -1847,10 +1865,10 @@ function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.sc
 <div id="chat-window" role="dialog" aria-label="Sila AI Assistent">
   <div class="chat-header">
     <div class="chat-header-avatar" style="background:none;">
-      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80" alt="Sali" style="border-radius:50%;padding:0;object-fit:cover;" />
+      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80" alt="Eva" style="border-radius:50%;padding:0;object-fit:cover;" />
     </div>
     <div class="chat-header-info">
-      <div class="chat-header-name">Sali</div>
+      <div class="chat-header-name">Eva</div>
       <div class="chat-header-status"><span class="status-dot"></span><span data-i18n="chat.status">Online</span></div>
     </div>
   </div>

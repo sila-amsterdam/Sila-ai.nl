@@ -1004,10 +1004,6 @@
       </div>
     </div>
 
-    <div class="scroll-hint">
-      <span>Scroll</span>
-      <div class="scroll-arrow"></div>
-    </div>
   </section>
 
   <!-- ── Sessions ─────────────────────────────────────── -->
@@ -1082,7 +1078,7 @@
         <div class="session-card featured reveal reveal-delay-2">
           <div class="session-badge">
             <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>
-            Half dag
+            Halve dag
           </div>
           <h3 class="session-title">Strategiesessie</h3>
           <p class="session-body">
@@ -1317,14 +1313,14 @@ const T_CONS = {
     'back': 'Terug',
     'nav.services': 'Diensten', 'nav.about': 'Over ons', 'nav.refs': 'Referenties', 'nav.newsletter': 'Nieuwsbrief', 'nav.contact': 'Contact',
     'cons.contact': 'Neem contact op',
-    'chat.greeting': 'Hi! Ik ben Sali. Heb je vragen over Sila, onze diensten of wil je een afspraak inplannen? Stel je vraag gerust, ik help je graag verder!',
+    'chat.greeting': 'Hi! Ik ben Eva. Heb je vragen over Sila, onze diensten of wil je een afspraak inplannen? Stel je vraag gerust, ik help je graag verder!',
     'chat.you': 'Jij', 'chat.error': 'Er ging iets mis. Probeer het later opnieuw.', 'chat.status': 'Online',
   },
   en: {
     'back': 'Back',
     'nav.services': 'Services', 'nav.about': 'About', 'nav.refs': 'References', 'nav.newsletter': 'Newsletter', 'nav.contact': 'Contact',
     'cons.contact': 'Contact us',
-    'chat.greeting': 'Hi! I\'m Sali. Do you have questions about Sila, our services, or would you like to schedule an appointment? Feel free to ask, I\'m happy to help!',
+    'chat.greeting': 'Hi! I\'m Eva. Do you have questions about Sila, our services, or would you like to schedule an appointment? Feel free to ask, I\'m happy to help!',
     'chat.you': 'You', 'chat.error': 'Something went wrong. Please try again later.', 'chat.status': 'Online',
   }
 };
@@ -1394,7 +1390,7 @@ function addMsg(role, text) {
   if (role === 'bot') {
     const img = document.createElement('img');
     img.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80';
-    img.alt = 'Sali'; img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;';
+    img.alt = 'Eva'; img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;';
     av.style.background = 'none'; av.appendChild(img);
   } else { av.textContent = T_CONS[currentLang]['chat.you']; }
   const bub = document.createElement('div'); bub.className = 'msg-bubble'; bub.textContent = text;
@@ -1406,7 +1402,7 @@ function showTyping() {
   const av = document.createElement('div'); av.className = 'msg-avatar'; av.style.background = 'none';
   const img = document.createElement('img');
   img.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80';
-  img.alt = 'Sali'; img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;'; av.appendChild(img);
+  img.alt = 'Eva'; img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;'; av.appendChild(img);
   const bub = document.createElement('div'); bub.className = 'msg-bubble';
   bub.innerHTML = '<div class="typing-bubble"><span></span><span></span><span></span></div>';
   msg.appendChild(av); msg.appendChild(bub); chatMsgs.appendChild(msg); chatMsgs.scrollTop = chatMsgs.scrollHeight;
@@ -1439,10 +1435,10 @@ function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.sc
 <div id="chat-window" role="dialog" aria-label="Sila AI Assistent">
   <div class="chat-header">
     <div class="chat-header-avatar" style="background:none;">
-      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80" alt="Sali" style="border-radius:50%;padding:0;object-fit:cover;" />
+      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80" alt="Eva" style="border-radius:50%;padding:0;object-fit:cover;" />
     </div>
     <div class="chat-header-info">
-      <div class="chat-header-name">Sali</div>
+      <div class="chat-header-name">Eva</div>
       <div class="chat-header-status"><span class="status-dot"></span><span data-i18n="chat.status">Online</span></div>
     </div>
   </div>

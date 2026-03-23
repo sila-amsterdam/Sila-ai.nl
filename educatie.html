@@ -762,7 +762,7 @@
     }
     .tier-start  { background: hsl(142,55%,94%); color: hsl(142,50%,32%); border: 1px solid hsl(142,40%,82%); }
     .tier-groei  { background: hsl(212,75%,94%); color: hsl(212,65%,38%); border: 1px solid hsl(212,55%,82%); }
-    .tier-expert { background: hsl(16,85%,95%);  color: var(--primary);   border: 1px solid var(--primary-border); }
+    .tier-expert { background: hsl(262,70%,94%);  color: hsl(262,55%,38%);   border: 1px solid hsl(262,50%,82%); }
 
     /* ── Category section divider ───────────────────── */
     .category-section {
@@ -1183,10 +1183,6 @@
       Onze cursussen en workshops maken AI toegankelijk voor iedereen. Van basiskennis tot geavanceerde toepassingen, wij helpen jou en je team om AI effectief in te zetten.
     </p>
 
-  </div>
-  <div class="scroll-hint" aria-hidden="true">
-    <span>Scroll</span>
-    <div class="scroll-arrow"></div>
   </div>
 </section>
 
@@ -1651,7 +1647,7 @@ const T_EDU = {
     'cta.liever': 'Liever iets op maat?',
     'cta.contact': 'Neem contact op',
     'nav.newsletter': 'Nieuwsbrief',
-    'chat.greeting': 'Hi! Ik ben Sali. Heb je vragen over Sila, onze diensten of wil je een afspraak inplannen? Stel je vraag gerust, ik help je graag verder!',
+    'chat.greeting': 'Hi! Ik ben Eva. Heb je vragen over Sila, onze diensten of wil je een afspraak inplannen? Stel je vraag gerust, ik help je graag verder!',
     'chat.you': 'Jij',
     'chat.error': 'Er ging iets mis. Probeer het later opnieuw.',
     'chat.status': 'Online',
@@ -1669,7 +1665,7 @@ const T_EDU = {
     'cta.liever': 'Prefer something tailored?',
     'cta.contact': 'Contact us',
     'nav.newsletter': 'Newsletter',
-    'chat.greeting': 'Hi! I\'m Sali. Do you have questions about Sila, our services, or would you like to schedule an appointment? Feel free to ask, I\'m happy to help!',
+    'chat.greeting': 'Hi! I\'m Eva. Do you have questions about Sila, our services, or would you like to schedule an appointment? Feel free to ask, I\'m happy to help!',
     'chat.you': 'You',
     'chat.error': 'Something went wrong. Please try again later.',
     'chat.status': 'Online',
@@ -1803,7 +1799,7 @@ function addMsg(role, text) {
   if (role === 'bot') {
     const img = document.createElement('img');
     img.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80';
-    img.alt = 'Sali';
+    img.alt = 'Eva';
     img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;';
     avatar.style.background = 'none';
     avatar.appendChild(img);
@@ -1829,7 +1825,7 @@ function showTyping() {
   avatar.style.background = 'none';
   const img = document.createElement('img');
   img.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80';
-  img.alt = 'Sali';
+  img.alt = 'Eva';
   img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;';
   avatar.appendChild(img);
   const bubble = document.createElement('div');
@@ -1906,10 +1902,10 @@ function autoResize(el) {
 <div id="chat-window" role="dialog" aria-label="Sila AI Assistent">
   <div class="chat-header">
     <div class="chat-header-avatar" style="background:none;">
-      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80" alt="Sali" style="border-radius:50%;padding:0;object-fit:cover;" />
+      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80" alt="Eva" style="border-radius:50%;padding:0;object-fit:cover;" />
     </div>
     <div class="chat-header-info">
-      <div class="chat-header-name">Sali</div>
+      <div class="chat-header-name">Eva</div>
       <div class="chat-header-status">
         <span class="status-dot"></span>
         <span data-i18n="chat.status">Online</span>

@@ -817,7 +817,7 @@ function toggleChat() {
   chatWindow.classList.toggle('open', chatOpen);
   if (chatOpen && !chatInitialised) {
     chatInitialised = true;
-    addChatMsg('bot', 'Hi! Ik ben Sali. Heb je vragen over Sila, onze diensten of wil je een afspraak inplannen? Stel je vraag gerust!');
+    addChatMsg('bot', 'Hi! Ik ben Eva. Heb je vragen over Sila, onze diensten of wil je een afspraak inplannen? Stel je vraag gerust!');
     setTimeout(() => chatInput.focus(), 350);
   }
 }
@@ -827,7 +827,7 @@ function addChatMsg(role, text) {
   if (role === 'bot') {
     const img = document.createElement('img');
     img.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80';
-    img.alt = 'Sali'; img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;width:100%;height:100%;';
+    img.alt = 'Eva'; img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;width:100%;height:100%;';
     av.style.background = 'none'; av.appendChild(img);
   } else { av.textContent = 'Jij'; }
   const bub = document.createElement('div'); bub.className = 'msg-bubble'; bub.textContent = text;
@@ -839,7 +839,7 @@ function showChatTyping() {
   const av = document.createElement('div'); av.className = 'msg-avatar'; av.style.background = 'none';
   const img = document.createElement('img');
   img.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80';
-  img.alt = 'Sali'; img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;width:100%;height:100%;'; av.appendChild(img);
+  img.alt = 'Eva'; img.style.cssText = 'border-radius:50%;padding:0;object-fit:cover;width:100%;height:100%;'; av.appendChild(img);
   const bub = document.createElement('div'); bub.className = 'msg-bubble';
   bub.innerHTML = '<div class="typing-bubble"><span></span><span></span><span></span></div>';
   msg.appendChild(av); msg.appendChild(bub); chatMsgs.appendChild(msg); chatMsgs.scrollTop = chatMsgs.scrollHeight;
@@ -925,10 +925,10 @@ function autoResizeChat(el) { el.style.height='auto'; el.style.height=Math.min(e
 <div id="chat-window" role="dialog" aria-label="Sila AI Assistent">
   <div class="chat-header">
     <div class="chat-header-avatar" style="background:none;">
-      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80" alt="Sali" style="border-radius:50%;padding:0;object-fit:cover;width:100%;height:100%;" />
+      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face&q=80" alt="Eva" style="border-radius:50%;padding:0;object-fit:cover;width:100%;height:100%;" />
     </div>
     <div class="chat-header-info">
-      <div class="chat-header-name">Sali</div>
+      <div class="chat-header-name">Eva</div>
       <div class="chat-header-status"><span class="status-dot"></span><span>Online</span></div>
     </div>
   </div>
