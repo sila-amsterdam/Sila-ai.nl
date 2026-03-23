@@ -225,18 +225,6 @@
       .mob-drawer { display: flex; bottom: 5rem; }
     }
 
-    /* ── Scroll Progress ─────────────────────────── */
-    #scroll-progress {
-      position: fixed;
-      top: 0; left: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--primary), hsl(16,90%,68%));
-      z-index: 300;
-      width: 0%;
-      transition: width 0.08s linear;
-      pointer-events: none;
-    }
-
     /* ── Chip ─────────────────────────────────────── */
     .chip {
       display: inline-flex;
@@ -370,42 +358,6 @@
       line-height: 1.75;
       max-width: 540px;
       margin-bottom: 2.5rem;
-    }
-
-    .scroll-hint {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.6rem;
-      margin-top: 3.5rem;
-    }
-    .scroll-hint span {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--primary);
-    }
-    .scroll-arrow {
-      width: 22px; height: 32px;
-      border: 1.5px solid hsla(16,82%,54%,.5);
-      border-radius: 11px;
-      position: relative;
-    }
-    .scroll-arrow::after {
-      content: '';
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 4px;
-      height: 8px;
-      background: var(--primary);
-      border-radius: 2px;
-      animation: scrollDrop 1.6s ease-in-out infinite;
-    }
-    @keyframes scrollDrop {
-      0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
     }
 
     /* ── Bio Section ──────────────────────────────── */
@@ -1071,8 +1023,6 @@
 </head>
 <body>
 
-<div id="scroll-progress" aria-hidden="true"></div>
-
 <!-- TOP BAR -->
 <header class="top-bar">
   <a href="index.html" class="back-link" aria-label="Terug naar hoofdpagina">
@@ -1128,10 +1078,6 @@
       Geen standaardoplossingen, geen holle beloften. Sila begeleidt organisaties stap voor stap naar AI die écht werkt — passend bij hun mensen, processen en doelen.
     </p>
 
-    <div class="scroll-hint" aria-hidden="true">
-      <span>Scroll</span>
-      <div class="scroll-arrow"></div>
-    </div>
   </div>
 </section>
 
@@ -1301,13 +1247,6 @@
 
 <!-- JAVASCRIPT -->
 <script>
-/* ── Scroll progress ── */
-const prog = document.getElementById('scroll-progress');
-window.addEventListener('scroll', () => {
-  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-  prog.style.width = Math.min(pct, 100) + '%';
-}, { passive: true });
-
 /* ── Reveal on scroll ── */
 const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
 const revealObs = new IntersectionObserver((entries) => {
