@@ -1408,7 +1408,11 @@
         max-height: 88svh;
         box-shadow: 0 -8px 40px rgba(0,0,0,.14);
       }
+      /* Prevent iOS auto-zoom on input focus (font-size must be ≥ 16px) */
+      .chat-input { font-size: 16px; }
     }
+    /* Prevent double-tap zoom delay on touch devices */
+    #chat-btn, .chat-send { touch-action: manipulation; }
 
     /* ── Scroll Progress Bar ────────────────────────── */
     #scroll-progress {
@@ -2846,6 +2850,14 @@ function toggleChat() {
   const badge = chatBtn.querySelector('.chat-badge');
   if (badge && chatOpen) badge.remove();
 
+  // Reset inline styles when closing (keyboard fix cleanup)
+  if (!chatOpen) {
+    chatWindow.style.height = '';
+    chatWindow.style.maxHeight = '';
+    chatWindow.style.bottom = '';
+    chatInput.blur();
+  }
+
   if (chatOpen && !chatInitialised) {
     chatInitialised = true;
     addMsg('bot', T[currentLang]['chat.greeting']);
@@ -2963,6 +2975,33 @@ function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = Math.min(el.scrollHeight, 100) + 'px';
 }
+
+/* ── Mobile keyboard fix (iOS Safari) ───────────────────
+   iOS position:fixed elements don't move when the keyboard opens.
+   We use the visualViewport API to resize/reposition the chat window. */
+(function () {
+  var vv = window.visualViewport;
+  if (!vv) return;
+
+  function adjustForKeyboard() {
+    if (window.innerWidth > 640) return;
+    if (!chatOpen) return;
+    var keyboardHeight = window.innerHeight - vv.offsetTop - vv.height;
+    if (keyboardHeight > 50) {
+      chatWindow.style.height = vv.height + 'px';
+      chatWindow.style.maxHeight = 'none';
+      chatWindow.style.bottom = keyboardHeight + 'px';
+    } else {
+      chatWindow.style.height = '';
+      chatWindow.style.maxHeight = '';
+      chatWindow.style.bottom = '';
+    }
+    chatMsgs.scrollTop = chatMsgs.scrollHeight;
+  }
+
+  vv.addEventListener('resize', adjustForKeyboard);
+  vv.addEventListener('scroll', adjustForKeyboard);
+})();
 
 /* ── Mobile menu ─────────────────────────────────────── */
 (function () {
