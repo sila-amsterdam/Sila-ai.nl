@@ -659,7 +659,7 @@
       gap: 1.25rem;
     }
     @media (min-width: 768px) {
-      .custom-grid { grid-template-columns: repeat(3, 1fr); }
+      .custom-grid { grid-template-columns: repeat(2, 1fr); }
     }
     .custom-card {
       background: #fff;
@@ -1100,6 +1100,157 @@
     .chat-send:hover { background:var(--primary-h); transform:scale(1.05); }
     .chat-send:disabled { background:hsl(20,18%,78%); cursor:not-allowed; transform:none; }
     .chat-send svg { width:16px; height:16px; }
+
+    /* ── Service card link ──────────────────────────── */
+    .custom-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 1.125rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: gap 0.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s;
+    }
+    .custom-card-link:hover { gap: 0.55rem; opacity: 0.82; }
+    .custom-card-link:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 4px; }
+
+    /* ── CTA card variant ───────────────────────────── */
+    .custom-card--cta {
+      background: var(--primary-light);
+      border-color: var(--primary-border);
+    }
+
+    /* ── Comparison Section ─────────────────────────── */
+    .comparison-section {
+      padding: 6rem 0 7rem;
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    @media (min-width: 768px) {
+      .comparison-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .comp-col {
+      border-radius: 20px;
+      padding: 2rem;
+    }
+    .comp-col--old {
+      background: hsl(20, 10%, 95%);
+      border: 1px solid hsl(20, 12%, 86%);
+    }
+    .comp-col--new {
+      background: #fff;
+      border: 1.5px solid var(--primary-border);
+      box-shadow: 0 4px 24px rgba(220,90,20,.08), 0 1px 4px rgba(0,0,0,.03);
+    }
+    .comp-col-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.75rem;
+      border-radius: 9999px;
+      margin-bottom: 1rem;
+    }
+    .comp-col--old .comp-col-badge {
+      background: hsl(20, 10%, 88%);
+      color: hsl(20, 10%, 42%);
+    }
+    .comp-col--new .comp-col-badge {
+      background: var(--primary-light);
+      color: var(--primary-h);
+      border: 1px solid var(--primary-border);
+    }
+    .comp-col-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+    .comp-col--old .comp-col-title { color: hsl(20, 10%, 40%); }
+    .comp-col--new .comp-col-title { color: var(--fg); }
+    .comp-steps { display: flex; flex-direction: column; }
+    .comp-step {
+      display: flex;
+      gap: 1rem;
+      padding: 0.875rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .comp-col--old .comp-step { border-bottom-color: hsl(20, 12%, 88%); }
+    .comp-step:last-child { border-bottom: none; padding-bottom: 0; }
+    .comp-step-week {
+      flex-shrink: 0;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-top: 0.15rem;
+      min-width: 78px;
+    }
+    .comp-col--new .comp-step-week { color: var(--primary-h); }
+    .comp-step-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 0.2rem;
+    }
+    .comp-col--old .comp-step-title { color: hsl(20, 8%, 38%); }
+    .comp-col--new .comp-step-title { color: var(--fg); }
+    .comp-step-body {
+      font-size: 0.81rem;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+    .comp-result {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 1.5rem;
+      padding: 0.55rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.81rem;
+      font-weight: 600;
+    }
+    .comp-col--old .comp-result {
+      background: hsl(0, 55%, 94%);
+      color: hsl(0, 50%, 40%);
+      border: 1px solid hsl(0, 45%, 84%);
+    }
+    .comp-col--new .comp-result {
+      background: hsl(140, 55%, 93%);
+      color: hsl(140, 50%, 28%);
+      border: 1px solid hsl(140, 45%, 80%);
+    }
+
+    /* ── CTA trust pills ────────────────────────────── */
+    .cta-trust-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      justify-content: center;
+      margin-top: 1.75rem;
+    }
+    .cta-trust-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.83rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .cta-trust-item svg { color: var(--primary); flex-shrink: 0; }
+
   </style>
 </head>
 
@@ -1188,49 +1339,149 @@
     </div>
 
     <div class="wrap" style="position:relative;z-index:2;">
-      <p class="custom-subtitle fade-up" style="margin-bottom:2.5rem;">Waar het concreet op neer komt:</p>
       <div class="custom-grid">
 
-        <!-- Card 1 -->
+        <!-- Card 1: AI agents & automation -->
         <div class="custom-card fade-up fade-up-delay-1">
           <div class="custom-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="16 3 21 3 21 8"/>
-              <line x1="4" y1="20" x2="21" y2="3"/>
-              <polyline points="21 16 21 21 16 21"/>
-              <line x1="15" y1="15" x2="21" y2="21"/>
+              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><path d="M15 8h.01M9 8h.01"/>
             </svg>
           </div>
-          <h3 class="custom-card-title">Workflow Automation</h3>
-          <p class="custom-card-body">We automatiseren terugkerende en tijdrovende processen met behulp van AI. Door slimme workflow-oplossingen nemen we handmatig werk uit handen en zorgen we voor meer snelheid, structuur en consistentie binnen je organisatie.</p>
+          <h3 class="custom-card-title" data-i18n="impl.agents_title">AI agents &amp; automatisering</h3>
+          <p class="custom-card-body" data-i18n="impl.agents_body">Autonome agents die daadwerkelijk het werk doen — documenten verwerken, workflows orkestreren en beslissingen nemen die jouw team eerder handmatig deed.</p>
+          <a href="contact.html" class="custom-card-link" data-i18n="impl.learn_more">Meer lezen <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
         </div>
 
-        <!-- Card 2 -->
+        <!-- Card 2: AI apps & platforms -->
         <div class="custom-card fade-up fade-up-delay-2">
           <div class="custom-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 20h9"/>
-              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
             </svg>
           </div>
-          <h3 class="custom-card-title">Slimme Communicatie & Opvolging</h3>
-          <p class="custom-card-body">Van offerte-opvolging tot klantupdates — wij automatiseren jouw communicatie zodat elk contact op het juiste moment en in de juiste toon plaatsvindt. Persoonlijk, consistent en zonder handmatig werk.</p>
+          <h3 class="custom-card-title" data-i18n="impl.apps_title">AI apps &amp; platformen</h3>
+          <p class="custom-card-body" data-i18n="impl.apps_body">Full-stack AI-applicaties waar jouw team graag mee werkt. Interne tools, klantportalen, dashboards — gebouwd rond hoe jij écht werkt.</p>
+          <a href="contact.html" class="custom-card-link" data-i18n="impl.learn_more">Meer lezen <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
         </div>
 
-        <!-- Card 3 -->
+        <!-- Card 3: Plug & play AI products -->
         <div class="custom-card fade-up fade-up-delay-3">
           <div class="custom-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <path d="M3 9h18M9 21V9"/>
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
             </svg>
           </div>
-          <h3 class="custom-card-title">Websites &amp; Dashboards</h3>
-          <p class="custom-card-body">Of het nu een landingspagina is, een slim dashboard of een klantportaal — wij bouwen digitale omgevingen die er niet alleen prachtig uitzien, maar ook direct koppelen aan jouw automatiseringen en databronnen.</p>
+          <h3 class="custom-card-title" data-i18n="impl.plugplay_title">Plug &amp; play AI producten</h3>
+          <p class="custom-card-body" data-i18n="impl.plugplay_body">Bewezen AI-oplossingen klaar voor inzet vandaag. Sla de bouwfase volledig over en ga direct naar waarde — op maat voor jouw use case.</p>
+          <a href="contact.html" class="custom-card-link" data-i18n="impl.learn_more">Meer lezen <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        </div>
+
+        <!-- Card 4: Not sure where to start? -->
+        <div class="custom-card custom-card--cta fade-up fade-up-delay-4">
+          <div class="custom-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <h3 class="custom-card-title" data-i18n="impl.notsure_title">Weet je niet waar te beginnen?</h3>
+          <p class="custom-card-body" data-i18n="impl.notsure_body">Vertel ons wat jouw team vertraagt. We zeggen je precies welke AI-aanpak bij je past — in 15 minuten.</p>
+          <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" class="custom-card-link" data-i18n="impl.notsure_cta">Gesprek inplannen <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
         </div>
 
       </div>
     </div><!-- /wrap -->
+  </section>
+
+  <!-- From idea to AI agent in production -->
+  <section class="comparison-section">
+    <div class="wrap">
+      <div class="fade-up">
+        <div class="section-label">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="4"/></svg>
+          <span data-i18n="impl.comp_label">De Sila aanpak</span>
+        </div>
+        <h2 class="section-title" data-i18n="impl.comp_title">Van idee naar AI agent<br>in productie — in weken.</h2>
+      </div>
+
+      <div class="comparison-grid">
+
+        <!-- Old Way -->
+        <div class="comp-col comp-col--old fade-up fade-up-delay-1">
+          <div class="comp-col-badge" data-i18n="impl.old_badge">De oude manier</div>
+          <div class="comp-col-title" data-i18n="impl.old_col_title">Traditionele ontwikkeling</div>
+          <div class="comp-steps">
+            <div class="comp-step">
+              <div class="comp-step-week" data-i18n="impl.old_w1_week">Weken 1–4</div>
+              <div>
+                <div class="comp-step-title" data-i18n="impl.old_w1_title">Ontdekking en afstemming</div>
+                <div class="comp-step-body" data-i18n="impl.old_w1_body">SOW-onderhandelingen, vendorselectie, afstemmingsmeetings. Je betaalt — niemand bouwt.</div>
+              </div>
+            </div>
+            <div class="comp-step">
+              <div class="comp-step-week" data-i18n="impl.old_w2_week">Weken 5–8</div>
+              <div>
+                <div class="comp-step-title" data-i18n="impl.old_w2_title">Bemensing en architectuur</div>
+                <div class="comp-step-body" data-i18n="impl.old_w2_body">Team samenstellen, techstackdiscussies, onboarding. Jouw concurrenten lanceerden afgelopen dinsdag een AI agent.</div>
+              </div>
+            </div>
+            <div class="comp-step">
+              <div class="comp-step-week" data-i18n="impl.old_w3_week">Weken 9–16</div>
+              <div>
+                <div class="comp-step-title" data-i18n="impl.old_w3_title">Sprint na sprint</div>
+                <div class="comp-step-body" data-i18n="impl.old_w3_body">Scope groeit. Schattingen ook. De finish verschuift. Per sprint gefactureerd, ongeacht de uitkomst.</div>
+              </div>
+            </div>
+            <div class="comp-step">
+              <div class="comp-step-week" data-i18n="impl.old_w4_week">Maand 4+</div>
+              <div>
+                <div class="comp-step-title" data-i18n="impl.old_w4_title">Misschien een MVP</div>
+                <div class="comp-step-body" data-i18n="impl.old_w4_body">Iets werkt. Niet wat je voor ogen had. Budget op — nu willen ze een onderhoudscontract.</div>
+              </div>
+            </div>
+          </div>
+          <div class="comp-result" data-i18n="impl.old_result">4+ maanden tot misschien-MVP</div>
+        </div>
+
+        <!-- Sila Way -->
+        <div class="comp-col comp-col--new fade-up fade-up-delay-2">
+          <div class="comp-col-badge" data-i18n="impl.new_badge">De Sila aanpak</div>
+          <div class="comp-col-title" data-i18n="impl.new_col_title">Hoe wij écht werken</div>
+          <div class="comp-steps">
+            <div class="comp-step">
+              <div class="comp-step-week" data-i18n="impl.new_w1_week">Week 1</div>
+              <div>
+                <div class="comp-step-title" data-i18n="impl.new_w1_title">Proof of concept</div>
+                <div class="comp-step-body" data-i18n="impl.new_w1_body">Een werkende AI agent op jouw echte data. Geen slidedeck — echte software in 5 dagen.</div>
+              </div>
+            </div>
+            <div class="comp-step">
+              <div class="comp-step-week" data-i18n="impl.new_w2_week">Weken 2–4</div>
+              <div>
+                <div class="comp-step-title" data-i18n="impl.new_w2_title">MVP bouwen</div>
+                <div class="comp-step-body" data-i18n="impl.new_w2_body">Jouw POC wordt een productieklaar MVP. Integraties, edge cases, afgewerkt voor echte gebruikers.</div>
+              </div>
+            </div>
+            <div class="comp-step">
+              <div class="comp-step-week" data-i18n="impl.new_w3_week">Weken 5–8</div>
+              <div>
+                <div class="comp-step-title" data-i18n="impl.new_w3_title">Productie-klaar</div>
+                <div class="comp-step-body" data-i18n="impl.new_w3_body">Enterprise-authenticatie, monitoring, CI/CD. Klaar voor dagelijks gebruik door jouw team.</div>
+              </div>
+            </div>
+            <div class="comp-step">
+              <div class="comp-step-week" data-i18n="impl.new_w4_week">Doorlopend</div>
+              <div>
+                <div class="comp-step-title" data-i18n="impl.new_w4_title">Schalen of pauzeren</div>
+                <div class="comp-step-body" data-i18n="impl.new_w4_body">Meer bouwen, nieuwe projecten starten of pauzeren. Alles blijft draaien. Jouw keuze.</div>
+              </div>
+            </div>
+          </div>
+          <div class="comp-result" data-i18n="impl.new_result">POC in 7 dagen — productie in weken</div>
+        </div>
+
+      </div>
+    </div>
   </section>
 
   <!-- Case Studies Carousel Section -->
@@ -1437,40 +1688,39 @@
   <section class="bottom-cta">
     <div class="wrap">
       <div class="fade-up">
-        <div class="bottom-cta-eyebrow">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="4"/></svg>
-          Klaar om te starten
-        </div>
-        <h2 class="bottom-cta-title" data-i18n="impl.cta_title">Klaar om je AI idee in werking te brengen?</h2>
-        <p class="bottom-cta-body" data-i18n="impl.cta_body">Laat ons weten wat je wilt bereiken. We denken graag met je mee.</p>
+        <h2 class="bottom-cta-title" data-i18n="impl.cta_title">Jouw AI-project begint hier.</h2>
+        <p class="bottom-cta-body" data-i18n="impl.cta_body">15 minuten. Geen pitch deck. Gewoon een gesprek over wat AI kan doen voor jouw team.</p>
         <div class="cta-options">
-          <a href="contact.html?bericht=Hi+Sila%2C+ik+wil+met+jou+een+implementatie+project+starten.+Kan+dat%3F" class="cta-opt cta-opt-primary">
-            <span class="cta-opt-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </span>
-            <span class="cta-opt-text">
-              <span class="cta-opt-title">Neem contact op</span>
-              <span class="cta-opt-sub">Stel je vraag of vertel je verhaal</span>
-            </span>
-            <span class="cta-opt-arrow" aria-hidden="true">
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-            </span>
-          </a>
-
-          <span style="display:flex;align-items:center;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:0 0.25rem;" aria-hidden="true">OF</span>
-
-          <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" class="cta-opt cta-opt-secondary">
+          <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" class="cta-opt cta-opt-primary">
             <span class="cta-opt-icon" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
             </span>
             <span class="cta-opt-text">
-              <span class="cta-opt-title">Kies een moment</span>
-              <span class="cta-opt-sub">Gratis kennismakingsgesprek — direct in je agenda</span>
+              <span class="cta-opt-title" data-i18n="impl.cta_start">Plan je kennismakingsgesprek</span>
+              <span class="cta-opt-sub" data-i18n="impl.cta_start_sub">Gratis, vrijblijvend — direct in je agenda</span>
             </span>
             <span class="cta-opt-arrow" aria-hidden="true">
               <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
             </span>
           </a>
+        </div>
+        <div class="cta-trust-list">
+          <span class="cta-trust-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-i18n="impl.trust_1">Rechtstreeks met onze AI-specialisten</span>
+          </span>
+          <span class="cta-trust-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-i18n="impl.trust_2">15 min, vrijblijvend</span>
+          </span>
+          <span class="cta-trust-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-i18n="impl.trust_3">Geen salesdruk</span>
+          </span>
+          <span class="cta-trust-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-i18n="impl.trust_4">Prototype in 7 dagen</span>
+          </span>
         </div>
       </div>
     </div>
@@ -1654,9 +1904,56 @@
         'impl.integ_title':    'AI Integraties',
         'impl.integ_body':     'Koppel AI-modellen aan jouw bestaande software en systemen.',
         'impl.contact':        'Neem contact op',
-        'impl.cta_title':      'Klaar om te automatiseren?',
-        'impl.cta_body':       'Laat ons weten wat je wilt bereiken. We denken graag met je mee.',
-        'impl.cta_start':      'Start een project',
+        'impl.agents_title':   'AI agents &amp; automatisering',
+        'impl.agents_body':    'Autonome agents die daadwerkelijk het werk doen — documenten verwerken, workflows orkestreren en beslissingen nemen die jouw team eerder handmatig deed.',
+        'impl.apps_title':     'AI apps &amp; platformen',
+        'impl.apps_body':      'Full-stack AI-applicaties waar jouw team graag mee werkt. Interne tools, klantportalen, dashboards — gebouwd rond hoe jij écht werkt.',
+        'impl.plugplay_title': 'Plug &amp; play AI producten',
+        'impl.plugplay_body':  'Bewezen AI-oplossingen klaar voor inzet vandaag. Sla de bouwfase volledig over en ga direct naar waarde — op maat voor jouw use case.',
+        'impl.notsure_title':  'Weet je niet waar te beginnen?',
+        'impl.notsure_body':   'Vertel ons wat jouw team vertraagt. We zeggen je precies welke AI-aanpak bij je past — in 15 minuten.',
+        'impl.notsure_cta':    'Gesprek inplannen',
+        'impl.learn_more':     'Meer lezen',
+        'impl.comp_label':     'De Sila aanpak',
+        'impl.comp_title':     'Van idee naar AI agent<br>in productie — in weken.',
+        'impl.old_badge':      'De oude manier',
+        'impl.old_col_title':  'Traditionele ontwikkeling',
+        'impl.old_w1_week':    'Weken 1–4',
+        'impl.old_w1_title':   'Ontdekking en afstemming',
+        'impl.old_w1_body':    'SOW-onderhandelingen, vendorselectie, afstemmingsmeetings. Je betaalt — niemand bouwt.',
+        'impl.old_w2_week':    'Weken 5–8',
+        'impl.old_w2_title':   'Bemensing en architectuur',
+        'impl.old_w2_body':    'Team samenstellen, techstackdiscussies, onboarding. Jouw concurrenten lanceerden afgelopen dinsdag een AI agent.',
+        'impl.old_w3_week':    'Weken 9–16',
+        'impl.old_w3_title':   'Sprint na sprint',
+        'impl.old_w3_body':    'Scope groeit. Schattingen ook. De finish verschuift. Per sprint gefactureerd, ongeacht de uitkomst.',
+        'impl.old_w4_week':    'Maand 4+',
+        'impl.old_w4_title':   'Misschien een MVP',
+        'impl.old_w4_body':    'Iets werkt. Niet wat je voor ogen had. Budget op — nu willen ze een onderhoudscontract.',
+        'impl.old_result':     '4+ maanden tot misschien-MVP',
+        'impl.new_badge':      'De Sila aanpak',
+        'impl.new_col_title':  'Hoe wij écht werken',
+        'impl.new_w1_week':    'Week 1',
+        'impl.new_w1_title':   'Proof of concept',
+        'impl.new_w1_body':    'Een werkende AI agent op jouw echte data. Geen slidedeck — echte software in 5 dagen.',
+        'impl.new_w2_week':    'Weken 2–4',
+        'impl.new_w2_title':   'MVP bouwen',
+        'impl.new_w2_body':    'Jouw POC wordt een productieklaar MVP. Integraties, edge cases, afgewerkt voor echte gebruikers.',
+        'impl.new_w3_week':    'Weken 5–8',
+        'impl.new_w3_title':   'Productie-klaar',
+        'impl.new_w3_body':    'Enterprise-authenticatie, monitoring, CI/CD. Klaar voor dagelijks gebruik door jouw team.',
+        'impl.new_w4_week':    'Doorlopend',
+        'impl.new_w4_title':   'Schalen of pauzeren',
+        'impl.new_w4_body':    'Meer bouwen, nieuwe projecten starten of pauzeren. Alles blijft draaien. Jouw keuze.',
+        'impl.new_result':     'POC in 7 dagen — productie in weken',
+        'impl.cta_title':      'Jouw AI-project begint hier.',
+        'impl.cta_body':       '15 minuten. Geen pitch deck. Gewoon een gesprek over wat AI kan doen voor jouw team.',
+        'impl.cta_start':      'Plan je kennismakingsgesprek',
+        'impl.cta_start_sub':  'Gratis, vrijblijvend — direct in je agenda',
+        'impl.trust_1':        'Rechtstreeks met onze AI-specialisten',
+        'impl.trust_2':        '15 min, vrijblijvend',
+        'impl.trust_3':        'Geen salesdruk',
+        'impl.trust_4':        'Prototype in 7 dagen',
         'impl.cta_discuss':    'Bespreek jouw idee',
         'nav.newsletter':      'Nieuwsbrief',
         'chat.greeting': 'Hi! Ik ben Eva. Heb je vragen over Sila, onze diensten of wil je een afspraak inplannen? Stel je vraag gerust, ik help je graag verder!',
@@ -1680,9 +1977,56 @@
         'impl.integ_title':    'AI Integrations',
         'impl.integ_body':     'Connect AI models to your existing software and systems.',
         'impl.contact':        'Get in touch',
-        'impl.cta_title':      'Ready to automate?',
-        'impl.cta_body':       'Let us know what you want to achieve. We love to think along with you.',
-        'impl.cta_start':      'Start a project',
+        'impl.agents_title':   'AI agents &amp; automation',
+        'impl.agents_body':    'Autonomous agents that actually do the work — processing documents, orchestrating workflows, and making decisions your team used to handle manually.',
+        'impl.apps_title':     'AI apps &amp; platforms',
+        'impl.apps_body':      'Full-stack AI applications your team will love using. Internal tools, customer portals, dashboards — built around how you actually work.',
+        'impl.plugplay_title': 'Plug &amp; play AI products',
+        'impl.plugplay_body':  'Battle-tested AI solutions ready for deployment today. Skip the build phase entirely and go straight to value — customised for your use case.',
+        'impl.notsure_title':  'Not sure where to start?',
+        'impl.notsure_body':   "Tell us what&#39;s slowing your team down. We&#39;ll tell you exactly which AI approach fits — in 15 minutes.",
+        'impl.notsure_cta':    'Schedule a call',
+        'impl.learn_more':     'Learn more',
+        'impl.comp_label':     'The Sila approach',
+        'impl.comp_title':     'From idea to AI agent<br>in production — in weeks.',
+        'impl.old_badge':      'The old way',
+        'impl.old_col_title':  'Traditional development',
+        'impl.old_w1_week':    'Weeks 1–4',
+        'impl.old_w1_title':   'Discovery and alignment',
+        'impl.old_w1_body':    'SOW negotiations, vendor evaluation, alignment meetings. You\'re paying — nobody\'s building.',
+        'impl.old_w2_week':    'Weeks 5–8',
+        'impl.old_w2_title':   'Staffing and architecture',
+        'impl.old_w2_body':    'Team assembly, tech stack debates, onboarding. Your competitors shipped an AI agent last Tuesday.',
+        'impl.old_w3_week':    'Weeks 9–16',
+        'impl.old_w3_title':   'Sprint after sprint',
+        'impl.old_w3_body':    'Scope creeps. Estimates grow. Finish line moves. Billed per sprint regardless.',
+        'impl.old_w4_week':    'Month 4+',
+        'impl.old_w4_title':   'Maybe an MVP',
+        'impl.old_w4_body':    "Something works. Not what you envisioned. Budget&#39;s gone — now they want a maintenance contract.",
+        'impl.old_result':     '4+ months to maybe-MVP',
+        'impl.new_badge':      'The Sila approach',
+        'impl.new_col_title':  'How we actually work',
+        'impl.new_w1_week':    'Week 1',
+        'impl.new_w1_title':   'Proof of concept',
+        'impl.new_w1_body':    'A working AI agent on your real data. Not a slide deck — real software in 5 days.',
+        'impl.new_w2_week':    'Weeks 2–4',
+        'impl.new_w2_title':   'MVP build',
+        'impl.new_w2_body':    'Your POC becomes a production-grade MVP. Integrations, edge cases, polish for real users.',
+        'impl.new_w3_week':    'Weeks 5–8',
+        'impl.new_w3_title':   'Production-ready',
+        'impl.new_w3_body':    'Enterprise auth, monitoring, CI/CD. Ready for your team to rely on daily.',
+        'impl.new_w4_week':    'Ongoing',
+        'impl.new_w4_title':   'Scale or pause',
+        'impl.new_w4_body':    'Build more, start new projects, or pause. Everything keeps running. Your call.',
+        'impl.new_result':     'POC in 7 days — production in weeks',
+        'impl.cta_title':      'Your AI project starts here.',
+        'impl.cta_body':       '15 minutes. No pitch deck. Just a conversation about what AI can do for your team.',
+        'impl.cta_start':      'Book your intro call',
+        'impl.cta_start_sub':  'Free, no strings — straight to your calendar',
+        'impl.trust_1':        'Talk directly with our AI specialists',
+        'impl.trust_2':        '15 min, no strings',
+        'impl.trust_3':        'No sales pressure',
+        'impl.trust_4':        'Prototype in 7 days',
         'impl.cta_discuss':    'Discuss your idea',
         'nav.newsletter':      'Newsletter',
         'chat.greeting': 'Hi! I\'m Eva. Do you have questions about Sila, our services, or would you like to schedule an appointment? Feel free to ask, I\'m happy to help!',
