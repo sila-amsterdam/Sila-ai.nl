@@ -20,9 +20,10 @@ Claude.md
 # Betaaldata (bevat klantgegevens)
 betalingen.json
 
-# PDF cursussen (niet publiek via git — uitzondering voor gratis cursussen)
+# PDF cursussen (niet publiek via git — uitzondering voor gratis cursussen en betaalde cursussen)
 pdf-cursussen/*.pdf
 !pdf-cursussen/ai-tools-vandaag.pdf
+!pdf-cursussen/ai-strategie-voor-leiders.pdf
 
 # OS bestanden
 .DS_Store

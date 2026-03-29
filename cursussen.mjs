@@ -24,6 +24,12 @@ export const CURSUSSEN = {
   },
 
   // ── Online cursussen ─────────────────────────────────────────────────────
+  'ai-strategie-voor-leiders': {
+    naam: 'AI Strategie voor Leiders',
+    prijs: 1495,            // €14,95
+    beschrijving: 'Online cursus: AI Strategie voor Leiders — Denk als een leider, laat AI bouwen',
+    pdf: 'ai-strategie-voor-leiders.pdf',
+  },
   'starten-met-automatiseren': {
     naam: 'Hoe begin ik met automatiseren?',
     prijs: 2500,            // €25,00
