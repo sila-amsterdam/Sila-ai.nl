@@ -1359,10 +1359,10 @@
               <p class="price-value" style="color:#22c55e;">Gratis</p>
             </div>
             <div class="card-btns">
-              <a class="card-cta" href="/pdf-cursussen/ai-tools-vandaag.pdf" download="Sila - Welke AI tools zijn vandaag nodig.pdf">
+              <button class="card-cta btn-gratis" data-cursus-naam="Welke AI tools zijn vandaag nodig?" data-download-url="/pdf-cursussen/ai-tools-vandaag.pdf" data-download-naam="Sila - Welke AI tools zijn vandaag nodig.pdf">
                 Gratis downloaden
                 <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v9M4 8l4 4 4-4"/><path d="M2 13h12"/></svg>
-              </a>
+              </button>
             </div>
           </div>
         </article>
@@ -1453,7 +1453,7 @@
               Zelfstandig
             </div>
             <h3 class="course-title">AI Strategie voor Leiders</h3>
-            <p class="course-body">Niet hoe AI werkt, maar hoe jij als leider de juiste vragen stelt. Leer AI aansturen als een medewerker — strategisch, helder en doelgericht.</p>
+            <p class="course-body">Niet hoe AI werkt, maar hoe jij als leider de juiste vragen stelt. Leer AI aansturen als een medewerker: strategisch, helder en doelgericht.</p>
           </div>
           <div class="card-body">
             <ul class="feature-list" aria-label="Wat je leert">
@@ -1581,10 +1581,10 @@
               <p class="price-value" style="color:#22c55e;">Gratis</p>
             </div>
             <div class="card-btns">
-              <a class="card-cta" href="/assets/images/claude-code-cheat-sheet.jpeg" download="Sila - Claude Code Cheat Sheet.jpeg">
+              <button class="card-cta btn-gratis" data-cursus-naam="Claude Code Cheat Sheet" data-download-url="/assets/images/claude-code-cheat-sheet.jpeg" data-download-naam="Sila - Claude Code Cheat Sheet.jpeg">
                 Gratis downloaden
                 <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v9M4 8l4 4 4-4"/><path d="M2 13h12"/></svg>
-              </a>
+              </button>
             </div>
           </div>
         </article>
@@ -2044,6 +2044,28 @@ function autoResize(el) {
   </div>
 </div>
 
+<!-- Gratis download modal -->
+<div id="gratis-overlay" role="dialog" aria-modal="true" aria-labelledby="gratis-cursus-naam" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(26,20,16,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:1rem;">
+  <div style="background:#fff;border-radius:16px;padding:2rem;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative;">
+    <button onclick="sluitGratisModal()" aria-label="Sluiten" style="position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;color:#7A7167;padding:4px;">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg>
+    </button>
+    <p style="margin:0 0 4px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#7A7167;">Gratis voor jou</p>
+    <h2 id="gratis-cursus-naam" style="margin:0 0 20px;font-family:'Playfair Display',Georgia,serif;font-size:1.375rem;color:#231D18;font-weight:700;"></h2>
+    <label for="gratis-email" style="display:block;font-size:13px;font-weight:600;color:#231D18;margin-bottom:6px;">Jouw e-mailadres</label>
+    <input type="email" id="gratis-email" placeholder="naam@bedrijf.nl" autocomplete="email"
+      style="width:100%;box-sizing:border-box;padding:10px 14px;border:1.5px solid #E3DDD5;border-radius:8px;font-size:15px;color:#231D18;outline:none;transition:border-color .18s;"
+      onfocus="this.style.borderColor='#DC5A14'" onblur="this.style.borderColor='#E3DDD5'"
+      onkeydown="if(event.key==='Enter')bevestigGratis()">
+    <p id="gratis-email-fout" style="display:none;margin:6px 0 0;font-size:12px;color:#c0392b;"></p>
+    <p style="margin:10px 0 20px;font-size:12px;color:#7A7167;">Je download start direct. We sturen je af en toe nuttige updates van Sila.</p>
+    <button id="gratis-bevestig-btn" onclick="bevestigGratis()" style="width:100%;padding:13px;background:#DC5A14;color:#fff;border:none;border-radius:9999px;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s;">
+      Direct downloaden
+      <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><path d="M8 2v9M4 8l4 4 4-4"/><path d="M2 13h12"/></svg>
+    </button>
+  </div>
+</div>
+
 <script>
 /* ── Betaling flow ─────────────────────────────────────── */
 let actieveCursusId = null;
@@ -2193,6 +2215,69 @@ async function openPreview(cursusId) {
 function sluitPreview() {
   document.getElementById('preview-overlay').style.display = 'none';
   actievePreviewId = null;
+}
+
+/* ── Gratis download flow ─────────────────────────────── */
+let actieveGratisUrl = null;
+let actieveGratisNaam = null;
+let actieveGratisCursusNaam = null;
+
+document.querySelectorAll('.btn-gratis').forEach(btn => {
+  btn.addEventListener('click', () => {
+    actieveGratisUrl = btn.dataset.downloadUrl;
+    actieveGratisNaam = btn.dataset.downloadNaam;
+    actieveGratisCursusNaam = btn.dataset.cursusNaam;
+    document.getElementById('gratis-cursus-naam').textContent = actieveGratisCursusNaam;
+    document.getElementById('gratis-email').value = '';
+    document.getElementById('gratis-email-fout').style.display = 'none';
+    const overlay = document.getElementById('gratis-overlay');
+    overlay.style.display = 'flex';
+    setTimeout(() => document.getElementById('gratis-email').focus(), 100);
+  });
+});
+
+document.getElementById('gratis-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) sluitGratisModal();
+});
+
+function sluitGratisModal() {
+  document.getElementById('gratis-overlay').style.display = 'none';
+}
+
+async function bevestigGratis() {
+  const emailInput = document.getElementById('gratis-email');
+  const foutEl = document.getElementById('gratis-email-fout');
+  const btn = document.getElementById('gratis-bevestig-btn');
+  const email = emailInput.value.trim();
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    foutEl.textContent = 'Vul een geldig e-mailadres in.';
+    foutEl.style.display = 'block';
+    emailInput.focus();
+    return;
+  }
+  foutEl.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'Bezig…';
+
+  // Stuur naar n8n (fire-and-forget)
+  fetch('https://sila-ai.app.n8n.cloud/webhook/gratis-download', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, cursusNaam: actieveGratisCursusNaam }),
+  }).catch(() => {});
+
+  // Download direct starten
+  const a = document.createElement('a');
+  a.href = actieveGratisUrl;
+  a.download = actieveGratisNaam;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  sluitGratisModal();
+  btn.disabled = false;
+  btn.textContent = 'Direct downloaden';
 }
 </script>
 

@@ -51,6 +51,26 @@ function leesBody(req) {
   });
 }
 
+// ── n8n notificatie sturen ──────────────────────────────────────
+async function meldAankoop(email, cursus, token, downloadUrl) {
+  const prijsFormatted = `€${(cursus.prijs / 100).toFixed(2).replace('.', ',')}`;
+  try {
+    await fetch('https://sila-ai.app.n8n.cloud/webhook/cursus-aankoop', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        cursusNaam: cursus.naam,
+        cursusId: token,
+        downloadUrl,
+        prijs: prijsFormatted,
+      }),
+    });
+  } catch (err) {
+    console.error('n8n notificatie mislukt:', err.message);
+  }
+}
+
 // ── Bevestigingse-mail sturen ────────────────────────────────────
 async function stuurBevestigingEmail(email, cursus, token) {
   const downloadUrl = `${BASE_URL}/api/download?token=${token}`;
@@ -200,11 +220,13 @@ const server = http.createServer(async (req, res) => {
 
             const cursus = CURSUSSEN[betalingen[token].cursusId];
             if (cursus) {
+              const downloadUrl = `${BASE_URL}/api/download?token=${token}`;
               try {
                 await stuurBevestigingEmail(betalingen[token].email, cursus, token);
               } catch (emailErr) {
                 console.error('E-mail kon niet worden verstuurd:', emailErr);
               }
+              meldAankoop(betalingen[token].email, cursus, token, downloadUrl);
             }
           }
         }
@@ -248,9 +270,11 @@ const server = http.createServer(async (req, res) => {
 
           const cursus = CURSUSSEN[record.cursusId];
           if (cursus) {
+            const downloadUrl = `${BASE_URL}/api/download?token=${token}`;
             stuurBevestigingEmail(record.email, cursus, token).catch(err =>
               console.error('E-mail kon niet worden verstuurd:', err)
             );
+            meldAankoop(record.email, cursus, token, downloadUrl);
           }
         }
       } catch (err) {
