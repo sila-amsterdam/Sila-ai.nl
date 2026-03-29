@@ -1689,10 +1689,9 @@
     <div class="section-header">
       <div class="chip">
         <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0.5 6.33,3.7 9.76,3.7 7.12,5.95 8.09,9.18 5,7.18 1.91,9.18 2.88,5.95 0.24,3.7 3.67,3.7"/></svg>
-        <span data-i18n="pillars.chip">Onze diensten</span>
+        <span data-i18n="pillars.chip">Onze missie</span>
       </div>
-      <h2 class="section-title" data-i18n="pillars.title">Drie pijlers. Eén missie.</h2>
-      <p class="pillars-headline" data-i18n="pillars.headline">Individuen en bedrijven helpen AI te omarmen.</p>
+      <h2 class="section-title" data-i18n="pillars.title">Individuen en bedrijven helpen AI te omarmen</h2>
       <p class="pillars-sub" data-i18n="pillars.sub">Dat doen we op 3 manieren:</p>
     </div>
 
@@ -1707,7 +1706,7 @@
         </div>
         <h3 class="pillar-title" data-i18n="edu.title">Educatie</h3>
         <p class="pillar-body" data-i18n="edu.body">
-          Begrijp de basis van AI en wat het voor jouw sector kan betekenen.
+          Begrijp AI op elk niveau en ontdek wat het voor jouw sector kan betekenen.
           Via workshops, trainingen en cursussen bouwen we jouw AI-kennis
           stap voor stap op, op jouw tempo.
         </p>
@@ -1784,8 +1783,7 @@
         <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0.5 6.33,3.7 9.76,3.7 7.12,5.95 8.09,9.18 5,7.18 1.91,9.18 2.88,5.95 0.24,3.7 3.67,3.7"/></svg>
         <span>Direct starten</span>
       </div>
-      <h2 class="section-title">Kies je startpunt.</h2>
-      <p class="pillars-headline" style="max-width:540px;margin-left:auto;margin-right:auto;">Of je nu wilt leren, advies wilt of gewoon een goed gesprek — hier begin je.</p>
+      <h2 class="section-title">Voorbeelden uit de praktijk</h2>
     </div>
 
     <div class="conv-grid">
@@ -1829,10 +1827,29 @@
             <path d="M12 8v4l3 3"/>
           </svg>
         </div>
-        <h3 class="conv-title">AI Audit</h3>
-        <p class="conv-body">In 2 à 3 uur brengen we samen jouw processen in kaart, identificeren we AI-kansen en leggen we een concreet actieplan neer — zodat je weet waar te beginnen.</p>
-        <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" class="conv-btn conv-btn--secondary" onclick="gtag('event','cta_click',{event_category:'conversie',event_label:'AI Audit gesprek'})">
+        <h3 class="conv-title">AI Bedrijfsonderzoek (Audit)</h3>
+        <p class="conv-body">In 2 à 3 uur brengen we samen jouw processen in kaart, identificeren we AI-kansen en leggen we een concreet actieplan neer, zodat je weet waar te beginnen.</p>
+        <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" class="conv-btn conv-btn--secondary" onclick="gtag('event','cta_click',{event_category:'conversie',event_label:'AI Bedrijfsonderzoek gesprek'})">
           Plan een gesprek in
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+
+      <!-- Implementatie voorbeeld -->
+      <div class="conv-card conv-card--impl reveal" style="transition-delay:.2s;">
+        <span class="conv-service-label conv-service-label--implementatie">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Implementatie
+        </span>
+        <div class="conv-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <h3 class="conv-title">AI agent voor klantenservice</h3>
+        <p class="conv-body">Een logistiek bedrijf vroeg ons een AI agent te bouwen die klantvragen automatisch beantwoordt, orderstatussen opzoekt en intern doorschakelt naar de juiste afdeling.</p>
+        <a href="implementatie.html" class="conv-btn conv-btn--primary" onclick="gtag('event','cta_click',{event_category:'conversie',event_label:'Implementatie voorbeeld'})">
+          Bekijk implementatie
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
       </div>
@@ -1859,11 +1876,12 @@
 
     <div class="orb-wrapper">
       <div class="orb-canvas" id="orb-canvas">
-        <div class="orb-center">
+        <div class="orb-center" style="cursor:pointer;" onclick="gtag('event','cta_click',{event_category:'quiz',event_label:'Start de quiz orb'}); openQuiz()">
           <div class="orb-center-pulse2"></div>
           <div class="orb-center-pulse"></div>
-          <div class="orb-center-core">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <div class="orb-center-core" style="width:auto;height:auto;padding:0.6rem 1.1rem;border-radius:9999px;background:linear-gradient(135deg,#E8621A,#F07C35);flex-direction:column;gap:0.15rem;min-width:90px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span style="font-size:0.65rem;font-weight:700;color:#fff;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;">Start de Quiz</span>
           </div>
         </div>
         <div class="orb-ring"></div>
@@ -1880,10 +1898,6 @@
         <span data-i18n="cta.btn">Start de quiz</span>
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </button>
-      <p style="margin-top:1.25rem;font-size:0.875rem;color:var(--muted);">
-        of liever direct contact?
-        <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" style="color:var(--primary);font-weight:600;text-decoration:none;border-bottom:1.5px solid var(--primary-border);transition:border-color 0.18s,color 0.18s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--primary-border)'">Plan een gesprek in</a>
-      </p>
     </div>
 
   </div>
@@ -1950,7 +1964,7 @@
           <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0.5 6.33,3.7 9.76,3.7 7.12,5.95 8.09,9.18 5,7.18 1.91,9.18 2.88,5.95 0.24,3.7 3.67,3.7"/></svg>
           <span data-i18n="about.chip">Over ons</span>
         </div>
-        <h2 class="over-ons-title" data-i18n="about.title">Hier wordt AI weer menselijk</h2>
+        <h2 class="over-ons-title" data-i18n="about.title">Wij maken AI weer menselijk</h2>
         <p class="over-ons-eyebrow" data-i18n="about.eyebrow">Bruggen bouwen tussen mens en technologie</p>
       </div>
 
@@ -2058,7 +2072,7 @@
       <div class="uitgelicht-inner">
         <div class="uitgelicht-content">
           <h2 class="uitgelicht-title">Jouw eigen chatbot<br>voor <span class="uitgelicht-price">€99<span class="uitgelicht-period">/mnd</span></span></h2>
-          <p class="uitgelicht-body">Zou jij ook zo'n chatbot willen zoals aan de rechterkant van deze website — van hoge kwaliteit, zonder gedoe en hoge prijzen? Bij Sila staat kwaliteit en prijs voorop.</p>
+          <p class="uitgelicht-body">Zou jij ook zo'n chatbot willen zoals aan de rechterkant van deze website, van hoge kwaliteit, zonder gedoe en hoge prijzen? Bij Sila staat kwaliteit en prijs voorop.</p>
           <ul class="uitgelicht-list">
             <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 5.5 10.5 12 3.5"/></svg> Kent alles van jouw bedrijf</li>
             <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 5.5 10.5 12 3.5"/></svg> Boekt afspraken automatisch in</li>
@@ -2535,12 +2549,11 @@ const T = {
     'nav.contact':     'Contact',
     'hero.subtitle':'Jouw AI transformatiepartner.',
     'hero.desc':    'Begeleiding en persoonlijke aandacht in een wereld waarin AI razendsnel verandert.',
-    'pillars.chip': 'Onze diensten',
-    'pillars.title':    'Drie pijlers. Eén missie.',
-    'pillars.headline': 'Individuen en bedrijven helpen AI te omarmen.',
+    'pillars.chip': 'Onze missie',
+    'pillars.title':    'Individuen en bedrijven helpen AI te omarmen',
     'pillars.sub':      'Dat doen we op 3 manieren:',
     'edu.title':    'Educatie',
-    'edu.body':     'Begrijp de basis van AI en wat het voor jouw sector kan betekenen. Via workshops, trainingen en cursussen bouwen we jouw AI-kennis stap voor stap op, op jouw tempo.',
+    'edu.body':     'Begrijp AI op elk niveau en ontdek wat het voor jouw sector kan betekenen. Via workshops, trainingen en cursussen bouwen we jouw AI-kennis stap voor stap op, op jouw tempo.',
     'edu.t1':       'Workshops', 'edu.t2': 'Trainingen', 'edu.t3': 'Begeleiding',
     'cons.title':   'Consultancy',
     'cons.body':    'Ontdek samen met ons hoe AI specifiek voor jouw organisatie een rol kan spelen. We analyseren jouw processen en brengen kansen in kaart die direct relevant en toepasbaar zijn.',
@@ -2554,7 +2567,7 @@ const T = {
     'cta.btn':      'Start de quiz',
     'quiz.cta_lead':'Weet je niet in welke fase je zit? Doe de test en ontdek in welke fase jij zit van de AI-reis, gratis en inclusief advies.',
     'about.chip':   'Over ons',
-    'about.title':  'Hier wordt AI weer menselijk',
+    'about.title':  'Wij maken AI weer menselijk',
     'about.eyebrow':'Bruggen bouwen tussen mens en technologie',
     'about.body1':  'Onze naam is geïnspireerd door het Arabische woord Sila (صلة), wat verbinding betekent, en precies dat is wat wij doen.',
     'about.body2':  'Al meer dan 3 jaar bouwen we bruggen tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.',
@@ -2595,18 +2608,17 @@ const T = {
     'nav.contact':     'Contact',
     'hero.subtitle':'Your AI transformation partner.',
     'hero.desc':    'Personal guidance and attention in a world where AI is changing at lightning speed.',
-    'pillars.chip': 'Our services',
-    'pillars.title':    'Three pillars. One mission.',
-    'pillars.headline': 'Helping individuals and businesses embrace AI.',
+    'pillars.chip': 'Our mission',
+    'pillars.title':    'Helping individuals and businesses embrace AI',
     'pillars.sub':      'We do this in 3 ways:',
     'edu.title':    'Education',
-    'edu.body':     'Understand the basics of AI and what it can mean for your sector. Through workshops, training and personal guidance, we build your AI knowledge step by step — at your pace.',
+    'edu.body':     'Understand AI at every level and discover what it can mean for your sector. Through workshops, training and personal guidance, we build your AI knowledge step by step, at your pace.',
     'edu.t1':       'Workshops', 'edu.t2': 'Training', 'edu.t3': 'Coaching',
     'cons.title':   'Consultancy',
     'cons.body':    'Discover together with us how AI can play a role specifically for your organisation. We analyse your processes and map out opportunities that are directly relevant and applicable.',
     'cons.t1':      'Analysis', 'cons.t2': 'Strategy', 'cons.t3': 'Custom advice',
     'impl.title':   'Implementation',
-    'impl.body':    'Take the step toward concrete AI solutions in your daily processes. From prototype to full integration — we guide the entire journey from start to finish.',
+    'impl.body':    'Take the step toward concrete AI solutions in your daily processes. From prototype to full integration, we guide the entire journey from start to finish.',
     'impl.t1':      'Integration', 'impl.t2': 'Automation', 'impl.t3': 'Support',
     'meer':         'More info',
     'cta.eyebrow':  'Do you know where you stand?',
@@ -2614,9 +2626,9 @@ const T = {
     'cta.btn':      'Start the quiz',
     'quiz.cta_lead':'Not sure which phase you are in? Take the test and discover where you stand in the AI journey, free and including personalised advice.',
     'about.chip':   'About us',
-    'about.title':  'This is where AI becomes human again',
+    'about.title':  'We make AI human again',
     'about.eyebrow':'Building bridges between people and technology',
-    'about.body1':  'Our name is inspired by the Arabic word Sila (صلة), which means connection — and that is exactly what we do.',
+    'about.body1':  'Our name is inspired by the Arabic word Sila (صلة), which means connection, and that is exactly what we do.',
     'about.body2':  'For over 3 years we have been building bridges between people and AI. Our mission is to strengthen relationships and provide support through innovative AI solutions that people understand and truly need.',
     'vision.chip':  'Our vision',
     'vision.title': 'What drives us',
@@ -3103,8 +3115,8 @@ function closeMobMenu() {
     {
       id: 1, title: 'Educatie', titleEN: 'Education',
       phase: 'Fase 1', phaseEN: 'Phase 1',
-      content: 'Ontdek wat AI voor jou kan betekenen. In heldere taal, zonder onnodige complexiteit — wij leren je denken in AI-toepassingen die écht aansluiten op jouw wereld.',
-      contentEN: 'Discover what AI can mean for you. In clear language, without unnecessary complexity — we teach you to think in AI applications that truly fit your world.',
+      content: 'Ontdek wat AI voor jou kan betekenen. In heldere taal, zonder onnodige complexiteit. Wij leren je denken in AI-toepassingen die écht aansluiten op jouw wereld.',
+      contentEN: 'Discover what AI can mean for you. In clear language, without unnecessary complexity. We teach you to think in AI applications that truly fit your world.',
       status: '', statusEN: '', statusClass: '', energy: 0,
       tags: ['Workshops','Trainingen','Begeleiding'], tagsEN: ['Workshops','Training','Coaching'],
       icon: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'
@@ -3112,8 +3124,8 @@ function closeMobMenu() {
     {
       id: 2, title: 'Consultancy', titleEN: 'Consultancy',
       phase: 'Fase 2', phaseEN: 'Phase 2',
-      content: 'Samen duiken we in jouw processen. We zoeken de plekken waar AI echt het verschil maakt — geen theorie, maar concrete kansen die passen bij jouw organisatie.',
-      contentEN: 'Together we dive into your processes. We find the spots where AI truly makes a difference — not theory, but concrete opportunities tailored to your organisation.',
+      content: 'Samen duiken we in jouw processen. We zoeken de plekken waar AI echt het verschil maakt: geen theorie, maar concrete kansen die passen bij jouw organisatie.',
+      contentEN: 'Together we dive into your processes. We find the spots where AI truly makes a difference: not theory, but concrete opportunities tailored to your organisation.',
       status: '', statusEN: '', statusClass: '', energy: 0,
       tags: ['Analyse','Strategie','Advies op maat'], tagsEN: ['Analysis','Strategy','Custom advice'],
       icon: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>'
@@ -3121,8 +3133,8 @@ function closeMobMenu() {
     {
       id: 3, title: 'Implementatie', titleEN: 'Implementation',
       phase: 'Fase 3', phaseEN: 'Phase 3',
-      content: 'Ideeën omzetten naar werkende AI-oplossingen. Van eerste prototype tot live product — we bouwen het, testen het en leveren het op, precies zoals jij het wilt.',
-      contentEN: 'Turning ideas into working AI solutions. From first prototype to live product — we build it, test it and deliver it, exactly as you envision.',
+      content: 'Ideeën omzetten naar werkende AI-oplossingen. Van eerste prototype tot live product: we bouwen het, testen het en leveren het op, precies zoals jij het wilt.',
+      contentEN: 'Turning ideas into working AI solutions. From first prototype to live product: we build it, test it and deliver it, exactly as you envision.',
       status: '', statusEN: '', statusClass: '', energy: 0,
       tags: ['Integratie','Automatisering','Support'], tagsEN: ['Integration','Automation','Support'],
       icon: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>'
@@ -3823,7 +3835,7 @@ setTimeout(() => {
     <div id="hp-preview-header">
       <div>
         <h2 id="hp-preview-titel">Preview</h2>
-        <p>Eerste 3 pagina's — gratis inkijken</p>
+        <p>Eerste 3 pagina's, gratis inkijken</p>
       </div>
       <button onclick="sluitHpPreview()" aria-label="Sluiten" style="background:none;border:none;cursor:pointer;color:#7A7167;padding:4px;flex-shrink:0;">
         <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg>

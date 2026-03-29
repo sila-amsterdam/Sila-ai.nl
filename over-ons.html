@@ -117,21 +117,21 @@
     .back-link {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.8375rem;
-      font-weight: 500;
-      color: var(--muted);
+      gap: 0.45rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #E8621A;
       text-decoration: none;
-      padding: 0.38rem 0.9rem;
+      padding: 0.45rem 1rem;
       border-radius: 9999px;
-      border: 1px solid var(--border);
-      background: transparent;
+      border: 1.5px solid #E8621A;
+      background: rgba(232,98,26,0.07);
       transition: color 0.2s ease, gap 0.2s ease, background 0.2s, border-color 0.2s;
     }
-    .back-link:hover { color: var(--primary); background: var(--primary-light); border-color: var(--primary-border); }
-    .back-link svg { transition: transform 0.2s ease; }
+    .back-link:hover { color: #fff; background: #E8621A; border-color: #E8621A; }
+    .back-link svg { transition: transform 0.2s ease; stroke: currentColor; }
     .back-link:hover svg { transform: translateX(-3px); }
-    .back-link:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .back-link:focus-visible { outline: 2px solid #E8621A; outline-offset: 2px; }
 
     .lang-toggle {
       display: flex;
@@ -1075,7 +1075,7 @@
     </h1>
 
     <p class="hero-lead" data-i18n="hero-lead">
-      Geen standaardoplossingen, geen holle beloften. Sila begeleidt organisaties stap voor stap naar AI die écht werkt — passend bij hun mensen, processen en doelen.
+      Geen standaardoplossingen, geen holle beloften. Sila begeleidt organisaties stap voor stap naar AI die écht werkt, passend bij hun mensen, processen en doelen.
     </p>
 
   </div>
@@ -1099,7 +1099,7 @@
       <div class="reveal reveal-right" style="transition-delay:.1s;">
         <div class="chip" style="margin-bottom:1.25rem;">
           <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/></svg>
-          <span data-i18n="chip-mens">De mens achter Sila</span>
+          <span data-i18n="chip-mens">Het gezicht achter Sila</span>
         </div>
 
         <h2 class="bio-name">Jamal Allam</h2>
@@ -1112,7 +1112,7 @@
           Wat begon als nieuwsgierigheid groeide uit tot een passie: organisaties helpen om AI op een slimme en realistische manier toe te passen. Niet met standaardoplossingen, maar met een aanpak die past bij hun mensen, processen en doelen.
         </p>
         <p class="bio-body" data-i18n="bio-body-3">
-          Want ieder AI-project vraagt om maatwerk — omdat geen enkele organisatie hetzelfde is.
+          Want ieder AI-project vraagt om maatwerk, omdat geen enkele organisatie hetzelfde is.
         </p>
       </div>
 
@@ -1188,7 +1188,7 @@
           </span>
           <span class="cta-opt-text">
             <span class="cta-opt-title" data-i18n="cta-calendar-title">Kies een moment</span>
-            <span class="cta-opt-sub" data-i18n="cta-calendar-sub">Gratis kennismakingsgesprek — direct in je agenda</span>
+            <span class="cta-opt-sub" data-i18n="cta-calendar-sub">Gratis kennismakingsgesprek, direct in je agenda</span>
           </span>
           <span class="cta-opt-arrow" aria-hidden="true">
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -1415,12 +1415,12 @@ const T_OO = {
   nl: {
     'hero-label':        'Over Sila',
     'hero-title':        'Bij Sila staat <em>jouw</em><br>organisatie centraal',
-    'hero-lead':         'Geen standaardoplossingen, geen holle beloften. Sila begeleidt organisaties stap voor stap naar AI die écht werkt — passend bij hun mensen, processen en doelen.',
-    'chip-mens':         'De mens achter Sila',
+    'hero-lead':         'Geen standaardoplossingen, geen holle beloften. Sila begeleidt organisaties stap voor stap naar AI die écht werkt, passend bij hun mensen, processen en doelen.',
+    'chip-mens':         'Het gezicht achter Sila',
     'bio-role':          'AI specialist',
     'bio-body-1':        'Mijn naam is Jamal Allam, geboren en getogen in Amsterdam-Oost. Vanuit die Amsterdamse mentaliteit, nuchter, oplossingsgericht en altijd een beetje eigenwijs, ben ik al vroeg gaan experimenteren met AI.',
     'bio-body-2':        'Wat begon als nieuwsgierigheid groeide uit tot een passie: organisaties helpen om AI op een slimme en realistische manier toe te passen. Niet met standaardoplossingen, maar met een aanpak die past bij hun mensen, processen en doelen.',
-    'bio-body-3':        'Want ieder AI-project vraagt om maatwerk — omdat geen enkele organisatie hetzelfde is.',
+    'bio-body-3':        'Want ieder AI-project vraagt om maatwerk, omdat geen enkele organisatie hetzelfde is.',
     'stat-label-1':      'jaar bezig<br>met AI',
     'stat-label-2':      'projecten<br>gerealiseerd',
     'stat-label-3':      'op maat<br>gemaakt',
@@ -1432,7 +1432,7 @@ const T_OO = {
     'cta-contact-sub':   'Stel je vraag of vertel je verhaal',
     'cta-or':            'OF',
     'cta-calendar-title':'Kies een moment',
-    'cta-calendar-sub':  'Gratis kennismakingsgesprek — direct in je agenda',
+    'cta-calendar-sub':  'Gratis kennismakingsgesprek, direct in je agenda',
     'footer-tagline':    'Jouw AI transformatiepartner. Begeleiding en persoonlijke aandacht op maat.',
     'footer-diensten':   'Diensten',
     'footer-bedrijf':    'Bedrijf',
@@ -1442,12 +1442,12 @@ const T_OO = {
   en: {
     'hero-label':        'About Sila',
     'hero-title':        'At Sila, <em>your</em><br>organisation comes first',
-    'hero-lead':         'No standard solutions, no empty promises. Sila guides organisations step by step toward AI that truly works — tailored to their people, processes and goals.',
+    'hero-lead':         'No standard solutions, no empty promises. Sila guides organisations step by step toward AI that truly works, tailored to their people, processes and goals.',
     'chip-mens':         'The person behind Sila',
     'bio-role':          'AI specialist',
-    'bio-body-1':        'My name is Jamal Allam, born and raised in Amsterdam-Oost. With that Amsterdam mentality — straightforward, solution-oriented, and always a little headstrong — I started experimenting with AI early on.',
+    'bio-body-1':        'My name is Jamal Allam, born and raised in Amsterdam-Oost. With that Amsterdam mentality, straightforward, solution-oriented, and always a little headstrong, I started experimenting with AI early on.',
     'bio-body-2':        'What started as curiosity grew into a passion: helping organisations apply AI in a smart and realistic way. Not with standard solutions, but with an approach that fits their people, processes and goals.',
-    'bio-body-3':        'Because every AI project requires a custom approach — no two organisations are the same.',
+    'bio-body-3':        'Because every AI project requires a custom approach, no two organisations are the same.',
     'stat-label-1':      'years working<br>with AI',
     'stat-label-2':      'projects<br>delivered',
     'stat-label-3':      'custom<br>made',
@@ -1459,7 +1459,7 @@ const T_OO = {
     'cta-contact-sub':   'Ask your question or share your story',
     'cta-or':            'OR',
     'cta-calendar-title':'Pick a time',
-    'cta-calendar-sub':  'Free introductory call — straight to your calendar',
+    'cta-calendar-sub':  'Free introductory call, straight to your calendar',
     'footer-tagline':    'Your AI transformation partner. Guidance and personal attention, tailored to you.',
     'footer-diensten':   'Services',
     'footer-bedrijf':    'Company',
