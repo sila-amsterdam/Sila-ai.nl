@@ -1233,7 +1233,7 @@
                 <circle cx="12" cy="12" r="10"/>
                 <polyline points="12 6 12 12 16 14"/>
               </svg>
-              4 weken &nbsp;•&nbsp; Online
+              1 dag &nbsp;•&nbsp; Op locatie
             </div>
             <h3 class="course-title">AI Basics voor Ondernemers</h3>
             <p class="course-body">Leer de fundamenten van AI en hoe je het kunt toepassen in jouw bedrijf. Geen technische kennis vereist.</p>
@@ -1260,7 +1260,7 @@
                 <circle cx="12" cy="12" r="10"/>
                 <polyline points="12 6 12 12 16 14"/>
               </svg>
-              2 weken &nbsp;•&nbsp; Online
+              1 dag &nbsp;•&nbsp; Op locatie
             </div>
             <h3 class="course-title">ChatGPT Masterclass</h3>
             <p class="course-body">Van beginner tot expert. Leer effectieve prompts schrijven en ChatGPT inzetten voor dagelijkse taken.</p>
@@ -1465,7 +1465,7 @@
           <div class="card-footer">
             <div class="price-block">
               <p class="price-label">Prijs</p>
-              <p class="price-value">€14,95</p>
+              <p class="price-value">€0,50</p>
             </div>
             <div class="card-btns">
               <button class="btn-preview" data-preview-id="ai-strategie-voor-leiders">
@@ -2161,13 +2161,13 @@ async function openPreview(cursusId) {
   const overlay = document.getElementById('preview-overlay');
   overlay.style.display = 'flex';
 
-  const pdfUrl = `/pdf-previews/${cursusId}-preview.pdf`;
+  const previewUrl = `/pdf-previews/${cursusId}-preview.pdf`;
+  const fallbackUrl = `/pdf-cursussen/${cursusId}.pdf`;
 
-  try {
-    const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+  async function laadPdf(url) {
+    const pdf = await pdfjsLib.getDocument(url).promise;
     pagesEl.innerHTML = '';
     const aantalPaginas = Math.min(pdf.numPages, 3);
-
     for (let i = 1; i <= aantalPaginas; i++) {
       const pagina = await pdf.getPage(i);
       const viewport = pagina.getViewport({ scale: 1.5 });
@@ -2177,8 +2177,16 @@ async function openPreview(cursusId) {
       pagesEl.appendChild(canvas);
       await pagina.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
     }
+  }
+
+  try {
+    await laadPdf(previewUrl);
   } catch {
-    pagesEl.innerHTML = '<div id="preview-loader">Preview is nog niet beschikbaar voor deze cursus.</div>';
+    try {
+      await laadPdf(fallbackUrl);
+    } catch {
+      pagesEl.innerHTML = '<div id="preview-loader">Preview is nog niet beschikbaar voor deze cursus.</div>';
+    }
   }
 }
 

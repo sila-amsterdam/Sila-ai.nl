@@ -26,7 +26,7 @@ export const CURSUSSEN = {
   // ── Online cursussen ─────────────────────────────────────────────────────
   'ai-strategie-voor-leiders': {
     naam: 'AI Strategie voor Leiders',
-    prijs: 1495,            // €14,95
+    prijs: 50,              // €0,50 (tijdelijk voor testdoeleinden)
     beschrijving: 'Online cursus: AI Strategie voor Leiders — Denk als een leider, laat AI bouwen',
     pdf: 'ai-strategie-voor-leiders.pdf',
   },
