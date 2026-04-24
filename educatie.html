@@ -1829,7 +1829,7 @@ function filterTier(section, btn, tier) {
 /* ─────────────────────────────────────────────────────────
    CHATBOT
 ───────────────────────────────────────────────────────── */
-const N8N_WEBHOOK_URL = 'https://sila-ai.app.n8n.cloud/webhook/d33eb148-1a2b-48a9-a823-0f818b56cf50';
+const N8N_WEBHOOK_URL = 'https://n8n.sila-ai.nl/webhook/d33eb148-1a2b-48a9-a823-0f818b56cf50';
 let chatBtn, chatWindow, chatInput, chatSend, chatMsgs;
 
 let chatOpen = false;
@@ -2262,7 +2262,7 @@ async function bevestigGratis() {
   btn.textContent = 'Bezig…';
 
   // Stuur naar n8n (fire-and-forget)
-  fetch('https://sila-ai.app.n8n.cloud/webhook/gratis-download', {
+  fetch('https://n8n.sila-ai.nl/webhook/gratis-download', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, cursusNaam: actieveGratisCursusNaam, downloadUrl: `https://www.sila-ai.nl${actieveGratisUrl}` }),

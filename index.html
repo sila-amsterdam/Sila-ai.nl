@@ -2760,7 +2760,7 @@ document.getElementById('newsletter-form').addEventListener('submit', async func
   btn.querySelector('span[data-i18n]').textContent = currentLang === 'nl' ? 'Bezig…' : 'Sending…';
 
   try {
-    await fetch('https://sila-ai.app.n8n.cloud/webhook/c7b9db6b-c928-4a07-8cf9-5aa862f07c88', {
+    await fetch('https://n8n.sila-ai.nl/webhook/c7b9db6b-c928-4a07-8cf9-5aa862f07c88', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ voornaam, achternaam, email, lang: currentLang }),
@@ -3252,7 +3252,7 @@ function closeMobMenu() {
    AI QUIZ
 ───────────────────────────────────────────────────────── */
 (function initQuiz() {
-  const WEBHOOK = 'https://sila-ai.app.n8n.cloud/webhook/60da34b5-b8ec-42e8-aa69-6a7d28400b38';
+  const WEBHOOK = 'https://n8n.sila-ai.nl/webhook/60da34b5-b8ec-42e8-aa69-6a7d28400b38';
   const modal   = document.getElementById('quiz-modal');
   const card    = document.getElementById('quiz-card');
   const body    = document.getElementById('quiz-body');

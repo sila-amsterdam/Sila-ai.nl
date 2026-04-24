@@ -765,7 +765,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
   const payload = { voornaam, achternaam, email, onderwerp, bedrijf, bericht, lang: currentLang };
 
   try {
-    await fetch('https://sila-ai.app.n8n.cloud/webhook/bc2d2e0a-89fc-42f9-8e03-6d232ba21c67', {
+    await fetch('https://n8n.sila-ai.nl/webhook/bc2d2e0a-89fc-42f9-8e03-6d232ba21c67', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -795,7 +795,7 @@ document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(e
 });
 
 /* ── Chatbot ── */
-const N8N_CHAT_URL = 'https://sila-ai.app.n8n.cloud/webhook/d33eb148-1a2b-48a9-a823-0f818b56cf50';
+const N8N_CHAT_URL = 'https://n8n.sila-ai.nl/webhook/d33eb148-1a2b-48a9-a823-0f818b56cf50';
 let chatBtn, chatWindow, chatInput, chatSend, chatMsgs;
 let chatOpen = false, chatInitialised = false;
 const sessionId = 'sila-' + Math.random().toString(36).slice(2);

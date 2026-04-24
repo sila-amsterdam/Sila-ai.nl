@@ -55,7 +55,7 @@ function leesBody(req) {
 async function meldAankoop(email, cursus, token, downloadUrl) {
   const prijsFormatted = `€${(cursus.prijs / 100).toFixed(2).replace('.', ',')}`;
   try {
-    await fetch('https://sila-ai.app.n8n.cloud/webhook/cursus-aankoop', {
+    await fetch('https://n8n.sila-ai.nl/webhook/cursus-aankoop', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
