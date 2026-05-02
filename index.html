@@ -931,35 +931,6 @@
     }
     #hp-preview-footer .hp-koop-btn:hover { background: #C85210; }
 
-    /* ── Newsletter ────────────────────────────────── */
-    .newsletter-section {
-      background: linear-gradient(155deg, var(--lavender) 0%, hsl(30, 22%, 97%) 100%);
-      padding: 5.5rem 0;
-      text-align: center;
-    }
-    .newsletter-form {
-      display: flex; flex-wrap: wrap; gap: 0.7rem;
-      justify-content: center; align-items: center;
-      max-width: 450px;
-      margin: 0 auto 0.875rem;
-    }
-    .newsletter-input {
-      flex: 1; min-width: 190px;
-      padding: 0.78rem 1.2rem;
-      border-radius: 9999px;
-      border: 1px solid var(--border);
-      background: #fff;
-      font-size: 0.9375rem;
-      font-family: inherit;
-      outline: none; color: var(--fg);
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .newsletter-input::placeholder { color: hsl(20,10%,63%); }
-    .newsletter-input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(220,90,20,.1);
-    }
-    .newsletter-note { font-size: 0.77rem; color: hsl(20,10%,60%); }
 
     /* ── Footer ────────────────────────────────────── */
     footer {
@@ -1527,19 +1498,6 @@
     .reveal-right.pre-reveal.visible,
     .reveal-scale.pre-reveal.visible { opacity:1; transform:none; }
 
-    /* ── Newsletter new layout ──────────────────────── */
-    .newsletter-name-row {
-      display: flex; flex-wrap: wrap; gap: 0.7rem;
-      justify-content: center;
-      max-width: 450px; margin: 0 auto 0.7rem;
-    }
-    .newsletter-name-row .newsletter-input { flex: 1; min-width: 140px; }
-    .newsletter-email-row {
-      display: flex; flex-wrap: wrap; gap: 0.7rem;
-      justify-content: center; align-items: center;
-      max-width: 450px; margin: 0 auto 0.875rem;
-    }
-    .newsletter-email-row .newsletter-input { flex: 1; min-width: 190px; }
     /* ── Quiz modal internal ────────────────────────── */
     .quiz-option {
       display: flex; align-items: flex-start; gap: 0.875rem;
@@ -1593,21 +1551,6 @@
       #quiz-body { padding: 1.75rem 1.5rem 1.5rem; }
     }
 
-    #newsletter-success {
-      display: none;
-      padding: 2rem 1rem;
-      animation: fadeUp 0.5s ease-out forwards;
-    }
-    .newsletter-success-emoji { font-size: 2.25rem; margin-bottom: 0.75rem; display: block; }
-    .newsletter-success-title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.3125rem; font-weight: 600;
-      color: hsl(20,12%,10%); margin-bottom: 0.6rem;
-    }
-    .newsletter-success-body {
-      font-size: 0.9375rem; color: var(--muted);
-      line-height: 1.72; max-width: 440px; margin: 0 auto;
-    }
   </style>
 </head>
 <body>
@@ -1634,7 +1577,6 @@
   <a href="#diensten"    class="nav-link mob-hide" data-i18n="nav.services">Diensten</a>
   <a href="#over-ons" class="nav-link mob-hide" data-i18n="nav.about">Over ons</a>
   <a href="#referenties"  class="nav-link mob-hide" data-i18n="nav.refs">Referenties</a>
-  <a href="#nieuwsbrief" class="nav-link mob-hide" data-i18n="nav.newsletter">Nieuwsbrief</a>
   <button class="mob-menu-btn" id="mob-menu-btn" aria-label="Menu openen" aria-expanded="false">
     <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
       <line x1="0" y1="1" x2="18" y2="1"/><line x1="0" y1="7" x2="18" y2="7"/><line x1="0" y1="13" x2="18" y2="13"/>
@@ -1647,7 +1589,6 @@
   <a href="#diensten"   onclick="closeMobMenu()" data-i18n="nav.services">Diensten</a>
   <a href="#over-ons"   onclick="closeMobMenu()" data-i18n="nav.about">Over ons</a>
   <a href="#referenties" onclick="closeMobMenu()" data-i18n="nav.refs">Referenties</a>
-  <a href="#nieuwsbrief" onclick="closeMobMenu()" data-i18n="nav.newsletter">Nieuwsbrief</a>
 </nav>
 
 
@@ -2377,41 +2318,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 
-<!-- ═══════════════════════════════════════════════════════
-     NEWSLETTER
-════════════════════════════════════════════════════════ -->
-<section id="nieuwsbrief" class="newsletter-section" aria-label="Nieuwsbrief">
-  <div class="wrap">
-    <div class="chip" style="margin-bottom:1.125rem;">
-      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0.5 6.33,3.7 9.76,3.7 7.12,5.95 8.09,9.18 5,7.18 1.91,9.18 2.88,5.95 0.24,3.7 3.67,3.7"/></svg>
-      <span data-i18n="nl.chip">Blijf op de hoogte</span>
-    </div>
-    <h2 class="section-title" style="margin-bottom:1rem;" data-i18n="nl.title">AI Update in je mailbox</h2>
-    <p class="section-lead" style="margin-bottom:2.25rem;" data-i18n="nl.lead">
-      Ontvang wekelijks de laatste AI-inzichten, praktische tips en updates
-      die relevant zijn voor jouw bedrijf. Geen spam, alleen waarde.
-    </p>
-    <form id="newsletter-form" novalidate>
-      <div class="newsletter-name-row">
-        <input type="text" id="nl-voornaam" class="newsletter-input" placeholder="Voornaam" data-i18n-ph="nl.voornaam" required aria-label="Voornaam" />
-        <input type="text" id="nl-achternaam" class="newsletter-input" placeholder="Achternaam" data-i18n-ph="nl.achternaam" required aria-label="Achternaam" />
-      </div>
-      <div class="newsletter-email-row">
-        <input type="email" id="nl-email" class="newsletter-input" placeholder="jouw@email.com" data-i18n-ph="nl.email" required aria-label="E-mailadres" />
-        <button type="submit" class="btn-primary" onclick="gtag('event','cta_click',{event_category:'nieuwsbrief',event_label:'Inschrijven'})">
-          <span data-i18n="nl.btn">Inschrijven</span>
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-        </button>
-      </div>
-    </form>
-    <div id="newsletter-success">
-      <span class="newsletter-success-emoji">🎉</span>
-      <p class="newsletter-success-title" id="nl-success-title"></p>
-      <p class="newsletter-success-body" id="nl-success-body"></p>
-    </div>
-    <p class="newsletter-note" data-i18n="nl.note">Gratis &amp; altijd opzegbaar. Privacy gegarandeerd.</p>
-  </div>
-</section>
 
 
 <!-- ═══════════════════════════════════════════════════════
@@ -2535,7 +2441,6 @@ const T = {
     'nav.services': 'Diensten',
     'nav.about':    'Over ons',
     'nav.refs':        'Referenties',
-    'nav.newsletter':  'Nieuwsbrief',
     'nav.contact':     'Contact',
     'hero.subtitle':'Jouw AI transformatiepartner.',
     'hero.desc':    'Begeleiding en persoonlijke aandacht in een wereld waarin AI razendsnel verandert.',
@@ -2570,14 +2475,6 @@ const T = {
     'v4.title':'Effectiviteit','v4.body':'Concrete resultaten, geen beloftes. We meten succes aan echte impact die zichtbaar is in jouw dagelijkse werk en cijfers.',
     'refs.chip':    'Referenties',
     'refs.title':   'Wat anderen over ons zeggen',
-    'nl.chip':      'Blijf op de hoogte',
-    'nl.title':     'AI Update in je mailbox',
-    'nl.lead':      'Ontvang wekelijks de laatste AI-inzichten, praktische tips en updates die relevant zijn voor jouw bedrijf. Geen spam, alleen waarde.',
-    'nl.voornaam':  'Voornaam',
-    'nl.achternaam':'Achternaam',
-    'nl.email':     'jouw@email.com',
-    'nl.btn':       'Inschrijven',
-    'nl.note':      'Gratis & altijd opzegbaar. Privacy gegarandeerd.',
     'footer.tagline':'Jouw AI transformatiepartner. Begeleiding en persoonlijke aandacht op maat.',
     'footer.h1':    'Diensten', 'footer.h2': 'Bedrijf', 'footer.h3': 'Contact',
     'footer.rights':'Alle rechten voorbehouden.',
@@ -2594,7 +2491,6 @@ const T = {
     'nav.services': 'Services',
     'nav.about':    'About',
     'nav.refs':        'References',
-    'nav.newsletter':  'Newsletter',
     'nav.contact':     'Contact',
     'hero.subtitle':'Your AI transformation partner.',
     'hero.desc':    'Personal guidance and attention in a world where AI is changing at lightning speed.',
@@ -2629,14 +2525,6 @@ const T = {
     'v4.title':'Effectiveness','v4.body':'Concrete results, no empty promises. We measure success by real impact visible in your daily work and numbers.',
     'refs.chip':    'References',
     'refs.title':   'What others say about us',
-    'nl.chip':      'Stay informed',
-    'nl.title':     'AI updates in your inbox',
-    'nl.lead':      'Receive weekly AI insights, practical tips and updates relevant to your business. No spam, only value.',
-    'nl.voornaam':  'First name',
-    'nl.achternaam':'Last name',
-    'nl.email':     'your@email.com',
-    'nl.btn':       'Subscribe',
-    'nl.note':      'Free & always unsubscribable. Privacy guaranteed.',
     'footer.tagline':'Your AI transformation partner. Personal guidance tailored to you.',
     'footer.h1':    'Services', 'footer.h2': 'Company', 'footer.h3': 'Contact',
     'footer.rights':'All rights reserved.',
@@ -2743,57 +2631,6 @@ function tick() {
 }
 setTimeout(tick, 700);
 
-/* ─────────────────────────────────────────────────────────
-   NEWSLETTER
-───────────────────────────────────────────────────────── */
-document.getElementById('newsletter-form').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const voornaam   = document.getElementById('nl-voornaam').value.trim();
-  const achternaam = document.getElementById('nl-achternaam').value.trim();
-  const email      = document.getElementById('nl-email').value.trim();
-
-  if (!voornaam || !achternaam || !email) return;
-
-  const btn     = this.querySelector('button[type="submit"]');
-  const origHTML = btn.innerHTML;
-  btn.disabled  = true;
-  btn.querySelector('span[data-i18n]').textContent = currentLang === 'nl' ? 'Bezig…' : 'Sending…';
-
-  try {
-    await fetch('https://n8n.sila-ai.nl/webhook/c7b9db6b-c928-4a07-8cf9-5aa862f07c88', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ voornaam, achternaam, email, lang: currentLang }),
-    });
-  } catch (err) {
-    console.warn('Newsletter webhook error:', err);
-  }
-
-  // Show personalised success — always, regardless of webhook result
-  this.style.display = 'none';
-  const successEl = document.getElementById('newsletter-success');
-  const titleEl   = document.getElementById('nl-success-title');
-  const bodyEl    = document.getElementById('nl-success-body');
-
-  if (currentLang === 'nl') {
-    titleEl.textContent = `Dankjewel ${voornaam}, je bent aangemeld!`;
-    bodyEl.textContent  = 'Vanaf nu ontvang je elke week onze AI-update met de belangrijkste ontwikkelingen, in begrijpelijke taal. Welkom!';
-  } else {
-    titleEl.textContent = `Thank you ${voornaam}, you\'re subscribed!`;
-    bodyEl.textContent  = 'From now on you\'ll receive our weekly AI update with the most important developments, in plain language. Welcome!';
-  }
-
-  successEl.style.display = 'block';
-
-  // Confetti 🎉
-  const end = Date.now() + 3000;
-  const colors = ['#dc5a14', '#f4935c', '#eca184', '#f8deb1', '#fff'];
-  (function frame() {
-    confetti({ particleCount: 2, angle: 60, spread: 55, startVelocity: 60, origin: { x: 0, y: 0.6 }, colors });
-    confetti({ particleCount: 2, angle: 120, spread: 55, startVelocity: 60, origin: { x: 1, y: 0.6 }, colors });
-    if (Date.now() < end) requestAnimationFrame(frame);
-  })();
-});
 
 /* ─────────────────────────────────────────────────────────
    SCROLL REVEAL + PROGRESS
