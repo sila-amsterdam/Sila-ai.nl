@@ -346,7 +346,10 @@ const server = http.createServer(async (req, res) => {
 
   // ── Statische bestanden ──────────────────────────────────────
   let staticPath = urlPath;
-  if (staticPath === '/') staticPath = '/index.html';
+  if (staticPath === '/' || staticPath.endsWith('/')) {
+    staticPath = staticPath.replace(/\/$/, '') + '/index.html';
+    if (staticPath === '/index.html') staticPath = '/index.html';
+  }
 
   // Blokkeer toegang tot pdf-cursussen map
   if (staticPath.startsWith('/pdf-cursussen')) {
