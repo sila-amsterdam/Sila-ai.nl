@@ -268,7 +268,17 @@
       background: #f4f4f5;
       color: #1a1a1a;
       border-bottom-left-radius: 3px;
+      word-break: break-word;
+      overflow-wrap: anywhere;
     }
+
+    .msg-bubble.bot a {
+      color: #ee2c82;
+      text-decoration: underline;
+      word-break: break-all;
+    }
+
+    .msg-bubble.bot a:hover { opacity: 0.8; }
 
     .msg-bubble.user {
       background: #ee2c82;
@@ -591,6 +601,18 @@
 </div>
 
 <script>
+  function formatMsg(text) {
+    // Escape HTML
+    const escaped = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    // URLs klikbaar maken
+    const linked = escaped.replace(
+      /(https?:\/\/[^\s]+)/g,
+      '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
+    // Newlines naar <br>
+    return linked.replace(/\n/g, '<br>');
+  }
+
   const WEBHOOK_URL = 'https://n8n.sila-ai.nl/webhook/86836e3b-c4c5-4d4c-951c-420c94dcd942';
   const SESSION_ID  = 'session_' + Math.random().toString(36).slice(2);
   let chatStarted = false;
@@ -618,7 +640,7 @@
     const row = document.createElement('div');
     row.className = 'msg-row ' + role;
     row.innerHTML = `
-      <div class="msg-bubble ${role}">${text.replace(/\n/g, '<br>')}</div>
+      <div class="msg-bubble ${role}">${formatMsg(text)}</div>
       <span class="msg-time">${time()}</span>
     `;
     log.appendChild(row);
