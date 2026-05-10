@@ -524,24 +524,60 @@
       user-select: none;
     }
     .meer-link {
-      display: inline-flex; align-items: center; gap: 0.35rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.45rem;
       font-size: 0.875rem; font-weight: 600;
       color: var(--primary); text-decoration: none;
-      padding: 0.45rem 0.875rem;
+      padding: 0.7rem 1.25rem;
       border-radius: 9999px;
       border: 1.5px solid var(--primary-border);
       background: var(--primary-light);
+      margin-top: auto;
       transition: gap 0.22s ease, background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.18s;
     }
     .meer-link:hover {
-      gap: 0.55rem;
+      gap: 0.65rem;
       background: var(--primary);
       border-color: var(--primary);
       color: #fff;
-      box-shadow: 0 4px 16px rgba(217,92,33,.28);
-      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(217,92,33,.30);
+      transform: translateY(-2px);
     }
     .meer-link:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+
+    /* pillar outcome highlight */
+    .pillar-outcome {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-light);
+      border-left: 2.5px solid var(--primary);
+      padding: 0.45rem 0.75rem;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    /* pillar step watermark */
+    .pillar-step {
+      position: absolute;
+      top: 1.25rem; right: 1.5rem;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: hsl(20, 18%, 91%);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.04em;
+    }
+
+    /* icon shape variations */
+    .icon-box--circle { border-radius: 50%; }
+    .icon-box--diamond {
+      border-radius: 8px;
+      transform: rotate(45deg);
+    }
+    .icon-box--diamond svg { transform: rotate(-45deg); }
 
     /* ── Conversie sectie ──────────────────────────── */
     .conv-section { background: var(--bg); }
@@ -1843,7 +1879,8 @@
 
     <div class="pillars-grid">
 
-      <article class="pillar-card reveal">
+      <article class="pillar-card reveal" style="display:flex;flex-direction:column;">
+        <span class="pillar-step" aria-hidden="true">01</span>
         <div class="icon-box">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
@@ -1851,65 +1888,65 @@
           </svg>
         </div>
         <h3 class="pillar-title" data-i18n="edu.title">Educatie</h3>
+        <p class="pillar-outcome" data-i18n="edu.outcome">Na één training pakt je team de eerste AI-taak zelfstandig op.</p>
         <p class="pillar-body" data-i18n="edu.body">
-          Begrijp AI op elk niveau en ontdek wat het voor jouw sector kan betekenen.
-          Via workshops, trainingen en cursussen bouwen we jouw AI-kennis
-          stap voor stap op, op jouw tempo.
+          Via workshops, trainingen en cursussen bouwen we jouw AI-kennis stap voor stap op, op jouw tempo en voor jouw sector.
         </p>
         <div class="tag-row">
           <span class="tag" data-i18n="edu.t1">Workshops</span>
           <span class="tag" data-i18n="edu.t2">Trainingen</span>
           <span class="tag" data-i18n="edu.t3">Begeleiding</span>
         </div>
-        <a href="educatie.html" class="meer-link" onclick="gtag('event','cta_click',{event_category:'diensten',event_label:'Educatie meer info'})"
-          <span data-i18n="meer">Meer info</span>
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        <a href="educatie.html" class="meer-link" onclick="gtag('event','cta_click',{event_category:'diensten',event_label:'Educatie meer info'})">
+          <span data-i18n="edu.cta">Bekijk cursussen en workshops</span>
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
       </article>
 
-      <article class="pillar-card reveal" style="transition-delay:.1s;">
-        <div class="icon-box">
+      <article class="pillar-card reveal" style="transition-delay:.1s;display:flex;flex-direction:column;">
+        <span class="pillar-step" aria-hidden="true">02</span>
+        <div class="icon-box icon-box--circle">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="7" width="20" height="14" rx="2"/>
             <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
           </svg>
         </div>
         <h3 class="pillar-title" data-i18n="cons.title">Consultancy</h3>
+        <p class="pillar-outcome" data-i18n="cons.outcome">Gemiddeld 3 concrete AI-kansen per bedrijfsaudit, binnen één dag.</p>
         <p class="pillar-body" data-i18n="cons.body">
-          Ontdek samen met ons hoe AI specifiek voor jouw organisatie een rol
-          kan spelen. We analyseren jouw processen en brengen kansen in kaart
-          die direct relevant en toepasbaar zijn.
+          We analyseren jouw processen en brengen kansen in kaart die direct relevant en toepasbaar zijn voor jouw organisatie.
         </p>
         <div class="tag-row">
           <span class="tag" data-i18n="cons.t1">Analyse</span>
           <span class="tag" data-i18n="cons.t2">Strategie</span>
           <span class="tag" data-i18n="cons.t3">Advies op maat</span>
         </div>
-        <a href="consultancy.html" class="meer-link" onclick="gtag('event','cta_click',{event_category:'diensten',event_label:'Consultancy meer info'})"
-          <span data-i18n="meer">Meer info</span>
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        <a href="consultancy.html" class="meer-link" onclick="gtag('event','cta_click',{event_category:'diensten',event_label:'Consultancy meer info'})">
+          <span data-i18n="cons.cta">Bekijk onze aanpak</span>
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
       </article>
 
-      <article class="pillar-card reveal" style="transition-delay:.2s;">
-        <div class="icon-box">
+      <article class="pillar-card reveal" style="transition-delay:.2s;display:flex;flex-direction:column;">
+        <span class="pillar-step" aria-hidden="true">03</span>
+        <div class="icon-box icon-box--diamond">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
           </svg>
         </div>
         <h3 class="pillar-title" data-i18n="impl.title">Implementatie</h3>
+        <p class="pillar-outcome" data-i18n="impl.outcome">Van idee naar werkend AI-systeem in 2 tot 4 weken.</p>
         <p class="pillar-body" data-i18n="impl.body">
-          Zet de stap naar concrete AI-oplossingen in jouw dagelijkse processen.
-          Van idee naar uitvoering: wij bouwen het gehele traject van begin tot eind.
+          Van idee naar uitvoering: wij bouwen het gehele traject van begin tot eind, volledig afgestemd op hoe jij werkt.
         </p>
         <div class="tag-row">
           <span class="tag" data-i18n="impl.t1">Integratie</span>
           <span class="tag" data-i18n="impl.t2">Automatisering</span>
           <span class="tag" data-i18n="impl.t3">Support</span>
         </div>
-        <a href="implementatie.html" class="meer-link" onclick="gtag('event','cta_click',{event_category:'diensten',event_label:'Implementatie meer info'})"
-          <span data-i18n="meer">Meer info</span>
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        <a href="implementatie.html" class="meer-link" onclick="gtag('event','cta_click',{event_category:'diensten',event_label:'Implementatie meer info'})">
+          <span data-i18n="impl.cta_pillar">Bekijk wat we bouwen</span>
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
       </article>
 
@@ -2745,14 +2782,20 @@ const T = {
     'pillars.title':    'Individuen en bedrijven helpen AI te omarmen',
     'pillars.sub':      'Dat doen we op 3 manieren:',
     'edu.title':    'Educatie',
-    'edu.body':     'Begrijp AI op elk niveau en ontdek wat het voor jouw sector kan betekenen. Via workshops, trainingen en cursussen bouwen we jouw AI-kennis stap voor stap op, op jouw tempo.',
+    'edu.outcome':  'Na één training pakt je team de eerste AI-taak zelfstandig op.',
+    'edu.body':     'Via workshops, trainingen en cursussen bouwen we jouw AI-kennis stap voor stap op, op jouw tempo en voor jouw sector.',
     'edu.t1':       'Workshops', 'edu.t2': 'Trainingen', 'edu.t3': 'Begeleiding',
+    'edu.cta':      'Bekijk cursussen en workshops',
     'cons.title':   'Consultancy',
-    'cons.body':    'Ontdek samen met ons hoe AI specifiek voor jouw organisatie een rol kan spelen. We analyseren jouw processen en brengen kansen in kaart die direct relevant en toepasbaar zijn.',
+    'cons.outcome': 'Gemiddeld 3 concrete AI-kansen per bedrijfsaudit, binnen één dag.',
+    'cons.body':    'We analyseren jouw processen en brengen kansen in kaart die direct relevant en toepasbaar zijn voor jouw organisatie.',
     'cons.t1':      'Analyse', 'cons.t2': 'Strategie', 'cons.t3': 'Advies op maat',
+    'cons.cta':     'Bekijk onze aanpak',
     'impl.title':   'Implementatie',
-    'impl.body':    'Zet de stap naar concrete AI-oplossingen in jouw dagelijkse processen. Van idee naar uitvoering: wij bouwen het gehele traject van begin tot eind.',
+    'impl.outcome': 'Van idee naar werkend AI-systeem in 2 tot 4 weken.',
+    'impl.body':    'Van idee naar uitvoering: wij bouwen het gehele traject van begin tot eind, volledig afgestemd op hoe jij werkt.',
     'impl.t1':      'Integratie', 'impl.t2': 'Automatisering', 'impl.t3': 'Support',
+    'impl.cta_pillar': 'Bekijk wat we bouwen',
     'meer':         'Meer info',
     'cta.eyebrow':  'Weet jij waar jij staat?',
     'cta.title':    'Klaar om te ontdekken in welke fase jij zit van de AI-reis?',
@@ -2804,14 +2847,20 @@ const T = {
     'pillars.title':    'Helping individuals and businesses embrace AI',
     'pillars.sub':      'We do this in 3 ways:',
     'edu.title':    'Education',
-    'edu.body':     'Understand AI at every level and discover what it can mean for your sector. Through workshops, training and personal guidance, we build your AI knowledge step by step, at your pace.',
+    'edu.outcome':  'After one training, your team handles the first AI task independently.',
+    'edu.body':     'Through workshops, training and courses we build your AI knowledge step by step, at your pace and for your sector.',
     'edu.t1':       'Workshops', 'edu.t2': 'Training', 'edu.t3': 'Coaching',
+    'edu.cta':      'See courses and workshops',
     'cons.title':   'Consultancy',
-    'cons.body':    'Discover together with us how AI can play a role specifically for your organisation. We analyse your processes and map out opportunities that are directly relevant and applicable.',
+    'cons.outcome': 'On average 3 concrete AI opportunities per business audit, within one day.',
+    'cons.body':    'We analyse your processes and map out opportunities that are directly relevant and applicable for your organisation.',
     'cons.t1':      'Analysis', 'cons.t2': 'Strategy', 'cons.t3': 'Custom advice',
+    'cons.cta':     'See our approach',
     'impl.title':   'Implementation',
-    'impl.body':    'Take the step toward concrete AI solutions in your daily processes. From prototype to full integration, we guide the entire journey from start to finish.',
+    'impl.outcome': 'From idea to working AI system in 2 to 4 weeks.',
+    'impl.body':    'From idea to execution: we build the entire journey from start to finish, fully aligned with how you work.',
     'impl.t1':      'Integration', 'impl.t2': 'Automation', 'impl.t3': 'Support',
+    'impl.cta_pillar': 'See what we build',
     'meer':         'More info',
     'cta.eyebrow':  'Do you know where you stand?',
     'cta.title':    'Ready to discover which phase of the AI journey you are in?',
