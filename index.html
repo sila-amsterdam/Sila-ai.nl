@@ -1608,6 +1608,152 @@
       font-size: 0.9375rem; color: var(--muted);
       line-height: 1.72; max-width: 440px; margin: 0 auto;
     }
+
+    /* ── Wat we al hebben gebouwd — carousel ─── */
+    .home-carousel-section {
+      padding: 6rem 0;
+      overflow: hidden;
+    }
+    .home-carousel-header {
+      margin-bottom: 2.5rem;
+    }
+    .home-carousel-wrapper {
+      position: relative;
+    }
+    .home-carousel-track-outer {
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .home-carousel-track-outer:active { cursor: grabbing; }
+    .home-carousel-track {
+      display: flex;
+      gap: 1.25rem;
+      transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+    .home-carousel-track.is-dragging { transition: none; }
+    .home-case-card {
+      flex: 0 0 300px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,.05), 0 1px 4px rgba(0,0,0,.04);
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: flex;
+      flex-direction: column;
+    }
+    .home-case-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 48px rgba(220,90,20,.11), 0 4px 16px rgba(0,0,0,.08);
+    }
+    @media (min-width: 768px) { .home-case-card { flex: 0 0 336px; } }
+    .home-case-card-img-wrap {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .home-case-card-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      pointer-events: none;
+    }
+    .home-case-card:hover .home-case-card-img { transform: scale(1.06); }
+    .home-case-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(249,247,244,.85) 100%);
+    }
+    .home-case-card-color {
+      position: absolute;
+      inset: 0;
+      background: hsl(16, 60%, 28%, 0.18);
+      mix-blend-mode: multiply;
+    }
+    .home-case-card-content {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .home-case-card-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .home-case-card-desc {
+      font-size: 0.845rem;
+      line-height: 1.65;
+      color: var(--muted);
+      flex: 1;
+    }
+    .home-carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1.75rem;
+    }
+    .home-carousel-dots {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .home-carousel-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s, transform 0.2s, width 0.25s;
+    }
+    .home-carousel-dot.active {
+      background: var(--primary);
+      width: 24px;
+      border-radius: 9999px;
+    }
+    .home-carousel-dot:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+    .home-carousel-arrows { display: flex; gap: 0.625rem; }
+    .home-carousel-arrow {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .home-carousel-arrow:hover {
+      background: var(--primary-light);
+      border-color: var(--primary-border);
+      transform: scale(1.06);
+    }
+    .home-carousel-arrow:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .home-carousel-arrow:active { transform: scale(0.94); }
+    .home-carousel-arrow svg {
+      width: 18px; height: 18px;
+      color: var(--fg);
+      transition: color 0.2s;
+    }
+    .home-carousel-arrow:hover svg { color: var(--primary-h); }
+    .home-carousel-arrow:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -1854,6 +2000,121 @@
         </a>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     WAT WE AL HEBBEN GEBOUWD — CAROUSEL
+════════════════════════════════════════════════════════ -->
+<section class="home-carousel-section" aria-label="Wat we al hebben gebouwd">
+  <div class="wrap">
+    <div class="home-carousel-header reveal">
+      <div class="chip">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0.5 6.33,3.7 9.76,3.7 7.12,5.95 8.09,9.18 5,7.18 1.91,9.18 2.88,5.95 0.24,3.7 3.67,3.7"/></svg>
+        <span>Inspiratie</span>
+      </div>
+      <h2 class="section-title">Wat we al hebben gebouwd</h2>
+      <p class="section-subtitle" style="max-width:520px;">Laat je inspireren met wat we al eerder hebben gebouwd voor onze klanten.</p>
+    </div>
+
+    <div class="home-carousel-wrapper reveal">
+      <div class="home-carousel-track-outer" id="homeCarouselOuter">
+        <div class="home-carousel-track" id="homeCarouselTrack">
+
+          <article class="home-case-card">
+            <div class="home-case-card-img-wrap">
+              <img class="home-case-card-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Lead Management en Follow Up Automation" draggable="false"/>
+              <div class="home-case-card-overlay"></div>
+              <div class="home-case-card-color"></div>
+            </div>
+            <div class="home-case-card-content">
+              <h3 class="home-case-card-title">Lead Management &amp; Follow Up Automation</h3>
+              <p class="home-case-card-desc">Van eerste contact tot klant, volledig geautomatiseerd. Leads worden automatisch gescoord, ingedeeld en persoonlijk opgevolgd op het juiste moment.</p>
+            </div>
+          </article>
+
+          <article class="home-case-card">
+            <div class="home-case-card-img-wrap">
+              <img class="home-case-card-img" src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80" alt="Marketing Agent en AI Content" draggable="false"/>
+              <div class="home-case-card-overlay"></div>
+              <div class="home-case-card-color"></div>
+            </div>
+            <div class="home-case-card-content">
+              <h3 class="home-case-card-title">Marketing Agent &amp; AI Content</h3>
+              <p class="home-case-card-desc">Een AI-agent die marketing content produceert in de stijl van de klant, van LinkedIn posts tot e-mailcampagnes. Meer output, zonder extra uren.</p>
+            </div>
+          </article>
+
+          <article class="home-case-card">
+            <div class="home-case-card-img-wrap">
+              <img class="home-case-card-img" src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&q=80" alt="Voice Agent" draggable="false"/>
+              <div class="home-case-card-overlay"></div>
+              <div class="home-case-card-color"></div>
+            </div>
+            <div class="home-case-card-content">
+              <h3 class="home-case-card-title">Voice Agent</h3>
+              <p class="home-case-card-desc">Een geavanceerde AI-spraakassistent die klantvragen afhandelt in meerdere talen. Altijd beschikbaar, altijd professioneel, zonder dat er iemand aan de lijn hoeft te zitten.</p>
+            </div>
+          </article>
+
+          <article class="home-case-card">
+            <div class="home-case-card-img-wrap">
+              <img class="home-case-card-img" src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&q=80" alt="AI Chatbots" draggable="false"/>
+              <div class="home-case-card-overlay"></div>
+              <div class="home-case-card-color"></div>
+            </div>
+            <div class="home-case-card-content">
+              <h3 class="home-case-card-title">AI Chatbots</h3>
+              <p class="home-case-card-desc">Op maat gemaakte chatbots gevoed met jouw bedrijfskennis. Ze beantwoorden vragen, begeleiden bezoekers en sturen gesprekken de juiste kant op, 24/7.</p>
+            </div>
+          </article>
+
+          <article class="home-case-card">
+            <div class="home-case-card-img-wrap">
+              <img class="home-case-card-img" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="Website Automatiseringen" draggable="false"/>
+              <div class="home-case-card-overlay"></div>
+              <div class="home-case-card-color"></div>
+            </div>
+            <div class="home-case-card-content">
+              <h3 class="home-case-card-title">Website Automatiseringen</h3>
+              <p class="home-case-card-desc">Formulieren, boekingen, betalingen en notificaties, volledig geautomatiseerd vanuit je website. Bezoekers krijgen direct een reactie, jij houdt overzicht zonder handmatig werk.</p>
+            </div>
+          </article>
+
+          <article class="home-case-card">
+            <div class="home-case-card-img-wrap">
+              <img class="home-case-card-img" src="https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=800&q=80" alt="Personal Assistant via WhatsApp en Telegram" draggable="false"/>
+              <div class="home-case-card-overlay"></div>
+              <div class="home-case-card-color"></div>
+            </div>
+            <div class="home-case-card-content">
+              <h3 class="home-case-card-title">Personal Assistant via WhatsApp &amp; Telegram</h3>
+              <p class="home-case-card-desc">Een persoonlijke AI-assistent die je via WhatsApp of Telegram bereikt. Stel vragen, laat taken uitvoeren, ontvang samenvattingen, alles vanuit de app die je toch al gebruikt.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <div class="home-carousel-controls">
+        <div class="home-carousel-dots" id="homeCarouselDots" role="tablist" aria-label="Case study navigatie">
+          <button class="home-carousel-dot active" role="tab" aria-selected="true" aria-label="Case 1" data-index="0"></button>
+          <button class="home-carousel-dot" role="tab" aria-selected="false" aria-label="Case 2" data-index="1"></button>
+          <button class="home-carousel-dot" role="tab" aria-selected="false" aria-label="Case 3" data-index="2"></button>
+          <button class="home-carousel-dot" role="tab" aria-selected="false" aria-label="Case 4" data-index="3"></button>
+          <button class="home-carousel-dot" role="tab" aria-selected="false" aria-label="Case 5" data-index="4"></button>
+          <button class="home-carousel-dot" role="tab" aria-selected="false" aria-label="Case 6" data-index="5"></button>
+        </div>
+        <div class="home-carousel-arrows">
+          <button class="home-carousel-arrow" id="homePrevBtn" aria-label="Vorige" disabled>
+            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 4 6 9 11 14"/></svg>
+          </button>
+          <button class="home-carousel-arrow" id="homeNextBtn" aria-label="Volgende">
+            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 4 12 9 7 14"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -4014,6 +4275,81 @@ function sluitHpPreview() {
     }
   ]
 }
+</script>
+
+<script>
+/* ── Home Carousel ─────────────────────────────────── */
+(function () {
+  const outer   = document.getElementById('homeCarouselOuter');
+  const track   = document.getElementById('homeCarouselTrack');
+  const dots    = document.querySelectorAll('#homeCarouselDots .home-carousel-dot');
+  const prevBtn = document.getElementById('homePrevBtn');
+  const nextBtn = document.getElementById('homeNextBtn');
+  if (!outer || !track) return;
+
+  const TOTAL = 6;
+  let current = 0, cardWidth = 0, gap = 20;
+  let startX = 0, startTranslate = 0, isDragging = false, hasDragged = false, currentTranslate = 0;
+
+  function getCardWidth() {
+    const card = track.querySelector('.home-case-card');
+    return card ? card.getBoundingClientRect().width : 320;
+  }
+  function getTranslateForIndex(idx) {
+    const outerWidth = outer.getBoundingClientRect().width;
+    cardWidth = getCardWidth();
+    const offset = Math.min(24, (outerWidth - cardWidth) / 2);
+    return -(idx * (cardWidth + gap)) + offset;
+  }
+  function clampIndex(idx) { return Math.max(0, Math.min(TOTAL - 1, idx)); }
+  function goTo(idx) {
+    current = clampIndex(idx);
+    const tx = getTranslateForIndex(current);
+    currentTranslate = tx;
+    track.style.transform = `translateX(${tx}px)`;
+    dots.forEach((d, i) => {
+      const active = i === current;
+      d.classList.toggle('active', active);
+      d.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === TOTAL - 1;
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+  dots.forEach(dot => dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index, 10))));
+
+  outer.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0 && e.pointerType === 'mouse') return;
+    outer.setPointerCapture(e.pointerId);
+    isDragging = true; hasDragged = false;
+    startX = e.clientX; startTranslate = currentTranslate;
+    track.classList.add('is-dragging');
+  });
+  outer.addEventListener('pointermove', (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) hasDragged = true;
+    const tx = startTranslate + dx;
+    track.style.transform = `translateX(${tx}px)`;
+    currentTranslate = tx;
+  });
+  function endDrag(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    track.classList.remove('is-dragging');
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 60) { if (dx < 0) goTo(current + 1); else goTo(current - 1); }
+    else goTo(current);
+  }
+  outer.addEventListener('pointerup', endDrag);
+  outer.addEventListener('pointercancel', endDrag);
+  outer.addEventListener('click', (e) => { if (hasDragged) e.stopImmediatePropagation(); }, true);
+
+  goTo(0);
+  window.addEventListener('resize', () => goTo(current));
+})();
 </script>
 
 </body>
