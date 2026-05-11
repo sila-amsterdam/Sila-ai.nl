@@ -1,0 +1,18 @@
+/* TEAM */
+Founder & AI Specialist: Jamal Allam
+Location: Amsterdam, Nederland
+
+/* SITE */
+Last update: 2026/05/11
+Language: Dutch (nl-NL)
+Doctype: HTML5
+Standards: Schema.org, Open Graph, LLMs.txt
+
+/* ORGANIZATION */
+Company: Sila
+Mission: AI-transformatiepartner voor MKB-bedrijven in Nederland
+Founded: 2023
+Website: https://www.sila-ai.nl
+
+/* CONTACT */
+Contact: https://www.sila-ai.nl/contact.html

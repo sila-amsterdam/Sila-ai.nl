@@ -11,24 +11,90 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Over ons — Sila AI</title>
-  <meta name="description" content="Leer Jamal Allam kennen — AI specialist, Amsterdammer en de persoon achter Sila." />
+  <title>Over Sila | Jamal Allam | AI Specialist Amsterdam | AI-transformatiepartner Nederland</title>
+  <meta name="description" content="Maak kennis met Jamal Allam, oprichter van Sila. AI-specialist en consultant in Amsterdam. Sila helpt MKB-bedrijven in Nederland AI strategisch te begrijpen en toe te passen." />
   <link rel="canonical" href="https://www.sila-ai.nl/over-ons.html" />
+  <link rel="alternate" hreflang="nl" href="https://www.sila-ai.nl/over-ons.html" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Jamal Allam" />
+  <meta name="keywords" content="Jamal Allam, AI specialist Amsterdam, AI consultant Nederland, oprichter Sila, AI expert Nederland, Sila AI-transformatiepartner, wie is Sila, AI bedrijf Amsterdam" />
 
   <!-- Open Graph -->
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content="profile" />
   <meta property="og:site_name" content="Sila" />
   <meta property="og:url" content="https://www.sila-ai.nl/over-ons.html" />
-  <meta property="og:title" content="Over ons — Sila AI" />
-  <meta property="og:description" content="Leer Jamal Allam kennen — AI specialist, Amsterdammer en de persoon achter Sila." />
+  <meta property="og:title" content="Over Sila | Jamal Allam | AI Specialist Amsterdam" />
+  <meta property="og:description" content="Maak kennis met Jamal Allam, oprichter van Sila. AI-specialist en consultant in Amsterdam." />
   <meta property="og:image" content="https://www.sila-ai.nl/assets/images/og-image.png" />
   <meta property="og:locale" content="nl_NL" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Over ons — Sila AI" />
-  <meta name="twitter:description" content="Leer Jamal Allam kennen — AI specialist, Amsterdammer en de persoon achter Sila." />
+  <meta name="twitter:title" content="Over Sila | Jamal Allam | AI Specialist Amsterdam" />
+  <meta name="twitter:description" content="Maak kennis met Jamal Allam, oprichter van Sila. AI-specialist en consultant in Amsterdam." />
   <meta name="twitter:image" content="https://www.sila-ai.nl/assets/images/og-image.png" />
+
+  <!-- Structured Data: Person + Organization + BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://www.sila-ai.nl/#jamal-allam",
+        "name": "Jamal Allam",
+        "jobTitle": "Oprichter en AI Specialist",
+        "description": "Jamal Allam is AI-specialist en consultant in Amsterdam. Hij is de oprichter van Sila, een AI-transformatiebedrijf dat MKB-bedrijven in Nederland helpt AI strategisch te begrijpen en te implementeren.",
+        "url": "https://www.sila-ai.nl/over-ons.html",
+        "worksFor": {
+          "@type": "Organization",
+          "@id": "https://www.sila-ai.nl/#organization",
+          "name": "Sila"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Amsterdam",
+          "addressCountry": "NL"
+        },
+        "knowsAbout": [
+          "Artificial Intelligence",
+          "AI-strategie",
+          "AI-implementatie",
+          "Machine Learning",
+          "Bedrijfstransformatie",
+          "MKB Nederland"
+        ]
+      },
+      {
+        "@type": "AboutPage",
+        "url": "https://www.sila-ai.nl/over-ons.html",
+        "name": "Over Sila en Jamal Allam",
+        "description": "Pagina over Sila, het Nederlandse AI-transformatiebedrijf, en oprichter Jamal Allam.",
+        "about": [
+          { "@id": "https://www.sila-ai.nl/#organization" },
+          { "@id": "https://www.sila-ai.nl/#jamal-allam" }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.sila-ai.nl/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Over ons",
+            "item": "https://www.sila-ai.nl/over-ons.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
@@ -381,15 +447,57 @@
     .bio-photo-wrap {
       position: relative;
     }
-    .bio-photo {
+    .bio-slideshow {
       width: 100%;
       aspect-ratio: 3 / 4;
-      object-fit: cover;
       border-radius: 18px;
-      display: block;
+      overflow: hidden;
+      position: relative;
       box-shadow:
         0 20px 60px rgba(0,0,0,.14),
         0 4px 12px rgba(0,0,0,.08);
+    }
+    .bio-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .bio-slide.active {
+      opacity: 1;
+    }
+    .bio-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .bio-slide-dots {
+      position: absolute;
+      bottom: 4.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 5;
+      background: rgba(10,6,3,0.38);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 9999px;
+      padding: 0.45rem 0.75rem;
+    }
+    .bio-slide-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 9999px;
+      background: rgba(255,255,255,0.35);
+      transition: background 0.35s ease, width 0.35s cubic-bezier(0.4,0,0.2,1);
+      cursor: pointer;
+    }
+    .bio-slide-dot.active {
+      background: #fff;
+      width: 20px;
     }
     .bio-photo-accent {
       position: absolute;
@@ -1088,7 +1196,22 @@
     <div class="bio-grid">
 
       <div class="bio-photo-wrap reveal reveal-left">
-        <img src="assets/images/jamal.jpg" alt="Jamal Allam — AI specialist" class="bio-photo" />
+        <div class="bio-slideshow" id="bio-slideshow">
+          <div class="bio-slide active">
+            <img src="assets/images/jamal.jpg" alt="Jamal Allam — AI specialist" class="bio-photo" />
+          </div>
+          <div class="bio-slide">
+            <img src="assets/images/jamal-event-2.jpg" alt="Jamal Allam presenteert op het podium" class="bio-photo" style="object-position: 25% center;" />
+          </div>
+          <div class="bio-slide">
+            <img src="assets/images/jamal-event-1.jpg" alt="Jamal Allam in gesprek met het publiek" class="bio-photo" />
+          </div>
+          <div class="bio-slide-dots" aria-hidden="true">
+            <div class="bio-slide-dot active"></div>
+            <div class="bio-slide-dot"></div>
+            <div class="bio-slide-dot"></div>
+          </div>
+        </div>
         <div class="bio-photo-accent" aria-hidden="true"></div>
         <div class="bio-photo-badge" aria-hidden="true">
           <div class="bio-photo-badge-name">Jamal Allam</div>
@@ -1561,6 +1684,29 @@ function setLang(lang) {
     }
   ]
 }
+</script>
+
+<script>
+(function() {
+  const slideshow = document.getElementById('bio-slideshow');
+  if (!slideshow) return;
+  const slides = slideshow.querySelectorAll('.bio-slide');
+  const dots = slideshow.querySelectorAll('.bio-slide-dot');
+  let current = 0;
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { goTo(i); resetTimer(); }));
+
+  let timer = setInterval(() => goTo(current + 1), 3000);
+  function resetTimer() { clearInterval(timer); timer = setInterval(() => goTo(current + 1), 3000); }
+})();
 </script>
 
 </body>

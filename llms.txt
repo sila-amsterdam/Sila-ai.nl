@@ -10,42 +10,87 @@ Sila (صلة) betekent in het Arabisch *verbinding* — en dat is precies wat we
 - **Oprichter:** Jamal Allam — AI specialist en consultant
 - **Vestiging:** Amsterdam, Nederland
 - **Website:** https://www.sila-ai.nl
-- **Doelgroep:** MKB-bedrijven, leiders en beslissers die AI willen begrijpen en toepassen
+- **Doelgroep:** MKB-bedrijven, leiders en beslissers in Nederland die AI willen begrijpen en toepassen
+- **Tagline:** Sila: Transformatiepartner in AI
+- **Taal:** Nederlands (primair), Engels op aanvraag
 
 ## Drie diensten
 
 ### 1. Educatie
 Workshops en cursussen die AI toegankelijk maken voor iedereen — van basiskennis tot concrete toepassingen. Geen jargon, gewoon heldere taal.
+- Online cursussen: €10 – €35, op eigen tempo
+- Workshops: live of online, gericht op teams en leiders
 - [Educatie pagina](https://www.sila-ai.nl/educatie.html)
 
 ### 2. Consultancy
 Strategisch AI-advies op maat. Van een AI audit tot maandelijkse sparringpartner — wij helpen organisaties een duidelijke AI-koers te varen.
+- AI Audit: eenmalige doorlichting van kansen en risico's
+- AI Sparringpartner: maandelijks strategisch sparren
 - [Consultancy pagina](https://www.sila-ai.nl/consultancy.html)
 
 ### 3. Implementatie
 Van idee naar werkende AI-oplossing. Chatbots, geautomatiseerde workflows, AI-integraties — op maat gebouwd voor jouw organisatie.
+- AI chatbots voor klantenservice en interne processen
+- Workflow-automatisering met AI
+- AI-integraties met bestaande systemen
 - [Implementatie pagina](https://www.sila-ai.nl/implementatie.html)
 
-## Tone of voice
+## Veelgestelde vragen (FAQ)
 
-Sila communiceert menselijk, rustig en persoonlijk. Geen Engelse buzzwords, geen opsommingen van tien punten. Helder genoeg voor een ondernemer zonder technische achtergrond.
+**Wat is Sila?**
+Sila is een Nederlands AI-transformatiebedrijf opgericht in 2023 door Jamal Allam in Amsterdam. Sila helpt MKB-bedrijven en leiders in Nederland AI op een menselijke, strategische en duurzame manier te omarmen.
 
-## Klanten
+**Wie is de oprichter van Sila?**
+Jamal Allam is de oprichter van Sila. Hij is AI-specialist en consultant, gevestigd in Amsterdam. Hij richtte Sila op in 2023 met de missie om AI toegankelijk te maken voor ondernemers en leiders in Nederland.
 
-Sila werkt met MKB-bedrijven in Nederland. Klanten zijn onder andere founders en directeuren in sectoren als technologie, dienstverlening en retail.
+**Wat doet een AI-transformatiepartner?**
+Een AI-transformatiepartner zoals Sila begeleidt bedrijven van begin tot eind in hun AI-reis: kennisopbouw bij leiders en teams, uitstippelen van een AI-strategie en de concrete bouw van AI-tools, chatbots en automatiseringen.
+
+**Is Sila een AI-bedrijf in Nederland?**
+Ja. Sila is gevestigd in Amsterdam en richt zich volledig op de Nederlandse markt. Alle diensten worden aangeboden in het Nederlands.
+
+**Voor welke bedrijven werkt Sila?**
+Sila werkt primair voor MKB-bedrijven in Nederland. Klanten zijn founders, directeuren en managers in sectoren als technologie, dienstverlening en retail.
+
+**Wat kost een AI-traject bij Sila?**
+Online cursussen kosten €10 tot €35. Workshops en consultancytrajecten zijn op maat geprijsd. Neem contact op via https://www.sila-ai.nl/contact.html voor een persoonlijk voorstel.
+
+**Hoe verschilt Sila van andere AI-bureaus?**
+Sila is geen groot consultancybureau en geen generieke AI-cursusaanbieder. Sila werkt persoonlijk, menselijk en op het tempo van de klant. De aanpak is strategisch en praktisch — niet technisch en jargon-gedreven.
+
+**Biedt Sila AI-workshops aan in Nederland?**
+Ja. Sila verzorgt AI-workshops voor teams en leiders, zowel op locatie in Amsterdam als online door heel Nederland.
+
+**Kan Sila een chatbot bouwen voor mijn bedrijf?**
+Ja. Sila bouwt op maat gemaakte AI-chatbots voor MKB-bedrijven, voor zowel klantenservice als interne processen. Meer info op https://www.sila-ai.nl/implementatie.html
+
+**Wat is AI-transformatie?**
+AI-transformatie betekent dat een organisatie AI niet alleen gebruikt als tool, maar het strategisch en structureel integreert in haar manier van werken. Sila begeleidt dit proces van A tot Z: van bewustwording en educatie tot strategie en technische uitvoering.
+
+**Heeft Sila een AI-cursus in het Nederlands?**
+Ja. Sila biedt meerdere online AI-cursussen aan in het Nederlands, specifiek ontworpen voor ondernemers en professionals zonder technische achtergrond. Zie https://www.sila-ai.nl/educatie.html
+
+**Wat is het verschil tussen AI consultancy en AI implementatie?**
+AI consultancy (Sila) = strategisch advies: waar liggen kansen, wat past bij jouw organisatie, hoe pak je het aan? AI implementatie (Sila) = uitvoering: chatbots bouwen, workflows automatiseren, AI-tools integreren.
 
 ## Wat Sila niet is
 
 - Geen groot consultancybureau
 - Geen generieke AI-cursus aanbieder
 - Geen technisch AI-bedrijf zonder menselijke aanpak
+- Geen Engelse buzzword-machine
 
-## Contact
+## Tone of voice
+
+Sila communiceert menselijk, rustig en persoonlijk. Geen Engelse buzzwords, geen opsommingen van tien punten. Helder genoeg voor een ondernemer zonder technische achtergrond. De naam Sila komt van het Arabische woord voor *verbinding*.
+
+## Contactinformatie
 
 - Website: https://www.sila-ai.nl
 - Contactpagina: https://www.sila-ai.nl/contact.html
+- Locatie: Amsterdam, Nederland
 
-## Pagina's
+## Alle pagina's
 
 - [Homepage](https://www.sila-ai.nl/)
 - [Educatie](https://www.sila-ai.nl/educatie.html)
