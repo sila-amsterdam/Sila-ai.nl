@@ -626,14 +626,18 @@
 <script>
   function formatMsg(text) {
     // Escape HTML
-    const escaped = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    // URLs klikbaar maken
-    const linked = escaped.replace(
-      /(https?:\/\/[^\s]+)/g,
+    let out = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    // Bold: **tekst** → <strong>
+    out = out.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // Italic: *tekst* → <em>  (alleen als er geen ** meer over is)
+    out = out.replace(/\*([^*\n]+?)\*/g, '<em>$1</em>');
+    // URLs klikbaar
+    out = out.replace(
+      /(https?:\/\/[^\s<]+)/g,
       '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
     );
-    // Newlines naar <br>
-    return linked.replace(/\n/g, '<br>');
+    // Newlines → <br>
+    return out.replace(/\n/g, '<br>');
   }
 
   const WEBHOOK_URL = 'https://n8n.sila-ai.nl/webhook/86836e3b-c4c5-4d4c-951c-420c94dcd942';
