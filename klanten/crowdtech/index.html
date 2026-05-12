@@ -293,6 +293,29 @@
       padding: 0 3px;
     }
 
+    .msg-feedback {
+      display: flex;
+      gap: 4px;
+      margin-top: 4px;
+      padding: 0 2px;
+    }
+
+    .feedback-btn {
+      background: none;
+      border: 1px solid #e4e4e7;
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 2px 6px;
+      font-size: 13px;
+      color: #aaa;
+      line-height: 1;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .feedback-btn:hover { background: #f4f4f5; color: #555; border-color: #ccc; }
+    .feedback-btn.voted-up   { background: #f0fdf4; border-color: #86efac; color: #16a34a; }
+    .feedback-btn.voted-down { background: #fff1f2; border-color: #fca5a5; color: #dc2626; }
+
     .typing {
       display: flex;
       align-items: center;
@@ -634,17 +657,50 @@
     document.getElementById('chat-log').classList.add('active');
   }
 
-  function addMsg(text, role) {
+  function addMsg(text, role, question = '') {
     startChat();
     const log = document.getElementById('chat-log');
     const row = document.createElement('div');
     row.className = 'msg-row ' + role;
+
+    const feedbackId = 'fb_' + Date.now();
+    const feedbackHtml = role === 'bot' ? `
+      <div class="msg-feedback" id="${feedbackId}"
+           data-vraag="${question.replace(/"/g, '&quot;')}"
+           data-antwoord="${text.replace(/"/g, '&quot;')}">
+        <button class="feedback-btn" title="Nuttig" onclick="sendFeedback(1, '${feedbackId}', this)">👍</button>
+        <button class="feedback-btn" title="Niet nuttig" onclick="sendFeedback(-1, '${feedbackId}', this)">👎</button>
+      </div>` : '';
+
     row.innerHTML = `
       <div class="msg-bubble ${role}">${formatMsg(text)}</div>
       <span class="msg-time">${time()}</span>
+      ${feedbackHtml}
     `;
     log.appendChild(row);
     document.getElementById('messages').scrollTop = 9999;
+  }
+
+  let feedbackQueue = Promise.resolve();
+
+  function sendFeedback(score, feedbackId, btn) {
+    const container = document.getElementById(feedbackId);
+    if (!container) return;
+    container.querySelectorAll('.feedback-btn').forEach(b => b.disabled = true);
+    btn.classList.add(score === 1 ? 'voted-up' : 'voted-down');
+    const payload = {
+      sessionId: SESSION_ID,
+      vraag: container.dataset.vraag,
+      antwoord: container.dataset.antwoord,
+      score
+    };
+    feedbackQueue = feedbackQueue.then(() =>
+      fetch('https://n8n.sila-ai.nl/webhook/crowdtech-feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(() => {})
+    );
   }
 
   function showTyping() {
@@ -688,10 +744,10 @@
         reply = (await res.text()).trim() || 'Geen antwoord ontvangen.';
       }
       removeTyping();
-      addMsg(reply, 'bot');
+      addMsg(reply, 'bot', text);
     } catch (e) {
       removeTyping();
-      addMsg('Er ging iets mis. Probeer het opnieuw.', 'bot');
+      addMsg('Er ging iets mis. Probeer het opnieuw.', 'bot', text);
     }
   }
 
