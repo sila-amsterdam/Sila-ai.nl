@@ -24,39 +24,45 @@ export const CURSUSSEN = {
   },
 
   // ── Online cursussen ─────────────────────────────────────────────────────
+  'ai-fluency-werk-slimmer-met-ai': {
+    naam: 'Van AI gebruiken naar écht samenwerken',
+    prijs: 1495,            // €14,95
+    beschrijving: 'Online cursus: AI Fluency. Leer effectief, efficiënt en bewust samenwerken met AI, van basisgebruiker naar vaardige AI-samenwerker.',
+    pdf: 'ai-fluency-werk-slimmer-met-ai.pdf',
+  },
   'ai-strategie-voor-leiders': {
     naam: 'AI Strategie voor Leiders',
-    prijs: 1995,            // €19,95
+    prijs: 1495,            // €14,95
     beschrijving: 'Online cursus: AI Strategie voor Leiders. Denk als een leider, laat AI bouwen',
     pdf: 'ai-strategie-voor-leiders.pdf',
   },
   'starten-met-automatiseren': {
     naam: 'Hoe begin ik met automatiseren?',
-    prijs: 2500,            // €25,00
+    prijs: 1495,            // €14,95
     beschrijving: 'Online cursus: Hoe begin ik met automatiseren?',
     pdf: 'starten-met-automatiseren.pdf',
   },
   'ai-tools-vandaag': {
     naam: 'Welke AI tools zijn vandaag nodig?',
-    prijs: 1000,            // €10,00
+    prijs: 1000,            // €10,00 — gratis download, aparte prijs
     beschrijving: 'Online cursus: Welke AI tools zijn vandaag nodig? (up to date april 2026)',
     pdf: 'ai-tools-vandaag.pdf',
   },
   'word-een-prompt-expert': {
     naam: 'Word een prompt expert',
-    prijs: 2000,            // €20,00
+    prijs: 1495,            // €14,95
     beschrijving: 'Online cursus: Word een prompt expert',
     pdf: null,
   },
   'hoe-gebruik-ik-n8n': {
     naam: 'Hoe gebruik ik n8n?',
-    prijs: 1995,            // €19,95
+    prijs: 1495,            // €14,95
     beschrijving: 'Online cursus: Hoe gebruik ik n8n?',
     pdf: 'hoe-gebruik-ik-n8n.pdf',
   },
   'hoe-gebruik-ik-claude-code': {
     naam: 'Hoe gebruik ik Claude Code?',
-    prijs: 3500,            // €35,00
+    prijs: 1495,            // €14,95
     beschrijving: 'Online cursus: Hoe gebruik ik Claude Code?',
     pdf: null,
   },
@@ -64,19 +70,19 @@ export const CURSUSSEN = {
   // ── Kant-en-klare workflows (implementatie.html) ─────────────────────────
   'chatbot-workflow': {
     naam: 'Chatbot Workflow',
-    prijs: 5000,            // €50,00
+    prijs: 1495,            // €14,95
     beschrijving: 'Kant-en-klare workflow: de volledige achterkant van een professionele chatbot in n8n',
     pdf: null,
   },
   'nieuwsbrieven-automatisering': {
     naam: 'Geautomatiseerd nieuwsbrieven maken',
-    prijs: 2000,            // €20,00
+    prijs: 1495,            // €14,95
     beschrijving: 'Kant-en-klare workflow: automatisch nieuwsbrieven genereren op basis van jouw huisstijl',
     pdf: null,
   },
   'ai-nieuws-google-sheet': {
     naam: 'AI nieuws opslaan in Google Sheet',
-    prijs: 2000,            // €20,00
+    prijs: 1495,            // €14,95
     beschrijving: 'Kant-en-klare workflow: AI nieuws vanuit Gmail automatisch opslaan in Google Sheet',
     pdf: null,
   },
