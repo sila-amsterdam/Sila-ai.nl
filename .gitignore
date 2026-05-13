@@ -24,6 +24,7 @@ betalingen.json
 pdf-cursussen/*.pdf
 !pdf-cursussen/ai-tools-vandaag.pdf
 !pdf-cursussen/ai-strategie-voor-leiders.pdf
+!pdf-cursussen/hoe-gebruik-ik-n8n.pdf
 
 # OS bestanden
 .DS_Store

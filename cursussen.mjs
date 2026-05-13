@@ -26,8 +26,8 @@ export const CURSUSSEN = {
   // ── Online cursussen ─────────────────────────────────────────────────────
   'ai-strategie-voor-leiders': {
     naam: 'AI Strategie voor Leiders',
-    prijs: 1500,            // €15,00
-    beschrijving: 'Online cursus: AI Strategie voor Leiders — Denk als een leider, laat AI bouwen',
+    prijs: 1995,            // €19,95
+    beschrijving: 'Online cursus: AI Strategie voor Leiders. Denk als een leider, laat AI bouwen',
     pdf: 'ai-strategie-voor-leiders.pdf',
   },
   'starten-met-automatiseren': {
@@ -50,7 +50,7 @@ export const CURSUSSEN = {
   },
   'hoe-gebruik-ik-n8n': {
     naam: 'Hoe gebruik ik n8n?',
-    prijs: 1500,            // €15,00
+    prijs: 1995,            // €19,95
     beschrijving: 'Online cursus: Hoe gebruik ik n8n?',
     pdf: 'hoe-gebruik-ik-n8n.pdf',
   },
