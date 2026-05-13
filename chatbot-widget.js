@@ -332,6 +332,8 @@
       '  .cb-header{padding-top:max(14px,env(safe-area-inset-top,14px))!important}',
       '  .cb-input-area{padding-bottom:max(12px,env(safe-area-inset-bottom,12px))!important}',
       '  .cb-bubble{' + posKey + ':16px!important;bottom:16px!important}',
+      '  .cb-bubble.cb-open{display:none!important}',
+      '  .cb-input{font-size:16px!important}',
       '}'
     ].join('\n');
 
@@ -425,7 +427,8 @@
       this.style.height = Math.min(this.scrollHeight, 120) + 'px';
     });
     inputField.addEventListener('focus', function () {
-      setTimeout(scrollToBottom, 300);
+      setTimeout(scrollToBottom, 100);
+      setTimeout(scrollToBottom, 400);
     });
 
     document.addEventListener('click', function (e) {
@@ -563,8 +566,12 @@
     bubble.classList.add('cb-open');
     bubble.setAttribute('aria-expanded', 'true');
     hideBadge();
-    if (window.innerWidth <= 480) document.body.style.overflow = 'hidden';
-    setTimeout(function () { inputField.focus(); scrollToBottom(); }, 300);
+    if (window.innerWidth <= 480) {
+      document.body.style.overflow = 'hidden';
+      setTimeout(scrollToBottom, 300);
+    } else {
+      setTimeout(function () { inputField.focus(); scrollToBottom(); }, 300);
+    }
   }
 
   function closeChat() {
