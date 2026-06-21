@@ -117,7 +117,7 @@
     }
 
     .cat-btn {
-      border: 1.5px solid #ee2c82;
+      border: 1px solid #ee2c82;
       border-radius: 6px;
       padding: 18px 16px;
       text-align: center;
@@ -128,6 +128,8 @@
       cursor: pointer;
       transition: background 0.12s, color 0.12s;
       font-family: 'Inter', sans-serif;
+      text-decoration: none;
+      display: block;
     }
 
     .cat-btn:hover {
@@ -150,11 +152,8 @@
     .articles-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-    }
-
-    .article-col {
-      padding-right: 24px;
+      column-gap: 24px;
+      row-gap: 0;
     }
 
     .article-item {
@@ -164,11 +163,13 @@
       color: #1a1a1a;
       cursor: pointer;
       line-height: 1.4;
+      text-decoration: none;
+      display: block;
     }
 
     .article-item:hover { color: #ee2c82; }
 
-    .article-item:last-child { border-bottom: none; }
+    .articles-grid .article-item:nth-last-child(-n+3) { border-bottom: none; }
 
     /* ── Chat panel (right) ── */
     .chat-panel {
@@ -528,36 +529,30 @@
 
     <!-- Categories -->
     <div class="categories">
-      <button class="cat-btn">Opbouw en beheer</button>
-      <button class="cat-btn">Aan de slag</button>
-      <button class="cat-btn">Respondenten benaderen</button>
-      <button class="cat-btn">Data &amp; resultaten</button>
-      <button class="cat-btn">Geavanceerd</button>
-      <button class="cat-btn">FAQ</button>
+      <a class="cat-btn" href="https://guide.crowdtech.com/hc/nl/categories/360003022080-Opbouw-en-beheer" target="_blank" rel="noopener noreferrer">Opbouw en beheer</a>
+      <a class="cat-btn" href="https://guide.crowdtech.com/hc/nl/categories/360003036540-Aan-de-slag" target="_blank" rel="noopener noreferrer">Aan de slag</a>
+      <a class="cat-btn" href="https://guide.crowdtech.com/hc/nl/categories/360002991459-Respondenten-benaderen" target="_blank" rel="noopener noreferrer">Respondenten benaderen</a>
+      <a class="cat-btn" href="https://guide.crowdtech.com/hc/nl/categories/360003025920-Data-resultaten" target="_blank" rel="noopener noreferrer">Data &amp; resultaten</a>
+      <a class="cat-btn" href="https://guide.crowdtech.com/hc/nl/categories/360003025940-Geavanceerd" target="_blank" rel="noopener noreferrer">Geavanceerd</a>
+      <a class="cat-btn" href="https://guide.crowdtech.com/hc/nl/categories/360003025980-FAQ" target="_blank" rel="noopener noreferrer">FAQ</a>
     </div>
 
     <!-- Articles -->
     <div class="articles-section">
       <h2>Uitgelichte artikelen</h2>
       <div class="articles-grid">
-        <div class="article-col">
-          <div class="article-item">Locatievraag</div>
-          <div class="article-item">Respondenten benaderen</div>
-          <div class="article-item">WhatsApp uitnodigingen</div>
-          <div class="article-item">Probleem met een knop of onderdeel dat niet zichtbaar is in Safari op iPhone?</div>
-        </div>
-        <div class="article-col">
-          <div class="article-item">Video's</div>
-          <div class="article-item">Automatisch uitnodigen</div>
-          <div class="article-item">Tips voor het opstellen en verzenden van massamails</div>
-          <div class="article-item">Kom je er niet uit? Stuur een e-mail naar support@crowdtech.com</div>
-        </div>
-        <div class="article-col">
-          <div class="article-item">Snel van start</div>
-          <div class="article-item">Onderzoek depubliceren om vragen aan te passen</div>
-          <div class="article-item">Apparaatgegevens van de respondent ophalen met de User Agent</div>
-          <div class="article-item">Privacywaarborging (AVG)</div>
-        </div>
+        <a class="article-item" href="https://guide.crowdtech.com/hc/nl/articles/16687703376924-Locatievraag" target="_blank" rel="noopener noreferrer">Locatievraag</a>
+        <a class="article-item" href="https://guide.crowdtech.com/hc/nl/articles/17353686399260-Video-s" target="_blank" rel="noopener noreferrer">Video's</a>
+        <a class="article-item" href="https://guide.crowdtech.com/hc/nl/articles/360019838160-Snel-van-start" target="_blank" rel="noopener noreferrer">Snel van start</a>
+        <a class="article-item" href="https://guide.crowdtech.com/hc/nl/articles/360019785140-Respondenten-benaderen" target="_blank" rel="noopener noreferrer">Respondenten benaderen</a>
+        <a class="article-item" href="https://guide.crowdtech.com/hc/nl/articles/360019815340-Automatisch-uitnodigen" target="_blank" rel="noopener noreferrer">Automatisch uitnodigen</a>
+        <a class="article-item" href="https://guide.crowdtech.com/hc/nl/articles/9291505788316-Onderzoek-depubliceren-om-vragen-aan-te-passen" target="_blank" rel="noopener noreferrer">Onderzoek depubliceren om vragen aan te passen</a>
+        <a class="article-item" href="https://guide.crowdtech.com/hc/nl/articles/5897581611666-WhatsApp-uitnodigingen" target="_blank" rel="noopener noreferrer">WhatsApp uitnodigingen</a>
+        <a class="article-item" href="https://guide.crowdtech.com/hc/nl/articles/5278936717330-Tips-voor-het-opstellen-en-verzenden-van-massamails" target="_blank" rel="noopener noreferrer">Tips voor het opstellen en verzenden van massamails</a>
+        <a class="article-item" href="https://guide.crowdtech.com/hc/nl/articles/6501174709276-Apparaatgegevens-van-de-respondent-ophalen-met-de-User-Agent" target="_blank" rel="noopener noreferrer">Apparaatgegevens van de respondent ophalen met de User Agent</a>
+        <a class="article-item" href="https://guide.crowdtech.com/hc/nl/articles/20999904587292-Probleem-met-een-knop-of-onderdeel-dat-niet-zichtbaar-is-in-Safari-op-iPhone" target="_blank" rel="noopener noreferrer">Probleem met een knop of onderdeel dat niet zichtbaar is in Safari op iPhone?</a>
+        <a class="article-item" href="https://guide.crowdtech.com/hc/nl/articles/360020456799-Kom-je-er-niet-uit-Stuur-een-e-mail-naar-support-crowdtech-com" target="_blank" rel="noopener noreferrer">Kom je er niet uit? Stuur een e-mail naar support@crowdtech.com</a>
+        <a class="article-item" href="https://guide.crowdtech.com/hc/nl/articles/14339869437340-Privacywaarborging-AVG" target="_blank" rel="noopener noreferrer">Privacywaarborging (AVG)</a>
       </div>
     </div>
 
