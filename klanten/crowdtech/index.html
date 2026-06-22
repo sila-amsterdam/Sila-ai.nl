@@ -508,7 +508,7 @@
 
 <!-- ── Top nav ── -->
 <div class="topnav">
-  <img src="/klanten/crowdtech/crowdtech-logo.png" alt="Crowdtech" />
+  <img src="https://crowdtech.com/wp-content/uploads/2024/05/crowdtech-footer-logo.png" alt="Crowdtech" />
 </div>
 
 <!-- ── Main layout ── -->
@@ -635,7 +635,7 @@
     return out.replace(/\n/g, '<br>');
   }
 
-  const WEBHOOK_URL = 'https://n8n.sila-ai.nl/webhook/86836e3b-c4c5-4d4c-951c-420c94dcd942';
+  const WEBHOOK_URL = 'http://178.105.207.148:5678/webhook/86836e3b-c4c5-4d4c-951c-420c94dcd942';
   const SESSION_ID  = 'session_' + Math.random().toString(36).slice(2);
   let chatStarted = false;
 
@@ -694,7 +694,7 @@
       score
     };
     feedbackQueue = feedbackQueue.then(() =>
-      fetch('https://n8n.sila-ai.nl/webhook/crowdtech-feedback', {
+      fetch('http://178.105.207.148:5678/webhook/crowdtech-feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
