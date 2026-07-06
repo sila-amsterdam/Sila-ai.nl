@@ -56,6 +56,10 @@
         },
         "serviceType": "AI Development",
         "url": "https://www.sila-ai.nl/implementatie.html",
+        "audience": {
+          "@type": "Audience",
+          "audienceType": "MKB-bedrijven die AI willen bouwen en implementeren"
+        },
         "offers": [
           {
             "@type": "Offer",
@@ -2201,40 +2205,6 @@ async function bevestigKoop() {
     foutEl.style.display = 'block';
     btn.disabled = false;
     btn.textContent = T_IMPL[currentLang]['impl.modal_btn'] || 'Doorgaan naar betaling →';
-  }
-}
-</script>
-
-<!-- Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "AI Implementatie",
-  "provider": {
-    "@type": "Organization",
-    "name": "Sila",
-    "url": "https://www.sila-ai.nl"
-  },
-  "url": "https://www.sila-ai.nl/implementatie.html",
-  "description": "Van idee naar werkende AI-oplossing. Sila bouwt chatbots, AI workflows en automatiseringen op maat voor MKB-bedrijven.",
-  "serviceType": "AI Implementatie en Automatisering",
-  "areaServed": {
-    "@type": "Country",
-    "name": "Netherlands"
-  },
-  "audience": {
-    "@type": "Audience",
-    "audienceType": "MKB-bedrijven die AI willen bouwen en implementeren"
-  },
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "AI Implementatie diensten",
-    "itemListElement": [
-      { "@type": "Offer", "name": "AI Chatbot op maat", "description": "Een chatbot die past bij jouw merk, gekoppeld aan jouw kennisbank." },
-      { "@type": "Offer", "name": "Workflow automatisering", "description": "Automatiseer repetitieve processen met AI en tools als n8n." },
-      { "@type": "Offer", "name": "AI-integraties", "description": "Verbind AI met jouw bestaande systemen en tools." }
-    ]
   }
 }
 </script>

@@ -56,6 +56,10 @@
         },
         "serviceType": "AI Education",
         "url": "https://www.sila-ai.nl/educatie.html",
+        "audience": {
+          "@type": "Audience",
+          "audienceType": "MKB-medewerkers, leiders, teams zonder technische achtergrond"
+        },
         "offers": [
           {
             "@type": "Offer",
@@ -93,6 +97,76 @@
             "item": "https://www.sila-ai.nl/educatie.html"
           }
         ]
+      },
+      {
+        "@type": "Course",
+        "name": "Van AI gebruiken naar écht samenwerken (AI Fluency)",
+        "description": "Online cursus over effectief, efficiënt en bewust samenwerken met AI: van basisgebruiker naar vaardige AI-samenwerker.",
+        "provider": { "@id": "https://www.sila-ai.nl/#organization" },
+        "inLanguage": "nl",
+        "url": "https://www.sila-ai.nl/educatie.html",
+        "offers": { "@type": "Offer", "price": "14.95", "priceCurrency": "EUR", "category": "Paid" },
+        "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "Online", "courseWorkload": "PT2H" }
+      },
+      {
+        "@type": "Course",
+        "name": "AI Strategie voor Leiders",
+        "description": "Online cursus voor beslissers en directeuren: denk als een leider, laat AI bouwen.",
+        "provider": { "@id": "https://www.sila-ai.nl/#organization" },
+        "inLanguage": "nl",
+        "url": "https://www.sila-ai.nl/educatie.html",
+        "offers": { "@type": "Offer", "price": "14.95", "priceCurrency": "EUR", "category": "Paid" },
+        "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "Online", "courseWorkload": "PT2H" }
+      },
+      {
+        "@type": "Course",
+        "name": "Hoe begin ik met automatiseren?",
+        "description": "Online cursus over de eerste stappen in automatiseren met AI voor MKB-bedrijven.",
+        "provider": { "@id": "https://www.sila-ai.nl/#organization" },
+        "inLanguage": "nl",
+        "url": "https://www.sila-ai.nl/educatie.html",
+        "offers": { "@type": "Offer", "price": "14.95", "priceCurrency": "EUR", "category": "Paid" },
+        "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "Online", "courseWorkload": "PT2H" }
+      },
+      {
+        "@type": "Course",
+        "name": "Welke AI tools zijn vandaag nodig?",
+        "description": "Online cursus met een actueel overzicht van AI-tools die vandaag relevant zijn voor ondernemers.",
+        "provider": { "@id": "https://www.sila-ai.nl/#organization" },
+        "inLanguage": "nl",
+        "url": "https://www.sila-ai.nl/educatie.html",
+        "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR", "category": "Paid" },
+        "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "Online", "courseWorkload": "PT2H" }
+      },
+      {
+        "@type": "Course",
+        "name": "Word een prompt expert",
+        "description": "Online cursus over het schrijven van goede prompts voor AI-tools zoals ChatGPT en Claude.",
+        "provider": { "@id": "https://www.sila-ai.nl/#organization" },
+        "inLanguage": "nl",
+        "url": "https://www.sila-ai.nl/educatie.html",
+        "offers": { "@type": "Offer", "price": "14.95", "priceCurrency": "EUR", "category": "Paid" },
+        "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "Online", "courseWorkload": "PT2H" }
+      },
+      {
+        "@type": "Course",
+        "name": "Hoe gebruik ik n8n?",
+        "description": "Online cursus over automatiseren met n8n: workflows bouwen zonder programmeerkennis.",
+        "provider": { "@id": "https://www.sila-ai.nl/#organization" },
+        "inLanguage": "nl",
+        "url": "https://www.sila-ai.nl/educatie.html",
+        "offers": { "@type": "Offer", "price": "14.95", "priceCurrency": "EUR", "category": "Paid" },
+        "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "Online", "courseWorkload": "PT2H" }
+      },
+      {
+        "@type": "Course",
+        "name": "Hoe gebruik ik Claude Code?",
+        "description": "Online cursus over werken met Claude Code als persoonlijke AI-assistent.",
+        "provider": { "@id": "https://www.sila-ai.nl/#organization" },
+        "inLanguage": "nl",
+        "url": "https://www.sila-ai.nl/educatie.html",
+        "offers": { "@type": "Offer", "price": "14.95", "priceCurrency": "EUR", "category": "Paid" },
+        "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "Online", "courseWorkload": "PT2H" }
       }
     ]
   }
@@ -2265,40 +2339,6 @@ async function bevestigGratis() {
   sluitGratisModal();
   btn.disabled = false;
   btn.querySelector('span') ? btn.querySelector('span').textContent = T_EDU[currentLang]['modal.gratis_btn'] : btn.textContent = T_EDU[currentLang]['modal.gratis_btn'];
-}
-</script>
-
-<!-- Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "AI Educatie",
-  "provider": {
-    "@type": "Organization",
-    "name": "Sila",
-    "url": "https://www.sila-ai.nl"
-  },
-  "url": "https://www.sila-ai.nl/educatie.html",
-  "description": "Cursussen en workshops die AI toegankelijk maken voor leiders en teams. Van basiskennis tot concrete toepassingen — in heldere taal, zonder jargon.",
-  "serviceType": "AI Educatie en Training",
-  "areaServed": {
-    "@type": "Country",
-    "name": "Netherlands"
-  },
-  "audience": {
-    "@type": "Audience",
-    "audienceType": "MKB-medewerkers, leiders, teams zonder technische achtergrond"
-  },
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "AI Cursussen en Workshops",
-    "itemListElement": [
-      { "@type": "Offer", "name": "AI Basisworkshop", "description": "Begrijp wat AI is en wat het voor jouw organisatie kan betekenen." },
-      { "@type": "Offer", "name": "AI voor leiders", "description": "Strategische AI-kennis voor beslissers en directeuren." },
-      { "@type": "Offer", "name": "Online cursussen", "description": "Zelfstandig leren over AI-toepassingen in jouw vakgebied." }
-    ]
-  }
 }
 </script>
 
