@@ -18,7 +18,7 @@ Sila (صلة) betekent in het Arabisch *verbinding* — en dat is precies wat we
 
 ### 1. Educatie
 Workshops en cursussen die AI toegankelijk maken voor iedereen — van basiskennis tot concrete toepassingen. Geen jargon, gewoon heldere taal.
-- Online cursussen: €10 – €35, op eigen tempo
+- Online cursussen: €10 – €15, op eigen tempo
 - Workshops: live of online, gericht op teams en leiders
 - [Educatie pagina](https://www.sila-ai.nl/educatie.html)
 
@@ -53,7 +53,7 @@ Ja. Sila is gevestigd in Amsterdam en richt zich volledig op de Nederlandse mark
 Sila werkt primair voor MKB-bedrijven in Nederland. Klanten zijn founders, directeuren en managers in sectoren als technologie, dienstverlening en retail.
 
 **Wat kost een AI-traject bij Sila?**
-Online cursussen kosten €10 tot €35. Workshops en consultancytrajecten zijn op maat geprijsd. Neem contact op via https://www.sila-ai.nl/contact.html voor een persoonlijk voorstel.
+Online cursussen kosten €10 tot €15. Workshops en consultancytrajecten zijn op maat geprijsd. Neem contact op via https://www.sila-ai.nl/contact.html voor een persoonlijk voorstel.
 
 **Hoe verschilt Sila van andere AI-bureaus?**
 Sila is geen groot consultancybureau en geen generieke AI-cursusaanbieder. Sila werkt persoonlijk, menselijk en op het tempo van de klant. De aanpak is strategisch en praktisch — niet technisch en jargon-gedreven.
@@ -90,6 +90,15 @@ Sila communiceert menselijk, rustig en persoonlijk. Geen Engelse buzzwords, geen
 - Contactpagina: https://www.sila-ai.nl/contact.html
 - Locatie: Amsterdam, Nederland
 
+## Kennisbank
+
+Heldere artikelen over AI voor het Nederlandse MKB, geschreven door Jamal Allam.
+
+- [Kennisbank overzicht](https://www.sila-ai.nl/kennisbank/)
+- [Wat is een AI-transformatiepartner en wanneer heb je er een nodig?](https://www.sila-ai.nl/kennisbank/ai-transformatiepartner.html)
+- [AI-automatisering voor het MKB: wat kun je in 2026 echt automatiseren?](https://www.sila-ai.nl/kennisbank/ai-automatisering-mkb.html)
+- [AI-consultancy of een AI-cursus: wat past bij jouw bedrijf?](https://www.sila-ai.nl/kennisbank/ai-consultancy-of-cursus.html)
+
 ## Alle pagina's
 
 - [Homepage](https://www.sila-ai.nl/)
@@ -98,3 +107,4 @@ Sila communiceert menselijk, rustig en persoonlijk. Geen Engelse buzzwords, geen
 - [Implementatie](https://www.sila-ai.nl/implementatie.html)
 - [Over ons](https://www.sila-ai.nl/over-ons.html)
 - [Contact](https://www.sila-ai.nl/contact.html)
+- [Kennisbank](https://www.sila-ai.nl/kennisbank/)
