@@ -1036,8 +1036,9 @@
     .faq-item summary::-webkit-details-marker { display: none; }
     .faq-item summary:hover { color: var(--primary); }
     .faq-item summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 14px; }
-    .faq-chevron { flex-shrink: 0; color: var(--muted); transition: transform 0.25s ease; }
-    .faq-item[open] .faq-chevron { transform: rotate(180deg); color: var(--primary); }
+    .faq-chevron { flex-shrink: 0; width: 28px; height: 28px; padding: 6px; box-sizing: border-box; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); color: var(--muted); transition: transform 0.25s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease; }
+    .faq-item summary:hover .faq-chevron { color: var(--primary); border-color: var(--primary-border); background: var(--primary-light); }
+    .faq-item[open] .faq-chevron { transform: rotate(180deg); color: var(--primary); border-color: var(--primary-border); background: var(--primary-light); }
     .faq-answer { padding: 0 1.375rem 1.25rem; }
     .faq-answer p { margin: 0; color: var(--muted); font-size: 0.9375rem; line-height: 1.7; }
   </style>
@@ -1322,6 +1323,10 @@
   <section class="faq-section" id="faq" aria-label="Veelgestelde vragen">
     <div class="faq-wrap">
       <div class="faq-header">
+        <div class="section-label" style="justify-content:center;">
+          <span class="section-label-dot"></span>
+          <span data-i18n="faq.label">Vragen &amp; antwoorden</span>
+        </div>
         <h2 class="faq-title" data-i18n="faq.title">Veelgestelde vragen over AI consultancy</h2>
         <p class="faq-subtitle" data-i18n="faq.subtitle">Antwoorden op de vragen die MKB-leiders ons het vaakst stellen.</p>
       </div>
@@ -1421,6 +1426,7 @@ const T_CONS = {
     'back': 'Terug',
     'nav.services': 'Diensten', 'nav.about': 'Over ons', 'nav.refs': 'Referenties', 'nav.kennisbank': 'Kennisbank', 'nav.newsletter': 'Nieuwsbrief', 'nav.contact': 'Contact',
     'cons.contact': 'Neem contact op',
+    'faq.label': 'Vragen & antwoorden',
     'faq.title': 'Veelgestelde vragen over AI consultancy',
     'faq.subtitle': 'Antwoorden op de vragen die MKB-leiders ons het vaakst stellen.',
     'faq.q1': 'Wat doet een AI-consultant voor het MKB?',
@@ -1479,6 +1485,7 @@ const T_CONS = {
     'back': 'Back',
     'nav.services': 'Services', 'nav.about': 'About', 'nav.refs': 'References', 'nav.kennisbank': 'Knowledge base', 'nav.newsletter': 'Newsletter', 'nav.contact': 'Contact',
     'cons.contact': 'Contact us',
+    'faq.label': 'Questions & answers',
     'faq.title': 'Frequently asked questions about AI consultancy',
     'faq.subtitle': 'Answers to the questions SME leaders ask us most often.',
     'faq.q1': 'What does an AI consultant do for SMEs?',
