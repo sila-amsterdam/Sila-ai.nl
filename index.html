@@ -313,7 +313,7 @@
       z-index: 90;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       padding: 0.75rem 2rem;
       background: hsl(30, 22%, 98%);
       box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 6px 20px rgba(220,90,20,.04);
@@ -325,6 +325,9 @@
       width: auto;
     }
     .top-bar-logo-text {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       font-family: 'Lora', Georgia, serif;
       font-size: 1.375rem;
       font-weight: 600;
