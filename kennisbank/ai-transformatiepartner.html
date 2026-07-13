@@ -95,116 +95,122 @@
   <header class="kb-topbar">
     <a href="index.html" class="kb-back">
       <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg>
-      Kennisbank
+      <span data-i18n="kb.back">Kennisbank</span>
     </a>
-    <a href="../index.html" class="kb-wordmark" aria-label="Sila home">Sila</a>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <a href="../index.html" class="kb-wordmark" aria-label="Sila home">Sila</a>
+      <div class="lang-toggle" role="group" aria-label="Taalwissel">
+        <button class="lang-btn active" data-lang="nl" onclick="setLang('nl', this)">NL</button>
+        <button class="lang-btn"        data-lang="en" onclick="setLang('en', this)">EN</button>
+      </div>
+    </div>
   </header>
 
   <main>
     <article class="kb-article">
       <nav class="kb-breadcrumb" aria-label="Kruimelpad">
-        <a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Kennisbank</a><span aria-hidden="true">/</span>AI-transformatiepartner
+        <a href="../index.html" data-i18n="kb.crumb.home">Home</a><span aria-hidden="true">/</span><a href="index.html" data-i18n="kb.crumb.kb">Kennisbank</a><span aria-hidden="true">/</span><span data-i18n="kb.crumb.current">AI-transformatiepartner</span>
       </nav>
 
-      <h1 class="kb-title">Wat is een <em>AI-transformatiepartner</em> en wanneer heb je er een nodig?</h1>
+      <h1 class="kb-title" data-i18n-html="kb.h1">Wat is een <em>AI-transformatiepartner</em> en wanneer heb je er een nodig?</h1>
 
       <div class="kb-meta">
-        <span>Door Jamal Allam</span>
+        <span data-i18n="kb.meta.by">Door Jamal Allam</span>
         <span class="kb-meta-dot" aria-hidden="true"></span>
-        <time datetime="2026-07-07">7 juli 2026</time>
+        <time datetime="2026-07-07" data-i18n="kb.meta.date">7 juli 2026</time>
         <span class="kb-meta-dot" aria-hidden="true"></span>
-        <span>6 minuten leestijd</span>
+        <span data-i18n="kb.meta.readtime">6 minuten leestijd</span>
       </div>
 
-      <p class="kb-lead">Een AI-transformatiepartner is een bedrijf dat je helpt AI stap voor stap in te voeren in je organisatie: van begrijpen wat AI voor jou kan betekenen, tot een concreet plan maken, tot het daadwerkelijk bouwen en laten werken van AI-oplossingen. Anders dan een losse consultant of een softwareleverancier begeleidt een transformatiepartner het hele traject, niet alleen één onderdeel ervan. Je hebt er een nodig zodra je voelt dat AI belangrijk is voor je bedrijf, maar je niet weet waar je moet beginnen.</p>
+      <p class="kb-lead" data-i18n="kb.lead">Een AI-transformatiepartner is een bedrijf dat je helpt AI stap voor stap in te voeren in je organisatie: van begrijpen wat AI voor jou kan betekenen, tot een concreet plan maken, tot het daadwerkelijk bouwen en laten werken van AI-oplossingen. Anders dan een losse consultant of een softwareleverancier begeleidt een transformatiepartner het hele traject, niet alleen één onderdeel ervan. Je hebt er een nodig zodra je voelt dat AI belangrijk is voor je bedrijf, maar je niet weet waar je moet beginnen.</p>
 
-      <p>Sila is zo'n partner. We noemen onszelf niet voor niets Sila: Transformatiepartner in AI. In dit artikel leggen we uit wat dat precies betekent, wanneer het zinvol is om er een in te schakelen en hoe zo'n traject eruitziet.</p>
+      <p data-i18n="kb.p1">Sila is zo'n partner. We noemen onszelf niet voor niets Sila: Transformatiepartner in AI. In dit artikel leggen we uit wat dat precies betekent, wanneer het zinvol is om er een in te schakelen en hoe zo'n traject eruitziet.</p>
 
-      <h2>Wat doet een AI-transformatiepartner?</h2>
-      <p>Een AI-transformatiepartner brengt drie dingen samen die normaal los van elkaar georganiseerd worden: kennis, strategie en uitvoering.</p>
-      <p>Bij de meeste bedrijven verloopt een AI-traject namelijk versnipperd. Een consultant maakt een adviesrapport. Een softwarebedrijf verkoopt een tool. Een freelancer bouwt iets losstaands. Niemand kijkt naar het geheel, en de eigenaar of directeur blijft achter met losse puzzelstukjes die niet vanzelf een plaatje vormen.</p>
-      <p>Een transformatiepartner doet het anders. Die begint bij de vraag wat AI eigenlijk voor jouw bedrijf kan betekenen, helpt je vervolgens een plan maken dat past bij jouw situatie, en bouwt daarna mee aan de oplossingen die dat plan concreet maken. Het is dezelfde partij die met je meedenkt én meebouwt.</p>
-      <p>Bij Sila is dat vertaald naar drie pijlers die op elkaar aansluiten:</p>
-      <p><strong><a href="../educatie.html">Educatie</a>.</strong> Eerst begrijpen wat AI is en wat het voor jouw team kan betekenen. Dat gebeurt via workshops en online cursussen, gericht op leiders en medewerkers zonder technische achtergrond.</p>
-      <p><strong><a href="../consultancy.html">Consultancy</a>.</strong> Daarna bepalen wat je met die kennis gaat doen. Samen een concreet, uitvoerbaar AI-plan maken: waar liggen de kansen, wat pak je eerst aan, wat past bij jouw bedrijf.</p>
-      <p><strong><a href="../implementatie.html">Implementatie</a>.</strong> En tot slot bouwen wat je hebt besloten te doen. Workflows, chatbots, automatisering, integraties: praktische oplossingen die echt werken in de dagelijkse praktijk.</p>
-      <p>Het mooie is dat je niet bij alle drie hoeft te beginnen. Sommige klanten starten met een workshop, andere stappen direct in bij consultancy of implementatie. Maar de partner die je kiest, kan idealiter alle drie bieden, zodat je niet halverwege een traject naar een andere partij hoeft over te stappen.</p>
+      <h2 data-i18n="kb.h2.1">Wat doet een AI-transformatiepartner?</h2>
+      <p data-i18n="kb.p2">Een AI-transformatiepartner brengt drie dingen samen die normaal los van elkaar georganiseerd worden: kennis, strategie en uitvoering.</p>
+      <p data-i18n="kb.p3">Bij de meeste bedrijven verloopt een AI-traject namelijk versnipperd. Een consultant maakt een adviesrapport. Een softwarebedrijf verkoopt een tool. Een freelancer bouwt iets losstaands. Niemand kijkt naar het geheel, en de eigenaar of directeur blijft achter met losse puzzelstukjes die niet vanzelf een plaatje vormen.</p>
+      <p data-i18n="kb.p4">Een transformatiepartner doet het anders. Die begint bij de vraag wat AI eigenlijk voor jouw bedrijf kan betekenen, helpt je vervolgens een plan maken dat past bij jouw situatie, en bouwt daarna mee aan de oplossingen die dat plan concreet maken. Het is dezelfde partij die met je meedenkt én meebouwt.</p>
+      <p data-i18n="kb.p5">Bij Sila is dat vertaald naar drie pijlers die op elkaar aansluiten:</p>
+      <p data-i18n-html="kb.p6"><strong><a href="../educatie.html">Educatie</a>.</strong> Eerst begrijpen wat AI is en wat het voor jouw team kan betekenen. Dat gebeurt via workshops en online cursussen, gericht op leiders en medewerkers zonder technische achtergrond.</p>
+      <p data-i18n-html="kb.p7"><strong><a href="../consultancy.html">Consultancy</a>.</strong> Daarna bepalen wat je met die kennis gaat doen. Samen een concreet, uitvoerbaar AI-plan maken: waar liggen de kansen, wat pak je eerst aan, wat past bij jouw bedrijf.</p>
+      <p data-i18n-html="kb.p8"><strong><a href="../implementatie.html">Implementatie</a>.</strong> En tot slot bouwen wat je hebt besloten te doen. Workflows, chatbots, automatisering, integraties: praktische oplossingen die echt werken in de dagelijkse praktijk.</p>
+      <p data-i18n="kb.p9">Het mooie is dat je niet bij alle drie hoeft te beginnen. Sommige klanten starten met een workshop, andere stappen direct in bij consultancy of implementatie. Maar de partner die je kiest, kan idealiter alle drie bieden, zodat je niet halverwege een traject naar een andere partij hoeft over te stappen.</p>
 
-      <h2>Wanneer heb je een AI-transformatiepartner nodig?</h2>
-      <p>Niet elk bedrijf heeft direct een transformatiepartner nodig. Soms volstaat een goede tool, of een enthousiaste medewerker die zelf uitzoekt hoe ChatGPT te gebruiken is. Maar er zijn een aantal signalen die aangeven dat het tijd is voor structurele begeleiding.</p>
+      <h2 data-i18n="kb.h2.2">Wanneer heb je een AI-transformatiepartner nodig?</h2>
+      <p data-i18n="kb.p10">Niet elk bedrijf heeft direct een transformatiepartner nodig. Soms volstaat een goede tool, of een enthousiaste medewerker die zelf uitzoekt hoe ChatGPT te gebruiken is. Maar er zijn een aantal signalen die aangeven dat het tijd is voor structurele begeleiding.</p>
 
-      <h3>Je weet dat AI belangrijk is, maar niet waar te beginnen</h3>
-      <p>Dit is het meest voorkomende signaal. Je leest overal over AI, je voelt de druk om iets te doen, maar elk idee voelt als een sprong in het diepe. Een transformatiepartner haalt die druk weg door je te helpen met één concrete, overzichtelijke eerste stap.</p>
+      <h3 data-i18n="kb.h3.1">Je weet dat AI belangrijk is, maar niet waar te beginnen</h3>
+      <p data-i18n="kb.p11">Dit is het meest voorkomende signaal. Je leest overal over AI, je voelt de druk om iets te doen, maar elk idee voelt als een sprong in het diepe. Een transformatiepartner haalt die druk weg door je te helpen met één concrete, overzichtelijke eerste stap.</p>
 
-      <h3>Je hebt al geëxperimenteerd, maar zonder duidelijk resultaat</h3>
-      <p>Veel bedrijven hebben al wel iets geprobeerd: een los ChatGPT-abonnement, een automatiseringstool die half gebruikt wordt, een chatbot die niemand goed onderhoudt. Losse experimenten zonder plan leveren zelden blijvende waarde op. Een transformatiepartner brengt structuur aan in wat je al doet, en zorgt dat volgende stappen wél ergens naartoe leiden.</p>
+      <h3 data-i18n="kb.h3.2">Je hebt al geëxperimenteerd, maar zonder duidelijk resultaat</h3>
+      <p data-i18n="kb.p12">Veel bedrijven hebben al wel iets geprobeerd: een los ChatGPT-abonnement, een automatiseringstool die half gebruikt wordt, een chatbot die niemand goed onderhoudt. Losse experimenten zonder plan leveren zelden blijvende waarde op. Een transformatiepartner brengt structuur aan in wat je al doet, en zorgt dat volgende stappen wél ergens naartoe leiden.</p>
 
-      <h3>Je team is huiverig of onzeker over AI</h3>
-      <p>AI roept bij veel medewerkers vragen op: gaat mijn werk veranderen, wordt mijn functie overbodig, moet ik dit zelf uitzoeken? Een transformatiepartner die begint met educatie, neemt die onzekerheid weg voordat er iets geïmplementeerd wordt. Dat werkt beter dan een tool erdoorheen drukken zonder uitleg.</p>
+      <h3 data-i18n="kb.h3.3">Je team is huiverig of onzeker over AI</h3>
+      <p data-i18n="kb.p13">AI roept bij veel medewerkers vragen op: gaat mijn werk veranderen, wordt mijn functie overbodig, moet ik dit zelf uitzoeken? Een transformatiepartner die begint met educatie, neemt die onzekerheid weg voordat er iets geïmplementeerd wordt. Dat werkt beter dan een tool erdoorheen drukken zonder uitleg.</p>
 
-      <h3>Je wilt geen losse tools, maar een samenhangende aanpak</h3>
-      <p>Als je merkt dat je bedrijf steeds losse AI-tools aanschaft zonder dat ze elkaar versterken, is dat een teken dat er behoefte is aan overzicht. Een transformatiepartner kijkt naar het geheel: welke tools passen bij elkaar, wat heeft prioriteit, en wat kan wachten.</p>
+      <h3 data-i18n="kb.h3.4">Je wilt geen losse tools, maar een samenhangende aanpak</h3>
+      <p data-i18n="kb.p14">Als je merkt dat je bedrijf steeds losse AI-tools aanschaft zonder dat ze elkaar versterken, is dat een teken dat er behoefte is aan overzicht. Een transformatiepartner kijkt naar het geheel: welke tools passen bij elkaar, wat heeft prioriteit, en wat kan wachten.</p>
 
-      <h2>Waarin verschilt een transformatiepartner van een AI-consultant of bureau?</h2>
-      <p>Dit is een vraag die veel MKB-leiders zich terecht stellen, want de termen worden vaak door elkaar gebruikt.</p>
-      <p>Een <strong>AI-consultant</strong> adviseert. Die analyseert je situatie en levert een rapport of strategie op, maar bouwt zelf meestal niets. Na het advies sta je er vaak alleen voor om het uit te voeren.</p>
-      <p>Een <strong>softwarebureau of implementatiepartij</strong> bouwt. Die levert een werkende oplossing op, maar begint vaak zonder eerst goed te kijken of dit wel het juiste probleem is om op te lossen. Het risico: een technisch prima product dat niet aansluit op wat je bedrijf eigenlijk nodig had.</p>
-      <p>Een <strong>transformatiepartner</strong> doet beide, en voegt daar educatie aan toe. Niet omdat dat mooi klinkt, maar omdat een plan zonder begrip niet beklijft, en een implementatie zonder plan zelden het juiste probleem oplost. Bij Sila hangen educatie, consultancy en implementatie daarom bewust samen: eerst begrijpen, dan bepalen, dan bouwen.</p>
-      <p>Het verschil zit ook in het tempo en de toon. Sila werkt niet met opgejaagde verkoopverhalen of technische taal die niemand begrijpt. We werken op jouw tempo, leggen alles uit alsof het voor het eerst is, en beloven alleen wat we ook echt waarmaken.</p>
+      <h2 data-i18n="kb.h2.3">Waarin verschilt een transformatiepartner van een AI-consultant of bureau?</h2>
+      <p data-i18n="kb.p15">Dit is een vraag die veel MKB-leiders zich terecht stellen, want de termen worden vaak door elkaar gebruikt.</p>
+      <p data-i18n-html="kb.p16">Een <strong>AI-consultant</strong> adviseert. Die analyseert je situatie en levert een rapport of strategie op, maar bouwt zelf meestal niets. Na het advies sta je er vaak alleen voor om het uit te voeren.</p>
+      <p data-i18n-html="kb.p17">Een <strong>softwarebureau of implementatiepartij</strong> bouwt. Die levert een werkende oplossing op, maar begint vaak zonder eerst goed te kijken of dit wel het juiste probleem is om op te lossen. Het risico: een technisch prima product dat niet aansluit op wat je bedrijf eigenlijk nodig had.</p>
+      <p data-i18n-html="kb.p18">Een <strong>transformatiepartner</strong> doet beide, en voegt daar educatie aan toe. Niet omdat dat mooi klinkt, maar omdat een plan zonder begrip niet beklijft, en een implementatie zonder plan zelden het juiste probleem oplost. Bij Sila hangen educatie, consultancy en implementatie daarom bewust samen: eerst begrijpen, dan bepalen, dan bouwen.</p>
+      <p data-i18n="kb.p19">Het verschil zit ook in het tempo en de toon. Sila werkt niet met opgejaagde verkoopverhalen of technische taal die niemand begrijpt. We werken op jouw tempo, leggen alles uit alsof het voor het eerst is, en beloven alleen wat we ook echt waarmaken.</p>
 
-      <h2>Wat kost een AI-transformatiepartner?</h2>
-      <p>De kosten van een AI-transformatiepartner hangen sterk af van waar je instapt en hoeveel begeleiding je nodig hebt. Er is geen vast bedrag dat voor elk bedrijf geldt, maar wel een aantal richtlijnen.</p>
-      <p><strong>Educatie</strong> is meestal de laagste instap. <a href="../educatie.html">Online cursussen bij Sila</a> liggen tussen de tien en vijftien euro per stuk. Een live workshop voor een team kost meer, afhankelijk van groepsgrootte en duur, maar is nog altijd een overzichtelijke investering vergeleken met een heel traject.</p>
-      <p><strong>Consultancy</strong> vraagt een grotere investering, omdat het gaat om een intake, analyse en strategiesessie die samen een concreet plan opleveren. De prijs hangt af van de complexiteit van je organisatie en hoeveel afdelingen betrokken zijn.</p>
-      <p><strong>Implementatie</strong> varieert het meest, omdat de prijs afhangt van wat je precies laat bouwen. Een eenvoudige automatisering kost minder dan een op maat gemaakte chatbot die gekoppeld wordt aan je bestaande systemen.</p>
-      <p>De belangrijkste vraag is niet "wat kost het", maar "wat levert het op". Een goed uitgevoerd AI-traject bespaart tijd op repetitief werk, voorkomt verkeerde investeringen in tools die niet passen, en geeft je team vertrouwen om AI zelf verder te gebruiken. Bij Sila bespreken we de investering altijd vooraf, zodat je nooit voor verrassingen komt te staan.</p>
+      <h2 data-i18n="kb.h2.4">Wat kost een AI-transformatiepartner?</h2>
+      <p data-i18n="kb.p20">De kosten van een AI-transformatiepartner hangen sterk af van waar je instapt en hoeveel begeleiding je nodig hebt. Er is geen vast bedrag dat voor elk bedrijf geldt, maar wel een aantal richtlijnen.</p>
+      <p data-i18n-html="kb.p21"><strong>Educatie</strong> is meestal de laagste instap. <a href="../educatie.html">Online cursussen bij Sila</a> liggen tussen de tien en vijftien euro per stuk. Een live workshop voor een team kost meer, afhankelijk van groepsgrootte en duur, maar is nog altijd een overzichtelijke investering vergeleken met een heel traject.</p>
+      <p data-i18n-html="kb.p22"><strong>Consultancy</strong> vraagt een grotere investering, omdat het gaat om een intake, analyse en strategiesessie die samen een concreet plan opleveren. De prijs hangt af van de complexiteit van je organisatie en hoeveel afdelingen betrokken zijn.</p>
+      <p data-i18n-html="kb.p23"><strong>Implementatie</strong> varieert het meest, omdat de prijs afhangt van wat je precies laat bouwen. Een eenvoudige automatisering kost minder dan een op maat gemaakte chatbot die gekoppeld wordt aan je bestaande systemen.</p>
+      <p data-i18n="kb.p24">De belangrijkste vraag is niet "wat kost het", maar "wat levert het op". Een goed uitgevoerd AI-traject bespaart tijd op repetitief werk, voorkomt verkeerde investeringen in tools die niet passen, en geeft je team vertrouwen om AI zelf verder te gebruiken. Bij Sila bespreken we de investering altijd vooraf, zodat je nooit voor verrassingen komt te staan.</p>
 
-      <h2>Hoe ziet een traject met Sila eruit?</h2>
-      <p>De meeste klanten starten met een kennismakingsgesprek. Geen verkooppraatje, gewoon een gesprek over wie je bent, wat je bedrijf doet en waar je tegenaan loopt. Daarna bepalen we samen waar je het beste kunt instappen: bij educatie, consultancy of direct bij implementatie.</p>
-      <p>De meest gekozen combinatie is consultancy gevolgd door implementatie: eerst een helder plan, daarna de bouw ervan. Maar er is geen verplichte volgorde. Sommige klanten willen eerst hun team meekrijgen via een workshop, anderen hebben al een duidelijk idee en willen direct aan de slag met bouwen.</p>
+      <h2 data-i18n="kb.h2.5">Hoe ziet een traject met Sila eruit?</h2>
+      <p data-i18n="kb.p25">De meeste klanten starten met een kennismakingsgesprek. Geen verkooppraatje, gewoon een gesprek over wie je bent, wat je bedrijf doet en waar je tegenaan loopt. Daarna bepalen we samen waar je het beste kunt instappen: bij educatie, consultancy of direct bij implementatie.</p>
+      <p data-i18n="kb.p26">De meest gekozen combinatie is consultancy gevolgd door implementatie: eerst een helder plan, daarna de bouw ervan. Maar er is geen verplichte volgorde. Sommige klanten willen eerst hun team meekrijgen via een workshop, anderen hebben al een duidelijk idee en willen direct aan de slag met bouwen.</p>
 
       <div class="kb-cta">
-        <h2>Klaar voor de volgende stap?</h2>
-        <p>Als je merkt dat je bedrijf AI serieus wil oppakken, maar nog niet weet waar te beginnen, is een goed gesprek de beste eerste stap. Geen verplichtingen, geen standaardverhaal. Gewoon kijken wat past bij jouw situatie en jouw tempo.</p>
+        <h2 data-i18n="kb.cta.title">Klaar voor de volgende stap?</h2>
+        <p data-i18n="kb.cta.body">Als je merkt dat je bedrijf AI serieus wil oppakken, maar nog niet weet waar te beginnen, is een goed gesprek de beste eerste stap. Geen verplichtingen, geen standaardverhaal. Gewoon kijken wat past bij jouw situatie en jouw tempo.</p>
         <div class="kb-cta-buttons">
-          <a href="../contact.html" class="kb-btn kb-btn-primary">Neem contact op</a>
-          <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" class="kb-btn kb-btn-secondary">Plan een gesprek in</a>
+          <a href="../contact.html" class="kb-btn kb-btn-primary" data-i18n="kb.cta.btn1">Neem contact op</a>
+          <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" class="kb-btn kb-btn-secondary" data-i18n="kb.cta.btn2">Plan een gesprek in</a>
         </div>
       </div>
 
-      <h2>Veelgestelde vragen</h2>
+      <h2 data-i18n="kb.faq.title">Veelgestelde vragen</h2>
       <div class="faq-list">
         <details class="faq-item">
-          <summary>Is een AI-transformatiepartner alleen geschikt voor grote bedrijven?<svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
-          <div class="faq-answer"><p>Nee. Sila werkt juist met het Nederlandse MKB, van kleine teams tot organisaties met een paar honderd medewerkers. De aanpak schaalt mee met de grootte van je bedrijf.</p></div>
+          <summary><span data-i18n="kb.faq.q1">Is een AI-transformatiepartner alleen geschikt voor grote bedrijven?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="faq-answer"><p data-i18n="kb.faq.a1">Nee. Sila werkt juist met het Nederlandse MKB, van kleine teams tot organisaties met een paar honderd medewerkers. De aanpak schaalt mee met de grootte van je bedrijf.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Moet ik technische kennis hebben om met een AI-transformatiepartner te werken?<svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
-          <div class="faq-answer"><p>Nee, dat is juist het uitgangspunt. Sila legt alles uit zonder jargon, zo helder dat iedereen het begrijpt, ongeacht technische achtergrond.</p></div>
+          <summary><span data-i18n="kb.faq.q2">Moet ik technische kennis hebben om met een AI-transformatiepartner te werken?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="faq-answer"><p data-i18n="kb.faq.a2">Nee, dat is juist het uitgangspunt. Sila legt alles uit zonder jargon, zo helder dat iedereen het begrijpt, ongeacht technische achtergrond.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Hoe lang duurt een AI-traject gemiddeld?<svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
-          <div class="faq-answer"><p>Dat verschilt per bedrijf en per pijler. Een workshop duurt een dagdeel, een consultancytraject meestal enkele weken, en implementatie hangt af van de omvang van wat je laat bouwen.</p></div>
+          <summary><span data-i18n="kb.faq.q3">Hoe lang duurt een AI-traject gemiddeld?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="faq-answer"><p data-i18n="kb.faq.a3">Dat verschilt per bedrijf en per pijler. Een workshop duurt een dagdeel, een consultancytraject meestal enkele weken, en implementatie hangt af van de omvang van wat je laat bouwen.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Kan ik alleen consultancy of implementatie afnemen, zonder de andere pijlers?<svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
-          <div class="faq-answer"><p>Ja. Je kunt bij elke pijler apart instappen. Veel klanten combineren er wel meerdere, omdat dat het meeste resultaat oplevert, maar het is geen verplichting.</p></div>
+          <summary><span data-i18n="kb.faq.q4">Kan ik alleen consultancy of implementatie afnemen, zonder de andere pijlers?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="faq-answer"><p data-i18n="kb.faq.a4">Ja. Je kunt bij elke pijler apart instappen. Veel klanten combineren er wel meerdere, omdat dat het meeste resultaat oplevert, maar het is geen verplichting.</p></div>
         </details>
       </div>
     </article>
 
     <aside class="kb-related" aria-label="Verder lezen">
-      <h2>Verder lezen</h2>
+      <h2 data-i18n="kb.related.title">Verder lezen</h2>
       <div class="kb-related-grid">
         <a href="ai-automatisering-mkb.html" class="kb-card">
-          <div class="kb-card-label">Automatisering</div>
-          <div class="kb-card-title">AI-automatisering voor het MKB: wat kun je in 2026 echt automatiseren?</div>
-          <span class="kb-card-arrow">Lees artikel <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+          <div class="kb-card-label" data-i18n="kb.related1.label">Automatisering</div>
+          <div class="kb-card-title" data-i18n="kb.related1.title">AI-automatisering voor het MKB: wat kun je in 2026 echt automatiseren?</div>
+          <span class="kb-card-arrow"><span data-i18n="kb.card.read">Lees artikel</span> <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </a>
         <a href="ai-consultancy-of-cursus.html" class="kb-card">
-          <div class="kb-card-label">Consultancy &amp; educatie</div>
-          <div class="kb-card-title">AI-consultancy of een AI-cursus: wat past bij jouw bedrijf?</div>
-          <span class="kb-card-arrow">Lees artikel <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+          <div class="kb-card-label" data-i18n="kb.related2.label">Consultancy & educatie</div>
+          <div class="kb-card-title" data-i18n="kb.related2.title">AI-consultancy of een AI-cursus: wat past bij jouw bedrijf?</div>
+          <span class="kb-card-arrow"><span data-i18n="kb.card.read">Lees artikel</span> <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </a>
       </div>
     </aside>
@@ -212,12 +218,176 @@
 
   <!-- ── Floating Nav ─────────────────────────────────── -->
   <nav class="floating-nav" aria-label="Hoofdnavigatie">
-    <a href="../index.html#diensten"    class="nav-link mob-hide">Diensten</a>
-    <a href="../over-ons.html"          class="nav-link mob-hide">Over ons</a>
-    <a href="index.html"                class="nav-link mob-hide">Kennisbank</a>
-    <a href="../index.html#nieuwsbrief" class="nav-link mob-hide">Nieuwsbrief</a>
-    <a href="../contact.html"           class="nav-cta">Contact</a>
+    <a href="../index.html#diensten"    class="nav-link mob-hide" data-i18n="kb.nav.services">Diensten</a>
+    <a href="../over-ons.html"          class="nav-link mob-hide" data-i18n="kb.nav.about">Over ons</a>
+    <a href="index.html"                class="nav-link mob-hide" data-i18n="kb.nav.kennisbank">Kennisbank</a>
+    <a href="../index.html#nieuwsbrief" class="nav-link mob-hide" data-i18n="kb.nav.newsletter">Nieuwsbrief</a>
+    <a href="../contact.html"           class="nav-cta" data-i18n="kb.nav.contact">Contact</a>
   </nav>
+
+<script>
+const T_KB = {
+  nl: {
+    'kb.back': 'Kennisbank',
+    'kb.crumb.home': 'Home',
+    'kb.crumb.kb': 'Kennisbank',
+    'kb.crumb.current': 'AI-transformatiepartner',
+    'kb.h1': 'Wat is een <em>AI-transformatiepartner</em> en wanneer heb je er een nodig?',
+    'kb.meta.by': 'Door Jamal Allam',
+    'kb.meta.date': '7 juli 2026',
+    'kb.meta.readtime': '6 minuten leestijd',
+    'kb.lead': 'Een AI-transformatiepartner is een bedrijf dat je helpt AI stap voor stap in te voeren in je organisatie: van begrijpen wat AI voor jou kan betekenen, tot een concreet plan maken, tot het daadwerkelijk bouwen en laten werken van AI-oplossingen. Anders dan een losse consultant of een softwareleverancier begeleidt een transformatiepartner het hele traject, niet alleen één onderdeel ervan. Je hebt er een nodig zodra je voelt dat AI belangrijk is voor je bedrijf, maar je niet weet waar je moet beginnen.',
+    'kb.p1': 'Sila is zo\'n partner. We noemen onszelf niet voor niets Sila: Transformatiepartner in AI. In dit artikel leggen we uit wat dat precies betekent, wanneer het zinvol is om er een in te schakelen en hoe zo\'n traject eruitziet.',
+    'kb.h2.1': 'Wat doet een AI-transformatiepartner?',
+    'kb.p2': 'Een AI-transformatiepartner brengt drie dingen samen die normaal los van elkaar georganiseerd worden: kennis, strategie en uitvoering.',
+    'kb.p3': 'Bij de meeste bedrijven verloopt een AI-traject namelijk versnipperd. Een consultant maakt een adviesrapport. Een softwarebedrijf verkoopt een tool. Een freelancer bouwt iets losstaands. Niemand kijkt naar het geheel, en de eigenaar of directeur blijft achter met losse puzzelstukjes die niet vanzelf een plaatje vormen.',
+    'kb.p4': 'Een transformatiepartner doet het anders. Die begint bij de vraag wat AI eigenlijk voor jouw bedrijf kan betekenen, helpt je vervolgens een plan maken dat past bij jouw situatie, en bouwt daarna mee aan de oplossingen die dat plan concreet maken. Het is dezelfde partij die met je meedenkt én meebouwt.',
+    'kb.p5': 'Bij Sila is dat vertaald naar drie pijlers die op elkaar aansluiten:',
+    'kb.p6': '<strong><a href="../educatie.html">Educatie</a>.</strong> Eerst begrijpen wat AI is en wat het voor jouw team kan betekenen. Dat gebeurt via workshops en online cursussen, gericht op leiders en medewerkers zonder technische achtergrond.',
+    'kb.p7': '<strong><a href="../consultancy.html">Consultancy</a>.</strong> Daarna bepalen wat je met die kennis gaat doen. Samen een concreet, uitvoerbaar AI-plan maken: waar liggen de kansen, wat pak je eerst aan, wat past bij jouw bedrijf.',
+    'kb.p8': '<strong><a href="../implementatie.html">Implementatie</a>.</strong> En tot slot bouwen wat je hebt besloten te doen. Workflows, chatbots, automatisering, integraties: praktische oplossingen die echt werken in de dagelijkse praktijk.',
+    'kb.p9': 'Het mooie is dat je niet bij alle drie hoeft te beginnen. Sommige klanten starten met een workshop, andere stappen direct in bij consultancy of implementatie. Maar de partner die je kiest, kan idealiter alle drie bieden, zodat je niet halverwege een traject naar een andere partij hoeft over te stappen.',
+    'kb.h2.2': 'Wanneer heb je een AI-transformatiepartner nodig?',
+    'kb.p10': 'Niet elk bedrijf heeft direct een transformatiepartner nodig. Soms volstaat een goede tool, of een enthousiaste medewerker die zelf uitzoekt hoe ChatGPT te gebruiken is. Maar er zijn een aantal signalen die aangeven dat het tijd is voor structurele begeleiding.',
+    'kb.h3.1': 'Je weet dat AI belangrijk is, maar niet waar te beginnen',
+    'kb.p11': 'Dit is het meest voorkomende signaal. Je leest overal over AI, je voelt de druk om iets te doen, maar elk idee voelt als een sprong in het diepe. Een transformatiepartner haalt die druk weg door je te helpen met één concrete, overzichtelijke eerste stap.',
+    'kb.h3.2': 'Je hebt al geëxperimenteerd, maar zonder duidelijk resultaat',
+    'kb.p12': 'Veel bedrijven hebben al wel iets geprobeerd: een los ChatGPT-abonnement, een automatiseringstool die half gebruikt wordt, een chatbot die niemand goed onderhoudt. Losse experimenten zonder plan leveren zelden blijvende waarde op. Een transformatiepartner brengt structuur aan in wat je al doet, en zorgt dat volgende stappen wél ergens naartoe leiden.',
+    'kb.h3.3': 'Je team is huiverig of onzeker over AI',
+    'kb.p13': 'AI roept bij veel medewerkers vragen op: gaat mijn werk veranderen, wordt mijn functie overbodig, moet ik dit zelf uitzoeken? Een transformatiepartner die begint met educatie, neemt die onzekerheid weg voordat er iets geïmplementeerd wordt. Dat werkt beter dan een tool erdoorheen drukken zonder uitleg.',
+    'kb.h3.4': 'Je wilt geen losse tools, maar een samenhangende aanpak',
+    'kb.p14': 'Als je merkt dat je bedrijf steeds losse AI-tools aanschaft zonder dat ze elkaar versterken, is dat een teken dat er behoefte is aan overzicht. Een transformatiepartner kijkt naar het geheel: welke tools passen bij elkaar, wat heeft prioriteit, en wat kan wachten.',
+    'kb.h2.3': 'Waarin verschilt een transformatiepartner van een AI-consultant of bureau?',
+    'kb.p15': 'Dit is een vraag die veel MKB-leiders zich terecht stellen, want de termen worden vaak door elkaar gebruikt.',
+    'kb.p16': 'Een <strong>AI-consultant</strong> adviseert. Die analyseert je situatie en levert een rapport of strategie op, maar bouwt zelf meestal niets. Na het advies sta je er vaak alleen voor om het uit te voeren.',
+    'kb.p17': 'Een <strong>softwarebureau of implementatiepartij</strong> bouwt. Die levert een werkende oplossing op, maar begint vaak zonder eerst goed te kijken of dit wel het juiste probleem is om op te lossen. Het risico: een technisch prima product dat niet aansluit op wat je bedrijf eigenlijk nodig had.',
+    'kb.p18': 'Een <strong>transformatiepartner</strong> doet beide, en voegt daar educatie aan toe. Niet omdat dat mooi klinkt, maar omdat een plan zonder begrip niet beklijft, en een implementatie zonder plan zelden het juiste probleem oplost. Bij Sila hangen educatie, consultancy en implementatie daarom bewust samen: eerst begrijpen, dan bepalen, dan bouwen.',
+    'kb.p19': 'Het verschil zit ook in het tempo en de toon. Sila werkt niet met opgejaagde verkoopverhalen of technische taal die niemand begrijpt. We werken op jouw tempo, leggen alles uit alsof het voor het eerst is, en beloven alleen wat we ook echt waarmaken.',
+    'kb.h2.4': 'Wat kost een AI-transformatiepartner?',
+    'kb.p20': 'De kosten van een AI-transformatiepartner hangen sterk af van waar je instapt en hoeveel begeleiding je nodig hebt. Er is geen vast bedrag dat voor elk bedrijf geldt, maar wel een aantal richtlijnen.',
+    'kb.p21': '<strong>Educatie</strong> is meestal de laagste instap. <a href="../educatie.html">Online cursussen bij Sila</a> liggen tussen de tien en vijftien euro per stuk. Een live workshop voor een team kost meer, afhankelijk van groepsgrootte en duur, maar is nog altijd een overzichtelijke investering vergeleken met een heel traject.',
+    'kb.p22': '<strong>Consultancy</strong> vraagt een grotere investering, omdat het gaat om een intake, analyse en strategiesessie die samen een concreet plan opleveren. De prijs hangt af van de complexiteit van je organisatie en hoeveel afdelingen betrokken zijn.',
+    'kb.p23': '<strong>Implementatie</strong> varieert het meest, omdat de prijs afhangt van wat je precies laat bouwen. Een eenvoudige automatisering kost minder dan een op maat gemaakte chatbot die gekoppeld wordt aan je bestaande systemen.',
+    'kb.p24': 'De belangrijkste vraag is niet "wat kost het", maar "wat levert het op". Een goed uitgevoerd AI-traject bespaart tijd op repetitief werk, voorkomt verkeerde investeringen in tools die niet passen, en geeft je team vertrouwen om AI zelf verder te gebruiken. Bij Sila bespreken we de investering altijd vooraf, zodat je nooit voor verrassingen komt te staan.',
+    'kb.h2.5': 'Hoe ziet een traject met Sila eruit?',
+    'kb.p25': 'De meeste klanten starten met een kennismakingsgesprek. Geen verkooppraatje, gewoon een gesprek over wie je bent, wat je bedrijf doet en waar je tegenaan loopt. Daarna bepalen we samen waar je het beste kunt instappen: bij educatie, consultancy of direct bij implementatie.',
+    'kb.p26': 'De meest gekozen combinatie is consultancy gevolgd door implementatie: eerst een helder plan, daarna de bouw ervan. Maar er is geen verplichte volgorde. Sommige klanten willen eerst hun team meekrijgen via een workshop, anderen hebben al een duidelijk idee en willen direct aan de slag met bouwen.',
+    'kb.cta.title': 'Klaar voor de volgende stap?',
+    'kb.cta.body': 'Als je merkt dat je bedrijf AI serieus wil oppakken, maar nog niet weet waar te beginnen, is een goed gesprek de beste eerste stap. Geen verplichtingen, geen standaardverhaal. Gewoon kijken wat past bij jouw situatie en jouw tempo.',
+    'kb.cta.btn1': 'Neem contact op',
+    'kb.cta.btn2': 'Plan een gesprek in',
+    'kb.faq.title': 'Veelgestelde vragen',
+    'kb.faq.q1': 'Is een AI-transformatiepartner alleen geschikt voor grote bedrijven?',
+    'kb.faq.a1': 'Nee. Sila werkt juist met het Nederlandse MKB, van kleine teams tot organisaties met een paar honderd medewerkers. De aanpak schaalt mee met de grootte van je bedrijf.',
+    'kb.faq.q2': 'Moet ik technische kennis hebben om met een AI-transformatiepartner te werken?',
+    'kb.faq.a2': 'Nee, dat is juist het uitgangspunt. Sila legt alles uit zonder jargon, zo helder dat iedereen het begrijpt, ongeacht technische achtergrond.',
+    'kb.faq.q3': 'Hoe lang duurt een AI-traject gemiddeld?',
+    'kb.faq.a3': 'Dat verschilt per bedrijf en per pijler. Een workshop duurt een dagdeel, een consultancytraject meestal enkele weken, en implementatie hangt af van de omvang van wat je laat bouwen.',
+    'kb.faq.q4': 'Kan ik alleen consultancy of implementatie afnemen, zonder de andere pijlers?',
+    'kb.faq.a4': 'Ja. Je kunt bij elke pijler apart instappen. Veel klanten combineren er wel meerdere, omdat dat het meeste resultaat oplevert, maar het is geen verplichting.',
+    'kb.related.title': 'Verder lezen',
+    'kb.related1.label': 'Automatisering',
+    'kb.related1.title': 'AI-automatisering voor het MKB: wat kun je in 2026 echt automatiseren?',
+    'kb.related2.label': 'Consultancy & educatie',
+    'kb.related2.title': 'AI-consultancy of een AI-cursus: wat past bij jouw bedrijf?',
+    'kb.card.read': 'Lees artikel',
+    'kb.nav.services': 'Diensten',
+    'kb.nav.about': 'Over ons',
+    'kb.nav.kennisbank': 'Kennisbank',
+    'kb.nav.newsletter': 'Nieuwsbrief',
+    'kb.nav.contact': 'Contact',
+  },
+  en: {
+    'kb.back': 'Knowledge base',
+    'kb.crumb.home': 'Home',
+    'kb.crumb.kb': 'Knowledge base',
+    'kb.crumb.current': 'AI transformation partner',
+    'kb.h1': 'What is an <em>AI transformation partner</em>, and when do you need one?',
+    'kb.meta.by': 'By Jamal Allam',
+    'kb.meta.date': 'July 7, 2026',
+    'kb.meta.readtime': '6 min read',
+    'kb.lead': 'An AI transformation partner is a company that helps you introduce AI into your organisation step by step: from understanding what AI can mean for you, to building a concrete plan, to actually building and running AI solutions. Unlike a standalone consultant or a software vendor, a transformation partner guides the whole journey, not just one part of it. You need one as soon as you feel AI matters for your business, but you do not know where to start.',
+    'kb.p1': 'Sila is exactly that kind of partner. It is why we call ourselves Sila: Transformation Partner in AI. In this article we explain what that means in practice, when it makes sense to bring one in, and what such a journey looks like.',
+    'kb.h2.1': 'What does an AI transformation partner do?',
+    'kb.p2': 'An AI transformation partner brings together three things that are usually organised separately: knowledge, strategy and execution.',
+    'kb.p3': 'At most companies, an AI journey ends up fragmented. A consultant writes an advisory report. A software company sells a tool. A freelancer builds something standalone. No one looks at the whole picture, and the owner or director is left with loose puzzle pieces that never quite form an image on their own.',
+    'kb.p4': 'A transformation partner works differently. It starts with the question of what AI can actually mean for your business, then helps you build a plan that fits your situation, and afterwards helps build the solutions that make that plan real. It is the same party thinking alongside you and building alongside you.',
+    'kb.p5': 'At Sila, that is translated into three pillars that connect to each other:',
+    'kb.p6': '<strong><a href="../educatie.html">Education</a>.</strong> First, understand what AI is and what it can mean for your team. This happens through workshops and online courses, aimed at leaders and staff without a technical background.',
+    'kb.p7': '<strong><a href="../consultancy.html">Consultancy</a>.</strong> Next, decide what to do with that knowledge. Together we build a concrete, actionable AI plan: where the opportunities are, what to tackle first, what fits your business.',
+    'kb.p8': '<strong><a href="../implementatie.html">Implementation</a>.</strong> And finally, build what you decided to do. Workflows, chatbots, automation, integrations: practical solutions that actually work in day-to-day practice.',
+    'kb.p9': 'The good part is you do not have to start with all three. Some clients start with a workshop, others step directly into consultancy or implementation. But ideally, the partner you choose can offer all three, so you never have to switch to another party halfway through a journey.',
+    'kb.h2.2': 'When do you need an AI transformation partner?',
+    'kb.p10': 'Not every company needs a transformation partner right away. Sometimes a good tool is enough, or an enthusiastic employee who figures out how to use ChatGPT on their own. But there are a number of signals that indicate it is time for structural guidance.',
+    'kb.h3.1': 'You know AI matters, but you do not know where to start',
+    'kb.p11': 'This is the most common signal. You read about AI everywhere, you feel the pressure to do something, but every idea feels like a leap into the unknown. A transformation partner removes that pressure by helping you take one concrete, manageable first step.',
+    'kb.h3.2': 'You have already experimented, but without a clear result',
+    'kb.p12': 'Many companies have already tried something: a standalone ChatGPT subscription, an automation tool that is only half used, a chatbot nobody properly maintains. Isolated experiments without a plan rarely create lasting value. A transformation partner brings structure to what you are already doing, and makes sure the next steps actually lead somewhere.',
+    'kb.h3.3': 'Your team is hesitant or uncertain about AI',
+    'kb.p13': 'AI raises questions for many employees: will my job change, will my role become redundant, do I have to figure this out myself? A transformation partner that starts with education removes that uncertainty before anything gets implemented. That works better than pushing a tool through without explanation.',
+    'kb.h3.4': 'You do not want isolated tools, but a coherent approach',
+    'kb.p14': 'If you notice your company keeps buying separate AI tools that do not reinforce each other, that is a sign you need an overview. A transformation partner looks at the whole picture: which tools fit together, what takes priority, and what can wait.',
+    'kb.h2.3': 'How does a transformation partner differ from an AI consultant or agency?',
+    'kb.p15': 'This is a question many SME leaders rightly ask, because the terms are often used interchangeably.',
+    'kb.p16': 'An <strong>AI consultant</strong> advises. They analyse your situation and deliver a report or strategy, but usually build nothing themselves. After the advice, you are often left to execute it on your own.',
+    'kb.p17': 'A <strong>software agency or implementation party</strong> builds. They deliver a working solution, but often start without first properly checking whether this is even the right problem to solve. The risk: a technically fine product that does not match what your business actually needed.',
+    'kb.p18': 'A <strong>transformation partner</strong> does both, and adds education on top. Not because it sounds nice, but because a plan without understanding rarely sticks, and an implementation without a plan rarely solves the right problem. At Sila, education, consultancy and implementation are therefore deliberately connected: first understand, then decide, then build.',
+    'kb.p19': 'The difference also shows in pace and tone. Sila does not work with pushy sales pitches or technical language nobody understands. We work at your pace, explain everything as if it is the first time, and only promise what we actually deliver.',
+    'kb.h2.4': 'What does an AI transformation partner cost?',
+    'kb.p20': 'The cost of an AI transformation partner depends heavily on where you step in and how much guidance you need. There is no fixed amount that applies to every company, but there are a few guidelines.',
+    'kb.p21': '<strong>Education</strong> is usually the lowest-cost entry point. <a href="../educatie.html">Online courses at Sila</a> range between ten and fifteen euros each. A live workshop for a team costs more, depending on group size and duration, but is still a manageable investment compared to a full journey.',
+    'kb.p22': '<strong>Consultancy</strong> requires a bigger investment, since it involves an intake, analysis and strategy session that together produce a concrete plan. The price depends on the complexity of your organisation and how many departments are involved.',
+    'kb.p23': '<strong>Implementation</strong> varies the most, because the price depends on exactly what you have built. A simple automation costs less than a custom chatbot connected to your existing systems.',
+    'kb.p24': 'The most important question is not "what does it cost", but "what does it deliver". A well-executed AI journey saves time on repetitive work, prevents wrong investments in tools that do not fit, and gives your team the confidence to keep using AI on their own. At Sila we always discuss the investment upfront, so you never face surprises.',
+    'kb.h2.5': 'What does a journey with Sila look like?',
+    'kb.p25': 'Most clients start with an introductory conversation. No sales pitch, just a conversation about who you are, what your business does and what you are running into. After that, we decide together where you best step in: education, consultancy, or straight into implementation.',
+    'kb.p26': 'The most chosen combination is consultancy followed by implementation: first a clear plan, then building it. But there is no mandatory order. Some clients first want to bring their team along through a workshop, others already have a clear idea and want to start building right away.',
+    'kb.cta.title': 'Ready for the next step?',
+    'kb.cta.body': 'If you notice your business wants to take AI seriously, but you do not yet know where to start, a good conversation is the best first step. No obligations, no standard pitch. Just looking at what fits your situation and your pace.',
+    'kb.cta.btn1': 'Get in touch',
+    'kb.cta.btn2': 'Schedule a call',
+    'kb.faq.title': 'Frequently asked questions',
+    'kb.faq.q1': 'Is an AI transformation partner only suitable for large companies?',
+    'kb.faq.a1': 'No. Sila works specifically with Dutch SMEs, from small teams to organisations with a few hundred employees. The approach scales with the size of your business.',
+    'kb.faq.q2': 'Do I need technical knowledge to work with an AI transformation partner?',
+    'kb.faq.a2': 'No, that is precisely the starting point. Sila explains everything without jargon, clearly enough for anyone to understand, regardless of technical background.',
+    'kb.faq.q3': 'How long does an AI journey typically take?',
+    'kb.faq.a3': 'That differs per company and per pillar. A workshop takes half a day, a consultancy journey usually a few weeks, and implementation depends on the scope of what you have built.',
+    'kb.faq.q4': 'Can I take only consultancy or implementation, without the other pillars?',
+    'kb.faq.a4': 'Yes. You can step into each pillar separately. Many clients do combine several, because that delivers the most results, but it is never a requirement.',
+    'kb.related.title': 'Keep reading',
+    'kb.related1.label': 'Automation',
+    'kb.related1.title': 'AI automation for SMEs: what can you actually automate in 2026?',
+    'kb.related2.label': 'Consultancy & education',
+    'kb.related2.title': 'AI consultancy or an AI course: what fits your business?',
+    'kb.card.read': 'Read article',
+    'kb.nav.services': 'Services',
+    'kb.nav.about': 'About',
+    'kb.nav.kennisbank': 'Knowledge base',
+    'kb.nav.newsletter': 'Newsletter',
+    'kb.nav.contact': 'Contact',
+  },
+};
+
+function applyLang(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (T_KB[lang][key] !== undefined && el.children.length === 0) el.textContent = T_KB[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (T_KB[lang][key] !== undefined) el.innerHTML = T_KB[lang][key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+}
+
+function setLang(lang, btn) {
+  applyLang(lang);
+}
+</script>
 
 </body>
 </html>

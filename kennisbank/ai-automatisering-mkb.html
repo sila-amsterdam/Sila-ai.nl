@@ -95,118 +95,124 @@
   <header class="kb-topbar">
     <a href="index.html" class="kb-back">
       <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg>
-      Kennisbank
+      <span data-i18n="kb.back">Kennisbank</span>
     </a>
-    <a href="../index.html" class="kb-wordmark" aria-label="Sila home">Sila</a>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <a href="../index.html" class="kb-wordmark" aria-label="Sila home">Sila</a>
+      <div class="lang-toggle" role="group" aria-label="Taalwissel">
+        <button class="lang-btn active" data-lang="nl" onclick="setLang('nl', this)">NL</button>
+        <button class="lang-btn"        data-lang="en" onclick="setLang('en', this)">EN</button>
+      </div>
+    </div>
   </header>
 
   <main>
     <article class="kb-article">
       <nav class="kb-breadcrumb" aria-label="Kruimelpad">
-        <a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Kennisbank</a><span aria-hidden="true">/</span>AI-automatisering MKB
+        <a href="../index.html" data-i18n="kb.crumb.home">Home</a><span aria-hidden="true">/</span><a href="index.html" data-i18n="kb.crumb.kb">Kennisbank</a><span aria-hidden="true">/</span><span data-i18n="kb.crumb.current">AI-automatisering MKB</span>
       </nav>
 
-      <h1 class="kb-title">AI-automatisering voor het MKB: wat kun je in 2026 <em>echt</em> automatiseren?</h1>
+      <h1 class="kb-title" data-i18n-html="kb.h1">AI-automatisering voor het MKB: wat kun je in 2026 <em>echt</em> automatiseren?</h1>
 
       <div class="kb-meta">
-        <span>Door Jamal Allam</span>
+        <span data-i18n="kb.meta.by">Door Jamal Allam</span>
         <span class="kb-meta-dot" aria-hidden="true"></span>
-        <time datetime="2026-07-07">7 juli 2026</time>
+        <time datetime="2026-07-07" data-i18n="kb.meta.date">7 juli 2026</time>
         <span class="kb-meta-dot" aria-hidden="true"></span>
-        <span>6 minuten leestijd</span>
+        <span data-i18n="kb.meta.readtime">6 minuten leestijd</span>
       </div>
 
-      <p class="kb-lead">AI-automatisering betekent dat je software met kunstmatige intelligentie repetitieve taken laat overnemen: klantvragen beantwoorden, mails sorteren, facturen verwerken, offertes opstellen en planningen maken. Voor het Nederlandse MKB is dit in 2026 geen toekomstmuziek meer, maar een haalbare stap die binnen enkele weken al resultaat oplevert. Het werkt het beste wanneer je start bij één concreet, terugkerend proces in plaats van in één keer alles te willen veranderen.</p>
+      <p class="kb-lead" data-i18n="kb.lead">AI-automatisering betekent dat je software met kunstmatige intelligentie repetitieve taken laat overnemen: klantvragen beantwoorden, mails sorteren, facturen verwerken, offertes opstellen en planningen maken. Voor het Nederlandse MKB is dit in 2026 geen toekomstmuziek meer, maar een haalbare stap die binnen enkele weken al resultaat oplevert. Het werkt het beste wanneer je start bij één concreet, terugkerend proces in plaats van in één keer alles te willen veranderen.</p>
 
-      <h2>Wat is AI-automatisering precies?</h2>
-      <p>Automatisering bestaat al lang. Een simpele regel als "stuur een bevestigingsmail zodra iemand bestelt" is al automatisering, maar dan zonder AI. Het verschil met AI-automatisering zit in wat de software begrijpt.</p>
-      <p>Ouderwetse automatisering volgt vaste regels: als dit gebeurt, doe dan dat. AI-automatisering kan daarnaast taal, patronen en context herkennen. Een chatbot leest niet alleen het woord "factuur" in een mail, hij begrijpt ook wat de klant precies vraagt en formuleert daar een passend antwoord op. Dat maakt AI geschikt voor taken die vroeger altijd mensenwerk waren, omdat ze net iets te veel nuance vroegen voor een vaste regel.</p>
-      <p>Voor jouw bedrijf betekent dit concreet: processen die je nu handmatig doet, of die je met een simpele tool al deels automatiseert, kunnen met AI een stap verder. Sneller, met minder fouten, en zonder dat iemand er elke dag naar hoeft om te kijken.</p>
+      <h2 data-i18n="kb.h2.1">Wat is AI-automatisering precies?</h2>
+      <p data-i18n="kb.p1">Automatisering bestaat al lang. Een simpele regel als "stuur een bevestigingsmail zodra iemand bestelt" is al automatisering, maar dan zonder AI. Het verschil met AI-automatisering zit in wat de software begrijpt.</p>
+      <p data-i18n="kb.p2">Ouderwetse automatisering volgt vaste regels: als dit gebeurt, doe dan dat. AI-automatisering kan daarnaast taal, patronen en context herkennen. Een chatbot leest niet alleen het woord "factuur" in een mail, hij begrijpt ook wat de klant precies vraagt en formuleert daar een passend antwoord op. Dat maakt AI geschikt voor taken die vroeger altijd mensenwerk waren, omdat ze net iets te veel nuance vroegen voor een vaste regel.</p>
+      <p data-i18n="kb.p3">Voor jouw bedrijf betekent dit concreet: processen die je nu handmatig doet, of die je met een simpele tool al deels automatiseert, kunnen met AI een stap verder. Sneller, met minder fouten, en zonder dat iemand er elke dag naar hoeft om te kijken.</p>
 
-      <h2>Welke taken kun je automatiseren met AI?</h2>
-      <p>Niet elk proces leent zich even goed voor automatisering. De taken die de meeste tijd besparen, zijn meestal repetitief, volgen een herkenbaar patroon en komen vaak voor. Dit zijn de voorbeelden die we bij Sila het meest tegenkomen in het MKB.</p>
+      <h2 data-i18n="kb.h2.2">Welke taken kun je automatiseren met AI?</h2>
+      <p data-i18n="kb.p4">Niet elk proces leent zich even goed voor automatisering. De taken die de meeste tijd besparen, zijn meestal repetitief, volgen een herkenbaar patroon en komen vaak voor. Dit zijn de voorbeelden die we bij Sila het meest tegenkomen in het MKB.</p>
 
-      <h3>Klantenservice en chatbots</h3>
-      <p>Een <a href="../implementatie.html">chatbot op je website</a> beantwoordt veelgestelde vragen dag en nacht: openingstijden, levertijden, prijzen, retourbeleid. Voor een webshop of dienstverlener scheelt dit tientallen mails en telefoontjes per week. De chatbot kan doorverwijzen naar een medewerker zodra een vraag te specifiek of gevoelig wordt.</p>
+      <h3 data-i18n="kb.h3.1">Klantenservice en chatbots</h3>
+      <p data-i18n-html="kb.p5">Een <a href="../implementatie.html">chatbot op je website</a> beantwoordt veelgestelde vragen dag en nacht: openingstijden, levertijden, prijzen, retourbeleid. Voor een webshop of dienstverlener scheelt dit tientallen mails en telefoontjes per week. De chatbot kan doorverwijzen naar een medewerker zodra een vraag te specifiek of gevoelig wordt.</p>
 
-      <h3>E-mailafhandeling</h3>
-      <p>Veel bedrijven krijgen dagelijks mails die in een paar herkenbare categorieën vallen: offerteaanvragen, klachten, facturen, sollicitaties. AI kan die mails lezen, categoriseren en soms al een conceptantwoord schrijven, zodat een medewerker alleen nog hoeft te controleren en te versturen.</p>
+      <h3 data-i18n="kb.h3.2">E-mailafhandeling</h3>
+      <p data-i18n="kb.p6">Veel bedrijven krijgen dagelijks mails die in een paar herkenbare categorieën vallen: offerteaanvragen, klachten, facturen, sollicitaties. AI kan die mails lezen, categoriseren en soms al een conceptantwoord schrijven, zodat een medewerker alleen nog hoeft te controleren en te versturen.</p>
 
-      <h3>Facturen en administratie</h3>
-      <p>Facturen die binnenkomen via de mail, kunnen automatisch worden herkend, uitgelezen en ingeboekt in je boekhoudsysteem. Geen handmatig overtypen meer van bedragen en btw. Voor een aannemersbedrijf of een groothandel met veel inkoopfacturen scheelt dit al snel enkele uren per week.</p>
+      <h3 data-i18n="kb.h3.3">Facturen en administratie</h3>
+      <p data-i18n="kb.p7">Facturen die binnenkomen via de mail, kunnen automatisch worden herkend, uitgelezen en ingeboekt in je boekhoudsysteem. Geen handmatig overtypen meer van bedragen en btw. Voor een aannemersbedrijf of een groothandel met veel inkoopfacturen scheelt dit al snel enkele uren per week.</p>
 
-      <h3>Offertes opstellen</h3>
-      <p>Voor bedrijven die veel vergelijkbare offertes maken, kan AI een groot deel van het werk voorbereiden op basis van eerdere offertes en de wensen van de klant. De medewerker controleert en past aan, in plaats van alles vanaf nul te typen.</p>
+      <h3 data-i18n="kb.h3.4">Offertes opstellen</h3>
+      <p data-i18n="kb.p8">Voor bedrijven die veel vergelijkbare offertes maken, kan AI een groot deel van het werk voorbereiden op basis van eerdere offertes en de wensen van de klant. De medewerker controleert en past aan, in plaats van alles vanaf nul te typen.</p>
 
-      <h3>Planning en roosters</h3>
-      <p>Voor de zorg, horeca of retail kan AI helpen bij het maken van roosters die rekening houden met beschikbaarheid, wetgeving en drukte, en bij het automatisch verplaatsen van afspraken bij wijzigingen.</p>
+      <h3 data-i18n="kb.h3.5">Planning en roosters</h3>
+      <p data-i18n="kb.p9">Voor de zorg, horeca of retail kan AI helpen bij het maken van roosters die rekening houden met beschikbaarheid, wetgeving en drukte, en bij het automatisch verplaatsen van afspraken bij wijzigingen.</p>
 
-      <h3>Interne kennisbanken</h3>
-      <p>Veel bedrijven hebben kennis die alleen in de hoofden van een paar mensen zit. Een interne AI-assistent die getraind is op handleidingen, procedures en eerdere klantvragen, geeft nieuwe medewerkers direct een antwoord in plaats van dat ze een collega moeten storen.</p>
+      <h3 data-i18n="kb.h3.6">Interne kennisbanken</h3>
+      <p data-i18n="kb.p10">Veel bedrijven hebben kennis die alleen in de hoofden van een paar mensen zit. Een interne AI-assistent die getraind is op handleidingen, procedures en eerdere klantvragen, geeft nieuwe medewerkers direct een antwoord in plaats van dat ze een collega moeten storen.</p>
 
-      <h2>Wat kan AI niet goed?</h2>
-      <p>Bij Sila zijn we hier bewust eerlijk over, want dat hoort bij vertrouwen opbouwen. AI is geen vervanging voor mensen, het is een hulpmiddel met duidelijke grenzen.</p>
-      <p>AI is minder goed in situaties die om echt menselijk oordeel vragen: een boze klant die zich onbegrepen voelt, een gevoelige personeelskwestie, of een besluit met grote financiële gevolgen. AI kan hier ondersteunen met informatie, maar de uiteindelijke beslissing en het menselijke contact horen bij een mens te blijven.</p>
-      <p>AI is ook niet feilloos. Een taalmodel kan soms iets verzinnen dat overtuigend klinkt maar niet klopt, dit wordt ook wel een "hallucinatie" genoemd. Daarom bouwen we automatisering altijd met een controlestap, zeker bij taken met financiële of juridische impact.</p>
-      <p>Tot slot is AI zo goed als de gegevens waarmee hij werkt. Rommelige data, verouderde klantinformatie of tegenstrijdige procedures leveren rommelige resultaten op. Voordat je automatiseert, is het dus verstandig om te kijken of je basis op orde is.</p>
+      <h2 data-i18n="kb.h2.3">Wat kan AI niet goed?</h2>
+      <p data-i18n="kb.p11">Bij Sila zijn we hier bewust eerlijk over, want dat hoort bij vertrouwen opbouwen. AI is geen vervanging voor mensen, het is een hulpmiddel met duidelijke grenzen.</p>
+      <p data-i18n="kb.p12">AI is minder goed in situaties die om echt menselijk oordeel vragen: een boze klant die zich onbegrepen voelt, een gevoelige personeelskwestie, of een besluit met grote financiële gevolgen. AI kan hier ondersteunen met informatie, maar de uiteindelijke beslissing en het menselijke contact horen bij een mens te blijven.</p>
+      <p data-i18n="kb.p13">AI is ook niet feilloos. Een taalmodel kan soms iets verzinnen dat overtuigend klinkt maar niet klopt, dit wordt ook wel een "hallucinatie" genoemd. Daarom bouwen we automatisering altijd met een controlestap, zeker bij taken met financiële of juridische impact.</p>
+      <p data-i18n="kb.p14">Tot slot is AI zo goed als de gegevens waarmee hij werkt. Rommelige data, verouderde klantinformatie of tegenstrijdige procedures leveren rommelige resultaten op. Voordat je automatiseert, is het dus verstandig om te kijken of je basis op orde is.</p>
 
-      <h2>Wat kost AI-automatisering voor een MKB-bedrijf?</h2>
-      <p>Dit is de vraag die de meeste ondernemers stellen, en het eerlijke antwoord is: dat hangt af van wat je automatiseert. Een chatbot die drie veelgestelde vragen beantwoordt, kost minder tijd en geld dan een systeem dat facturen uit vijf verschillende bronnen verwerkt en koppelt aan je boekhouding.</p>
-      <p>De belangrijkste factoren zijn de complexiteit van het proces, het aantal systemen dat gekoppeld moet worden, en hoeveel maatwerk er nodig is. Een kleine, afgebakende automatisering is vaak al binnen enkele weken op te leveren. Een groter traject met meerdere processen en integraties vraagt meer tijd, maar levert ook meer op.</p>
-      <p>Bij Sila bepalen we de investering altijd pas na een intakegesprek, waarin we samen kijken wat je precies wilt bereiken en wat daarvoor nodig is. Zo krijg je geen pakket van de plank, maar een prijs die past bij wat je daadwerkelijk gaat gebruiken.</p>
+      <h2 data-i18n="kb.h2.4">Wat kost AI-automatisering voor een MKB-bedrijf?</h2>
+      <p data-i18n="kb.p15">Dit is de vraag die de meeste ondernemers stellen, en het eerlijke antwoord is: dat hangt af van wat je automatiseert. Een chatbot die drie veelgestelde vragen beantwoordt, kost minder tijd en geld dan een systeem dat facturen uit vijf verschillende bronnen verwerkt en koppelt aan je boekhouding.</p>
+      <p data-i18n="kb.p16">De belangrijkste factoren zijn de complexiteit van het proces, het aantal systemen dat gekoppeld moet worden, en hoeveel maatwerk er nodig is. Een kleine, afgebakende automatisering is vaak al binnen enkele weken op te leveren. Een groter traject met meerdere processen en integraties vraagt meer tijd, maar levert ook meer op.</p>
+      <p data-i18n="kb.p17">Bij Sila bepalen we de investering altijd pas na een intakegesprek, waarin we samen kijken wat je precies wilt bereiken en wat daarvoor nodig is. Zo krijg je geen pakket van de plank, maar een prijs die past bij wat je daadwerkelijk gaat gebruiken.</p>
 
-      <h2>Waar begin je?</h2>
-      <p>De meeste bedrijven die vastlopen met AI, lopen niet vast door de techniek, maar door het ontbreken van een duidelijk startpunt. Drie stappen die werken:</p>
-      <p>Eerst breng je in kaart welke taken in jouw bedrijf het meeste tijd kosten en zich herhalen. Denk aan een uur per dag dat iemand kwijt is aan het beantwoorden van dezelfde soort mails, of een halve dag per week aan het overtypen van facturen.</p>
-      <p>Daarna kies je één proces om mee te beginnen. Niet het grootste of meest ingewikkelde, maar het proces waar je het snelst resultaat ziet. Dat geeft vertrouwen en leert je team hoe werken met AI voelt.</p>
-      <p>Tot slot bouw je vandaaruit verder. Als de eerste automatisering werkt en waarde levert, kies je het volgende proces. Zo groeit je bedrijf stap voor stap mee, op een tempo dat past bij hoe je organisatie werkt.</p>
+      <h2 data-i18n="kb.h2.5">Waar begin je?</h2>
+      <p data-i18n="kb.p18">De meeste bedrijven die vastlopen met AI, lopen niet vast door de techniek, maar door het ontbreken van een duidelijk startpunt. Drie stappen die werken:</p>
+      <p data-i18n="kb.p19">Eerst breng je in kaart welke taken in jouw bedrijf het meeste tijd kosten en zich herhalen. Denk aan een uur per dag dat iemand kwijt is aan het beantwoorden van dezelfde soort mails, of een halve dag per week aan het overtypen van facturen.</p>
+      <p data-i18n="kb.p20">Daarna kies je één proces om mee te beginnen. Niet het grootste of meest ingewikkelde, maar het proces waar je het snelst resultaat ziet. Dat geeft vertrouwen en leert je team hoe werken met AI voelt.</p>
+      <p data-i18n="kb.p21">Tot slot bouw je vandaaruit verder. Als de eerste automatisering werkt en waarde levert, kies je het volgende proces. Zo groeit je bedrijf stap voor stap mee, op een tempo dat past bij hoe je organisatie werkt.</p>
 
-      <h2>Hoe helpt Sila hierbij?</h2>
-      <p>Sila: Transformatiepartner in AI. Wij helpen je AI begrijpen en gebruiken, op jouw manier en op jouw tempo. Weet je nog niet precies waar je moet beginnen? Dan denken we in een <a href="../consultancy.html">consultancytraject</a> met je mee: waar liggen de kansen in jouw bedrijf, en wat pak je als eerste aan?</p>
-      <p>Weet je al wat je wilt automatiseren? Dan <a href="../implementatie.html">bouwen we het voor je</a>: een chatbot voor je website, een workflow die facturen verwerkt, een koppeling tussen je systemen, of een interne kennisbank voor je team. Altijd met uitleg erbij, zodat je zelf snapt wat er staat en hoe je het beheert.</p>
+      <h2 data-i18n="kb.h2.6">Hoe helpt Sila hierbij?</h2>
+      <p data-i18n-html="kb.p22">Sila: Transformatiepartner in AI. Wij helpen je AI begrijpen en gebruiken, op jouw manier en op jouw tempo. Weet je nog niet precies waar je moet beginnen? Dan denken we in een <a href="../consultancy.html">consultancytraject</a> met je mee: waar liggen de kansen in jouw bedrijf, en wat pak je als eerste aan?</p>
+      <p data-i18n-html="kb.p23">Weet je al wat je wilt automatiseren? Dan <a href="../implementatie.html">bouwen we het voor je</a>: een chatbot voor je website, een workflow die facturen verwerkt, een koppeling tussen je systemen, of een interne kennisbank voor je team. Altijd met uitleg erbij, zodat je zelf snapt wat er staat en hoe je het beheert.</p>
 
       <div class="kb-cta">
-        <h2>Begin met één proces</h2>
-        <p>De eerste stap is een vrijblijvend kennismakingsgesprek. Geen verkooppraatje, geen pakket van de plank. We beginnen gewoon met jouw situatie en kijken samen wat AI voor jouw bedrijf kan betekenen.</p>
+        <h2 data-i18n="kb.cta.title">Begin met één proces</h2>
+        <p data-i18n="kb.cta.body">De eerste stap is een vrijblijvend kennismakingsgesprek. Geen verkooppraatje, geen pakket van de plank. We beginnen gewoon met jouw situatie en kijken samen wat AI voor jouw bedrijf kan betekenen.</p>
         <div class="kb-cta-buttons">
-          <a href="../contact.html" class="kb-btn kb-btn-primary">Neem contact op</a>
-          <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" class="kb-btn kb-btn-secondary">Plan een gesprek in</a>
+          <a href="../contact.html" class="kb-btn kb-btn-primary" data-i18n="kb.cta.btn1">Neem contact op</a>
+          <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" class="kb-btn kb-btn-secondary" data-i18n="kb.cta.btn2">Plan een gesprek in</a>
         </div>
       </div>
 
-      <h2>Veelgestelde vragen</h2>
+      <h2 data-i18n="kb.faq.title">Veelgestelde vragen</h2>
       <div class="faq-list">
         <details class="faq-item">
-          <summary>Is AI-automatisering alleen voor grote bedrijven?<svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
-          <div class="faq-answer"><p>Nee. Juist kleinere bedrijven merken snel het verschil, omdat elk uur dat je bespaart direct effect heeft op je capaciteit. Een goed gekozen, kleine automatisering levert vaak al binnen weken tijdwinst op.</p></div>
+          <summary><span data-i18n="kb.faq.q1">Is AI-automatisering alleen voor grote bedrijven?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="faq-answer"><p data-i18n="kb.faq.a1">Nee. Juist kleinere bedrijven merken snel het verschil, omdat elk uur dat je bespaart direct effect heeft op je capaciteit. Een goed gekozen, kleine automatisering levert vaak al binnen weken tijdwinst op.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Vervangt AI mijn medewerkers?<svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
-          <div class="faq-answer"><p>In de meeste gevallen niet. AI neemt repetitief werk over, zodat medewerkers tijd overhouden voor taken waar mensen echt het verschil maken: persoonlijk contact, complexe beslissingen en creatief werk.</p></div>
+          <summary><span data-i18n="kb.faq.q2">Vervangt AI mijn medewerkers?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="faq-answer"><p data-i18n="kb.faq.a2">In de meeste gevallen niet. AI neemt repetitief werk over, zodat medewerkers tijd overhouden voor taken waar mensen echt het verschil maken: persoonlijk contact, complexe beslissingen en creatief werk.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Heb ik technische kennis nodig om te starten?<svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
-          <div class="faq-answer"><p>Nee. Je hoeft geen programmeur te zijn om AI in te zetten. Bij Sila leggen we elke stap uit in gewone taal, zodat je begrijpt wat er gebeurt en waarom.</p></div>
+          <summary><span data-i18n="kb.faq.q3">Heb ik technische kennis nodig om te starten?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="faq-answer"><p data-i18n="kb.faq.a3">Nee. Je hoeft geen programmeur te zijn om AI in te zetten. Bij Sila leggen we elke stap uit in gewone taal, zodat je begrijpt wat er gebeurt en waarom.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Hoe lang duurt het voordat automatisering resultaat oplevert?<svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
-          <div class="faq-answer"><p>Voor een afgebakend proces zie je vaak binnen enkele weken al effect. Grotere trajecten met meerdere gekoppelde systemen kosten meer tijd, maar de aanpak blijft hetzelfde: beginnen bij één proces, resultaat boeken, dan verder bouwen.</p></div>
+          <summary><span data-i18n="kb.faq.q4">Hoe lang duurt het voordat automatisering resultaat oplevert?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="faq-answer"><p data-i18n="kb.faq.a4">Voor een afgebakend proces zie je vaak binnen enkele weken al effect. Grotere trajecten met meerdere gekoppelde systemen kosten meer tijd, maar de aanpak blijft hetzelfde: beginnen bij één proces, resultaat boeken, dan verder bouwen.</p></div>
         </details>
       </div>
     </article>
 
     <aside class="kb-related" aria-label="Verder lezen">
-      <h2>Verder lezen</h2>
+      <h2 data-i18n="kb.related.title">Verder lezen</h2>
       <div class="kb-related-grid">
         <a href="ai-transformatiepartner.html" class="kb-card">
-          <div class="kb-card-label">AI-transformatie</div>
-          <div class="kb-card-title">Wat is een AI-transformatiepartner en wanneer heb je er een nodig?</div>
-          <span class="kb-card-arrow">Lees artikel <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+          <div class="kb-card-label" data-i18n="kb.related1.label">AI-transformatie</div>
+          <div class="kb-card-title" data-i18n="kb.related1.title">Wat is een AI-transformatiepartner en wanneer heb je er een nodig?</div>
+          <span class="kb-card-arrow"><span data-i18n="kb.card.read">Lees artikel</span> <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </a>
         <a href="ai-consultancy-of-cursus.html" class="kb-card">
-          <div class="kb-card-label">Consultancy &amp; educatie</div>
-          <div class="kb-card-title">AI-consultancy of een AI-cursus: wat past bij jouw bedrijf?</div>
-          <span class="kb-card-arrow">Lees artikel <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+          <div class="kb-card-label" data-i18n="kb.related2.label">Consultancy & educatie</div>
+          <div class="kb-card-title" data-i18n="kb.related2.title">AI-consultancy of een AI-cursus: wat past bij jouw bedrijf?</div>
+          <span class="kb-card-arrow"><span data-i18n="kb.card.read">Lees artikel</span> <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </a>
       </div>
     </aside>
@@ -214,12 +220,176 @@
 
   <!-- ── Floating Nav ─────────────────────────────────── -->
   <nav class="floating-nav" aria-label="Hoofdnavigatie">
-    <a href="../index.html#diensten"    class="nav-link mob-hide">Diensten</a>
-    <a href="../over-ons.html"          class="nav-link mob-hide">Over ons</a>
-    <a href="index.html"                class="nav-link mob-hide">Kennisbank</a>
-    <a href="../index.html#nieuwsbrief" class="nav-link mob-hide">Nieuwsbrief</a>
-    <a href="../contact.html"           class="nav-cta">Contact</a>
+    <a href="../index.html#diensten"    class="nav-link mob-hide" data-i18n="kb.nav.services">Diensten</a>
+    <a href="../over-ons.html"          class="nav-link mob-hide" data-i18n="kb.nav.about">Over ons</a>
+    <a href="index.html"                class="nav-link mob-hide" data-i18n="kb.nav.kennisbank">Kennisbank</a>
+    <a href="../index.html#nieuwsbrief" class="nav-link mob-hide" data-i18n="kb.nav.newsletter">Nieuwsbrief</a>
+    <a href="../contact.html"           class="nav-cta" data-i18n="kb.nav.contact">Contact</a>
   </nav>
+
+<script>
+const T_KB = {
+  nl: {
+    'kb.back': 'Kennisbank',
+    'kb.crumb.home': 'Home',
+    'kb.crumb.kb': 'Kennisbank',
+    'kb.crumb.current': 'AI-automatisering MKB',
+    'kb.h1': 'AI-automatisering voor het MKB: wat kun je in 2026 <em>echt</em> automatiseren?',
+    'kb.meta.by': 'Door Jamal Allam',
+    'kb.meta.date': '7 juli 2026',
+    'kb.meta.readtime': '6 minuten leestijd',
+    'kb.lead': 'AI-automatisering betekent dat je software met kunstmatige intelligentie repetitieve taken laat overnemen: klantvragen beantwoorden, mails sorteren, facturen verwerken, offertes opstellen en planningen maken. Voor het Nederlandse MKB is dit in 2026 geen toekomstmuziek meer, maar een haalbare stap die binnen enkele weken al resultaat oplevert. Het werkt het beste wanneer je start bij één concreet, terugkerend proces in plaats van in één keer alles te willen veranderen.',
+    'kb.h2.1': 'Wat is AI-automatisering precies?',
+    'kb.p1': 'Automatisering bestaat al lang. Een simpele regel als "stuur een bevestigingsmail zodra iemand bestelt" is al automatisering, maar dan zonder AI. Het verschil met AI-automatisering zit in wat de software begrijpt.',
+    'kb.p2': 'Ouderwetse automatisering volgt vaste regels: als dit gebeurt, doe dan dat. AI-automatisering kan daarnaast taal, patronen en context herkennen. Een chatbot leest niet alleen het woord "factuur" in een mail, hij begrijpt ook wat de klant precies vraagt en formuleert daar een passend antwoord op. Dat maakt AI geschikt voor taken die vroeger altijd mensenwerk waren, omdat ze net iets te veel nuance vroegen voor een vaste regel.',
+    'kb.p3': 'Voor jouw bedrijf betekent dit concreet: processen die je nu handmatig doet, of die je met een simpele tool al deels automatiseert, kunnen met AI een stap verder. Sneller, met minder fouten, en zonder dat iemand er elke dag naar hoeft om te kijken.',
+    'kb.h2.2': 'Welke taken kun je automatiseren met AI?',
+    'kb.p4': 'Niet elk proces leent zich even goed voor automatisering. De taken die de meeste tijd besparen, zijn meestal repetitief, volgen een herkenbaar patroon en komen vaak voor. Dit zijn de voorbeelden die we bij Sila het meest tegenkomen in het MKB.',
+    'kb.h3.1': 'Klantenservice en chatbots',
+    'kb.p5': 'Een <a href="../implementatie.html">chatbot op je website</a> beantwoordt veelgestelde vragen dag en nacht: openingstijden, levertijden, prijzen, retourbeleid. Voor een webshop of dienstverlener scheelt dit tientallen mails en telefoontjes per week. De chatbot kan doorverwijzen naar een medewerker zodra een vraag te specifiek of gevoelig wordt.',
+    'kb.h3.2': 'E-mailafhandeling',
+    'kb.p6': 'Veel bedrijven krijgen dagelijks mails die in een paar herkenbare categorieën vallen: offerteaanvragen, klachten, facturen, sollicitaties. AI kan die mails lezen, categoriseren en soms al een conceptantwoord schrijven, zodat een medewerker alleen nog hoeft te controleren en te versturen.',
+    'kb.h3.3': 'Facturen en administratie',
+    'kb.p7': 'Facturen die binnenkomen via de mail, kunnen automatisch worden herkend, uitgelezen en ingeboekt in je boekhoudsysteem. Geen handmatig overtypen meer van bedragen en btw. Voor een aannemersbedrijf of een groothandel met veel inkoopfacturen scheelt dit al snel enkele uren per week.',
+    'kb.h3.4': 'Offertes opstellen',
+    'kb.p8': 'Voor bedrijven die veel vergelijkbare offertes maken, kan AI een groot deel van het werk voorbereiden op basis van eerdere offertes en de wensen van de klant. De medewerker controleert en past aan, in plaats van alles vanaf nul te typen.',
+    'kb.h3.5': 'Planning en roosters',
+    'kb.p9': 'Voor de zorg, horeca of retail kan AI helpen bij het maken van roosters die rekening houden met beschikbaarheid, wetgeving en drukte, en bij het automatisch verplaatsen van afspraken bij wijzigingen.',
+    'kb.h3.6': 'Interne kennisbanken',
+    'kb.p10': 'Veel bedrijven hebben kennis die alleen in de hoofden van een paar mensen zit. Een interne AI-assistent die getraind is op handleidingen, procedures en eerdere klantvragen, geeft nieuwe medewerkers direct een antwoord in plaats van dat ze een collega moeten storen.',
+    'kb.h2.3': 'Wat kan AI niet goed?',
+    'kb.p11': 'Bij Sila zijn we hier bewust eerlijk over, want dat hoort bij vertrouwen opbouwen. AI is geen vervanging voor mensen, het is een hulpmiddel met duidelijke grenzen.',
+    'kb.p12': 'AI is minder goed in situaties die om echt menselijk oordeel vragen: een boze klant die zich onbegrepen voelt, een gevoelige personeelskwestie, of een besluit met grote financiële gevolgen. AI kan hier ondersteunen met informatie, maar de uiteindelijke beslissing en het menselijke contact horen bij een mens te blijven.',
+    'kb.p13': 'AI is ook niet feilloos. Een taalmodel kan soms iets verzinnen dat overtuigend klinkt maar niet klopt, dit wordt ook wel een "hallucinatie" genoemd. Daarom bouwen we automatisering altijd met een controlestap, zeker bij taken met financiële of juridische impact.',
+    'kb.p14': 'Tot slot is AI zo goed als de gegevens waarmee hij werkt. Rommelige data, verouderde klantinformatie of tegenstrijdige procedures leveren rommelige resultaten op. Voordat je automatiseert, is het dus verstandig om te kijken of je basis op orde is.',
+    'kb.h2.4': 'Wat kost AI-automatisering voor een MKB-bedrijf?',
+    'kb.p15': 'Dit is de vraag die de meeste ondernemers stellen, en het eerlijke antwoord is: dat hangt af van wat je automatiseert. Een chatbot die drie veelgestelde vragen beantwoordt, kost minder tijd en geld dan een systeem dat facturen uit vijf verschillende bronnen verwerkt en koppelt aan je boekhouding.',
+    'kb.p16': 'De belangrijkste factoren zijn de complexiteit van het proces, het aantal systemen dat gekoppeld moet worden, en hoeveel maatwerk er nodig is. Een kleine, afgebakende automatisering is vaak al binnen enkele weken op te leveren. Een groter traject met meerdere processen en integraties vraagt meer tijd, maar levert ook meer op.',
+    'kb.p17': 'Bij Sila bepalen we de investering altijd pas na een intakegesprek, waarin we samen kijken wat je precies wilt bereiken en wat daarvoor nodig is. Zo krijg je geen pakket van de plank, maar een prijs die past bij wat je daadwerkelijk gaat gebruiken.',
+    'kb.h2.5': 'Waar begin je?',
+    'kb.p18': 'De meeste bedrijven die vastlopen met AI, lopen niet vast door de techniek, maar door het ontbreken van een duidelijk startpunt. Drie stappen die werken:',
+    'kb.p19': 'Eerst breng je in kaart welke taken in jouw bedrijf het meeste tijd kosten en zich herhalen. Denk aan een uur per dag dat iemand kwijt is aan het beantwoorden van dezelfde soort mails, of een halve dag per week aan het overtypen van facturen.',
+    'kb.p20': 'Daarna kies je één proces om mee te beginnen. Niet het grootste of meest ingewikkelde, maar het proces waar je het snelst resultaat ziet. Dat geeft vertrouwen en leert je team hoe werken met AI voelt.',
+    'kb.p21': 'Tot slot bouw je vandaaruit verder. Als de eerste automatisering werkt en waarde levert, kies je het volgende proces. Zo groeit je bedrijf stap voor stap mee, op een tempo dat past bij hoe je organisatie werkt.',
+    'kb.h2.6': 'Hoe helpt Sila hierbij?',
+    'kb.p22': 'Sila: Transformatiepartner in AI. Wij helpen je AI begrijpen en gebruiken, op jouw manier en op jouw tempo. Weet je nog niet precies waar je moet beginnen? Dan denken we in een <a href="../consultancy.html">consultancytraject</a> met je mee: waar liggen de kansen in jouw bedrijf, en wat pak je als eerste aan?',
+    'kb.p23': 'Weet je al wat je wilt automatiseren? Dan <a href="../implementatie.html">bouwen we het voor je</a>: een chatbot voor je website, een workflow die facturen verwerkt, een koppeling tussen je systemen, of een interne kennisbank voor je team. Altijd met uitleg erbij, zodat je zelf snapt wat er staat en hoe je het beheert.',
+    'kb.cta.title': 'Begin met één proces',
+    'kb.cta.body': 'De eerste stap is een vrijblijvend kennismakingsgesprek. Geen verkooppraatje, geen pakket van de plank. We beginnen gewoon met jouw situatie en kijken samen wat AI voor jouw bedrijf kan betekenen.',
+    'kb.cta.btn1': 'Neem contact op',
+    'kb.cta.btn2': 'Plan een gesprek in',
+    'kb.faq.title': 'Veelgestelde vragen',
+    'kb.faq.q1': 'Is AI-automatisering alleen voor grote bedrijven?',
+    'kb.faq.a1': 'Nee. Juist kleinere bedrijven merken snel het verschil, omdat elk uur dat je bespaart direct effect heeft op je capaciteit. Een goed gekozen, kleine automatisering levert vaak al binnen weken tijdwinst op.',
+    'kb.faq.q2': 'Vervangt AI mijn medewerkers?',
+    'kb.faq.a2': 'In de meeste gevallen niet. AI neemt repetitief werk over, zodat medewerkers tijd overhouden voor taken waar mensen echt het verschil maken: persoonlijk contact, complexe beslissingen en creatief werk.',
+    'kb.faq.q3': 'Heb ik technische kennis nodig om te starten?',
+    'kb.faq.a3': 'Nee. Je hoeft geen programmeur te zijn om AI in te zetten. Bij Sila leggen we elke stap uit in gewone taal, zodat je begrijpt wat er gebeurt en waarom.',
+    'kb.faq.q4': 'Hoe lang duurt het voordat automatisering resultaat oplevert?',
+    'kb.faq.a4': 'Voor een afgebakend proces zie je vaak binnen enkele weken al effect. Grotere trajecten met meerdere gekoppelde systemen kosten meer tijd, maar de aanpak blijft hetzelfde: beginnen bij één proces, resultaat boeken, dan verder bouwen.',
+    'kb.related.title': 'Verder lezen',
+    'kb.related1.label': 'AI-transformatie',
+    'kb.related1.title': 'Wat is een AI-transformatiepartner en wanneer heb je er een nodig?',
+    'kb.related2.label': 'Consultancy & educatie',
+    'kb.related2.title': 'AI-consultancy of een AI-cursus: wat past bij jouw bedrijf?',
+    'kb.card.read': 'Lees artikel',
+    'kb.nav.services': 'Diensten',
+    'kb.nav.about': 'Over ons',
+    'kb.nav.kennisbank': 'Kennisbank',
+    'kb.nav.newsletter': 'Nieuwsbrief',
+    'kb.nav.contact': 'Contact',
+  },
+  en: {
+    'kb.back': 'Knowledge base',
+    'kb.crumb.home': 'Home',
+    'kb.crumb.kb': 'Knowledge base',
+    'kb.crumb.current': 'AI automation for SMEs',
+    'kb.h1': 'AI automation for SMEs: what can you <em>actually</em> automate in 2026?',
+    'kb.meta.by': 'By Jamal Allam',
+    'kb.meta.date': 'July 7, 2026',
+    'kb.meta.readtime': '6 min read',
+    'kb.lead': 'AI automation means having software with artificial intelligence take over repetitive tasks: answering customer questions, sorting emails, processing invoices, drafting quotes and building schedules. For Dutch SMEs in 2026, this is no longer a distant future but an achievable step that pays off within a few weeks. It works best when you start with one concrete, recurring process instead of trying to change everything at once.',
+    'kb.h2.1': 'What exactly is AI automation?',
+    'kb.p1': 'Automation has been around for a long time. A simple rule like "send a confirmation email as soon as someone orders" is already automation, just without AI. The difference with AI automation lies in what the software understands.',
+    'kb.p2': 'Old-fashioned automation follows fixed rules: if this happens, do that. AI automation can additionally recognise language, patterns and context. A chatbot does not just read the word "invoice" in an email, it understands what the customer is actually asking and formulates a fitting reply. That makes AI suitable for tasks that used to always be human work, because they required just a bit too much nuance for a fixed rule.',
+    'kb.p3': 'For your business this means, concretely: processes you now do by hand, or that you already partly automate with a simple tool, can go a step further with AI. Faster, with fewer errors, and without anyone needing to check it every day.',
+    'kb.h2.2': 'Which tasks can you automate with AI?',
+    'kb.p4': 'Not every process is equally suited to automation. The tasks that save the most time are usually repetitive, follow a recognisable pattern and occur often. These are the examples we encounter most at Sila within SMEs.',
+    'kb.h3.1': 'Customer service and chatbots',
+    'kb.p5': 'A <a href="../implementatie.html">chatbot on your website</a> answers frequently asked questions day and night: opening hours, delivery times, prices, return policy. For a webshop or service provider, this saves dozens of emails and phone calls a week. The chatbot can hand off to a staff member as soon as a question gets too specific or sensitive.',
+    'kb.h3.2': 'Email handling',
+    'kb.p6': 'Many companies receive daily emails that fall into a few recognisable categories: quote requests, complaints, invoices, job applications. AI can read those emails, categorise them and sometimes already draft a reply, so a staff member only needs to check and send it.',
+    'kb.h3.3': 'Invoices and admin',
+    'kb.p7': 'Invoices arriving by email can be automatically recognised, read and booked into your accounting system. No more manually retyping amounts and VAT. For a contracting business or a wholesaler with many purchase invoices, this quickly saves several hours a week.',
+    'kb.h3.4': 'Drafting quotes',
+    'kb.p8': 'For companies that create many similar quotes, AI can prepare a large part of the work based on previous quotes and the customer\'s requirements. The staff member checks and adjusts, instead of typing everything from scratch.',
+    'kb.h3.5': 'Scheduling and rosters',
+    'kb.p9': 'For healthcare, hospitality or retail, AI can help build rosters that take availability, regulations and busy periods into account, and automatically reschedule appointments when things change.',
+    'kb.h3.6': 'Internal knowledge bases',
+    'kb.p10': 'Many companies have knowledge that only lives in the heads of a few people. An internal AI assistant trained on manuals, procedures and past customer questions gives new employees an instant answer instead of having to interrupt a colleague.',
+    'kb.h2.3': 'What is AI not good at?',
+    'kb.p11': 'At Sila we are deliberately honest about this, because that is part of building trust. AI is not a replacement for people, it is a tool with clear limits.',
+    'kb.p12': 'AI is less capable in situations that call for real human judgement: an angry customer who feels misunderstood, a sensitive HR matter, or a decision with major financial consequences. AI can support these with information, but the final decision and the human contact should stay with a person.',
+    'kb.p13': 'AI is also not flawless. A language model can sometimes make up something that sounds convincing but is not true, often called a "hallucination". That is why we always build automation with a check step, especially for tasks with financial or legal impact.',
+    'kb.p14': 'Finally, AI is only as good as the data it works with. Messy data, outdated customer information or conflicting procedures produce messy results. Before you automate, it is therefore wise to check whether your foundation is in order.',
+    'kb.h2.4': 'What does AI automation cost for an SME?',
+    'kb.p15': 'This is the question most business owners ask, and the honest answer is: it depends on what you automate. A chatbot answering three frequently asked questions costs less time and money than a system that processes invoices from five different sources and links them to your bookkeeping.',
+    'kb.p16': 'The main factors are the complexity of the process, the number of systems that need to be connected, and how much customisation is needed. A small, well-defined automation can often be delivered within a few weeks. A larger project with multiple processes and integrations takes more time, but also delivers more.',
+    'kb.p17': 'At Sila we only determine the investment after an intake conversation, in which we look together at exactly what you want to achieve and what that requires. That way you do not get an off-the-shelf package, but a price that fits what you will actually use.',
+    'kb.h2.5': 'Where do you start?',
+    'kb.p18': 'Most companies that get stuck with AI do not get stuck because of the technology, but because of a lack of a clear starting point. Three steps that work:',
+    'kb.p19': 'First, map out which tasks in your business cost the most time and repeat. Think of an hour a day someone spends answering the same kind of emails, or half a day a week retyping invoices.',
+    'kb.p20': 'Then choose one process to start with. Not the biggest or most complicated, but the process where you see results fastest. That builds confidence and shows your team what working with AI feels like.',
+    'kb.p21': 'Finally, build on from there. If the first automation works and delivers value, you pick the next process. That way your business grows step by step, at a pace that fits how your organisation works.',
+    'kb.h2.6': 'How does Sila help with this?',
+    'kb.p22': 'Sila: Transformation Partner in AI. We help you understand and use AI, your way and at your pace. Not sure yet where to start? Then we think along with you in a <a href="../consultancy.html">consultancy journey</a>: where are the opportunities in your business, and what do you tackle first?',
+    'kb.p23': 'Already know what you want to automate? Then <a href="../implementatie.html">we build it for you</a>: a chatbot for your website, a workflow that processes invoices, a connection between your systems, or an internal knowledge base for your team. Always with an explanation, so you understand what is there and how to manage it yourself.',
+    'kb.cta.title': 'Start with one process',
+    'kb.cta.body': 'The first step is a no-obligation introductory conversation. No sales pitch, no off-the-shelf package. We simply start with your situation and look together at what AI can mean for your business.',
+    'kb.cta.btn1': 'Get in touch',
+    'kb.cta.btn2': 'Schedule a call',
+    'kb.faq.title': 'Frequently asked questions',
+    'kb.faq.q1': 'Is AI automation only for large companies?',
+    'kb.faq.a1': 'No. Smaller companies in particular notice the difference quickly, because every hour you save directly affects your capacity. A well-chosen, small automation often pays off within weeks.',
+    'kb.faq.q2': 'Does AI replace my employees?',
+    'kb.faq.a2': 'In most cases, no. AI takes over repetitive work, so employees have time left for tasks where people truly make the difference: personal contact, complex decisions and creative work.',
+    'kb.faq.q3': 'Do I need technical knowledge to get started?',
+    'kb.faq.a3': 'No. You do not need to be a programmer to use AI. At Sila we explain every step in plain language, so you understand what happens and why.',
+    'kb.faq.q4': 'How long before automation delivers results?',
+    'kb.faq.a4': 'For a well-defined process you often see effect within a few weeks. Larger projects with multiple connected systems take more time, but the approach stays the same: start with one process, book a result, then keep building.',
+    'kb.related.title': 'Keep reading',
+    'kb.related1.label': 'AI transformation',
+    'kb.related1.title': 'What is an AI transformation partner, and when do you need one?',
+    'kb.related2.label': 'Consultancy & education',
+    'kb.related2.title': 'AI consultancy or an AI course: what fits your business?',
+    'kb.card.read': 'Read article',
+    'kb.nav.services': 'Services',
+    'kb.nav.about': 'About',
+    'kb.nav.kennisbank': 'Knowledge base',
+    'kb.nav.newsletter': 'Newsletter',
+    'kb.nav.contact': 'Contact',
+  },
+};
+
+function applyLang(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (T_KB[lang][key] !== undefined && el.children.length === 0) el.textContent = T_KB[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (T_KB[lang][key] !== undefined) el.innerHTML = T_KB[lang][key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+}
+
+function setLang(lang, btn) {
+  applyLang(lang);
+}
+</script>
 
 </body>
 </html>

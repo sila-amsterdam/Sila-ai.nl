@@ -68,50 +68,122 @@
   <header class="kb-topbar">
     <a href="../index.html" class="kb-back">
       <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg>
-      Terug naar home
+      <span data-i18n="kb.back">Terug naar home</span>
     </a>
-    <a href="../index.html" class="kb-wordmark" aria-label="Sila home">Sila</a>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <a href="../index.html" class="kb-wordmark" aria-label="Sila home">Sila</a>
+      <div class="lang-toggle" role="group" aria-label="Taalwissel">
+        <button class="lang-btn active" data-lang="nl" onclick="setLang('nl', this)">NL</button>
+        <button class="lang-btn"        data-lang="en" onclick="setLang('en', this)">EN</button>
+      </div>
+    </div>
   </header>
 
   <section class="kb-hero">
-    <div class="kb-hero-label"><span class="kb-hero-label-dot"></span>Kennisbank</div>
-    <h1 class="kb-title">AI uitgelegd, <em>zonder jargon</em></h1>
-    <p class="kb-hero-sub">Heldere artikelen over AI voor het Nederlandse MKB. Wat werkt, wat niet, en hoe je begint. Geschreven door Sila: Transformatiepartner in AI.</p>
+    <div class="kb-hero-label"><span class="kb-hero-label-dot"></span><span data-i18n="kb.hero.label">Kennisbank</span></div>
+    <h1 class="kb-title" data-i18n-html="kb.hero.title">AI uitgelegd, <em>zonder jargon</em></h1>
+    <p class="kb-hero-sub" data-i18n="kb.hero.sub">Heldere artikelen over AI voor het Nederlandse MKB. Wat werkt, wat niet, en hoe je begint. Geschreven door Sila: Transformatiepartner in AI.</p>
   </section>
 
   <main class="kb-index-grid" aria-label="Artikelen">
 
     <a href="ai-transformatiepartner.html" class="kb-card">
-      <div class="kb-card-label">AI-transformatie</div>
-      <div class="kb-card-title">Wat is een AI-transformatiepartner en wanneer heb je er een nodig?</div>
-      <p class="kb-card-desc">Wat een AI-transformatiepartner doet, waarin die verschilt van een consultant of bureau, wat het kost en wanneer het zinvol is.</p>
-      <span class="kb-card-arrow">Lees artikel <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      <div class="kb-card-label" data-i18n="kb.card1.label">AI-transformatie</div>
+      <div class="kb-card-title" data-i18n="kb.card1.title">Wat is een AI-transformatiepartner en wanneer heb je er een nodig?</div>
+      <p class="kb-card-desc" data-i18n="kb.card1.desc">Wat een AI-transformatiepartner doet, waarin die verschilt van een consultant of bureau, wat het kost en wanneer het zinvol is.</p>
+      <span class="kb-card-arrow"><span data-i18n="kb.card.read">Lees artikel</span> <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
     </a>
 
     <a href="ai-automatisering-mkb.html" class="kb-card">
-      <div class="kb-card-label">Automatisering</div>
-      <div class="kb-card-title">AI-automatisering voor het MKB: wat kun je in 2026 echt automatiseren?</div>
-      <p class="kb-card-desc">Concrete voorbeelden van wat AI wel en niet kan automatiseren in een MKB-bedrijf, wat het kost en waar je begint.</p>
-      <span class="kb-card-arrow">Lees artikel <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      <div class="kb-card-label" data-i18n="kb.card2.label">Automatisering</div>
+      <div class="kb-card-title" data-i18n="kb.card2.title">AI-automatisering voor het MKB: wat kun je in 2026 echt automatiseren?</div>
+      <p class="kb-card-desc" data-i18n="kb.card2.desc">Concrete voorbeelden van wat AI wel en niet kan automatiseren in een MKB-bedrijf, wat het kost en waar je begint.</p>
+      <span class="kb-card-arrow"><span data-i18n="kb.card.read">Lees artikel</span> <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
     </a>
 
     <a href="ai-consultancy-of-cursus.html" class="kb-card">
-      <div class="kb-card-label">Consultancy &amp; educatie</div>
-      <div class="kb-card-title">AI-consultancy of een AI-cursus: wat past bij jouw bedrijf?</div>
-      <p class="kb-card-desc">Een eerlijk beslismodel: wanneer is een cursus genoeg, wanneer heb je advies nodig, en wanneer allebei.</p>
-      <span class="kb-card-arrow">Lees artikel <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      <div class="kb-card-label" data-i18n="kb.card3.label">Consultancy & educatie</div>
+      <div class="kb-card-title" data-i18n="kb.card3.title">AI-consultancy of een AI-cursus: wat past bij jouw bedrijf?</div>
+      <p class="kb-card-desc" data-i18n="kb.card3.desc">Een eerlijk beslismodel: wanneer is een cursus genoeg, wanneer heb je advies nodig, en wanneer allebei.</p>
+      <span class="kb-card-arrow"><span data-i18n="kb.card.read">Lees artikel</span> <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
     </a>
 
   </main>
 
   <!-- ── Floating Nav ─────────────────────────────────── -->
   <nav class="floating-nav" aria-label="Hoofdnavigatie">
-    <a href="../index.html#diensten"    class="nav-link mob-hide">Diensten</a>
-    <a href="../over-ons.html"          class="nav-link mob-hide">Over ons</a>
-    <a href="index.html"                class="nav-link mob-hide">Kennisbank</a>
-    <a href="../index.html#nieuwsbrief" class="nav-link mob-hide">Nieuwsbrief</a>
-    <a href="../contact.html"           class="nav-cta">Contact</a>
+    <a href="../index.html#diensten"    class="nav-link mob-hide" data-i18n="kb.nav.services">Diensten</a>
+    <a href="../over-ons.html"          class="nav-link mob-hide" data-i18n="kb.nav.about">Over ons</a>
+    <a href="index.html"                class="nav-link mob-hide" data-i18n="kb.nav.kennisbank">Kennisbank</a>
+    <a href="../index.html#nieuwsbrief" class="nav-link mob-hide" data-i18n="kb.nav.newsletter">Nieuwsbrief</a>
+    <a href="../contact.html"           class="nav-cta" data-i18n="kb.nav.contact">Contact</a>
   </nav>
+
+<script>
+const T_KB = {
+  nl: {
+    'kb.back': 'Terug naar home',
+    'kb.hero.label': 'Kennisbank',
+    'kb.hero.title': 'AI uitgelegd, <em>zonder jargon</em>',
+    'kb.hero.sub': 'Heldere artikelen over AI voor het Nederlandse MKB. Wat werkt, wat niet, en hoe je begint. Geschreven door Sila: Transformatiepartner in AI.',
+    'kb.card1.label': 'AI-transformatie',
+    'kb.card1.title': 'Wat is een AI-transformatiepartner en wanneer heb je er een nodig?',
+    'kb.card1.desc': 'Wat een AI-transformatiepartner doet, waarin die verschilt van een consultant of bureau, wat het kost en wanneer het zinvol is.',
+    'kb.card2.label': 'Automatisering',
+    'kb.card2.title': 'AI-automatisering voor het MKB: wat kun je in 2026 echt automatiseren?',
+    'kb.card2.desc': 'Concrete voorbeelden van wat AI wel en niet kan automatiseren in een MKB-bedrijf, wat het kost en waar je begint.',
+    'kb.card3.label': 'Consultancy & educatie',
+    'kb.card3.title': 'AI-consultancy of een AI-cursus: wat past bij jouw bedrijf?',
+    'kb.card3.desc': 'Een eerlijk beslismodel: wanneer is een cursus genoeg, wanneer heb je advies nodig, en wanneer allebei.',
+    'kb.card.read': 'Lees artikel',
+    'kb.nav.services': 'Diensten',
+    'kb.nav.about': 'Over ons',
+    'kb.nav.kennisbank': 'Kennisbank',
+    'kb.nav.newsletter': 'Nieuwsbrief',
+    'kb.nav.contact': 'Contact',
+  },
+  en: {
+    'kb.back': 'Back to home',
+    'kb.hero.label': 'Knowledge base',
+    'kb.hero.title': 'AI explained, <em>without the jargon</em>',
+    'kb.hero.sub': 'Clear articles about AI for Dutch SMEs. What works, what does not, and how to get started. Written by Sila: Transformation Partner in AI.',
+    'kb.card1.label': 'AI transformation',
+    'kb.card1.title': 'What is an AI transformation partner, and when do you need one?',
+    'kb.card1.desc': 'What an AI transformation partner does, how it differs from a consultant or agency, what it costs and when it makes sense.',
+    'kb.card2.label': 'Automation',
+    'kb.card2.title': 'AI automation for SMEs: what can you actually automate in 2026?',
+    'kb.card2.desc': 'Concrete examples of what AI can and cannot automate in an SME, what it costs and where to start.',
+    'kb.card3.label': 'Consultancy & education',
+    'kb.card3.title': 'AI consultancy or an AI course: what fits your business?',
+    'kb.card3.desc': 'An honest decision model: when a course is enough, when you need advice, and when you need both.',
+    'kb.card.read': 'Read article',
+    'kb.nav.services': 'Services',
+    'kb.nav.about': 'About',
+    'kb.nav.kennisbank': 'Knowledge base',
+    'kb.nav.newsletter': 'Newsletter',
+    'kb.nav.contact': 'Contact',
+  },
+};
+
+function applyLang(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (T_KB[lang][key] !== undefined && el.children.length === 0) el.textContent = T_KB[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (T_KB[lang][key] !== undefined) el.innerHTML = T_KB[lang][key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+}
+
+function setLang(lang, btn) {
+  applyLang(lang);
+}
+</script>
 
 </body>
 </html>

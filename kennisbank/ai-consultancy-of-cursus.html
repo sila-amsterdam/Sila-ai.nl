@@ -95,112 +95,118 @@
   <header class="kb-topbar">
     <a href="index.html" class="kb-back">
       <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg>
-      Kennisbank
+      <span data-i18n="kb.back">Kennisbank</span>
     </a>
-    <a href="../index.html" class="kb-wordmark" aria-label="Sila home">Sila</a>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <a href="../index.html" class="kb-wordmark" aria-label="Sila home">Sila</a>
+      <div class="lang-toggle" role="group" aria-label="Taalwissel">
+        <button class="lang-btn active" data-lang="nl" onclick="setLang('nl', this)">NL</button>
+        <button class="lang-btn"        data-lang="en" onclick="setLang('en', this)">EN</button>
+      </div>
+    </div>
   </header>
 
   <main>
     <article class="kb-article">
       <nav class="kb-breadcrumb" aria-label="Kruimelpad">
-        <a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Kennisbank</a><span aria-hidden="true">/</span>Consultancy of cursus
+        <a href="../index.html" data-i18n="kb.crumb.home">Home</a><span aria-hidden="true">/</span><a href="index.html" data-i18n="kb.crumb.kb">Kennisbank</a><span aria-hidden="true">/</span><span data-i18n="kb.crumb.current">Consultancy of cursus</span>
       </nav>
 
-      <h1 class="kb-title">AI-consultancy of een AI-cursus: wat past bij <em>jouw</em> bedrijf?</h1>
+      <h1 class="kb-title" data-i18n-html="kb.h1">AI-consultancy of een AI-cursus: wat past bij <em>jouw</em> bedrijf?</h1>
 
       <div class="kb-meta">
-        <span>Door Jamal Allam</span>
+        <span data-i18n="kb.meta.by">Door Jamal Allam</span>
         <span class="kb-meta-dot" aria-hidden="true"></span>
-        <time datetime="2026-07-07">7 juli 2026</time>
+        <time datetime="2026-07-07" data-i18n="kb.meta.date">7 juli 2026</time>
         <span class="kb-meta-dot" aria-hidden="true"></span>
-        <span>6 minuten leestijd</span>
+        <span data-i18n="kb.meta.readtime">6 minuten leestijd</span>
       </div>
 
-      <p class="kb-lead"><strong>Kort antwoord:</strong> een AI-cursus leert jou en je team wat AI is en hoe je het gebruikt, tegen een vaste, lage prijs en op eigen tempo. AI-consultancy is persoonlijk advies over wát je met AI moet doen in jouw specifieke bedrijf, met een concreet plan als resultaat. Heb je vooral kennis nodig, kies dan een cursus of workshop. Heb je een keuze of strategie nodig, kies dan consultancy. Veel bedrijven combineren beide: eerst begrijpen, dan bepalen.</p>
+      <p class="kb-lead" data-i18n-html="kb.lead"><strong>Kort antwoord:</strong> een AI-cursus leert jou en je team wat AI is en hoe je het gebruikt, tegen een vaste, lage prijs en op eigen tempo. AI-consultancy is persoonlijk advies over wát je met AI moet doen in jouw specifieke bedrijf, met een concreet plan als resultaat. Heb je vooral kennis nodig, kies dan een cursus of workshop. Heb je een keuze of strategie nodig, kies dan consultancy. Veel bedrijven combineren beide: eerst begrijpen, dan bepalen.</p>
 
-      <p>Je hebt vast een van deze twee vragen gehad. "Moeten we een cursus AI volgen voor het team?" Of: "Moeten we iemand inhuren die met ons meedenkt over onze AI-koers?" Het antwoord hangt af van waar je nu staat, en dat is precies wat dit artikel helder maakt.</p>
+      <p data-i18n="kb.p1">Je hebt vast een van deze twee vragen gehad. "Moeten we een cursus AI volgen voor het team?" Of: "Moeten we iemand inhuren die met ons meedenkt over onze AI-koers?" Het antwoord hangt af van waar je nu staat, en dat is precies wat dit artikel helder maakt.</p>
 
-      <h2>Wat is het verschil tussen AI-consultancy en een AI-cursus?</h2>
-      <p>Een AI-cursus is educatie. Je leert wat AI is, wat het kan en hoe je ermee werkt. Het format is vast: je volgt de stof, op je eigen tempo, en het resultaat is kennis en vaardigheid.</p>
-      <p>AI-consultancy is advies. Een consultant kijkt naar jouw specifieke bedrijf en helpt je bepalen waar AI waarde toevoegt, wat je eerst oppakt en hoe je dat aanpakt. Het resultaat is geen kennis, maar een plan.</p>
-      <p>Bij Sila zie je dat verschil terug in twee van de drie pijlers waarmee we werken. <a href="../educatie.html">Educatie</a> draait om begrijpen wat AI is en kan. <a href="../consultancy.html">Consultancy</a> draait om bepalen wat jij met AI gaat doen. De derde pijler, <a href="../implementatie.html">implementatie</a>, is het daadwerkelijk bouwen van wat je hebt besloten.</p>
+      <h2 data-i18n="kb.h2.1">Wat is het verschil tussen AI-consultancy en een AI-cursus?</h2>
+      <p data-i18n="kb.p2">Een AI-cursus is educatie. Je leert wat AI is, wat het kan en hoe je ermee werkt. Het format is vast: je volgt de stof, op je eigen tempo, en het resultaat is kennis en vaardigheid.</p>
+      <p data-i18n="kb.p3">AI-consultancy is advies. Een consultant kijkt naar jouw specifieke bedrijf en helpt je bepalen waar AI waarde toevoegt, wat je eerst oppakt en hoe je dat aanpakt. Het resultaat is geen kennis, maar een plan.</p>
+      <p data-i18n-html="kb.p4">Bij Sila zie je dat verschil terug in twee van de drie pijlers waarmee we werken. <a href="../educatie.html">Educatie</a> draait om begrijpen wat AI is en kan. <a href="../consultancy.html">Consultancy</a> draait om bepalen wat jij met AI gaat doen. De derde pijler, <a href="../implementatie.html">implementatie</a>, is het daadwerkelijk bouwen van wat je hebt besloten.</p>
 
-      <h2>Wat leer je in een AI-cursus voor ondernemers?</h2>
-      <p>Een goede AI-cursus voor ondernemers is praktisch, niet technisch. Je leert geen programmeren. Je leert wat AI voor jouw werk kan betekenen, welke tools daarbij passen en hoe je een eerste stap zet zonder dat het overweldigend wordt.</p>
-      <p>Sila biedt hiervoor <a href="../educatie.html">online cursussen</a> aan, zoals <em>Hoe begin ik met automatiseren?</em>, <em>AI Strategie voor Leiders</em>, <em>Word een prompt expert</em> en <em>Hoe gebruik ik Claude Code?</em> Elke cursus behandelt één onderwerp grondig, in heldere taal, met voorbeelden die je herkent uit je eigen werkdag.</p>
-      <p>Naast de online cursussen zijn er live workshops. Een workshop is een interactieve sessie op locatie of online, gericht op een team of een leider. Waar een cursus vooral individueel is, werkt een workshop met een groep: je bouwt samen begrip op en oefent direct met elkaar. Een workshop over AI voor bedrijven is daarom vaak de eerste stap wanneer een heel team mee moet.</p>
-      <p>Het resultaat van beide vormen is hetzelfde soort verandering: van "ik weet niet waar te beginnen" naar "ik snap wat AI voor mij kan doen." Dat is winst, maar het is geen strategie. Een cursus vertelt je niet welke van de tien mogelijke toepassingen het beste past bij jouw bedrijf. Daarvoor is een ander gesprek nodig.</p>
+      <h2 data-i18n="kb.h2.2">Wat leer je in een AI-cursus voor ondernemers?</h2>
+      <p data-i18n="kb.p5">Een goede AI-cursus voor ondernemers is praktisch, niet technisch. Je leert geen programmeren. Je leert wat AI voor jouw werk kan betekenen, welke tools daarbij passen en hoe je een eerste stap zet zonder dat het overweldigend wordt.</p>
+      <p data-i18n-html="kb.p6">Sila biedt hiervoor <a href="../educatie.html">online cursussen</a> aan, zoals <em>Hoe begin ik met automatiseren?</em>, <em>AI Strategie voor Leiders</em>, <em>Word een prompt expert</em> en <em>Hoe gebruik ik Claude Code?</em> Elke cursus behandelt één onderwerp grondig, in heldere taal, met voorbeelden die je herkent uit je eigen werkdag.</p>
+      <p data-i18n="kb.p7">Naast de online cursussen zijn er live workshops. Een workshop is een interactieve sessie op locatie of online, gericht op een team of een leider. Waar een cursus vooral individueel is, werkt een workshop met een groep: je bouwt samen begrip op en oefent direct met elkaar. Een workshop over AI voor bedrijven is daarom vaak de eerste stap wanneer een heel team mee moet.</p>
+      <p data-i18n="kb.p8">Het resultaat van beide vormen is hetzelfde soort verandering: van "ik weet niet waar te beginnen" naar "ik snap wat AI voor mij kan doen." Dat is winst, maar het is geen strategie. Een cursus vertelt je niet welke van de tien mogelijke toepassingen het beste past bij jouw bedrijf. Daarvoor is een ander gesprek nodig.</p>
 
-      <h2>Wat doet een AI-consultant voor het MKB?</h2>
-      <p>Een AI-consultant analyseert waar AI waarde toevoegt in jouw organisatie en vertaalt dat naar een concrete strategie. Geen algemeen verhaal over wat AI allemaal kan, maar een antwoord op de vraag die telt: wat werkt hier, in dit bedrijf, met dit team?</p>
-      <p>Bij Sila ziet een <a href="../consultancy.html">consultancytraject</a> er zo uit:</p>
+      <h2 data-i18n="kb.h2.3">Wat doet een AI-consultant voor het MKB?</h2>
+      <p data-i18n="kb.p9">Een AI-consultant analyseert waar AI waarde toevoegt in jouw organisatie en vertaalt dat naar een concrete strategie. Geen algemeen verhaal over wat AI allemaal kan, maar een antwoord op de vraag die telt: wat werkt hier, in dit bedrijf, met dit team?</p>
+      <p data-i18n-html="kb.p10">Bij Sila ziet een <a href="../consultancy.html">consultancytraject</a> er zo uit:</p>
       <ul>
-        <li><strong>Intakegesprek.</strong> Wie ben je, wat doe je, wat wil je bereiken?</li>
-        <li><strong>Analyse.</strong> Waar liggen kansen voor AI in jouw organisatie? Wat zijn de risico's?</li>
-        <li><strong>Strategiesessie.</strong> Samen prioriteiten bepalen: wat pak je als eerste aan?</li>
-        <li><strong>AI-plan.</strong> Concrete aanbevelingen, tools en een volgorde van aanpak.</li>
-        <li><strong>Nazorg.</strong> Een korte follow-up na implementatie.</li>
+        <li data-i18n-html="kb.li1"><strong>Intakegesprek.</strong> Wie ben je, wat doe je, wat wil je bereiken?</li>
+        <li data-i18n-html="kb.li2"><strong>Analyse.</strong> Waar liggen kansen voor AI in jouw organisatie? Wat zijn de risico's?</li>
+        <li data-i18n-html="kb.li3"><strong>Strategiesessie.</strong> Samen prioriteiten bepalen: wat pak je als eerste aan?</li>
+        <li data-i18n-html="kb.li4"><strong>AI-plan.</strong> Concrete aanbevelingen, tools en een volgorde van aanpak.</li>
+        <li data-i18n-html="kb.li5"><strong>Nazorg.</strong> Een korte follow-up na implementatie.</li>
       </ul>
-      <p>Dit traject past bij bedrijven die weten dat AI belangrijk is, maar niet weten waar te beginnen. Ook bedrijven die al met losse tools experimenteren, komen hier vaak uit: ze hebben behoefte aan richting, niet aan nog meer losse toepassingen.</p>
-      <p>Concreet biedt Sila drie vormen van consultancy aan. Een AI-audit is een eenmalige doorlichting van je organisatie op kansen en risico's, met een helder rapport als resultaat. Een AI-strategietraject levert een concreet stappenplan op, afgestemd op jouw organisatie. En een AI-sparringpartner is een doorlopende vorm: maandelijkse strategische sessies met iemand die met je meedenkt, ook als je koers al staat.</p>
+      <p data-i18n="kb.p11">Dit traject past bij bedrijven die weten dat AI belangrijk is, maar niet weten waar te beginnen. Ook bedrijven die al met losse tools experimenteren, komen hier vaak uit: ze hebben behoefte aan richting, niet aan nog meer losse toepassingen.</p>
+      <p data-i18n="kb.p12">Concreet biedt Sila drie vormen van consultancy aan. Een AI-audit is een eenmalige doorlichting van je organisatie op kansen en risico's, met een helder rapport als resultaat. Een AI-strategietraject levert een concreet stappenplan op, afgestemd op jouw organisatie. En een AI-sparringpartner is een doorlopende vorm: maandelijkse strategische sessies met iemand die met je meedenkt, ook als je koers al staat.</p>
 
-      <h2>Wanneer kies je voor consultancy en wanneer voor educatie?</h2>
-      <p>Hier is een eerlijk beslismodel, zonder omhaal.</p>
-      <p><strong>Kies een cursus of workshop als:</strong> je team niet weet wat AI concreet inhoudt. Je zelf nog geen beeld hebt van de mogelijkheden. Je snel en betaalbaar basiskennis wilt opbouwen voordat je grotere keuzes maakt. Je merkt dat mensen in je bedrijf huiverig zijn en eerst vertrouwen moeten opbouwen.</p>
-      <p><strong>Kies consultancy als:</strong> je al weet dat AI kansen biedt, maar niet welke voor jouw bedrijf specifiek. Je al met losse tools experimenteert zonder duidelijke lijn. Je een plan nodig hebt dat je aan je team of je directie kunt voorleggen. Je liever eenmalig goed advies krijgt dan zelf maanden lang moet uitzoeken wat werkt.</p>
-      <p><strong>Kies allebei als:</strong> je een team hebt dat nog moet wennen aan AI, én je als leider een duidelijke koers nodig hebt. Dat is de meest voorkomende combinatie: eerst begrijpen wat er mogelijk is via een cursus of workshop, dan bepalen wat je concreet gaat doen via consultancy. Daarna volgt vaak een derde stap: implementatie, waarbij het plan daadwerkelijk gebouwd wordt.</p>
-      <p>Er is geen verkeerde keuze hier, wel een volgorde die het meeste oplevert. Beginnen met een plan zonder dat iemand in je team snapt wat AI is, werkt net zo slecht als een team vol enthousiasme zonder duidelijke richting.</p>
+      <h2 data-i18n="kb.h2.4">Wanneer kies je voor consultancy en wanneer voor educatie?</h2>
+      <p data-i18n="kb.p13">Hier is een eerlijk beslismodel, zonder omhaal.</p>
+      <p data-i18n-html="kb.p14"><strong>Kies een cursus of workshop als:</strong> je team niet weet wat AI concreet inhoudt. Je zelf nog geen beeld hebt van de mogelijkheden. Je snel en betaalbaar basiskennis wilt opbouwen voordat je grotere keuzes maakt. Je merkt dat mensen in je bedrijf huiverig zijn en eerst vertrouwen moeten opbouwen.</p>
+      <p data-i18n-html="kb.p15"><strong>Kies consultancy als:</strong> je al weet dat AI kansen biedt, maar niet welke voor jouw bedrijf specifiek. Je al met losse tools experimenteert zonder duidelijke lijn. Je een plan nodig hebt dat je aan je team of je directie kunt voorleggen. Je liever eenmalig goed advies krijgt dan zelf maanden lang moet uitzoeken wat werkt.</p>
+      <p data-i18n-html="kb.p16"><strong>Kies allebei als:</strong> je een team hebt dat nog moet wennen aan AI, én je als leider een duidelijke koers nodig hebt. Dat is de meest voorkomende combinatie: eerst begrijpen wat er mogelijk is via een cursus of workshop, dan bepalen wat je concreet gaat doen via consultancy. Daarna volgt vaak een derde stap: implementatie, waarbij het plan daadwerkelijk gebouwd wordt.</p>
+      <p data-i18n="kb.p17">Er is geen verkeerde keuze hier, wel een volgorde die het meeste oplevert. Beginnen met een plan zonder dat iemand in je team snapt wat AI is, werkt net zo slecht als een team vol enthousiasme zonder duidelijke richting.</p>
 
-      <h2>Wat kosten AI-consultancy en AI-cursussen?</h2>
-      <p>Online AI-cursussen bij Sila kosten tussen de tien en vijftien euro per stuk. Dat is bewust laagdrempelig: je kunt op eigen tempo leren zonder dat het een grote investering vraagt.</p>
-      <p>Workshops en consultancytrajecten zijn maatwerk. De prijs hangt af van de omvang van je team, de diepte van de analyse en wat je precies nodig hebt: een eenmalige AI-audit, een volledig strategietraject of een doorlopende sparringpartner. Daarom werken we hier niet met een vaste prijslijst, maar met een kort gesprek waarin we samen bepalen wat past. Je krijgt vooraf altijd een helder voorstel, zonder verrassingen achteraf.</p>
+      <h2 data-i18n="kb.h2.5">Wat kosten AI-consultancy en AI-cursussen?</h2>
+      <p data-i18n="kb.p18">Online AI-cursussen bij Sila kosten tussen de tien en vijftien euro per stuk. Dat is bewust laagdrempelig: je kunt op eigen tempo leren zonder dat het een grote investering vraagt.</p>
+      <p data-i18n="kb.p19">Workshops en consultancytrajecten zijn maatwerk. De prijs hangt af van de omvang van je team, de diepte van de analyse en wat je precies nodig hebt: een eenmalige AI-audit, een volledig strategietraject of een doorlopende sparringpartner. Daarom werken we hier niet met een vaste prijslijst, maar met een kort gesprek waarin we samen bepalen wat past. Je krijgt vooraf altijd een helder voorstel, zonder verrassingen achteraf.</p>
 
-      <h2>Kun je consultancy en een cursus combineren?</h2>
-      <p>Ja, en dat gebeurt regelmatig. De drie pijlers van Sila, educatie, consultancy en implementatie, zijn geen losse producten maar stappen die op elkaar kunnen volgen. Je kunt instappen bij één pijler, of alle drie doorlopen.</p>
-      <p>Een voorbeeld: een team volgt eerst een workshop om te begrijpen wat AI voor hun werk kan betekenen. Daarna volgt een consultancytraject waarin de leider een concreet plan krijgt voor welke twee of drie toepassingen echt waarde opleveren. Tot slot wordt dat plan gebouwd in een implementatietraject. Elke stap bouwt voort op de vorige, zonder dat je vooraf alles al hoeft te weten.</p>
+      <h2 data-i18n="kb.h2.6">Kun je consultancy en een cursus combineren?</h2>
+      <p data-i18n="kb.p20">Ja, en dat gebeurt regelmatig. De drie pijlers van Sila, educatie, consultancy en implementatie, zijn geen losse producten maar stappen die op elkaar kunnen volgen. Je kunt instappen bij één pijler, of alle drie doorlopen.</p>
+      <p data-i18n="kb.p21">Een voorbeeld: een team volgt eerst een workshop om te begrijpen wat AI voor hun werk kan betekenen. Daarna volgt een consultancytraject waarin de leider een concreet plan krijgt voor welke twee of drie toepassingen echt waarde opleveren. Tot slot wordt dat plan gebouwd in een implementatietraject. Elke stap bouwt voort op de vorige, zonder dat je vooraf alles al hoeft te weten.</p>
 
       <div class="kb-cta">
-        <h2>Wat is de volgende stap?</h2>
-        <p>Twijfel je nog of je bedrijf klaar is voor een cursus, een workshop of een adviestraject? Dat hoef je niet alleen te bepalen. Plan een kort, vrijblijvend gesprek met Sila. We kijken samen naar jouw situatie en adviseren eerlijk wat het beste past, ook als dat betekent dat je nog niet aan consultancy toe bent.</p>
+        <h2 data-i18n="kb.cta.title">Wat is de volgende stap?</h2>
+        <p data-i18n="kb.cta.body">Twijfel je nog of je bedrijf klaar is voor een cursus, een workshop of een adviestraject? Dat hoef je niet alleen te bepalen. Plan een kort, vrijblijvend gesprek met Sila. We kijken samen naar jouw situatie en adviseren eerlijk wat het beste past, ook als dat betekent dat je nog niet aan consultancy toe bent.</p>
         <div class="kb-cta-buttons">
-          <a href="../contact.html" class="kb-btn kb-btn-primary">Neem contact op</a>
-          <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" class="kb-btn kb-btn-secondary">Plan een gesprek in</a>
+          <a href="../contact.html" class="kb-btn kb-btn-primary" data-i18n="kb.cta.btn1">Neem contact op</a>
+          <a href="https://calendar.app.google/ChK3GTUb3qX93V6Y7" target="_blank" rel="noopener noreferrer" class="kb-btn kb-btn-secondary" data-i18n="kb.cta.btn2">Plan een gesprek in</a>
         </div>
       </div>
 
-      <h2>Veelgestelde vragen</h2>
+      <h2 data-i18n="kb.faq.title">Veelgestelde vragen</h2>
       <div class="faq-list">
         <details class="faq-item">
-          <summary>Is een AI-cursus genoeg om als bedrijf met AI te beginnen?<svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
-          <div class="faq-answer"><p>Voor de eerste stap wel. Een cursus geeft je het begrip en vertrouwen om te starten. Zodra je een keuze moet maken tussen meerdere toepassingen, of een plan nodig hebt voor je hele organisatie, is consultancy een logische vervolgstap.</p></div>
+          <summary><span data-i18n="kb.faq.q1">Is een AI-cursus genoeg om als bedrijf met AI te beginnen?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="faq-answer"><p data-i18n="kb.faq.a1">Voor de eerste stap wel. Een cursus geeft je het begrip en vertrouwen om te starten. Zodra je een keuze moet maken tussen meerdere toepassingen, of een plan nodig hebt voor je hele organisatie, is consultancy een logische vervolgstap.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Hoe lang duurt een AI-consultancytraject bij Sila?<svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
-          <div class="faq-answer"><p>Dat hangt af van de omvang van je organisatie en de vraag. Een traject bestaat uit een intake, analyse, strategiesessie, een AI-plan en een korte nazorgperiode. In het kennismakingsgesprek bespreken we een realistische planning.</p></div>
+          <summary><span data-i18n="kb.faq.q2">Hoe lang duurt een AI-consultancytraject bij Sila?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="faq-answer"><p data-i18n="kb.faq.a2">Dat hangt af van de omvang van je organisatie en de vraag. Een traject bestaat uit een intake, analyse, strategiesessie, een AI-plan en een korte nazorgperiode. In het kennismakingsgesprek bespreken we een realistische planning.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Kan mijn team zonder technische kennis met AI leren werken?<svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
-          <div class="faq-answer"><p>Ja. Alle cursussen en workshops van Sila zijn gemaakt voor mensen zonder technische achtergrond. Vaktermen worden direct uitgelegd, en je leert op je eigen tempo.</p></div>
+          <summary><span data-i18n="kb.faq.q3">Kan mijn team zonder technische kennis met AI leren werken?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="faq-answer"><p data-i18n="kb.faq.a3">Ja. Alle cursussen en workshops van Sila zijn gemaakt voor mensen zonder technische achtergrond. Vaktermen worden direct uitgelegd, en je leert op je eigen tempo.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Wat gebeurt er na een AI-audit of AI-strategietraject?<svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
-          <div class="faq-answer"><p>Je krijgt een helder plan met concrete aanbevelingen en een volgorde van aanpak. Wil je dat plan ook daadwerkelijk laten bouwen, dan kan dat via implementatie: workflows, chatbots of andere AI-oplossingen die Sila voor je realiseert.</p></div>
+          <summary><span data-i18n="kb.faq.q4">Wat gebeurt er na een AI-audit of AI-strategietraject?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="faq-answer"><p data-i18n="kb.faq.a4">Je krijgt een helder plan met concrete aanbevelingen en een volgorde van aanpak. Wil je dat plan ook daadwerkelijk laten bouwen, dan kan dat via implementatie: workflows, chatbots of andere AI-oplossingen die Sila voor je realiseert.</p></div>
         </details>
       </div>
     </article>
 
     <aside class="kb-related" aria-label="Verder lezen">
-      <h2>Verder lezen</h2>
+      <h2 data-i18n="kb.related.title">Verder lezen</h2>
       <div class="kb-related-grid">
         <a href="ai-transformatiepartner.html" class="kb-card">
-          <div class="kb-card-label">AI-transformatie</div>
-          <div class="kb-card-title">Wat is een AI-transformatiepartner en wanneer heb je er een nodig?</div>
-          <span class="kb-card-arrow">Lees artikel <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+          <div class="kb-card-label" data-i18n="kb.related1.label">AI-transformatie</div>
+          <div class="kb-card-title" data-i18n="kb.related1.title">Wat is een AI-transformatiepartner en wanneer heb je er een nodig?</div>
+          <span class="kb-card-arrow"><span data-i18n="kb.card.read">Lees artikel</span> <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </a>
         <a href="ai-automatisering-mkb.html" class="kb-card">
-          <div class="kb-card-label">Automatisering</div>
-          <div class="kb-card-title">AI-automatisering voor het MKB: wat kun je in 2026 echt automatiseren?</div>
-          <span class="kb-card-arrow">Lees artikel <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+          <div class="kb-card-label" data-i18n="kb.related2.label">Automatisering</div>
+          <div class="kb-card-title" data-i18n="kb.related2.title">AI-automatisering voor het MKB: wat kun je in 2026 echt automatiseren?</div>
+          <span class="kb-card-arrow"><span data-i18n="kb.card.read">Lees artikel</span> <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </a>
       </div>
     </aside>
@@ -208,12 +214,170 @@
 
   <!-- ── Floating Nav ─────────────────────────────────── -->
   <nav class="floating-nav" aria-label="Hoofdnavigatie">
-    <a href="../index.html#diensten"    class="nav-link mob-hide">Diensten</a>
-    <a href="../over-ons.html"          class="nav-link mob-hide">Over ons</a>
-    <a href="index.html"                class="nav-link mob-hide">Kennisbank</a>
-    <a href="../index.html#nieuwsbrief" class="nav-link mob-hide">Nieuwsbrief</a>
-    <a href="../contact.html"           class="nav-cta">Contact</a>
+    <a href="../index.html#diensten"    class="nav-link mob-hide" data-i18n="kb.nav.services">Diensten</a>
+    <a href="../over-ons.html"          class="nav-link mob-hide" data-i18n="kb.nav.about">Over ons</a>
+    <a href="index.html"                class="nav-link mob-hide" data-i18n="kb.nav.kennisbank">Kennisbank</a>
+    <a href="../index.html#nieuwsbrief" class="nav-link mob-hide" data-i18n="kb.nav.newsletter">Nieuwsbrief</a>
+    <a href="../contact.html"           class="nav-cta" data-i18n="kb.nav.contact">Contact</a>
   </nav>
+
+<script>
+const T_KB = {
+  nl: {
+    'kb.back': 'Kennisbank',
+    'kb.crumb.home': 'Home',
+    'kb.crumb.kb': 'Kennisbank',
+    'kb.crumb.current': 'Consultancy of cursus',
+    'kb.h1': 'AI-consultancy of een AI-cursus: wat past bij <em>jouw</em> bedrijf?',
+    'kb.meta.by': 'Door Jamal Allam',
+    'kb.meta.date': '7 juli 2026',
+    'kb.meta.readtime': '6 minuten leestijd',
+    'kb.lead': '<strong>Kort antwoord:</strong> een AI-cursus leert jou en je team wat AI is en hoe je het gebruikt, tegen een vaste, lage prijs en op eigen tempo. AI-consultancy is persoonlijk advies over wát je met AI moet doen in jouw specifieke bedrijf, met een concreet plan als resultaat. Heb je vooral kennis nodig, kies dan een cursus of workshop. Heb je een keuze of strategie nodig, kies dan consultancy. Veel bedrijven combineren beide: eerst begrijpen, dan bepalen.',
+    'kb.p1': 'Je hebt vast een van deze twee vragen gehad. "Moeten we een cursus AI volgen voor het team?" Of: "Moeten we iemand inhuren die met ons meedenkt over onze AI-koers?" Het antwoord hangt af van waar je nu staat, en dat is precies wat dit artikel helder maakt.',
+    'kb.h2.1': 'Wat is het verschil tussen AI-consultancy en een AI-cursus?',
+    'kb.p2': 'Een AI-cursus is educatie. Je leert wat AI is, wat het kan en hoe je ermee werkt. Het format is vast: je volgt de stof, op je eigen tempo, en het resultaat is kennis en vaardigheid.',
+    'kb.p3': 'AI-consultancy is advies. Een consultant kijkt naar jouw specifieke bedrijf en helpt je bepalen waar AI waarde toevoegt, wat je eerst oppakt en hoe je dat aanpakt. Het resultaat is geen kennis, maar een plan.',
+    'kb.p4': 'Bij Sila zie je dat verschil terug in twee van de drie pijlers waarmee we werken. <a href="../educatie.html">Educatie</a> draait om begrijpen wat AI is en kan. <a href="../consultancy.html">Consultancy</a> draait om bepalen wat jij met AI gaat doen. De derde pijler, <a href="../implementatie.html">implementatie</a>, is het daadwerkelijk bouwen van wat je hebt besloten.',
+    'kb.h2.2': 'Wat leer je in een AI-cursus voor ondernemers?',
+    'kb.p5': 'Een goede AI-cursus voor ondernemers is praktisch, niet technisch. Je leert geen programmeren. Je leert wat AI voor jouw werk kan betekenen, welke tools daarbij passen en hoe je een eerste stap zet zonder dat het overweldigend wordt.',
+    'kb.p6': 'Sila biedt hiervoor <a href="../educatie.html">online cursussen</a> aan, zoals <em>Hoe begin ik met automatiseren?</em>, <em>AI Strategie voor Leiders</em>, <em>Word een prompt expert</em> en <em>Hoe gebruik ik Claude Code?</em> Elke cursus behandelt één onderwerp grondig, in heldere taal, met voorbeelden die je herkent uit je eigen werkdag.',
+    'kb.p7': 'Naast de online cursussen zijn er live workshops. Een workshop is een interactieve sessie op locatie of online, gericht op een team of een leider. Waar een cursus vooral individueel is, werkt een workshop met een groep: je bouwt samen begrip op en oefent direct met elkaar. Een workshop over AI voor bedrijven is daarom vaak de eerste stap wanneer een heel team mee moet.',
+    'kb.p8': 'Het resultaat van beide vormen is hetzelfde soort verandering: van "ik weet niet waar te beginnen" naar "ik snap wat AI voor mij kan doen." Dat is winst, maar het is geen strategie. Een cursus vertelt je niet welke van de tien mogelijke toepassingen het beste past bij jouw bedrijf. Daarvoor is een ander gesprek nodig.',
+    'kb.h2.3': 'Wat doet een AI-consultant voor het MKB?',
+    'kb.p9': 'Een AI-consultant analyseert waar AI waarde toevoegt in jouw organisatie en vertaalt dat naar een concrete strategie. Geen algemeen verhaal over wat AI allemaal kan, maar een antwoord op de vraag die telt: wat werkt hier, in dit bedrijf, met dit team?',
+    'kb.p10': 'Bij Sila ziet een <a href="../consultancy.html">consultancytraject</a> er zo uit:',
+    'kb.li1': '<strong>Intakegesprek.</strong> Wie ben je, wat doe je, wat wil je bereiken?',
+    'kb.li2': '<strong>Analyse.</strong> Waar liggen kansen voor AI in jouw organisatie? Wat zijn de risico\'s?',
+    'kb.li3': '<strong>Strategiesessie.</strong> Samen prioriteiten bepalen: wat pak je als eerste aan?',
+    'kb.li4': '<strong>AI-plan.</strong> Concrete aanbevelingen, tools en een volgorde van aanpak.',
+    'kb.li5': '<strong>Nazorg.</strong> Een korte follow-up na implementatie.',
+    'kb.p11': 'Dit traject past bij bedrijven die weten dat AI belangrijk is, maar niet weten waar te beginnen. Ook bedrijven die al met losse tools experimenteren, komen hier vaak uit: ze hebben behoefte aan richting, niet aan nog meer losse toepassingen.',
+    'kb.p12': 'Concreet biedt Sila drie vormen van consultancy aan. Een AI-audit is een eenmalige doorlichting van je organisatie op kansen en risico\'s, met een helder rapport als resultaat. Een AI-strategietraject levert een concreet stappenplan op, afgestemd op jouw organisatie. En een AI-sparringpartner is een doorlopende vorm: maandelijkse strategische sessies met iemand die met je meedenkt, ook als je koers al staat.',
+    'kb.h2.4': 'Wanneer kies je voor consultancy en wanneer voor educatie?',
+    'kb.p13': 'Hier is een eerlijk beslismodel, zonder omhaal.',
+    'kb.p14': '<strong>Kies een cursus of workshop als:</strong> je team niet weet wat AI concreet inhoudt. Je zelf nog geen beeld hebt van de mogelijkheden. Je snel en betaalbaar basiskennis wilt opbouwen voordat je grotere keuzes maakt. Je merkt dat mensen in je bedrijf huiverig zijn en eerst vertrouwen moeten opbouwen.',
+    'kb.p15': '<strong>Kies consultancy als:</strong> je al weet dat AI kansen biedt, maar niet welke voor jouw bedrijf specifiek. Je al met losse tools experimenteert zonder duidelijke lijn. Je een plan nodig hebt dat je aan je team of je directie kunt voorleggen. Je liever eenmalig goed advies krijgt dan zelf maanden lang moet uitzoeken wat werkt.',
+    'kb.p16': '<strong>Kies allebei als:</strong> je een team hebt dat nog moet wennen aan AI, én je als leider een duidelijke koers nodig hebt. Dat is de meest voorkomende combinatie: eerst begrijpen wat er mogelijk is via een cursus of workshop, dan bepalen wat je concreet gaat doen via consultancy. Daarna volgt vaak een derde stap: implementatie, waarbij het plan daadwerkelijk gebouwd wordt.',
+    'kb.p17': 'Er is geen verkeerde keuze hier, wel een volgorde die het meeste oplevert. Beginnen met een plan zonder dat iemand in je team snapt wat AI is, werkt net zo slecht als een team vol enthousiasme zonder duidelijke richting.',
+    'kb.h2.5': 'Wat kosten AI-consultancy en AI-cursussen?',
+    'kb.p18': 'Online AI-cursussen bij Sila kosten tussen de tien en vijftien euro per stuk. Dat is bewust laagdrempelig: je kunt op eigen tempo leren zonder dat het een grote investering vraagt.',
+    'kb.p19': 'Workshops en consultancytrajecten zijn maatwerk. De prijs hangt af van de omvang van je team, de diepte van de analyse en wat je precies nodig hebt: een eenmalige AI-audit, een volledig strategietraject of een doorlopende sparringpartner. Daarom werken we hier niet met een vaste prijslijst, maar met een kort gesprek waarin we samen bepalen wat past. Je krijgt vooraf altijd een helder voorstel, zonder verrassingen achteraf.',
+    'kb.h2.6': 'Kun je consultancy en een cursus combineren?',
+    'kb.p20': 'Ja, en dat gebeurt regelmatig. De drie pijlers van Sila, educatie, consultancy en implementatie, zijn geen losse producten maar stappen die op elkaar kunnen volgen. Je kunt instappen bij één pijler, of alle drie doorlopen.',
+    'kb.p21': 'Een voorbeeld: een team volgt eerst een workshop om te begrijpen wat AI voor hun werk kan betekenen. Daarna volgt een consultancytraject waarin de leider een concreet plan krijgt voor welke twee of drie toepassingen echt waarde opleveren. Tot slot wordt dat plan gebouwd in een implementatietraject. Elke stap bouwt voort op de vorige, zonder dat je vooraf alles al hoeft te weten.',
+    'kb.cta.title': 'Wat is de volgende stap?',
+    'kb.cta.body': 'Twijfel je nog of je bedrijf klaar is voor een cursus, een workshop of een adviestraject? Dat hoef je niet alleen te bepalen. Plan een kort, vrijblijvend gesprek met Sila. We kijken samen naar jouw situatie en adviseren eerlijk wat het beste past, ook als dat betekent dat je nog niet aan consultancy toe bent.',
+    'kb.cta.btn1': 'Neem contact op',
+    'kb.cta.btn2': 'Plan een gesprek in',
+    'kb.faq.title': 'Veelgestelde vragen',
+    'kb.faq.q1': 'Is een AI-cursus genoeg om als bedrijf met AI te beginnen?',
+    'kb.faq.a1': 'Voor de eerste stap wel. Een cursus geeft je het begrip en vertrouwen om te starten. Zodra je een keuze moet maken tussen meerdere toepassingen, of een plan nodig hebt voor je hele organisatie, is consultancy een logische vervolgstap.',
+    'kb.faq.q2': 'Hoe lang duurt een AI-consultancytraject bij Sila?',
+    'kb.faq.a2': 'Dat hangt af van de omvang van je organisatie en de vraag. Een traject bestaat uit een intake, analyse, strategiesessie, een AI-plan en een korte nazorgperiode. In het kennismakingsgesprek bespreken we een realistische planning.',
+    'kb.faq.q3': 'Kan mijn team zonder technische kennis met AI leren werken?',
+    'kb.faq.a3': 'Ja. Alle cursussen en workshops van Sila zijn gemaakt voor mensen zonder technische achtergrond. Vaktermen worden direct uitgelegd, en je leert op je eigen tempo.',
+    'kb.faq.q4': 'Wat gebeurt er na een AI-audit of AI-strategietraject?',
+    'kb.faq.a4': 'Je krijgt een helder plan met concrete aanbevelingen en een volgorde van aanpak. Wil je dat plan ook daadwerkelijk laten bouwen, dan kan dat via implementatie: workflows, chatbots of andere AI-oplossingen die Sila voor je realiseert.',
+    'kb.related.title': 'Verder lezen',
+    'kb.related1.label': 'AI-transformatie',
+    'kb.related1.title': 'Wat is een AI-transformatiepartner en wanneer heb je er een nodig?',
+    'kb.related2.label': 'Automatisering',
+    'kb.related2.title': 'AI-automatisering voor het MKB: wat kun je in 2026 echt automatiseren?',
+    'kb.card.read': 'Lees artikel',
+    'kb.nav.services': 'Diensten',
+    'kb.nav.about': 'Over ons',
+    'kb.nav.kennisbank': 'Kennisbank',
+    'kb.nav.newsletter': 'Nieuwsbrief',
+    'kb.nav.contact': 'Contact',
+  },
+  en: {
+    'kb.back': 'Knowledge base',
+    'kb.crumb.home': 'Home',
+    'kb.crumb.kb': 'Knowledge base',
+    'kb.crumb.current': 'Consultancy or course',
+    'kb.h1': 'AI consultancy or an AI course: what fits <em>your</em> business?',
+    'kb.meta.by': 'By Jamal Allam',
+    'kb.meta.date': 'July 7, 2026',
+    'kb.meta.readtime': '6 min read',
+    'kb.lead': '<strong>Short answer:</strong> an AI course teaches you and your team what AI is and how to use it, for a fixed, low price and at your own pace. AI consultancy is personal advice about what you should do with AI in your specific business, resulting in a concrete plan. If you mainly need knowledge, choose a course or workshop. If you need a choice or a strategy, choose consultancy. Many companies combine both: first understand, then decide.',
+    'kb.p1': 'You have probably had one of these two questions. "Should we take an AI course for the team?" Or: "Should we hire someone to think along with us about our AI direction?" The answer depends on where you stand right now, and that is exactly what this article makes clear.',
+    'kb.h2.1': 'What is the difference between AI consultancy and an AI course?',
+    'kb.p2': 'An AI course is education. You learn what AI is, what it can do and how to work with it. The format is fixed: you follow the material, at your own pace, and the result is knowledge and skill.',
+    'kb.p3': 'AI consultancy is advice. A consultant looks at your specific business and helps you determine where AI adds value, what to tackle first and how to approach it. The result is not knowledge, but a plan.',
+    'kb.p4': 'At Sila you see that difference reflected in two of the three pillars we work with. <a href="../educatie.html">Education</a> is about understanding what AI is and can do. <a href="../consultancy.html">Consultancy</a> is about deciding what you are going to do with AI. The third pillar, <a href="../implementatie.html">implementation</a>, is actually building what you decided.',
+    'kb.h2.2': 'What do you learn in an AI course for entrepreneurs?',
+    'kb.p5': 'A good AI course for entrepreneurs is practical, not technical. You do not learn to code. You learn what AI can mean for your work, which tools fit that, and how to take a first step without it becoming overwhelming.',
+    'kb.p6': 'Sila offers <a href="../educatie.html">online courses</a> for this, such as <em>How do I start with automation?</em>, <em>AI Strategy for Leaders</em>, <em>Become a prompt expert</em> and <em>How do I use Claude Code?</em> Each course covers one topic thoroughly, in clear language, with examples you recognise from your own workday.',
+    'kb.p7': 'Besides the online courses there are live workshops. A workshop is an interactive session, on location or online, aimed at a team or a leader. Where a course is mostly individual, a workshop works with a group: you build understanding together and practise directly with each other. A workshop on AI for businesses is therefore often the first step when a whole team needs to come along.',
+    'kb.p8': 'The result of both formats is the same kind of shift: from "I do not know where to start" to "I understand what AI can do for me." That is progress, but it is not a strategy. A course will not tell you which of the ten possible applications fits your business best. That requires a different conversation.',
+    'kb.h2.3': 'What does an AI consultant do for SMEs?',
+    'kb.p9': 'An AI consultant analyses where AI adds value in your organisation and translates that into a concrete strategy. Not a generic story about everything AI can do, but an answer to the question that matters: what works here, in this business, with this team?',
+    'kb.p10': 'At Sila, a <a href="../consultancy.html">consultancy journey</a> looks like this:',
+    'kb.li1': '<strong>Intake conversation.</strong> Who are you, what do you do, what do you want to achieve?',
+    'kb.li2': '<strong>Analysis.</strong> Where are the opportunities for AI in your organisation? What are the risks?',
+    'kb.li3': '<strong>Strategy session.</strong> Determine priorities together: what do you tackle first?',
+    'kb.li4': '<strong>AI plan.</strong> Concrete recommendations, tools and an order of approach.',
+    'kb.li5': '<strong>Follow-up.</strong> A short check-in after implementation.',
+    'kb.p11': 'This journey fits companies that know AI matters but do not know where to start. Companies already experimenting with separate tools often end up here too: they need direction, not more isolated applications.',
+    'kb.p12': 'Concretely, Sila offers three forms of consultancy. An AI audit is a one-off review of your organisation for opportunities and risks, resulting in a clear report. An AI strategy journey delivers a concrete step-by-step plan tailored to your organisation. And an AI sparring partner is an ongoing form: monthly strategic sessions with someone thinking along with you, even once your direction is already set.',
+    'kb.h2.4': 'When do you choose consultancy, and when education?',
+    'kb.p13': 'Here is an honest decision model, no detours.',
+    'kb.p14': '<strong>Choose a course or workshop if:</strong> your team does not know what AI concretely involves. You yourself have no clear picture of the possibilities yet. You want to build basic knowledge quickly and affordably before making bigger choices. You notice people in your business are hesitant and need to build trust first.',
+    'kb.p15': '<strong>Choose consultancy if:</strong> you already know AI offers opportunities, but not which ones specifically for your business. You are already experimenting with separate tools without a clear line. You need a plan you can present to your team or your board. You would rather get good advice once than spend months figuring out what works yourself.',
+    'kb.p16': '<strong>Choose both if:</strong> you have a team that still needs to get used to AI, and as a leader you need a clear direction. That is the most common combination: first understand what is possible through a course or workshop, then decide what you are concretely going to do through consultancy. A third step often follows: implementation, where the plan actually gets built.',
+    'kb.p17': 'There is no wrong choice here, but there is an order that delivers the most. Starting with a plan while no one on your team understands what AI is works just as poorly as a team full of enthusiasm without clear direction.',
+    'kb.h2.5': 'What do AI consultancy and AI courses cost?',
+    'kb.p18': 'Online AI courses at Sila cost between ten and fifteen euros each. That is deliberately low-threshold: you can learn at your own pace without it requiring a big investment.',
+    'kb.p19': 'Workshops and consultancy journeys are custom work. The price depends on the size of your team, the depth of the analysis and exactly what you need: a one-off AI audit, a full strategy journey or an ongoing sparring partner. That is why we do not work with a fixed price list here, but with a short conversation in which we determine together what fits. You always get a clear proposal upfront, with no surprises afterwards.',
+    'kb.h2.6': 'Can you combine consultancy and a course?',
+    'kb.p20': 'Yes, and it happens regularly. Sila\'s three pillars, education, consultancy and implementation, are not separate products but steps that can follow each other. You can step into one pillar, or go through all three.',
+    'kb.p21': 'An example: a team first takes a workshop to understand what AI can mean for their work. Then follows a consultancy journey in which the leader gets a concrete plan for which two or three applications truly deliver value. Finally, that plan gets built in an implementation journey. Each step builds on the previous one, without you needing to know everything in advance.',
+    'kb.cta.title': 'What is the next step?',
+    'kb.cta.body': 'Still unsure whether your business is ready for a course, a workshop or an advisory journey? You do not have to figure that out alone. Schedule a short, no-obligation conversation with Sila. We look at your situation together and give honest advice on what fits best, even if that means you are not ready for consultancy yet.',
+    'kb.cta.btn1': 'Get in touch',
+    'kb.cta.btn2': 'Schedule a call',
+    'kb.faq.title': 'Frequently asked questions',
+    'kb.faq.q1': 'Is an AI course enough to start with AI as a business?',
+    'kb.faq.a1': 'For the first step, yes. A course gives you the understanding and confidence to get started. Once you need to choose between multiple applications, or need a plan for your whole organisation, consultancy is a logical next step.',
+    'kb.faq.q2': 'How long does an AI consultancy journey at Sila take?',
+    'kb.faq.a2': 'That depends on the size of your organisation and the question. A journey consists of an intake, analysis, strategy session, an AI plan and a short follow-up period. We discuss a realistic timeline during the introductory conversation.',
+    'kb.faq.q3': 'Can my team learn to work with AI without technical knowledge?',
+    'kb.faq.a3': 'Yes. All of Sila\'s courses and workshops are made for people without a technical background. Jargon is explained immediately, and you learn at your own pace.',
+    'kb.faq.q4': 'What happens after an AI audit or AI strategy journey?',
+    'kb.faq.a4': 'You get a clear plan with concrete recommendations and an order of approach. If you also want that plan actually built, that can happen through implementation: workflows, chatbots or other AI solutions that Sila builds for you.',
+    'kb.related.title': 'Keep reading',
+    'kb.related1.label': 'AI transformation',
+    'kb.related1.title': 'What is an AI transformation partner, and when do you need one?',
+    'kb.related2.label': 'Automation',
+    'kb.related2.title': 'AI automation for SMEs: what can you actually automate in 2026?',
+    'kb.card.read': 'Read article',
+    'kb.nav.services': 'Services',
+    'kb.nav.about': 'About',
+    'kb.nav.kennisbank': 'Knowledge base',
+    'kb.nav.newsletter': 'Newsletter',
+    'kb.nav.contact': 'Contact',
+  },
+};
+
+function applyLang(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (T_KB[lang][key] !== undefined && el.children.length === 0) el.textContent = T_KB[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (T_KB[lang][key] !== undefined) el.innerHTML = T_KB[lang][key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+}
+
+function setLang(lang, btn) {
+  applyLang(lang);
+}
+</script>
 
 </body>
 </html>

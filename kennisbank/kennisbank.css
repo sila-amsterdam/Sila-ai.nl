@@ -22,6 +22,35 @@ body {
   overflow-x: hidden;
 }
 
+/* ── Language toggle ── */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: hsl(20, 18%, 93%);
+  border-radius: 9999px;
+  padding: 3px;
+  border: 1px solid var(--border);
+}
+.lang-btn {
+  padding: 0.28rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s;
+  letter-spacing: 0.04em;
+}
+.lang-btn.active {
+  background: #fff;
+  color: var(--fg);
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+
 /* ── Top bar ── */
 .kb-topbar {
   position: sticky; top: 0; z-index: 50;
