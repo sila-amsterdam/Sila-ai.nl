@@ -2488,16 +2488,51 @@
 .aios-node:hover .aios-tile { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(35,29,24,.13); }
 .aios-node-label { font: 600 .74rem/1 'Karla', sans-serif; color: var(--muted); display: none; }
 @media (max-width: 768px) {
-  .aios-stage { aspect-ratio: auto; max-width: 420px; display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem 1rem; align-items: center; }
+  .aios-section { padding: 4rem 0 4.25rem; }
+  .aios-stage {
+    position: relative; aspect-ratio: auto; max-width: 440px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; align-items: stretch;
+    padding: 0 4px;
+  }
   .aios-svg { display: none; }
-  .aios-hub { position: relative; left: auto; top: auto; transform: none; grid-column: 1 / -1; justify-self: center; width: 152px; height: 152px; margin-bottom: .4rem; }
+  /* Verticale flow-spine: echo van het desktop-diagram, tools takken eraf */
+  .aios-stage::before {
+    content: ""; position: absolute; left: 50%; top: 150px; bottom: 8px;
+    width: 2px; transform: translateX(-50%);
+    background: repeating-linear-gradient(to bottom, var(--primary) 0 4px, transparent 4px 14px);
+    opacity: .32; z-index: 0;
+    animation: aiosSpine 2.6s linear infinite;
+  }
+  @keyframes aiosSpine { to { background-position: 0 18px; } }
+  .aios-hub {
+    position: relative; left: auto; top: auto; transform: none;
+    grid-column: 1 / -1; justify-self: center;
+    width: 134px; height: 134px; margin: 0 auto 1.6rem;
+  }
   .aios-hub-ring { animation: none; }
-  .aios-node { position: static; transform: none; left: auto; top: auto; flex-direction: row; gap: .55rem; justify-content: flex-start; }
-  .aios-node-label { display: block; }
+  .aios-hub-wordmark { font-size: 1.7rem; }
+  .aios-node {
+    position: static; transform: none; left: auto; top: auto; z-index: 1;
+    flex-direction: row; align-items: center; gap: .6rem; justify-content: flex-start;
+    background: #fff; border: 1px solid var(--border); border-radius: 16px;
+    padding: .6rem .75rem; box-shadow: 0 4px 14px rgba(35,29,24,.05);
+    transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s, border-color .3s;
+  }
+  .aios-node:active { transform: scale(.98); }
+  .aios-tile {
+    width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+    border-color: var(--primary-border); box-shadow: none;
+  }
+  .aios-tile svg { width: 24px; height: 24px; }
+  .aios-node-label { display: block; font-size: .82rem; color: var(--fg); }
+}
+@media (max-width: 768px) and (hover: hover) {
+  .aios-node:hover { border-color: var(--primary-border); box-shadow: 0 8px 20px rgba(220,90,20,.1); }
 }
 @media (prefers-reduced-motion: reduce) {
   .aios-flow { animation: none; opacity: .4; }
   .aios-hub-ring { animation: none; }
+  .aios-stage::before { animation: none; }
 }
 
 /* ═══════ AI-effectiviteitsindicator (calculator) ═══════ */
