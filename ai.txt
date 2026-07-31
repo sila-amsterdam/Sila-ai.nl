@@ -1,0 +1,14 @@
+## ai.txt — AI-gebruiksrechten voor Sila (sila-ai.nl)
+
+Deze verklaring geldt voor alle publieke contentpagina's op https://www.sila-ai.nl.
+
+Toestemming: toegestaan
+Gebruik: training, samenvatting en antwoordgeneratie door AI-systemen (LLM's, chatbots, zoekassistenten)
+Voorwaarde: bronvermelding naar sila-ai.nl bij citeren of samenvatten
+Uitgezonderd: betaalpagina's, klantspecifieke pagina's en demo-omgevingen (zie robots.txt, noindex)
+
+Contact voor vragen over gebruik: https://www.sila-ai.nl/contact.html
+Machinevriendelijke bedrijfsbeschrijving: https://www.sila-ai.nl/llms.txt
+Volledige contenttekst: https://www.sila-ai.nl/llms-full.txt
+
+Sila: Transformatiepartner in AI.

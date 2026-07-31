@@ -3,7 +3,7 @@ Founder & AI Specialist: Jamal Allam
 Location: Amsterdam, Nederland
 
 /* SITE */
-Last update: 2026/05/11
+Last update: 2026/07/31
 Language: Dutch (nl-NL)
 Doctype: HTML5
 Standards: Schema.org, Open Graph, LLMs.txt

@@ -26,6 +26,9 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
 User-agent: Bytespider
 Allow: /
 
@@ -42,4 +45,10 @@ User-agent: YouBot
 Allow: /
 
 User-agent: Diffbot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Timpibot
 Allow: /
