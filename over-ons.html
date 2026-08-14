@@ -769,6 +769,42 @@
       line-height: 1.7;
     }
 
+    /* ── Certificeringen Section ──────────────────── */
+    .cert-section {
+      background: var(--bg);
+      padding: 7rem 0;
+    }
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+    @media (max-width: 900px) {
+      .cert-grid { grid-template-columns: 1fr; }
+    }
+    .cert-issuer {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.4rem;
+    }
+    .cert-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1.1rem;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .cert-link svg { transition: transform 0.18s ease; }
+    .cert-link:hover svg { transform: translateX(3px); }
+    .cert-link:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 4px; }
+
     /* ── CTA Section ──────────────────────────────── */
     .cta-section {
       background: #fff;
@@ -1144,6 +1180,64 @@
 
 
 
+<!-- CERTIFICERINGEN SECTION -->
+<section class="cert-section" aria-label="Certificeringen">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="chip" style="margin-bottom:1.25rem;">
+        <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0 6.18,3.82 10,5 6.18,6.18 5,10 3.82,6.18 0,5 3.82,3.82"/></svg>
+        <span data-i18n="cert-chip">Erkend & gecertificeerd</span>
+      </div>
+      <h2 class="section-title" data-i18n="cert-title">Certificeringen & badges</h2>
+      <p class="section-lead" data-i18n="cert-lead">Direct te verifiëren erkenning van de platforms waarmee Sila werkt.</p>
+    </div>
+
+    <div class="cert-grid">
+
+      <div class="exp-card reveal reveal-delay-1">
+        <div class="exp-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5 7 22l5-3 5 3-1.5-8.5"/></svg>
+        </div>
+        <p class="cert-issuer">Anthropic Academy</p>
+        <h3 class="exp-title" data-i18n="cert-1-title">AI Fluency: Framework &amp; Foundations</h3>
+        <p class="exp-body" data-i18n="cert-1-body">Officiële certificering in het strategisch en verantwoord toepassen van AI.</p>
+        <a href="https://verify.skilljar.com/c/3s8b6vor7mwg" target="_blank" rel="noopener noreferrer" class="cert-link">
+          <span data-i18n="cert-link-label">Bekijk certificaat</span>
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+
+      <div class="exp-card reveal reveal-delay-2">
+        <div class="exp-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="12" r="2.5"/><path d="M7.2 7.2 16.8 11M7.2 16.8 16.8 13"/></svg>
+        </div>
+        <p class="cert-issuer">n8n</p>
+        <h3 class="exp-title" data-i18n="cert-2-title">n8n Automation Engineer</h3>
+        <p class="exp-body" data-i18n="cert-2-body">Gecertificeerd in het verantwoord en gestructureerd bouwen en beheren van automatiseringen.</p>
+        <a href="https://badges.n8n.io/198d3292-32ed-487a-ba7a-9814e11d16d2#acc.ELqGQNv8" target="_blank" rel="noopener noreferrer" class="cert-link">
+          <span data-i18n="cert-link-label">Bekijk certificaat</span>
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+
+      <div class="exp-card reveal reveal-delay-3">
+        <div class="exp-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15 15 9"/><path d="M10 6.5 12 4.5a4 4 0 0 1 5.66 5.66L15.5 12.16"/><path d="M14 17.5 12 19.5a4 4 0 0 1-5.66-5.66L8.5 11.84"/></svg>
+        </div>
+        <p class="cert-issuer">Make</p>
+        <h3 class="exp-title" data-i18n="cert-3-title">Make Certified</h3>
+        <p class="exp-body" data-i18n="cert-3-body">Certificering in het bouwen van scenario's en API-integraties.</p>
+        <a href="https://partnertraining.make.com/certificates/bkki8mevz0" target="_blank" rel="noopener noreferrer" class="cert-link">
+          <span data-i18n="cert-link-label">Bekijk certificaat</span>
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
 <!-- CTA SECTION -->
 <section class="cta-section" aria-label="Samenwerken">
   <div class="wrap" style="position:relative;z-index:1;">
@@ -1288,6 +1382,16 @@ const T_OO = {
     'stat-label-2':      'projecten<br>gerealiseerd',
     'stat-label-3':      'op maat<br>gemaakt',
     'stat-label-4':      'uren bespaard<br>voor klanten',
+    'cert-chip':         'Erkend & gecertificeerd',
+    'cert-title':        'Certificeringen & badges',
+    'cert-lead':         'Direct te verifiëren erkenning van de platforms waarmee Sila werkt.',
+    'cert-1-title':      'AI Fluency: Framework &amp; Foundations',
+    'cert-1-body':       'Officiële certificering in het strategisch en verantwoord toepassen van AI.',
+    'cert-2-title':      'n8n Automation Engineer',
+    'cert-2-body':       'Gecertificeerd in het verantwoord en gestructureerd bouwen en beheren van automatiseringen.',
+    'cert-3-title':      'Make Certified',
+    'cert-3-body':       "Certificering in het bouwen van scenario's en API-integraties.",
+    'cert-link-label':   'Bekijk certificaat',
     'cta-chip':          'Aan de slag',
     'cta-title':         'Klaar om samen te <em>werken</em>?',
     'cta-body':          'Samen kijken we wat AI voor jouw organisatie kan betekenen. Vrijblijvend, eerlijk en op maat.',
@@ -1315,6 +1419,16 @@ const T_OO = {
     'stat-label-2':      'projects<br>delivered',
     'stat-label-3':      'custom<br>made',
     'stat-label-4':      'hours saved<br>for clients',
+    'cert-chip':         'Recognised & certified',
+    'cert-title':        'Certifications & badges',
+    'cert-lead':         'Directly verifiable recognition from the platforms Sila works with.',
+    'cert-1-title':      'AI Fluency: Framework &amp; Foundations',
+    'cert-1-body':       'Official certification in strategically and responsibly applying AI.',
+    'cert-2-title':      'n8n Automation Engineer',
+    'cert-2-body':       'Certified in responsibly and rigorously building and managing automations.',
+    'cert-3-title':      'Make Certified',
+    'cert-3-body':       "Certification in building scenarios and API integrations.",
+    'cert-link-label':   'View certificate',
     'cta-chip':          'Get started',
     'cta-title':         'Ready to work <em>together</em>?',
     'cta-body':          "Together we'll explore what AI can mean for your organisation. No obligation, honest and tailored.",
