@@ -390,6 +390,7 @@
       position: relative;
       z-index: 1;
       max-width: 780px;
+      margin: 0 auto;
     }
 
     .hero-label {
@@ -412,6 +413,38 @@
       background: var(--primary);
       opacity: 0.6;
     }
+
+    .service-switch {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s ease-out forwards;
+    }
+    .service-switch a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font: 600 0.8rem/1 'Karla', sans-serif;
+      letter-spacing: 0.01em;
+      color: rgba(255,255,255,.72);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.05);
+      transition: transform 0.25s cubic-bezier(.2,.8,.2,1), background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+    .service-switch a:hover {
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.32);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .service-switch a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .service-switch a svg { flex-shrink: 0; transition: transform 0.25s ease; }
+    .service-switch a:hover svg { transform: translateX(2px); }
 
     .hero-title {
       font-family: 'Lora', Georgia, serif;
@@ -1068,6 +1101,10 @@
           <span class="hero-label-line"></span>
           <span data-i18n="hero.label">Consultancy</span>
         </div>
+        <div class="service-switch" aria-label="Andere diensten van Sila">
+          <a href="educatie.html"><span data-i18n="switch.edu">Educatie</span> <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+          <a href="implementatie.html"><span data-i18n="switch.impl">Implementatie</span> <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        </div>
         <h1 class="hero-title">
           <span class="sr-only" data-i18n="hero.sr">AI Consultancy Nederland: Strategisch AI-advies voor MKB</span>
           <span aria-hidden="true" data-i18n-html="hero.title">Strategisch advies<br>voor jouw <em>AI-reis</em></span>
@@ -1447,6 +1484,9 @@ const T_CONS = {
     'hero.sr': 'AI Consultancy Nederland: Strategisch AI-advies voor MKB',
     'hero.title': 'Strategisch advies<br>voor jouw <em>AI-reis</em>',
     'hero.body': 'Geen vage beloftes, maar concrete stappen. We analyseren jouw situatie en helpen je een heldere koers te varen in het AI-landschap.',
+    'switch.edu': 'Educatie',
+    'switch.cons': 'Consultancy',
+    'switch.impl': 'Implementatie',
     /* Sessions section */
     'sessions.label': 'Sessies',
     'sessions.title': 'Onze sessies',
@@ -1506,6 +1546,9 @@ const T_CONS = {
     'hero.sr': 'AI Consultancy Netherlands: Strategic AI advisory for SMEs',
     'hero.title': 'Strategic guidance<br>for your <em>AI journey</em>',
     'hero.body': 'No vague promises — just concrete steps. We analyse your situation and help you chart a clear course through the AI landscape.',
+    'switch.edu': 'Education',
+    'switch.cons': 'Consultancy',
+    'switch.impl': 'Implementation',
     /* Sessions section */
     'sessions.label': 'Sessions',
     'sessions.title': 'Our sessions',

@@ -561,7 +561,6 @@
       font-style: italic;
       color: var(--primary);
     }
-
     #typing-target::after {
       content: '|';
       animation: blink 0.85s step-end infinite;
@@ -570,7 +569,6 @@
       font-weight: 300;
     }
     @keyframes blink { 0%,100%{opacity:1}50%{opacity:0} }
-
     .hero-subtitle {
       font-size: clamp(1rem, 2.2vw, 1.175rem);
       font-weight: 400;
@@ -583,7 +581,7 @@
     }
     .hero-desc {
       font-size: 0.9375rem;
-      color: var(--muted);
+      color: hsl(20, 10%, 36%);
       max-width: 430px;
       margin: 0 auto 0;
       line-height: 1.7;
@@ -665,12 +663,74 @@
       margin: 0 auto;
     }
 
+    /* ── Bewegende aanbod-banner ──────────────────────── */
+    .hp-ticker {
+      background: var(--dark);
+      overflow: hidden;
+      padding: 1.05rem 0;
+    }
+    .hp-ticker-track {
+      display: flex;
+      width: max-content;
+      animation: hpTickerScroll 32s linear infinite;
+    }
+    .hp-ticker-track:hover { animation-play-state: paused; }
+    @media (prefers-reduced-motion: reduce) {
+      .hp-ticker-track { animation-duration: 90s; }
+    }
+    @keyframes hpTickerScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .hp-ticker-set { display: flex; align-items: center; flex-shrink: 0; }
+    .hp-ticker-item {
+      display: inline-block;
+      padding: 0 1.5rem;
+      font: 800 0.8rem/1 'Karla', sans-serif;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .hp-ticker-dot {
+      width: 15px; height: 15px;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+    .hp-ticker-dot svg { width: 100%; height: 100%; }
+
+
     /* ── Pillar Cards ──────────────────────────────── */
+    .pillars-stage { position: relative; }
+    #pillars-flow-svg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      overflow: visible; pointer-events: none; z-index: 0;
+    }
+    .pf-line { stroke: var(--border); stroke-width: 1.5; }
+    .pf-flow {
+      stroke: var(--primary); stroke-width: 2; stroke-linecap: round;
+      stroke-dasharray: 3 11; opacity: .6;
+      animation: pfFlow 2.4s linear infinite;
+    }
+    @keyframes pfFlow { to { stroke-dashoffset: -140; } }
+    @media (prefers-reduced-motion: reduce) { .pf-flow { animation: none; opacity: .35; } }
+    @media (max-width: 900px) { #pillars-flow-svg { display: none; } }
     .pillars-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(278px, 1fr));
       gap: 1.25rem;
       perspective: 1000px;
+      position: relative; z-index: 1;
+    }
+    @media (max-width: 900px) {
+      .pillar-card:not(:last-child) { position: relative; margin-bottom: 1.75rem; }
+      .pillar-card:not(:last-child)::after {
+        content: ''; position: absolute; left: 50%; bottom: -1.6rem; width: 12px; height: 12px;
+        transform: translateX(-50%) rotate(45deg);
+        border-right: 2px solid var(--primary); border-bottom: 2px solid var(--primary);
+        opacity: .55; animation: pfBounce 1.6s ease-in-out infinite;
+      }
+      @keyframes pfBounce { 0%,100% { bottom: -1.6rem; } 50% { bottom: -1.3rem; } }
     }
     /* ── Pillar mini-visuals (bewegend beeld in dataprivacy-kaarten) ── */
     .pillar-visual {
@@ -1032,16 +1092,11 @@
       padding: 5.5rem 0;
       background: linear-gradient(180deg, #fff 0%, hsl(280,20%,97%) 100%);
     }
-    .over-ons-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4.5rem;
-      align-items: center;
+    .over-ons-head {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 3rem;
     }
-    @media (max-width: 768px) {
-      .over-ons-inner { grid-template-columns: 1fr; gap: 2rem; }
-    }
-    .over-ons-left {}
     .over-ons-eyebrow {
       font-size: 0.9rem;
       font-weight: 500;
@@ -1059,11 +1114,16 @@
       color: hsl(20, 12%, 10%);
       margin-bottom: 0;
     }
+    #over-ons-right {
+      max-width: 720px;
+      margin: 0 auto;
+    }
     .over-ons-body {
-      font-size: 0.9375rem;
+      font-size: clamp(1.0625rem, 2vw, 1.1875rem);
       color: hsl(20, 10%, 38%);
-      line-height: 1.75;
-      margin-bottom: 1.125rem;
+      line-height: 1.85;
+      text-align: center;
+      margin-bottom: 1.75rem;
     }
     .over-ons-body:last-child { margin-bottom: 0; }
     .arabic-word {
@@ -1196,73 +1256,6 @@
         -webkit-overflow-scrolling: touch;
       }
     }
-
-    /* ── PDF Preview modal ──────────────────────────── */
-    #hp-preview-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 9100;
-      background: rgba(26,20,16,.72);
-      backdrop-filter: blur(4px);
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-    #hp-preview-modal {
-      background: #fff;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 680px;
-      max-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 20px 60px rgba(0,0,0,.25);
-      overflow: hidden;
-    }
-    #hp-preview-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid #E3DDD5;
-      flex-shrink: 0;
-    }
-    #hp-preview-header h2 {
-      font-family: 'Lora', Georgia, serif;
-      font-size: 1.125rem;
-      color: #231D18;
-      margin: 0;
-    }
-    #hp-preview-header p { font-size: 0.8125rem; color: #7A7167; margin: 2px 0 0; }
-    #hp-preview-pages {
-      overflow-y: auto;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      flex: 1;
-    }
-    #hp-preview-pages canvas { width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 12px rgba(0,0,0,.1); display: block; }
-    #hp-preview-loader { text-align: center; padding: 3rem; color: #7A7167; font-size: 0.9rem; }
-    #hp-preview-footer {
-      padding: 1rem 1.5rem;
-      border-top: 1px solid #E3DDD5;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-shrink: 0;
-      gap: 1rem;
-    }
-    #hp-preview-footer p { font-size: 0.8125rem; color: #7A7167; margin: 0; }
-    #hp-preview-footer .hp-koop-btn {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      background: #DC5A14; color: #fff;
-      border: none; cursor: pointer;
-      padding: 0.55rem 1.25rem; border-radius: 9999px;
-      font-size: 0.875rem; font-weight: 600;
-    }
-    #hp-preview-footer .hp-koop-btn:hover { background: #C85210; }
 
     /* ── Newsletter ────────────────────────────────── */
     .newsletter-section {
@@ -1800,12 +1793,12 @@
       <span aria-hidden="true"><span data-i18n="hero.voor">Voor</span> <em id="typing-target"></em></span>
     </h1>
 
-    <p class="hero-subtitle" data-i18n="hero.subtitle">
-      Jouw AI transformatiepartner.
+    <p class="hero-subtitle" data-i18n="hero.headline">
+      AI verandert elke week.
     </p>
 
     <p class="hero-desc" data-i18n="hero.desc">
-      Begeleiding en persoonlijke aandacht in een wereld waarin AI razendsnel verandert.
+      Sila geeft je begeleiding en persoonlijke aandacht in een wereld waarin AI razendsnel verandert.
     </p>
 
     <div class="scroll-indicator" aria-hidden="true">
@@ -1813,7 +1806,6 @@
     </div>
   </div>
 </section>
-
 
 <!-- ═══════════════════════════════════════════════════════
      DRIE PIJLERS
@@ -1830,9 +1822,23 @@
       <p class="pillars-sub" data-i18n="pillars.sub">Dat doen we op 3 manieren:</p>
     </div>
 
+    <div class="pillars-stage">
+    <svg id="pillars-flow-svg" aria-hidden="true">
+      <defs>
+        <marker id="pf-arrow" viewBox="0 0 8 8" refX="6.5" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 Z" fill="var(--primary)"/>
+        </marker>
+      </defs>
+      <path id="pf-path-1" class="pf-line" fill="none"/>
+      <path id="pf-path-2" class="pf-line" fill="none"/>
+      <path id="pf-path-3" class="pf-line" fill="none"/>
+      <path id="pf-flow-1" class="pf-flow" fill="none" marker-end="url(#pf-arrow)"/>
+      <path id="pf-flow-2" class="pf-flow" fill="none" marker-end="url(#pf-arrow)"/>
+      <path id="pf-flow-3" class="pf-flow" fill="none" marker-end="url(#pf-arrow)"/>
+    </svg>
     <div class="pillars-grid">
 
-      <article class="pillar-card reveal reveal-left" style="display:flex;flex-direction:column;">
+      <article class="pillar-card reveal reveal-left" id="pillar-edu" style="display:flex;flex-direction:column;">
         <span class="pillar-step" aria-hidden="true">01</span>
         <div class="icon-box">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -1842,7 +1848,7 @@
         </div>
         <h3 class="pillar-title" data-i18n="edu.title">Educatie</h3>
         <p class="pillar-body" data-i18n="edu.body">
-          Via workshops, trainingen en cursussen bouwen we jouw AI-kennis stap voor stap op, op jouw tempo en voor jouw sector.
+          Via workshops en persoonlijke begeleiding bouwen we jouw AI-kennis stap voor stap op, op jouw tempo en voor jouw sector.
         </p>
         <div class="tag-row">
           <span class="tag" data-i18n="edu.t1">Workshops</span>
@@ -1850,12 +1856,12 @@
           <span class="tag" data-i18n="edu.t3">Begeleiding</span>
         </div>
         <a href="educatie.html" class="meer-link" onclick="gtag('event','cta_click',{event_category:'diensten',event_label:'Educatie meer info'})">
-          <span data-i18n="edu.cta">Bekijk cursussen en workshops</span>
+          <span data-i18n="edu.cta">Bekijk onze workshops</span>
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
       </article>
 
-      <article class="pillar-card reveal" style="transition-delay:.1s;display:flex;flex-direction:column;">
+      <article class="pillar-card reveal" id="pillar-cons" style="transition-delay:.1s;display:flex;flex-direction:column;">
         <span class="pillar-step" aria-hidden="true">02</span>
         <div class="icon-box icon-box--circle">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -1878,7 +1884,7 @@
         </a>
       </article>
 
-      <article class="pillar-card reveal reveal-right" style="transition-delay:.2s;display:flex;flex-direction:column;">
+      <article class="pillar-card reveal reveal-right" id="pillar-impl" style="transition-delay:.2s;display:flex;flex-direction:column;">
         <span class="pillar-step" aria-hidden="true">03</span>
         <div class="icon-box icon-box--diamond">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -1902,12 +1908,91 @@
       </article>
 
     </div>
+    </div>
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════
+     BEWEGENDE AANBOD-BANNER
+════════════════════════════════════════════════════════ -->
+<div class="hp-ticker" aria-label="Wat Sila voor je bouwt">
+  <div class="hp-ticker-track">
+    <div class="hp-ticker-set" aria-hidden="false">
+      <span class="hp-ticker-item" data-i18n="ticker.i1">Claude Code Workshop</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i2">AI-bedrijfsonderzoek in 3 uur</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i3">Chatbots op maat gebouwd</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i4">Automatisering Workshop</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i5">Procesanalyse voor jouw team</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i6">Workflows die zichzelf runnen</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i7">AI voor zelfstandigen</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i8">Eén AI-systeem, op maat gebouwd</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+    </div>
+    <div class="hp-ticker-set" aria-hidden="true">
+      <span class="hp-ticker-item" data-i18n="ticker.i1">Claude Code Workshop</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i2">AI-bedrijfsonderzoek in 3 uur</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i3">Chatbots op maat gebouwd</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i4">Automatisering Workshop</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i5">Procesanalyse voor jouw team</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i6">Workflows die zichzelf runnen</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i7">AI voor zelfstandigen</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+      <span class="hp-ticker-item" data-i18n="ticker.i8">Eén AI-systeem, op maat gebouwd</span>
+      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
+    </div>
+  </div>
+</div>
 
 <!-- ═══════════════════════════════════════════════════════
-     CONVERSIE — UITGELICHTE CURSUS + CONSULTANCY
+     ORBITAL TIMELINE / QUIZ CTA
+════════════════════════════════════════════════════════ -->
+<section id="quiz" class="orb-section" aria-label="AI Reis Fases">
+  <div class="wrap">
+
+    <div class="section-header reveal reveal-left">
+      <div class="chip">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0.5 6.33,3.7 9.76,3.7 7.12,5.95 8.09,9.18 5,7.18 1.91,9.18 2.88,5.95 0.24,3.7 3.67,3.7"/></svg>
+        <span data-i18n="cta.eyebrow">Weet jij waar jij staat?</span>
+      </div>
+      <h2 class="section-title" data-i18n="cta.title">
+        Klaar om te ontdekken in welke fase jij zit van de AI-reis?
+      </h2>
+    </div>
+
+    <div class="orb-wrapper">
+      <div class="orb-canvas" id="orb-canvas">
+        <div class="orb-center" style="cursor:pointer;" onclick="gtag('event','cta_click',{event_category:'quiz',event_label:'Start de quiz orb'}); openQuiz()">
+          <div class="orb-center-pulse2"></div>
+          <div class="orb-center-pulse"></div>
+          <div class="orb-center-core" style="width:auto;height:auto;padding:0.7rem 1.3rem;border-radius:9999px;background:linear-gradient(135deg,#E8621A,#F07C35);min-width:110px;justify-content:center;">
+            <span style="font-size:0.8rem;font-weight:700;color:#fff;letter-spacing:0.03em;white-space:nowrap;" data-i18n="cta.btn">Start de quiz</span>
+          </div>
+        </div>
+        <div class="orb-ring"></div>
+        <!-- nodes injected by JS -->
+      </div>
+      <div class="orb-panel" id="orb-panel"></div>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     CONVERSIE — UITGELICHTE WORKSHOP + CONSULTANCY
 ════════════════════════════════════════════════════════ -->
 <section class="section conv-section" aria-label="Uitgelichte diensten">
   <div class="wrap">
@@ -1934,15 +2019,11 @@
             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
           </svg>
         </div>
-        <h3 class="conv-title" data-i18n="conv.edu.title">AI Strategie voor Leiders</h3>
-        <p class="conv-body" data-i18n="conv.edu.body">Niet hoe AI werkt, maar hoe jij als leider de juiste vragen stelt. Leer AI aansturen als een medewerker: strategisch, helder en doelgericht.</p>
+        <h3 class="conv-title" data-i18n="conv.edu.title">Claude Code Workshop</h3>
+        <p class="conv-body" data-i18n="conv.edu.body">Een dag lang zelf aan de slag met AI als werkassistent. Geen theorie, gewoon doen: aan het eind van de dag heb je zelf iets gebouwd.</p>
         <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
-          <button class="conv-btn conv-btn--outline" onclick="openPreview('ai-strategie-voor-leiders')">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-            Preview
-          </button>
-          <a href="educatie.html" class="conv-btn conv-btn--secondary" onclick="gtag('event','cta_click',{event_category:'conversie',event_label:'AI Strategie voor Leiders'})">
-            <span data-i18n="conv.edu.btn">Bekijk meer educatie</span>
+          <a href="educatie.html" class="conv-btn conv-btn--secondary" onclick="gtag('event','cta_click',{event_category:'conversie',event_label:'Claude Code Workshop'})">
+            <span data-i18n="conv.edu.btn">Bekijk onze workshops</span>
             <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>
         </div>
@@ -2019,9 +2100,9 @@
     <div class="section-header reveal" style="text-align:center;margin-bottom:3rem;">
       <div class="chip" style="justify-content:center;">
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span data-i18n="priv.chip">Privacy &amp; Veiligheid</span>
+        <span data-i18n="priv.chip">Goed om te weten</span>
       </div>
-      <h2 class="section-title" data-i18n="priv.title">Bewust omgaan met data</h2>
+      <h2 class="section-title" data-i18n="priv.title">Privacy &amp; Veiligheid</h2>
       <p class="section-subtitle" style="max-width:560px;margin:0 auto;" data-i18n="priv.sub">Onze infrastructuur staat altijd in Europa. Welke AI-tools we inzetten, bepaal jij. We zijn er altijd open over.</p>
     </div>
 
@@ -2104,42 +2185,6 @@
 </script>
 
 <!-- ═══════════════════════════════════════════════════════
-     ORBITAL TIMELINE / QUIZ CTA
-════════════════════════════════════════════════════════ -->
-<section id="quiz" class="orb-section" aria-label="AI Reis Fases">
-  <div class="wrap">
-
-    <div class="section-header reveal reveal-left">
-      <div class="chip">
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0.5 6.33,3.7 9.76,3.7 7.12,5.95 8.09,9.18 5,7.18 1.91,9.18 2.88,5.95 0.24,3.7 3.67,3.7"/></svg>
-        <span data-i18n="cta.eyebrow">Weet jij waar jij staat?</span>
-      </div>
-      <h2 class="section-title" data-i18n="cta.title">
-        Klaar om te ontdekken in welke fase jij zit van de AI-reis?
-      </h2>
-    </div>
-
-    <div class="orb-wrapper">
-      <div class="orb-canvas" id="orb-canvas">
-        <div class="orb-center" style="cursor:pointer;" onclick="gtag('event','cta_click',{event_category:'quiz',event_label:'Start de quiz orb'}); openQuiz()">
-          <div class="orb-center-pulse2"></div>
-          <div class="orb-center-pulse"></div>
-          <div class="orb-center-core" style="width:auto;height:auto;padding:0.7rem 1.3rem;border-radius:9999px;background:linear-gradient(135deg,#E8621A,#F07C35);min-width:110px;justify-content:center;">
-            <span style="font-size:0.8rem;font-weight:700;color:#fff;letter-spacing:0.03em;white-space:nowrap;" data-i18n="cta.btn">Start de quiz</span>
-          </div>
-        </div>
-        <div class="orb-ring"></div>
-        <!-- nodes injected by JS -->
-      </div>
-      <div class="orb-panel" id="orb-panel"></div>
-    </div>
-
-
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════
      QUIZ MODAL
 ════════════════════════════════════════════════════════ -->
 <div id="quiz-modal" role="dialog" aria-modal="true" aria-label="AI Quiz" style="
@@ -2192,241 +2237,34 @@
 ════════════════════════════════════════════════════════ -->
 <section id="over-ons" class="over-ons" aria-label="Over Sila">
   <div class="wrap">
-    <div class="over-ons-inner">
 
-      <div class="over-ons-left reveal reveal-left">
-        <div class="chip" style="margin-bottom:1rem;">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0.5 6.33,3.7 9.76,3.7 7.12,5.95 8.09,9.18 5,7.18 1.91,9.18 2.88,5.95 0.24,3.7 3.67,3.7"/></svg>
-          <span data-i18n="about.chip">Over ons</span>
-        </div>
-        <h2 class="over-ons-title" data-i18n="about.title">Wij maken AI weer menselijk</h2>
-        <p class="over-ons-eyebrow" data-i18n="about.eyebrow">Bruggen bouwen tussen mens en technologie</p>
-      </div>
-
-      <div id="over-ons-right">
-        <p class="over-ons-body" id="wr-body1" data-i18n="about.body1">
-          Onze naam is geïnspireerd door het Arabische woord Sila (صلة), wat verbinding betekent, en precies dat is wat wij doen.
-        </p>
-        <p class="over-ons-body" id="wr-body2" data-i18n="about.body2">
-          Al meer dan 3 jaar bouwen we bruggen tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.
-        </p>
-        <div style="margin-top:2rem;">
-          <a href="over-ons.html" class="conv-btn conv-btn--secondary">
-            <span data-i18n="about.more">Meer weten</span>
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     ONZE VISIE (4 waarden)
-════════════════════════════════════════════════════════ -->
-<section id="visie" class="section visie-section" aria-label="Onze visie">
-  <div class="wrap">
-
-    <div class="section-header reveal reveal-left">
-      <div class="chip">
+    <div class="over-ons-head reveal reveal-left">
+      <div class="chip" style="margin-bottom:1rem;">
         <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0.5 6.33,3.7 9.76,3.7 7.12,5.95 8.09,9.18 5,7.18 1.91,9.18 2.88,5.95 0.24,3.7 3.67,3.7"/></svg>
-        <span data-i18n="vision.chip">Onze visie</span>
+        <span data-i18n="about.chip">Over ons</span>
       </div>
-      <h2 class="section-title" data-i18n="vision.title">Wat ons drijft</h2>
-      <p class="section-lead" data-i18n="vision.lead">
-        Onze aanpak combineert de nieuwste AI-mogelijkheden met een diepgaand
-        begrip van mensen en organisaties.
+      <h2 class="over-ons-title" data-i18n="about.title">Wij maken AI weer menselijk</h2>
+      <p class="over-ons-eyebrow" data-i18n="about.eyebrow">Bruggen bouwen tussen mens en technologie</p>
+    </div>
+
+    <div id="over-ons-right">
+      <p class="over-ons-body" id="wr-body1" data-i18n="about.body1">
+        Onze naam is geïnspireerd door het Arabische woord Sila (صلة), wat verbinding betekent, en precies dat is wat wij doen.
       </p>
-    </div>
-
-    <div class="values-grid">
-
-      <div class="value-card reveal reveal-left">
-        <div class="icon-box">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m3.343-5.657-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386z"/>
-          </svg>
-        </div>
-        <h3 class="value-title" data-i18n="v1.title">Innovatie</h3>
-        <p class="value-body" data-i18n="v1.body">AI vernieuwt constant. We helpen je stap voor stap mee te groeien met de technologie die echt relevant is voor jou.</p>
-      </div>
-
-      <div class="value-card reveal reveal-right" style="transition-delay:.08s;">
-        <div class="icon-box icon-box--circle">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-        </div>
-        <h3 class="value-title" data-i18n="v2.title">Verbinding</h3>
-        <p class="value-body" data-i18n="v2.body">De kracht van AI ligt in de combinatie met menselijk inzicht. Wij bouwen bruggen tussen technologie en de mensen die ermee werken.</p>
-      </div>
-
-      <div class="value-card reveal reveal-left" style="transition-delay:.16s;">
-        <div class="icon-box icon-box--diamond">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
-          </svg>
-        </div>
-        <h3 class="value-title" data-i18n="v3.title">Continuïteit</h3>
-        <p class="value-body" data-i18n="v3.body">We zorgen voor een duurzame aanpak die ook op lange termijn waarde blijft creëren voor jouw organisatie.</p>
-      </div>
-
-      <div class="value-card reveal reveal-right" style="transition-delay:.24s;">
-        <div class="icon-box icon-box--outline">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 11 12 14 22 4"/>
-            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-          </svg>
-        </div>
-        <h3 class="value-title" data-i18n="v4.title">Effectiviteit</h3>
-        <p class="value-body" data-i18n="v4.body">Concrete resultaten, geen beloftes. We meten succes aan echte impact die zichtbaar is in jouw dagelijkse werk en cijfers.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     DEZE WEEK UITGELICHT
-════════════════════════════════════════════════════════ -->
-<!-- ═══════════════════════════════════════════════════════
-     AIOS — WERKT MET DE TOOLS DIE JE AL GEBRUIKT
-════════════════════════════════════════════════════════ -->
-<section id="aios-section" class="section aios-section" aria-label="Jouw AI-besturingssysteem">
-  <div class="wrap">
-    <div class="section-header reveal" style="text-align:center;margin-bottom:2.75rem;">
-      <div class="chip" style="justify-content:center;">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-        <span data-i18n="aios.chip">Op maat gebouwd</span>
-      </div>
-      <h2 class="section-title" data-i18n="aios.title">Je eigen AI-besturingssysteem</h2>
-      <p class="section-subtitle" style="max-width:680px;margin:0 auto;" data-i18n="aios.sub">Geen kant-en-klaar pakket dat voor iedereen hetzelfde is. We schrijven jouw manier van werken uit, en je AI draait daarop.</p>
-    </div>
-
-    <div class="aios-stage reveal" role="img" aria-label="Sila AIOS verbindt je tools met elkaar">
-      <svg class="aios-svg" viewBox="0 0 960 520" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-        <g>
-          <line class="aios-line" x1="480" y1="260" x2="480" y2="60"/>
-          <line class="aios-line" x1="480" y1="260" x2="763" y2="119"/>
-          <line class="aios-line" x1="480" y1="260" x2="880" y2="260"/>
-          <line class="aios-line" x1="480" y1="260" x2="763" y2="401"/>
-          <line class="aios-line" x1="480" y1="260" x2="480" y2="460"/>
-          <line class="aios-line" x1="480" y1="260" x2="197" y2="401"/>
-          <line class="aios-line" x1="480" y1="260" x2="80"  y2="260"/>
-          <line class="aios-line" x1="480" y1="260" x2="197" y2="119"/>
-        </g>
-        <g>
-          <line class="aios-flow" style="animation-delay:0s"    x1="480" y1="260" x2="480" y2="60"/>
-          <line class="aios-flow" style="animation-delay:.3s"   x1="480" y1="260" x2="763" y2="119"/>
-          <line class="aios-flow" style="animation-delay:.6s"   x1="480" y1="260" x2="880" y2="260"/>
-          <line class="aios-flow" style="animation-delay:.9s"   x1="480" y1="260" x2="763" y2="401"/>
-          <line class="aios-flow" style="animation-delay:1.2s"  x1="480" y1="260" x2="480" y2="460"/>
-          <line class="aios-flow" style="animation-delay:1.5s"  x1="480" y1="260" x2="197" y2="401"/>
-          <line class="aios-flow" style="animation-delay:1.8s"  x1="480" y1="260" x2="80"  y2="260"/>
-          <line class="aios-flow" style="animation-delay:2.1s"  x1="480" y1="260" x2="197" y2="119"/>
-        </g>
-      </svg>
-
-      <div class="aios-hub">
-        <span class="aios-hub-ring" aria-hidden="true"></span>
-        <span class="aios-hub-wordmark">sila</span>
-        <span class="aios-hub-label" data-i18n="aios.hublabel">OP MAAT</span>
-        <span class="aios-hub-sub" data-i18n="aios.hubsub">jouw AI-besturingssysteem</span>
-      </div>
-
-      <div class="aios-node" style="--x:50%;--y:11.5%">
-        <span class="aios-tile"><svg viewBox="0 0 24 24" fill="none"><path d="M2 6.5A1.5 1.5 0 0 1 3.5 5h17A1.5 1.5 0 0 1 22 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 17.5z" fill="#fff" stroke="#EA4335" stroke-width="1.5"/><path d="M3 7l9 6 9-6" stroke="#EA4335" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="aios-node-label">Gmail</span>
-      </div>
-      <div class="aios-node" style="--x:79.5%;--y:22.9%">
-        <span class="aios-tile"><svg viewBox="0 0 24 24"><rect x="10" y="3" width="4" height="11" rx="2" fill="#36C5F0"/><rect x="3" y="10" width="11" height="4" rx="2" fill="#2EB67D"/><rect x="10" y="10" width="4" height="11" rx="2" fill="#ECB22E"/><rect x="10" y="10" width="11" height="4" rx="2" fill="#E01E5A"/></svg></span><span class="aios-node-label">Slack</span>
-      </div>
-      <div class="aios-node" style="--x:91.7%;--y:50%">
-        <span class="aios-tile"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3.5" fill="#fff" stroke="#111" stroke-width="1.4"/><path d="M8 16.5V7.5l8 9V7.5" stroke="#111" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="aios-node-label">Notion</span>
-      </div>
-      <div class="aios-node" style="--x:79.5%;--y:77.1%">
-        <span class="aios-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#FF7A59" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16" r="3"/><circle cx="17" cy="8" r="2.5"/><path d="M17 10.6v2.4M9.6 14.7l4.6-4M17 5.5V3.2"/></svg></span><span class="aios-node-label">HubSpot</span>
-      </div>
-      <div class="aios-node" style="--x:50%;--y:88.5%">
-        <span class="aios-tile"><svg viewBox="0 0 24 24" fill="none"><path d="M21 3.6c-6 0-11 2-14.2 6.1C5.2 11.8 4.1 14.4 2.6 18c3.6-1.5 6.2-2.6 8.3-4.2C15 10.6 17 5.6 17 3.6z" fill="#FFB020"/><circle cx="8.4" cy="15.6" r="2.1" fill="#F5820A"/></svg></span><span class="aios-node-label">Fireflies</span>
-      </div>
-      <div class="aios-node" style="--x:20.5%;--y:77.1%">
-        <span class="aios-tile"><svg viewBox="0 0 24 24"><path d="M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" fill="#0F9D58"/><path d="M14 2v5h5z" fill="#0B7C46"/><rect x="7.5" y="11" width="9" height="7.5" rx="1" fill="#fff"/><path d="M7.5 13.5h9M7.5 16h9M12 11v7.5" stroke="#0F9D58" stroke-width="1"/></svg></span><span class="aios-node-label">Sheets</span>
-      </div>
-      <div class="aios-node" style="--x:8.3%;--y:50%">
-        <span class="aios-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#2F6FED" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.4 2.6 3.7 5.7 3.7 9s-1.3 6.4-3.7 9c-2.4-2.6-3.7-5.7-3.7-9S9.6 5.6 12 3z"/></svg></span><span class="aios-node-label">Website</span>
-      </div>
-      <div class="aios-node" style="--x:20.5%;--y:22.9%">
-        <span class="aios-tile"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2" fill="#fff" stroke="#4285F4" stroke-width="1.5"/><path d="M3.5 9.2h17" stroke="#4285F4" stroke-width="1.5"/><path d="M8 3v4M16 3v4" stroke="#4285F4" stroke-width="1.6" stroke-linecap="round"/><text x="12" y="18" font-size="7.2" text-anchor="middle" fill="#4285F4" font-family="Karla, Arial, sans-serif" font-weight="700">31</text></svg></span><span class="aios-node-label">Agenda</span>
-      </div>
-    </div>
-
-    <div class="aios-copy">
-      <div class="aios-block">
-      <div class="aios-block-head">
-        <p class="aios-eyebrow reveal" data-i18n="aios.ex.eyebrow">Vanuit één plek</p>
-        <h3 class="aios-subtitle reveal" data-i18n="aios.lead">Vanuit die ene plek regel je alles, bijvoorbeeld:</h3>
-      </div>
-      <div class="aios-uses">
-        <div class="aios-use reveal">
-          <span class="aios-use-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
-          <p data-i18n="aios.use1">Een klant mailt een aanvraag. Je AI vat het samen, werkt je klantsysteem bij en zet een antwoord klaar in jouw toon.</p>
-        </div>
-        <div class="aios-use reveal">
-          <span class="aios-use-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/></svg></span>
-          <p data-i18n="aios.use2">Een klus is af, en de factuur staat al klaar met de juiste uren, bedragen en klantgegevens.</p>
-        </div>
-        <div class="aios-use reveal">
-          <span class="aios-use-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
-          <p data-i18n="aios.use3">Je posts voor social en je nieuwsbrief worden geschreven in jouw stijl, klaar om te plaatsen.</p>
-        </div>
-        <div class="aios-use reveal">
-          <span class="aios-use-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg></span>
-          <p data-i18n="aios.use4">Terugkerend werk in je sheets en systemen loopt vanzelf. Data bijwerken, overzichten maken, opvolgen.</p>
-        </div>
-      </div>
-      </div>
-
-      <div class="aios-block">
-      <div class="aios-block-head">
-        <p class="aios-eyebrow reveal" data-i18n="aios.ben.eyebrow">De voordelen</p>
-        <h3 class="aios-subtitle reveal" data-i18n="aios.ben.title">Wat het je oplevert</h3>
-      </div>
-      <div class="aios-benefits">
-        <div class="aios-benefit reveal">
-          <span class="aios-benefit-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
-          <h4 data-i18n="aios.b1.t">Werk dat zichzelf doet</h4>
-          <p data-i18n="aios.b1.d">Wat steeds terugkomt, richt je één keer in. Daarna loopt het vanzelf.</p>
-        </div>
-        <div class="aios-benefit reveal">
-          <span class="aios-benefit-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 14.5 14.5 9.5"/><path d="M11 6.5l1-1a4 4 0 0 1 5.7 5.7l-1 1"/><path d="M13 17.5l-1 1a4 4 0 0 1-5.7-5.7l1-1"/></svg></span>
-          <h4 data-i18n="aios.b2.t">Alles verbonden</h4>
-          <p data-i18n="aios.b2.d">Je hoeft niks meer over te tikken of te onthouden. Je tools praten met elkaar.</p>
-        </div>
-        <div class="aios-benefit reveal">
-          <span class="aios-benefit-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.4-3 7.5-7 9-4-1.5-7-4.6-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
-          <h4 data-i18n="aios.b3.t">Jij houdt de regie</h4>
-          <p data-i18n="aios.b3.d">Je houdt het overzicht en tekent af wat naar buiten gaat. De rest regelt je systeem.</p>
-        </div>
-        <div class="aios-benefit reveal">
-          <span class="aios-benefit-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/><path d="M16 8h2a2 2 0 0 1 2 2v11"/><path d="M2 21h20"/><path d="M8 7h2M8 11h2M8 15h2"/></svg></span>
-          <h4 data-i18n="aios.b4.t">Kent je bedrijf</h4>
-          <p data-i18n="aios.b4.d">Het werkt met de kennis van je klanten, je processen en je stijl.</p>
-        </div>
-      </div>
-      </div>
-      <p class="aios-proof reveal" data-i18n="aios.proof">Geen software die je koopt, maar iets wat we samen op jouw manier opbouwen. Zo runt Sila zijn eigen bedrijf al, en dit zetten we ook voor jou op.</p>
-      <div class="aios-cta-wrap reveal">
-        <a href="contact.html?bericht=Hi+Sila%2C+ik+ben+benieuwd+wat+een+AIOS+voor+mijn+bedrijf+kan+verbinden+en+automatiseren." class="btn-primary" onclick="gtag('event','cta_click',{event_category:'aios',event_label:'AIOS-sectie'})">
-          <span data-i18n="aios.cta">Benieuwd wat dit voor jouw bedrijf kan doen? Plan een kennismaking</span>
+      <p class="over-ons-body" id="wr-body2" data-i18n="about.body2">
+        Al meer dan 3 jaar bouwen we bruggen tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.
+      </p>
+      <div style="margin-top:2.25rem;text-align:center;">
+        <a href="over-ons.html" class="conv-btn conv-btn--secondary">
+          <span data-i18n="about.more">Meer weten</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
       </div>
     </div>
+
   </div>
 </section>
+
 
 <!-- ═══════════════════════════════════════════════════════
      AI-EFFECTIVITEITSINDICATOR (BESPARINGSCALCULATOR)
@@ -2436,10 +2274,10 @@
     <div class="section-header reveal" style="text-align:center;margin-bottom:2.75rem;">
       <div class="chip" style="justify-content:center;">
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>
-        <span data-i18n="roi.chip">AI-effectiviteitsindicator</span>
+        <span data-i18n="roi.chip">Hoe effectief is AI?</span>
       </div>
       <h2 class="section-title" data-i18n="roi.title">Reken uit wat AI je teruggeeft</h2>
-      <p class="section-subtitle" style="max-width:600px;margin:0 auto;" data-i18n="roi.sub">Verschuif de waarden en zie wat handmatig werk je nu kost, en hoeveel tijd AI teruggeeft. We rekenen bewust conservatief.</p>
+      <p class="section-subtitle" style="max-width:600px;margin:0 auto;" data-i18n="roi.sub">Nog niet overtuigd van de toegevoegde waarde van AI? Verschuif de waarden en zie wat handmatig werk je nu kost, en hoeveel tijd AI teruggeeft. We rekenen bewust conservatief.</p>
     </div>
 
     <div class="roi-panel reveal">
@@ -2511,122 +2349,6 @@
 </section>
 
 <style>
-/* ═══════ AIOS integratie-diagram ═══════ */
-.aios-section { background: #fff; padding: 5.5rem 0; }
-.aios-stage { position: relative; max-width: 940px; margin: 0 auto; aspect-ratio: 960 / 520; }
-.aios-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
-.aios-line { stroke: var(--border); stroke-width: 1.5; }
-.aios-flow {
-  stroke: var(--primary); stroke-width: 2; stroke-linecap: round;
-  stroke-dasharray: 3 13; opacity: .55;
-  animation: aiosFlow 2.6s linear infinite;
-}
-@keyframes aiosFlow { to { stroke-dashoffset: -160; } }
-.aios-hub {
-  position: absolute; left: 50%; top: 50%; z-index: 2; transform: translate(-50%,-50%);
-  width: 170px; height: 170px; border-radius: 50%;
-  background: radial-gradient(circle at 50% 36%, #fff, #FBF5F0);
-  border: 1px solid var(--primary-border);
-  box-shadow: 0 14px 42px rgba(220,90,20,.15), inset 0 0 0 6px rgba(255,255,255,.65);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-}
-.aios-hub-ring {
-  position: absolute; inset: -1px; border-radius: 50%; border: 1.5px solid var(--primary);
-  opacity: .42; animation: aiosPulse 3.2s ease-out infinite;
-}
-@keyframes aiosPulse {
-  0% { transform: scale(1); opacity: .45; }
-  70% { opacity: 0; }
-  100% { transform: scale(1.55); opacity: 0; }
-}
-.aios-hub-wordmark { font-family: 'Lora', Georgia, serif; font-size: 1.95rem; font-weight: 600; color: var(--fg); line-height: 1; letter-spacing: -.01em; }
-.aios-hub-label { margin-top: .3rem; font: 700 .72rem/1 'Karla', sans-serif; letter-spacing: .28em; color: var(--primary); padding-left: .28em; }
-.aios-hub-sub { margin-top: .48rem; max-width: 120px; font: 500 .62rem/1.3 'Karla', sans-serif; color: var(--muted); }
-.aios-node { position: absolute; z-index: 1; left: var(--x); top: var(--y); transform: translate(-50%,-50%); display: flex; flex-direction: column; align-items: center; gap: .4rem; }
-.aios-tile {
-  width: 60px; height: 60px; border-radius: 15px; background: #fff; border: 1px solid var(--border);
-  box-shadow: 0 6px 18px rgba(35,29,24,.07); display: grid; place-items: center;
-  transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s;
-}
-.aios-tile svg { width: 30px; height: 30px; }
-.aios-node:hover .aios-tile { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(35,29,24,.13); }
-.aios-node-label { font: 600 .74rem/1 'Karla', sans-serif; color: var(--muted); display: none; }
-@media (max-width: 768px) {
-  .aios-section { padding: 4rem 0 4.25rem; }
-  .aios-stage {
-    position: relative; aspect-ratio: auto; max-width: 440px;
-    display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; align-items: stretch;
-    padding: 0 4px;
-  }
-  .aios-svg { display: none; }
-  /* Verticale flow-spine: echo van het desktop-diagram, tools takken eraf */
-  .aios-stage::before {
-    content: ""; position: absolute; left: 50%; top: 150px; bottom: 8px;
-    width: 2px; transform: translateX(-50%);
-    background: repeating-linear-gradient(to bottom, var(--primary) 0 4px, transparent 4px 14px);
-    opacity: .32; z-index: 0;
-    animation: aiosSpine 2.6s linear infinite;
-  }
-  @keyframes aiosSpine { to { background-position: 0 18px; } }
-  .aios-hub {
-    position: relative; left: auto; top: auto; transform: none;
-    grid-column: 1 / -1; justify-self: center;
-    width: 134px; height: 134px; margin: 0 auto 1.6rem;
-  }
-  .aios-hub-ring { animation: none; }
-  .aios-hub-wordmark { font-size: 1.7rem; }
-  .aios-node {
-    position: static; transform: none; left: auto; top: auto; z-index: 1;
-    flex-direction: row; align-items: center; gap: .6rem; justify-content: flex-start;
-    background: #fff; border: 1px solid var(--border); border-radius: 16px;
-    padding: .6rem .75rem; box-shadow: 0 4px 14px rgba(35,29,24,.05);
-    transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s, border-color .3s;
-  }
-  .aios-node:active { transform: scale(.98); }
-  .aios-tile {
-    width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
-    border-color: var(--primary-border); box-shadow: none;
-  }
-  .aios-tile svg { width: 24px; height: 24px; }
-  .aios-node-label { display: block; font-size: .82rem; color: var(--fg); }
-}
-@media (max-width: 768px) and (hover: hover) {
-  .aios-node:hover { border-color: var(--primary-border); box-shadow: 0 8px 20px rgba(220,90,20,.1); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .aios-flow { animation: none; opacity: .4; }
-  .aios-hub-ring { animation: none; }
-  .aios-stage::before { animation: none; }
-}
-
-/* ═══════ AIOS copy (verbindt & automatiseert) ═══════ */
-.aios-copy { max-width: 920px; margin: 3.75rem auto 0; }
-.aios-block { margin: 0 0 3rem; }
-.aios-block-head { text-align: center; margin: 0 0 1.6rem; }
-.aios-eyebrow { display: inline-block; font: 700 .7rem/1 'Karla', sans-serif; letter-spacing: .2em; text-transform: uppercase; color: var(--primary); margin: 0 0 .55rem; }
-.aios-subtitle { font: 600 1.5rem/1.25 'Lora', Georgia, serif; color: var(--fg); letter-spacing: -.02em; margin: 0; }
-.aios-uses { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
-.aios-use { display: flex; gap: .8rem; align-items: flex-start; background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 1.05rem 1.15rem; box-shadow: 0 6px 18px rgba(35,29,24,.05); transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s, border-color .3s; }
-.aios-use:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(35,29,24,.09); border-color: var(--primary-border); }
-.aios-use-ic { flex-shrink: 0; width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; background: hsl(16,78%,96%); color: var(--primary); }
-.aios-use-ic svg { width: 19px; height: 19px; }
-.aios-use p { margin: 0; font: 400 .93rem/1.5 'Karla', sans-serif; color: var(--fg); }
-.aios-benefits { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
-.aios-benefit { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 1.4rem 1.45rem; box-shadow: 0 6px 18px rgba(35,29,24,.05); transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s, border-color .3s; }
-.aios-benefit:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(35,29,24,.09); border-color: var(--primary-border); }
-.aios-benefit-ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: hsl(16,78%,96%); color: var(--primary); margin: 0 0 .9rem; }
-.aios-benefit-ic svg { width: 21px; height: 21px; }
-.aios-benefit h4 { margin: 0 0 .35rem; font: 700 1.04rem/1.3 'Karla', sans-serif; color: var(--fg); letter-spacing: -.01em; }
-.aios-benefit p { margin: 0; font: 400 .92rem/1.55 'Karla', sans-serif; color: var(--muted); }
-.aios-proof { font: 500 1.14rem/1.55 'Lora', Georgia, serif; color: var(--fg); text-align: center; max-width: 620px; margin: .5rem auto 1.9rem; letter-spacing: -.01em; }
-.aios-cta-wrap { text-align: center; }
-@media (max-width: 768px) {
-  .aios-copy { margin-top: 2.75rem; }
-  .aios-block { margin-bottom: 2.5rem; }
-  .aios-uses, .aios-benefits { grid-template-columns: 1fr; gap: .75rem; }
-  .aios-subtitle { font-size: 1.28rem; }
-}
-
 /* ═══════ AI-effectiviteitsindicator (calculator) ═══════ */
 .roi-section { background: var(--bg); padding: 5.5rem 0; }
 .roi-panel { background: #fff; border: 1px solid var(--border); border-radius: 22px; padding: 2.5rem; box-shadow: 0 18px 50px rgba(35,29,24,.06); max-width: 1000px; margin: 0 auto; }
@@ -2745,7 +2467,7 @@
         <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,0.5 6.33,3.7 9.76,3.7 7.12,5.95 8.09,9.18 5,7.18 1.91,9.18 2.88,5.95 0.24,3.7 3.67,3.7"/></svg>
         <span data-i18n="refs.chip">Referenties</span>
       </div>
-      <h2 class="section-title" data-i18n="refs.title">Wat anderen over ons zeggen</h2>
+      <h2 class="section-title" data-i18n="refs.title">Wat anderen over Sila zeggen</h2>
     </div>
 
     <div class="refs-filmstrip-outer">
@@ -2819,7 +2541,7 @@
         <p class="footer-heading" data-i18n="footer.h2">Bedrijf</p>
         <ul class="footer-links">
           <li><a href="#over-ons" data-i18n="about.chip">Over ons</a></li>
-          <li><a href="#visie"    data-i18n="vision.chip">Onze visie</a></li>
+          <li><a href="#quiz" data-i18n="cta.eyebrow">Weet jij waar jij staat?</a></li>
           <li><a href="#referenties" data-i18n="refs.chip">Referenties</a></li>
         </ul>
       </div>
@@ -2882,15 +2604,24 @@ const T = {
     'nav.kennisbank':  'Kennisbank',
     'nav.newsletter':  'Nieuwsbrief',
     'nav.contact':     'Contact',
-    'hero.subtitle':'Jouw AI transformatiepartner.',
-    'hero.desc':    'Begeleiding en persoonlijke aandacht in een wereld waarin AI razendsnel verandert.',
+    'hero.voor':    'Voor',
+    'hero.headline':'AI verandert elke week.',
+    'ticker.i1':    'Claude Code Workshop',
+    'ticker.i2':    'AI-bedrijfsonderzoek in 3 uur',
+    'ticker.i3':    'Chatbots op maat gebouwd',
+    'ticker.i4':    'Automatisering Workshop',
+    'ticker.i5':    'Procesanalyse voor jouw team',
+    'ticker.i6':    'Workflows die zichzelf runnen',
+    'ticker.i7':    'AI voor zelfstandigen',
+    'ticker.i8':    'Eén AI-systeem, op maat gebouwd',
+    'hero.desc':    'Sila geeft je begeleiding en persoonlijke aandacht in een wereld waarin AI razendsnel verandert.',
     'pillars.chip': 'Onze missie',
     'pillars.title':    'Individuen en bedrijven helpen AI te omarmen',
     'pillars.sub':      'Dat doen we op 3 manieren:',
     'edu.title':    'Educatie',
-    'edu.body':     'Via workshops, trainingen en cursussen bouwen we jouw AI-kennis stap voor stap op, op jouw tempo en voor jouw sector.',
+    'edu.body':     'Via workshops en persoonlijke begeleiding bouwen we jouw AI-kennis stap voor stap op, op jouw tempo en voor jouw sector.',
     'edu.t1':       'Workshops', 'edu.t2': 'Trainingen', 'edu.t3': 'Begeleiding',
-    'edu.cta':      'Bekijk cursussen en workshops',
+    'edu.cta':      'Bekijk onze workshops',
     'cons.title':   'Consultancy',
     'cons.body':    'We analyseren jouw processen en brengen kansen in kaart die direct relevant en toepasbaar zijn voor jouw organisatie.',
     'cons.t1':      'Analyse', 'cons.t2': 'Strategie', 'cons.t3': 'Advies op maat',
@@ -2909,15 +2640,8 @@ const T = {
     'about.eyebrow':'Bruggen bouwen tussen mens en technologie',
     'about.body1':  'Onze naam is geïnspireerd door het Arabische woord Sila (صلة), wat verbinding betekent, en precies dat is wat wij doen.',
     'about.body2':  'Al meer dan 3 jaar bouwen we bruggen tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.',
-    'vision.chip':  'Onze visie',
-    'vision.title': 'Wat ons drijft',
-    'vision.lead':  'Onze aanpak combineert de nieuwste AI-mogelijkheden met een diepgaand begrip van mensen en organisaties.',
-    'v1.title':'Innovatie','v1.body':'AI vernieuwt constant. We helpen je stap voor stap mee te groeien met de technologie die echt relevant is voor jou.',
-    'v2.title':'Verbinding','v2.body':'De kracht van AI ligt in de combinatie met menselijk inzicht. Wij bouwen bruggen tussen technologie en de mensen die ermee werken.',
-    'v3.title':'Continuïteit','v3.body':'We zorgen voor een duurzame aanpak die ook op lange termijn waarde blijft creëren voor jouw organisatie.',
-    'v4.title':'Effectiviteit','v4.body':'Concrete resultaten, geen beloftes. We meten succes aan echte impact die zichtbaar is in jouw dagelijkse werk en cijfers.',
     'refs.chip':    'Referenties',
-    'refs.title':   'Wat anderen over ons zeggen',
+    'refs.title':   'Wat anderen over Sila zeggen',
     'nl.chip':      'Blijf op de hoogte',
     'nl.title':     'AI Update in je mailbox',
     'nl.lead':      'Ontvang wekelijks de laatste AI-inzichten, praktische tips en updates die relevant zijn voor jouw bedrijf. Geen spam, alleen waarde.',
@@ -2933,24 +2657,23 @@ const T = {
     'chat.status':  'Online',
     'chat.greeting':'Hi! Ik ben Eva. Heb je vragen over Sila, onze diensten of wil je een afspraak inplannen? Stel je vraag gerust, ik help je graag verder!',
     'chat.placeholder': 'Stel een vraag...',
-    'hero.voor':    'Voor',
     'chat.you':     'JIJ',
     'chat.error':   'Sorry, er ging iets mis. Probeer het opnieuw.',
     'about.body2':  'Al meer dan 3 jaar bouwen we bruggen tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.',
     'about.more':   'Meer weten',
     'conv.chip':    'Direct starten',
     'conv.title':   'Voorbeelden uit de praktijk',
-    'conv.edu.title':'AI Strategie voor Leiders',
-    'conv.edu.body': 'Niet hoe AI werkt, maar hoe jij als leider de juiste vragen stelt. Leer AI aansturen als een medewerker: strategisch, helder en doelgericht.',
-    'conv.edu.btn':  'Bekijk meer educatie',
+    'conv.edu.title':'Claude Code Workshop',
+    'conv.edu.body': 'Een dag lang zelf aan de slag met AI als werkassistent. Geen theorie, gewoon doen: aan het eind van de dag heb je zelf iets gebouwd.',
+    'conv.edu.btn':  'Bekijk onze workshops',
     'conv.cons.title':'AI Bedrijfsonderzoek (Audit)',
     'conv.cons.body': 'In 2 à 3 uur brengen we samen jouw processen in kaart, identificeren we AI-kansen en leggen we een concreet actieplan neer, zodat je weet waar te beginnen.',
     'conv.cons.btn':  'Plan een gesprek in',
     'conv.impl.title':'Website Automatiseringen',
     'conv.impl.body': 'Formulieren, boekingen, betalingen en notificaties: volledig geautomatiseerd vanuit je website. Bezoekers krijgen direct een reactie, jij houdt overzicht zonder handmatig werk.',
     'conv.impl.btn':  'Bekijk implementatie',
-    'priv.chip':   'Privacy & Veiligheid',
-    'priv.title':  'Bewust omgaan met data',
+    'priv.chip':   'Goed om te weten',
+    'priv.title':  'Privacy & Veiligheid',
     'priv.sub':    'Onze infrastructuur staat altijd in Europa. Welke AI-tools we inzetten, bepaal jij. We zijn er altijd open over.',
     'priv.c1.title':'Eigen infrastructuur in Europa',
     'priv.c1.body': 'Alle automatiseringen en data die bij Sila draaien, staan op eigen servers in Europa. Volledig binnen de EU, onder eigen beheer.',
@@ -2969,32 +2692,9 @@ const T = {
     'priv.c2.viz2':'Krachtigste modellen',
     'priv.c2.viz3':'Jij bepaalt',
     'priv.c3.viz1':'DPA getekend',
-    'aios.chip':   'Op maat gebouwd',
-    'aios.title':  'Je eigen AI-besturingssysteem',
-    'aios.sub':    'Geen kant-en-klaar pakket dat voor iedereen hetzelfde is. We schrijven jouw manier van werken uit, en je AI draait daarop.',
-    'aios.hublabel': 'OP MAAT',
-    'aios.hubsub': 'jouw AI-besturingssysteem',
-    'aios.ex.eyebrow': 'Vanuit één plek',
-    'aios.lead':   'Vanuit die ene plek regel je alles, bijvoorbeeld:',
-    'aios.use1':   'Een klant mailt een aanvraag. Je AI vat het samen, werkt je klantsysteem bij en zet een antwoord klaar in jouw toon.',
-    'aios.use2':   'Een klus is af, en de factuur staat al klaar met de juiste uren, bedragen en klantgegevens.',
-    'aios.use3':   'Je posts voor social en je nieuwsbrief worden geschreven in jouw stijl, klaar om te plaatsen.',
-    'aios.use4':   'Terugkerend werk in je sheets en systemen loopt vanzelf. Data bijwerken, overzichten maken, opvolgen.',
-    'aios.ben.eyebrow': 'De voordelen',
-    'aios.ben.title': 'Wat het je oplevert',
-    'aios.b1.t':   'Werk dat zichzelf doet',
-    'aios.b1.d':   'Wat steeds terugkomt, richt je één keer in. Daarna loopt het vanzelf.',
-    'aios.b2.t':   'Alles verbonden',
-    'aios.b2.d':   'Je hoeft niks meer over te tikken of te onthouden. Je tools praten met elkaar.',
-    'aios.b3.t':   'Jij houdt de regie',
-    'aios.b3.d':   'Je houdt het overzicht en tekent af wat naar buiten gaat. De rest regelt je systeem.',
-    'aios.b4.t':   'Kent je bedrijf',
-    'aios.b4.d':   'Het werkt met de kennis van je klanten, je processen en je stijl.',
-    'aios.proof':  'Geen software die je koopt, maar iets wat we samen op jouw manier opbouwen. Zo runt Sila zijn eigen bedrijf al, en dit zetten we ook voor jou op.',
-    'aios.cta':    'Benieuwd wat dit voor jouw bedrijf kan doen? Plan een kennismaking',
-    'roi.chip':    'AI-effectiviteitsindicator',
+    'roi.chip':    'Hoe effectief is AI?',
     'roi.title':   'Reken uit wat AI je teruggeeft',
-    'roi.sub':     'Verschuif de waarden en zie wat handmatig werk je nu kost, en hoeveel tijd AI teruggeeft. We rekenen bewust conservatief.',
+    'roi.sub':     'Nog niet overtuigd van de toegevoegde waarde? Verschuif de waarden en zie wat handmatig werk je nu kost, en hoeveel tijd AI teruggeeft. We rekenen bewust conservatief.',
     'roi.inputs.title': 'Jouw situatie',
     'roi.in.team': 'Teamgrootte',
     'roi.in.team.help': 'Mensen die handmatig operationeel werk doen',
@@ -3029,12 +2729,6 @@ const T = {
     'uit.chat.u1':      'Wat zijn jullie openingstijden?',
     'uit.chat.bot1':    'We zijn bereikbaar van maandag t/m vrijdag, 9:00–18:00. Wil je een afspraak inplannen?',
     'uit.chat.u2':      'Ja graag!',
-    'preview.sub':      "Eerste 3 pagina's, gratis inkijken",
-    'preview.cta_lead': 'Wil je de volledige cursus?',
-    'preview.btn':      'Bekijk op educatie',
-    'preview.loading':  'Preview laden…',
-    'preview.unavail':  'Preview is nog niet beschikbaar.',
-    'preview.unavail_link': 'Bekijk op de cursuspagina →',
   },
   en: {
     'nav.services': 'Services',
@@ -3043,15 +2737,24 @@ const T = {
     'nav.kennisbank':  'Knowledge base',
     'nav.newsletter':  'Newsletter',
     'nav.contact':     'Contact',
-    'hero.subtitle':'Your AI transformation partner.',
-    'hero.desc':    'Personal guidance and attention in a world where AI is changing at lightning speed.',
+    'hero.voor':    'For',
+    'hero.headline':'AI changes every week.',
+    'ticker.i1':    'Claude Code Workshop',
+    'ticker.i2':    'AI business scan in 3 hours',
+    'ticker.i3':    'Chatbots built around you',
+    'ticker.i4':    'Automation Workshop',
+    'ticker.i5':    'Process analysis for your team',
+    'ticker.i6':    'Workflows that run themselves',
+    'ticker.i7':    'AI for the self-employed',
+    'ticker.i8':    'One AI system, built for you',
+    'hero.desc':    'Sila gives you guidance and personal attention in a world where AI is changing at lightning speed.',
     'pillars.chip': 'Our mission',
     'pillars.title':    'Helping individuals and businesses embrace AI',
     'pillars.sub':      'We do this in 3 ways:',
     'edu.title':    'Education',
-    'edu.body':     'Through workshops, training and courses we build your AI knowledge step by step, at your pace and for your sector.',
+    'edu.body':     'Through workshops and personal guidance we build your AI knowledge step by step, at your pace and for your sector.',
     'edu.t1':       'Workshops', 'edu.t2': 'Training', 'edu.t3': 'Coaching',
-    'edu.cta':      'See courses and workshops',
+    'edu.cta':      'See our workshops',
     'cons.title':   'Consultancy',
     'cons.body':    'We analyse your processes and map out opportunities that are directly relevant and applicable for your organisation.',
     'cons.t1':      'Analysis', 'cons.t2': 'Strategy', 'cons.t3': 'Custom advice',
@@ -3070,15 +2773,8 @@ const T = {
     'about.eyebrow':'Building bridges between people and technology',
     'about.body1':  'Our name is inspired by the Arabic word Sila (صلة), which means connection, and that is exactly what we do.',
     'about.body2':  'For over 3 years we have been building bridges between people and AI. Our mission is to strengthen relationships and provide support through innovative AI solutions that people understand and truly need.',
-    'vision.chip':  'Our vision',
-    'vision.title': 'What drives us',
-    'vision.lead':  'Our approach combines the latest AI capabilities with a deep understanding of people and organisations.',
-    'v1.title':'Innovation','v1.body':'AI is constantly evolving. We help you grow step by step with technology that is truly relevant to you.',
-    'v2.title':'Connection','v2.body':'The power of AI lies in its combination with human insight. We build bridges between technology and the people who work with it.',
-    'v3.title':'Continuity','v3.body':'We ensure a sustainable approach that continues to create value for your organisation over the long term.',
-    'v4.title':'Effectiveness','v4.body':'Concrete results, no empty promises. We measure success by real impact visible in your daily work and numbers.',
     'refs.chip':    'References',
-    'refs.title':   'What others say about us',
+    'refs.title':   'What others say about Sila',
     'nl.chip':      'Stay informed',
     'nl.title':     'AI updates in your inbox',
     'nl.lead':      'Receive weekly AI insights, practical tips and updates relevant to your business. No spam, only value.',
@@ -3094,24 +2790,23 @@ const T = {
     'chat.status':  'Online',
     'chat.greeting':'Hi! I\'m Eva. Do you have questions about Sila, our services, or would you like to schedule an appointment? Feel free to ask, I\'m happy to help!',
     'chat.placeholder': 'Ask a question...',
-    'hero.voor':    'For',
     'chat.you':     'YOU',
     'chat.error':   'Sorry, something went wrong. Please try again.',
     'about.body2':  'For over 3 years we have been building bridges between people and AI. Our mission is to strengthen relationships and provide support through innovative AI solutions that people understand and truly need.',
     'about.more':   'Learn more',
     'conv.chip':    'Get started',
     'conv.title':   'Real-world examples',
-    'conv.edu.title':'AI Strategy for Leaders',
-    'conv.edu.body': 'Not about how AI works, but about how you, as a leader, ask the right questions. Learn to direct AI like a team member: strategically, clearly, and with purpose.',
-    'conv.edu.btn':  'See more education',
+    'conv.edu.title':'Claude Code Workshop',
+    'conv.edu.body': 'A full day of hands-on work with AI as your work assistant. No theory, just doing: by the end of the day you have built something yourself.',
+    'conv.edu.btn':  'See our workshops',
     'conv.cons.title':'AI Business Assessment (Audit)',
     'conv.cons.body': 'In 2 to 3 hours, we map out your processes together, identify AI opportunities, and lay out a concrete action plan, so you know exactly where to begin.',
     'conv.cons.btn':  'Schedule a call',
     'conv.impl.title':'Website Automations',
     'conv.impl.body': 'Forms, bookings, payments and notifications: fully automated from your website. Visitors receive an immediate response, and you stay in control without any manual effort.',
     'conv.impl.btn':  'View implementation',
-    'priv.chip':   'Privacy & Security',
-    'priv.title':  'Thoughtful data management',
+    'priv.chip':   'Good to know',
+    'priv.title':  'Privacy & Security',
     'priv.sub':    'Our infrastructure is always based in Europe. You decide which AI tools we use. We are always transparent about it.',
     'priv.c1.title':'Private infrastructure in Europe',
     'priv.c1.body': 'All automations and data running at Sila are hosted on our own servers in Europe. Fully within the EU and under our own management.',
@@ -3130,32 +2825,9 @@ const T = {
     'priv.c2.viz2':'Most powerful models',
     'priv.c2.viz3':'You decide',
     'priv.c3.viz1':'DPA signed',
-    'aios.chip':   'Built for you',
-    'aios.title':  'Your own AI operating system',
-    'aios.sub':    'Not an off-the-shelf package that is the same for everyone. We write out your way of working, and your AI runs on it.',
-    'aios.hublabel': 'BESPOKE',
-    'aios.hubsub': 'your AI operating system',
-    'aios.ex.eyebrow': 'From one place',
-    'aios.lead':   'From that one place, you run everything, for example:',
-    'aios.use1':   'A client emails a request. Your AI summarises it, updates your customer system and drafts a reply in your tone.',
-    'aios.use2':   'A job is done, and the invoice is ready with the right hours, amounts and customer details.',
-    'aios.use3':   'Your social posts and newsletter are written in your style, ready to publish.',
-    'aios.use4':   'Recurring work in your sheets and systems runs on its own. Updating data, building overviews, following up.',
-    'aios.ben.eyebrow': 'The benefits',
-    'aios.ben.title': 'What it gives you',
-    'aios.b1.t':   'Work that runs itself',
-    'aios.b1.d':   'Whatever keeps coming back, you set up once. After that it runs on its own.',
-    'aios.b2.t':   'Everything connected',
-    'aios.b2.d':   'No more retyping or remembering. Your tools talk to each other.',
-    'aios.b3.t':   'You stay in control',
-    'aios.b3.d':   'You keep the overview and sign off on what goes out. Your system handles the rest.',
-    'aios.b4.t':   'It knows your business',
-    'aios.b4.d':   'It works with the knowledge of your clients, your processes and your style.',
-    'aios.proof':  'Not software you buy, but something we build together, your way. This is how Sila already runs its own business, and it is exactly what we set up for you.',
-    'aios.cta':    'Curious what this could do for your business? Book an intro',
-    'roi.chip':    'AI effectiveness indicator',
+    'roi.chip':    'How effective is AI?',
     'roi.title':   'See what AI gives you back',
-    'roi.sub':     'Move the sliders to see what manual work costs you today, and how much time AI gives back. We deliberately calculate conservatively.',
+    'roi.sub':     'Still not convinced of the added value of AI? Move the sliders to see what manual work costs you today, and how much time AI gives back. We deliberately calculate conservatively.',
     'roi.inputs.title': 'Your situation',
     'roi.in.team': 'Team size',
     'roi.in.team.help': 'People doing manual operational work',
@@ -3190,14 +2862,48 @@ const T = {
     'uit.chat.u1':      'What are your opening hours?',
     'uit.chat.bot1':    'We\'re available Monday to Friday, 9:00–18:00. Would you like to schedule an appointment?',
     'uit.chat.u2':      'Yes please!',
-    'preview.sub':      'First 3 pages, free to browse',
-    'preview.cta_lead': 'Want the full course?',
-    'preview.btn':      'View on education page',
-    'preview.loading':  'Loading preview…',
-    'preview.unavail':  'Preview is not yet available.',
-    'preview.unavail_link': 'View on the courses page →',
   }
 };
+
+/* ─────────────────────────────────────────────────────────
+   TYPING EFFECT
+───────────────────────────────────────────────────────── */
+const wordsNL = [
+  'jouw bedrijf.', 'de ondernemer.', 'de innovator.', 'de groeimaker.',
+  'de strateeg.', 'de leider.', 'de denker.', 'de MKB\'er.',
+  'de visionair.', 'de doener.', 'de pionier.'
+];
+const wordsEN = [
+  'your business.', 'the entrepreneur.', 'the innovator.', 'the growth maker.',
+  'the strategist.', 'the leader.', 'the thinker.', 'the SME owner.',
+  'the visionary.', 'the doer.', 'the pioneer.'
+];
+
+let currentWords = wordsNL;
+let wi = 0, ci = 0, deleting = false;
+const typingEl = document.getElementById('typing-target');
+
+function tick() {
+  const word = currentWords[wi];
+  if (!deleting) {
+    ci++;
+    typingEl.textContent = word.slice(0, ci);
+    if (ci >= word.length) {
+      setTimeout(() => { deleting = true; tick(); }, 2400);
+      return;
+    }
+  } else {
+    ci--;
+    typingEl.textContent = word.slice(0, ci);
+    if (ci <= 0) {
+      deleting = false;
+      wi = (wi + 1) % currentWords.length;
+      ci = 0;
+    }
+  }
+  setTimeout(tick, deleting ? 52 : 95);
+}
+setTimeout(tick, 700);
 
 let currentLang = 'nl';
 
@@ -3252,46 +2958,6 @@ function setLang(lang, btn) {
   if (window._wordRevealUpdateLang) window._wordRevealUpdateLang(lang);
   if (window._roiRender) window._roiRender();
 }
-
-/* ─────────────────────────────────────────────────────────
-   TYPING EFFECT
-───────────────────────────────────────────────────────── */
-const wordsNL = [
-  'jouw bedrijf.', 'de ondernemer.', 'de innovator.', 'de groeimaker.',
-  'de strateeg.', 'de leider.', 'de denker.', 'de MKB\'er.',
-  'de visionair.', 'de doener.', 'de pionier.'
-];
-const wordsEN = [
-  'your business.', 'the entrepreneur.', 'the innovator.', 'the growth maker.',
-  'the strategist.', 'the leader.', 'the thinker.', 'the SME owner.',
-  'the visionary.', 'the doer.', 'the pioneer.'
-];
-
-let currentWords = wordsNL;
-let wi = 0, ci = 0, deleting = false;
-const typingEl = document.getElementById('typing-target');
-
-function tick() {
-  const word = currentWords[wi];
-  if (!deleting) {
-    ci++;
-    typingEl.textContent = word.slice(0, ci);
-    if (ci >= word.length) {
-      setTimeout(() => { deleting = true; tick(); }, 2400);
-      return;
-    }
-  } else {
-    ci--;
-    typingEl.textContent = word.slice(0, ci);
-    if (ci <= 0) {
-      deleting = false;
-      wi = (wi + 1) % currentWords.length;
-      ci = 0;
-    }
-  }
-  setTimeout(tick, deleting ? 52 : 95);
-}
-setTimeout(tick, 700);
 
 /* ─────────────────────────────────────────────────────────
    NEWSLETTER
@@ -4318,96 +3984,6 @@ setTimeout(() => {
   }
 }, 3000);
 </script>
-<!-- ═══════════════════════════════════════════════════════
-     HOMEPAGE PDF PREVIEW MODAL
-════════════════════════════════════════════════════════ -->
-<div id="hp-preview-overlay" role="dialog" aria-modal="true" aria-label="Cursus preview">
-  <div id="hp-preview-modal">
-    <div id="hp-preview-header">
-      <div>
-        <h2 id="hp-preview-titel">Preview</h2>
-        <p data-i18n="preview.sub">Eerste 3 pagina's, gratis inkijken</p>
-      </div>
-      <button onclick="sluitHpPreview()" aria-label="Sluiten" style="background:none;border:none;cursor:pointer;color:#7A7167;padding:4px;flex-shrink:0;">
-        <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg>
-      </button>
-    </div>
-    <div id="hp-preview-pages">
-      <div id="hp-preview-loader" data-i18n="preview.loading">Preview laden…</div>
-    </div>
-    <div id="hp-preview-footer">
-      <p data-i18n="preview.cta_lead">Wil je de volledige cursus?</p>
-      <button class="hp-koop-btn" onclick="window.location.href='educatie.html'">
-        <span data-i18n="preview.btn">Bekijk op educatie</span>
-        <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script>
-// ── Homepage PDF Preview ──────────────────────────────────────────
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-const HP_CURSUS_NAMEN = {
-  nl: {
-    'starten-met-automatiseren': 'Hoe begin ik met automatiseren?',
-    'ai-strategie-voor-leiders': 'AI Strategie voor Leiders',
-  },
-  en: {
-    'starten-met-automatiseren': 'How do I start with automation?',
-    'ai-strategie-voor-leiders': 'AI Strategy for Leaders',
-  },
-};
-
-let hpActievePreviewId = null;
-
-document.getElementById('hp-preview-overlay').addEventListener('click', e => {
-  if (e.target === e.currentTarget) sluitHpPreview();
-});
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && document.getElementById('hp-preview-overlay').style.display === 'flex') sluitHpPreview();
-});
-
-async function openPreview(cursusId) {
-  hpActievePreviewId = cursusId;
-  var l = typeof currentLang !== 'undefined' ? currentLang : 'nl';
-  var namen = HP_CURSUS_NAMEN[l] || HP_CURSUS_NAMEN.nl;
-  document.getElementById('hp-preview-titel').textContent = namen[cursusId] || cursusId;
-  const pagesEl = document.getElementById('hp-preview-pages');
-  pagesEl.innerHTML = '<div id="hp-preview-loader">' + (T[l]['preview.loading'] || 'Loading…') + '</div>';
-  const overlay = document.getElementById('hp-preview-overlay');
-  overlay.style.display = 'flex';
-
-  const pdfUrl = `/pdf-previews/${cursusId}-preview.pdf`;
-  try {
-    const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
-    pagesEl.innerHTML = '';
-    const aantalPaginas = Math.min(pdf.numPages, 3);
-    for (let i = 1; i <= aantalPaginas; i++) {
-      const pagina = await pdf.getPage(i);
-      const viewport = pagina.getViewport({ scale: 1.5 });
-      const canvas = document.createElement('canvas');
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
-      pagesEl.appendChild(canvas);
-      await pagina.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-    }
-  } catch {
-    var unavail = T[l]['preview.unavail'] || 'Preview not available.';
-    var link    = T[l]['preview.unavail_link'] || 'View on the courses page →';
-    pagesEl.innerHTML = '<div id="hp-preview-loader">' + unavail + ' <a href="educatie.html" style="color:#DC5A14;font-weight:600;">' + link + '</a></div>';
-  }
-}
-
-function sluitHpPreview() {
-  document.getElementById('hp-preview-overlay').style.display = 'none';
-  hpActievePreviewId = null;
-}
-</script>
-
 <script>
 /* ── 3D Tilt — Pillar Cards ──────────────────────────── */
 (function () {
@@ -4438,6 +4014,53 @@ function sluitHpPreview() {
       card.style.setProperty('--my', '50%');
     });
   });
+})();
+</script>
+<script>
+/* ── Verbindingspijlen tussen Educatie / Consultancy / Implementatie ── */
+(function () {
+  var stage = document.querySelector('.pillars-stage');
+  var svg   = document.getElementById('pillars-flow-svg');
+  if (!stage || !svg) return;
+  var edu  = document.getElementById('pillar-edu');
+  var cons = document.getElementById('pillar-cons');
+  var impl = document.getElementById('pillar-impl');
+  if (!edu || !cons || !impl) return;
+
+  function arc(x1, y1, x2, y2, bulge) {
+    var mx = (x1 + x2) / 2, my = (y1 + y2) / 2 + bulge;
+    return 'M' + x1 + ',' + y1 + ' Q' + mx + ',' + my + ' ' + x2 + ',' + y2;
+  }
+
+  function draw() {
+    if (window.innerWidth <= 900) return;
+    var stageBox = stage.getBoundingClientRect();
+    var cards = [edu, cons, impl].map(function (c) {
+      var r = c.getBoundingClientRect();
+      return { top: r.top - stageBox.top, bottom: r.bottom - stageBox.top, cx: r.left - stageBox.left + r.width / 2 };
+    });
+    // Alleen tekenen als de kaarten echt op één rij staan
+    if (Math.abs(cards[0].top - cards[1].top) > 4 || Math.abs(cards[1].top - cards[2].top) > 4) {
+      svg.style.opacity = '0';
+      return;
+    }
+    svg.style.opacity = '1';
+    var bY = cards[0].bottom;
+    var d1 = arc(cards[0].cx, bY, cards[1].cx, bY, 34);
+    var d2 = arc(cards[1].cx, bY, cards[2].cx, bY, 34);
+    var d3 = arc(cards[2].cx, bY, cards[0].cx, bY, 78);
+    document.getElementById('pf-path-1').setAttribute('d', d1);
+    document.getElementById('pf-path-2').setAttribute('d', d2);
+    document.getElementById('pf-path-3').setAttribute('d', d3);
+    document.getElementById('pf-flow-1').setAttribute('d', d1);
+    document.getElementById('pf-flow-2').setAttribute('d', d2);
+    document.getElementById('pf-flow-3').setAttribute('d', d3);
+  }
+
+  draw();
+  window.addEventListener('resize', draw);
+  window.addEventListener('load', draw);
+  setTimeout(draw, 400); // na reveal-animaties en font-load
 })();
 </script>
 
