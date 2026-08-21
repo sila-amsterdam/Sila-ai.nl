@@ -360,58 +360,59 @@
 
     /* ── Hero ──────────────────────────────────────── */
     .hero {
-      position: relative;
       min-height: 92vh;
       display: flex;
       align-items: center;
+      padding: 8rem 1.5rem 7rem;
+      background:
+        radial-gradient(ellipse 70% 55% at 80% 30%, rgba(217,92,33,.18) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 15% 70%, rgba(180,70,20,.10) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 80% at 50% 50%, rgba(40,28,20,.95) 0%, var(--dark) 100%);
+      position: relative;
       overflow: hidden;
-      background: var(--dark);
-      padding-top: 80px;
     }
-    .hero-noise {
+
+    /* Noise texture overlay */
+    .hero::before {
+      content: '';
       position: absolute;
       inset: 0;
-      opacity: 0.035;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 200px 200px;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
       pointer-events: none;
+      opacity: 0.5;
     }
-    .hero-glow-1 {
+
+    /* Decorative horizontal rule in hero */
+    .hero::after {
+      content: '';
       position: absolute;
-      width: 700px; height: 700px;
-      border-radius: 50%;
-      background: radial-gradient(circle, hsl(16, 82%, 54%, 0.22) 0%, transparent 70%);
-      top: -200px; right: -100px;
-      pointer-events: none;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,92,33,.3), transparent);
     }
-    .hero-glow-2 {
-      position: absolute;
-      width: 500px; height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(circle, hsl(280, 40%, 50%, 0.10) 0%, transparent 70%);
-      bottom: -150px; left: -100px;
-      pointer-events: none;
-    }
+
     .hero-content {
       position: relative;
-      z-index: 2;
-      max-width: 900px;
+      z-index: 1;
+      max-width: 780px;
       margin: 0 auto;
     }
     .hero-label {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 0.8rem;
+      font-size: 0.775rem;
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--primary);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.05s ease-out forwards;
     }
     .hero-label-line {
       display: inline-block;
-      width: 32px;
+      width: 28px;
       height: 1px;
       background: var(--primary);
       opacity: 0.6;
@@ -421,7 +422,9 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.6rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s ease-out forwards;
     }
     .service-switch a {
       display: inline-flex;
@@ -463,11 +466,14 @@
       color: var(--primary);
     }
     .hero-body {
-      font-size: clamp(1rem, 2vw, 1.15rem);
-      line-height: 1.7;
-      color: hsl(20, 10%, 68%);
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      font-weight: 400;
+      color: rgba(255,255,255,.6);
+      line-height: 1.75;
       max-width: 520px;
       margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.25s ease-out forwards;
     }
     .hero-cta {
       display: inline-flex;
@@ -1496,9 +1502,6 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-noise" aria-hidden="true"></div>
-    <div class="hero-glow-1" aria-hidden="true"></div>
-    <div class="hero-glow-2" aria-hidden="true"></div>
     <div class="wrap hero-content">
       <div class="hero-label">
         <span class="hero-label-line"></span>
