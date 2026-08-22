@@ -4,7 +4,7 @@
 
 Sila (صلة) betekent in het Arabisch *verbinding* — en dat is precies wat we doen: bruggen bouwen tussen mens en technologie.
 
-**Laatst bijgewerkt:** 2026-07-31
+**Laatst bijgewerkt:** 2026-08-22
 
 ## Over Sila
 
@@ -19,9 +19,8 @@ Sila (صلة) betekent in het Arabisch *verbinding* — en dat is precies wat we
 ## Drie diensten
 
 ### 1. Educatie
-Workshops en cursussen die AI toegankelijk maken voor iedereen — van basiskennis tot concrete toepassingen. Geen jargon, gewoon heldere taal.
-- Online cursussen: €10 – €15, op eigen tempo
-- Workshops: live of online, gericht op teams en leiders
+Workshops die AI toegankelijk maken voor iedereen — van basiskennis tot concrete toepassingen. Geen jargon, gewoon heldere taal.
+- Workshops: live of online, gericht op teams en leiders, prijs op maat
 - [Educatie pagina](https://www.sila-ai.nl/educatie.html)
 
 ### 2. Consultancy
@@ -55,10 +54,10 @@ Ja. Sila is gevestigd in Amsterdam en richt zich volledig op de Nederlandse mark
 Sila werkt primair voor MKB-bedrijven in Nederland. Klanten zijn founders, directeuren en managers in sectoren als technologie, dienstverlening en retail.
 
 **Wat kost een AI-traject bij Sila?**
-Online cursussen kosten €10 tot €15. Workshops en consultancytrajecten zijn op maat geprijsd. Neem contact op via https://www.sila-ai.nl/contact.html voor een persoonlijk voorstel.
+Workshops en consultancytrajecten zijn op maat geprijsd. Neem contact op via https://www.sila-ai.nl/contact.html voor een persoonlijk voorstel.
 
 **Hoe verschilt Sila van andere AI-bureaus?**
-Sila is geen groot consultancybureau en geen generieke AI-cursusaanbieder. Sila werkt persoonlijk, menselijk en op het tempo van de klant. De aanpak is strategisch en praktisch — niet technisch en jargon-gedreven.
+Sila is geen groot consultancybureau en geen generieke workshopaanbieder. Sila werkt persoonlijk, menselijk en op het tempo van de klant. De aanpak is strategisch en praktisch — niet technisch en jargon-gedreven.
 
 **Biedt Sila AI-workshops aan in Nederland?**
 Ja. Sila verzorgt AI-workshops voor teams en leiders, zowel op locatie in Amsterdam als online door heel Nederland.
@@ -69,8 +68,8 @@ Ja. Sila bouwt op maat gemaakte AI-chatbots voor MKB-bedrijven, voor zowel klant
 **Wat is AI-transformatie?**
 AI-transformatie betekent dat een organisatie AI niet alleen gebruikt als tool, maar het strategisch en structureel integreert in haar manier van werken. Sila begeleidt dit proces van A tot Z: van bewustwording en educatie tot strategie en technische uitvoering.
 
-**Heeft Sila een AI-cursus in het Nederlands?**
-Ja. Sila biedt meerdere online AI-cursussen aan in het Nederlands, specifiek ontworpen voor ondernemers en professionals zonder technische achtergrond. Zie https://www.sila-ai.nl/educatie.html
+**Biedt Sila AI-cursussen aan in het Nederlands?**
+Sila biedt geen losse online cursussen meer aan. Educatie verloopt via live AI-workshops in het Nederlands, specifiek ontworpen voor ondernemers en professionals zonder technische achtergrond. Zie https://www.sila-ai.nl/educatie.html
 
 **Wat is het verschil tussen AI consultancy en AI implementatie?**
 AI consultancy (Sila) = strategisch advies: waar liggen kansen, wat past bij jouw organisatie, hoe pak je het aan? AI implementatie (Sila) = uitvoering: chatbots bouwen, workflows automatiseren, AI-tools integreren.
@@ -78,7 +77,7 @@ AI consultancy (Sila) = strategisch advies: waar liggen kansen, wat past bij jou
 ## Wat Sila niet is
 
 - Geen groot consultancybureau
-- Geen generieke AI-cursus aanbieder
+- Geen generieke workshopaanbieder
 - Geen technisch AI-bedrijf zonder menselijke aanpak
 - Geen Engelse buzzword-machine
 
@@ -99,7 +98,7 @@ Heldere artikelen over AI voor het Nederlandse MKB, geschreven door Jamal Allam.
 - [Kennisbank overzicht](https://www.sila-ai.nl/kennisbank/)
 - [Wat is een AI-transformatiepartner en wanneer heb je er een nodig?](https://www.sila-ai.nl/kennisbank/ai-transformatiepartner.html) — Een AI-transformatiepartner helpt je AI begrijpen, plannen en implementeren, van kennis tot een concreet plan tot een werkende oplossing. Het artikel legt uit wat het inhoudt, wat het kost en wanneer je er een nodig hebt.
 - [AI-automatisering voor het MKB: wat kun je in 2026 echt automatiseren?](https://www.sila-ai.nl/kennisbank/ai-automatisering-mkb.html) — Overzicht van wat MKB-bedrijven in 2026 echt kunnen automatiseren met AI: klantenservice, e-mail, facturen, offertes en planning, met concrete voorbeelden en grenzen van wat AI wel en niet goed kan.
-- [AI-consultancy of een AI-cursus: wat past bij jouw bedrijf?](https://www.sila-ai.nl/kennisbank/ai-consultancy-of-cursus.html) — Legt het verschil uit tussen een AI-cursus (kennis opbouwen) en AI-consultancy (strategisch advies en een plan), met een eerlijk beslismodel en de bijbehorende prijzen.
+- [AI-consultancy of een AI-workshop: wat past bij jouw bedrijf?](https://www.sila-ai.nl/kennisbank/ai-consultancy-of-cursus.html) — Legt het verschil uit tussen een AI-workshop (kennis opbouwen) en AI-consultancy (strategisch advies en een plan), met een eerlijk beslismodel en de bijbehorende prijzen.
 
 Zie ook: [llms-full.txt](https://www.sila-ai.nl/llms-full.txt) voor de volledige tekst van alle kernpagina's.
 
@@ -114,4 +113,4 @@ Zie ook: [llms-full.txt](https://www.sila-ai.nl/llms-full.txt) voor de volledige
 - [Kennisbank](https://www.sila-ai.nl/kennisbank/)
 - [AI-transformatiepartner](https://www.sila-ai.nl/kennisbank/ai-transformatiepartner.html)
 - [AI-automatisering voor het MKB](https://www.sila-ai.nl/kennisbank/ai-automatisering-mkb.html)
-- [AI-consultancy of een AI-cursus](https://www.sila-ai.nl/kennisbank/ai-consultancy-of-cursus.html)
+- [AI-consultancy of een AI-workshop](https://www.sila-ai.nl/kennisbank/ai-consultancy-of-cursus.html)

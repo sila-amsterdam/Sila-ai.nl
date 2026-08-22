@@ -2,7 +2,7 @@
 
 > Dit bestand bevat de onverkorte tekst van de kernpagina's van sila-ai.nl, bedoeld voor AI-systemen die in één keer de volledige inhoud willen ophalen in plaats van de site te crawlen. Voor een beknopt, gestructureerd overzicht: zie [llms.txt](https://www.sila-ai.nl/llms.txt).
 
-**Laatst bijgewerkt:** 2026-07-31
+**Laatst bijgewerkt:** 2026-08-22
 
 ---
 
@@ -14,11 +14,11 @@ Sila is opgericht in 2023 door Jamal Allam, AI-specialist en consultant, en is g
 
 Sila werkt met drie pijlers die op elkaar aansluiten:
 
-1. Educatie — workshops en online cursussen die AI toegankelijk maken, van basiskennis tot concrete toepassingen, zonder jargon. Online cursussen kosten 10 tot 15 euro en zijn op eigen tempo te volgen. Workshops zijn live of online, gericht op teams en leiders.
+1. Educatie — workshops die AI toegankelijk maken, van basiskennis tot concrete toepassingen, zonder jargon. Workshops zijn live of online, gericht op teams en leiders, en op maat geprijsd.
 2. Consultancy — strategisch AI-advies op maat: van een eenmalige AI-audit tot een doorlopende maandelijkse sparringpartner, met als resultaat een concreet plan.
 3. Implementatie — het daadwerkelijk bouwen van AI-oplossingen: chatbots voor klantenservice en interne processen, workflow-automatisering met AI, en AI-integraties met bestaande systemen.
 
-Sila is geen groot consultancybureau, geen generieke AI-cursusaanbieder, geen technisch AI-bedrijf zonder menselijke aanpak en geen Engelse buzzword-machine. De communicatie is menselijk, rustig en persoonlijk, zonder Engelse buzzwords en zonder overdaad aan opsommingen, helder genoeg voor een ondernemer zonder technische achtergrond.
+Sila is geen groot consultancybureau, geen generieke workshopaanbieder, geen technisch AI-bedrijf zonder menselijke aanpak en geen Engelse buzzword-machine. De communicatie is menselijk, rustig en persoonlijk, zonder Engelse buzzwords en zonder overdaad aan opsommingen, helder genoeg voor een ondernemer zonder technische achtergrond.
 
 Contact: https://www.sila-ai.nl/contact.html — Locatie: Amsterdam, Nederland.
 
@@ -42,7 +42,7 @@ Een transformatiepartner doet het anders. Die begint bij de vraag wat AI eigenli
 
 Bij Sila is dat vertaald naar drie pijlers die op elkaar aansluiten:
 
-Educatie: eerst begrijpen wat AI is en wat het voor jouw team kan betekenen, via workshops en online cursussen, gericht op leiders en medewerkers zonder technische achtergrond.
+Educatie: eerst begrijpen wat AI is en wat het voor jouw team kan betekenen, via workshops, gericht op leiders en medewerkers zonder technische achtergrond.
 
 Consultancy: daarna bepalen wat je met die kennis gaat doen, samen een concreet, uitvoerbaar AI-plan maken: waar liggen de kansen, wat pak je eerst aan, wat past bij jouw bedrijf.
 
@@ -76,7 +76,7 @@ Het verschil zit ook in het tempo en de toon. Sila werkt niet met opgejaagde ver
 
 De kosten hangen sterk af van waar je instapt en hoeveel begeleiding je nodig hebt. Er is geen vast bedrag dat voor elk bedrijf geldt, maar wel een aantal richtlijnen.
 
-Educatie is meestal de laagste instap. Online cursussen bij Sila liggen tussen de tien en vijftien euro per stuk. Een live workshop voor een team kost meer, afhankelijk van groepsgrootte en duur.
+Educatie is meestal de laagste instap. Een live workshop voor een team is maatwerk: de prijs hangt af van groepsgrootte, duur en onderwerp.
 
 Consultancy vraagt een grotere investering, omdat het gaat om een intake, analyse en strategiesessie die samen een concreet plan opleveren. De prijs hangt af van de complexiteit van je organisatie.
 
@@ -170,29 +170,27 @@ Hoe lang duurt het voordat automatisering resultaat oplevert? Voor een afgebaken
 
 ---
 
-## Artikel: AI-consultancy of een AI-cursus: wat past bij jouw bedrijf?
+## Artikel: AI-consultancy of een AI-workshop: wat past bij jouw bedrijf?
 
 Bron: https://www.sila-ai.nl/kennisbank/ai-consultancy-of-cursus.html
 
-Kort antwoord: een AI-cursus leert jou en je team wat AI is en hoe je het gebruikt, tegen een vaste, lage prijs en op eigen tempo. AI-consultancy is persoonlijk advies over wat je met AI moet doen in jouw specifieke bedrijf, met een concreet plan als resultaat. Heb je vooral kennis nodig, kies dan een cursus of workshop. Heb je een keuze of strategie nodig, kies dan consultancy. Veel bedrijven combineren beide: eerst begrijpen, dan bepalen.
+Kort antwoord: een AI-workshop leert jou en je team wat AI is en hoe je het gebruikt, in een paar uur en op maat voor jouw team. AI-consultancy is persoonlijk advies over wat je met AI moet doen in jouw specifieke bedrijf, met een concreet plan als resultaat. Heb je vooral kennis nodig, kies dan een workshop. Heb je een keuze of strategie nodig, kies dan consultancy. Veel bedrijven combineren beide: eerst begrijpen, dan bepalen.
 
-### Wat is het verschil tussen AI-consultancy en een AI-cursus?
+### Wat is het verschil tussen AI-consultancy en een AI-workshop?
 
-Een AI-cursus is educatie. Je leert wat AI is, wat het kan en hoe je ermee werkt. Het format is vast: je volgt de stof, op je eigen tempo, en het resultaat is kennis en vaardigheid.
+Een AI-workshop is educatie. Je leert samen met je team wat AI is, wat het kan en hoe je ermee werkt. Het resultaat is kennis en vertrouwen, niet een plan.
 
 AI-consultancy is advies. Een consultant kijkt naar jouw specifieke bedrijf en helpt je bepalen waar AI waarde toevoegt, wat je eerst oppakt en hoe je dat aanpakt. Het resultaat is geen kennis, maar een plan.
 
 Bij Sila zie je dat verschil terug in twee van de drie pijlers waarmee gewerkt wordt. Educatie draait om begrijpen wat AI is en kan. Consultancy draait om bepalen wat jij met AI gaat doen. De derde pijler, implementatie, is het daadwerkelijk bouwen van wat je hebt besloten.
 
-### Wat leer je in een AI-cursus voor ondernemers?
+### Wat leer je in een AI-workshop voor ondernemers?
 
-Een goede AI-cursus voor ondernemers is praktisch, niet technisch. Je leert geen programmeren. Je leert wat AI voor jouw werk kan betekenen, welke tools daarbij passen en hoe je een eerste stap zet zonder dat het overweldigend wordt.
+Een goede AI-workshop voor ondernemers is praktisch, niet technisch. Je leert geen programmeren. Je leert wat AI voor jouw werk kan betekenen, welke tools daarbij passen en hoe je een eerste stap zet zonder dat het overweldigend wordt.
 
-Sila biedt hiervoor online cursussen aan, zoals Automatiseren met AI, GPT Assistent bouwen, Denk als een leider, laat AI bouwen en Skills bouwen met Claude Code. Elke cursus behandelt één onderwerp grondig, in heldere taal.
+Sila verzorgt hiervoor live workshops, op locatie of online, gericht op een team of een leider. Je bouwt samen begrip op en oefent direct met elkaar, met voorbeelden die je herkent uit je eigen werkdag.
 
-Naast de online cursussen zijn er live workshops, interactieve sessies op locatie of online, gericht op een team of een leider. Waar een cursus vooral individueel is, werkt een workshop met een groep.
-
-Het resultaat van beide vormen is hetzelfde soort verandering: van "ik weet niet waar te beginnen" naar "ik snap wat AI voor mij kan doen." Dat is winst, maar het is geen strategie.
+Het resultaat is een duidelijke verandering: van "ik weet niet waar te beginnen" naar "ik snap wat AI voor mij kan doen." Dat is winst, maar het is geen strategie.
 
 ### Wat doet een AI-consultant voor het MKB?
 
@@ -204,29 +202,27 @@ Dit traject past bij bedrijven die weten dat AI belangrijk is, maar niet weten w
 
 ### Wanneer kies je voor consultancy en wanneer voor educatie?
 
-Kies een cursus of workshop als: je team niet weet wat AI concreet inhoudt, je zelf nog geen beeld hebt van de mogelijkheden, je snel en betaalbaar basiskennis wilt opbouwen, of je merkt dat mensen in je bedrijf huiverig zijn en eerst vertrouwen moeten opbouwen.
+Kies een workshop als: je team niet weet wat AI concreet inhoudt, je zelf nog geen beeld hebt van de mogelijkheden, je snel en betaalbaar basiskennis wilt opbouwen, of je merkt dat mensen in je bedrijf huiverig zijn en eerst vertrouwen moeten opbouwen.
 
 Kies consultancy als: je al weet dat AI kansen biedt maar niet welke voor jouw bedrijf specifiek, je al met losse tools experimenteert zonder duidelijke lijn, je een plan nodig hebt dat je aan je team of directie kunt voorleggen, of je liever eenmalig goed advies krijgt dan zelf maanden lang moet uitzoeken wat werkt.
 
-Kies allebei als: je een team hebt dat nog moet wennen aan AI, én je als leider een duidelijke koers nodig hebt. Dat is de meest voorkomende combinatie: eerst begrijpen wat er mogelijk is via een cursus of workshop, dan bepalen wat je concreet gaat doen via consultancy, en daarna vaak een derde stap: implementatie.
+Kies allebei als: je een team hebt dat nog moet wennen aan AI, én je als leider een duidelijke koers nodig hebt. Dat is de meest voorkomende combinatie: eerst begrijpen wat er mogelijk is via een workshop, dan bepalen wat je concreet gaat doen via consultancy, en daarna vaak een derde stap: implementatie.
 
-### Wat kosten AI-consultancy en AI-cursussen?
+### Wat kosten AI-consultancy en een AI-workshop?
 
-Online AI-cursussen bij Sila kosten tussen de tien en vijftien euro per stuk. Dat is bewust laagdrempelig.
+Workshops en consultancytrajecten zijn allebei maatwerk. De prijs hangt af van de groepsgrootte, de duur, de diepte van de analyse en wat je precies nodig hebt. Je krijgt vooraf altijd een helder voorstel, zonder verrassingen achteraf.
 
-Workshops en consultancytrajecten zijn maatwerk. De prijs hangt af van de omvang van je team, de diepte van de analyse en wat je precies nodig hebt. Je krijgt vooraf altijd een helder voorstel, zonder verrassingen achteraf.
-
-### Kun je consultancy en een cursus combineren?
+### Kun je consultancy en een workshop combineren?
 
 Ja, en dat gebeurt regelmatig. De drie pijlers van Sila, educatie, consultancy en implementatie, zijn geen losse producten maar stappen die op elkaar kunnen volgen. Een voorbeeld: een team volgt eerst een workshop, daarna volgt een consultancytraject waarin de leider een concreet plan krijgt, tot slot wordt dat plan gebouwd in een implementatietraject.
 
 ### Veelgestelde vragen
 
-Is een AI-cursus genoeg om als bedrijf met AI te beginnen? Voor de eerste stap wel. Zodra je een keuze moet maken tussen meerdere toepassingen, of een plan nodig hebt voor je hele organisatie, is consultancy een logische vervolgstap.
+Is een AI-workshop genoeg om als bedrijf met AI te beginnen? Voor de eerste stap wel. Zodra je een keuze moet maken tussen meerdere toepassingen, of een plan nodig hebt voor je hele organisatie, is consultancy een logische vervolgstap.
 
 Hoe lang duurt een AI-consultancytraject bij Sila? Dat hangt af van de omvang van je organisatie en de vraag. Een traject bestaat uit een intake, analyse, strategiesessie, een AI-plan en een korte nazorgperiode.
 
-Kan mijn team zonder technische kennis met AI leren werken? Ja. Alle cursussen en workshops van Sila zijn gemaakt voor mensen zonder technische achtergrond.
+Kan mijn team zonder technische kennis met AI leren werken? Ja. Alle workshops van Sila zijn gemaakt voor mensen zonder technische achtergrond.
 
 Wat gebeurt er na een AI-audit of AI-strategietraject? Je krijgt een helder plan met concrete aanbevelingen en een volgorde van aanpak. Wil je dat plan ook daadwerkelijk laten bouwen, dan kan dat via implementatie.
 
