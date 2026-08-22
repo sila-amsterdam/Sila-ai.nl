@@ -408,7 +408,7 @@
       color: var(--primary);
       margin-bottom: 1.75rem;
       opacity: 0;
-      animation: fadeUp 0.6s 0.05s ease-out forwards;
+      animation: heroFadeUp 0.6s 0.05s ease-out forwards;
     }
     .hero-label-line {
       display: inline-block;
@@ -424,7 +424,7 @@
       gap: 0.6rem;
       margin-bottom: 1.75rem;
       opacity: 0;
-      animation: fadeUp 0.6s 0.1s ease-out forwards;
+      animation: heroFadeUp 0.6s 0.1s ease-out forwards;
     }
     .service-switch a {
       display: inline-flex;
@@ -459,7 +459,7 @@
       color: #fff;
       margin-bottom: 1.5rem;
       opacity: 0;
-      animation: fadeUp 0.7s 0.15s ease-out forwards;
+      animation: heroFadeUp 0.7s 0.15s ease-out forwards;
     }
     .hero-heading em {
       font-style: italic;
@@ -473,7 +473,11 @@
       max-width: 520px;
       margin-bottom: 2.5rem;
       opacity: 0;
-      animation: fadeUp 0.7s 0.25s ease-out forwards;
+      animation: heroFadeUp 0.7s 0.25s ease-out forwards;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
     .hero-cta {
       display: inline-flex;
