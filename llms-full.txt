@@ -18,9 +18,25 @@ Sila werkt met drie pijlers die op elkaar aansluiten:
 2. Consultancy — strategisch AI-advies op maat: van een eenmalige AI-audit tot een doorlopende maandelijkse sparringpartner, met als resultaat een concreet plan.
 3. Implementatie — het daadwerkelijk bouwen van AI-oplossingen: chatbots voor klantenservice en interne processen, workflow-automatisering met AI, en AI-integraties met bestaande systemen.
 
+Na een implementatietraject biedt Sila ook Beheer aan: een vaste, maandelijkse laag die de automatisering draaiend en actueel houdt. Zie https://www.sila-ai.nl/beheer.html
+
 Sila is geen groot consultancybureau, geen generieke workshopaanbieder, geen technisch AI-bedrijf zonder menselijke aanpak en geen Engelse buzzword-machine. De communicatie is menselijk, rustig en persoonlijk, zonder Engelse buzzwords en zonder overdaad aan opsommingen, helder genoeg voor een ondernemer zonder technische achtergrond.
 
 Contact: https://www.sila-ai.nl/contact.html — Locatie: Amsterdam, Nederland.
+
+---
+
+## Beheer — samenvatting
+
+Bron: https://www.sila-ai.nl/beheer.html
+
+Een build is nooit klaar op de dag van oplevering. Modellen worden gedeprecieerd, workflows lopen vast en regels veranderen. Beheer is de vaste, maandelijkse laag die Sila bovenop een implementatietraject aanbiedt om daarvoor te zorgen.
+
+Beheer bestaat uit twee onderdelen. Workflow-onderhoud houdt de automatisering draaiend: Sila monitort het systeem, lost storingen op en werkt bij zodra een onderliggend model of platform verandert. Veiligheid- en documentatie-onderhoud houdt de automatisering kloppend: het AI-register wordt actueel gehouden, met een periodieke check op wat er in de regelgeving is veranderd, en een kort maandverslag.
+
+De afspraak is vast en voorspelbaar: een vaste prijs met een vaste scope, geen rekening die oploopt naarmate het meer tijd kost. Er is een vast aantal uren per maand, bijvoorbeeld maximaal twee uur, in plaats van een belofte dat Sila altijd en overal beschikbaar is. Elke maand volgt een kort verslag van wat is gecontroleerd, wat is aangepast en wat er nog open staat.
+
+Beheer is standaard onderdeel van elk nieuw implementatietraject bij Sila, en is ook los af te nemen door bedrijven die al hun eigen automatisering hebben. Niet inbegrepen zijn nieuwe functionaliteit of uitbreidingen, dat valt onder een nieuw implementatietraject, en formele, geaccrediteerde certificering: Sila beoordeelt en documenteert, maar certificeert niet. De prijs is op maat, afgestemd op de omvang van de automatisering.
 
 ---
 

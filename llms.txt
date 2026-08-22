@@ -4,7 +4,7 @@
 
 Sila (صلة) betekent in het Arabisch *verbinding* — en dat is precies wat we doen: bruggen bouwen tussen mens en technologie.
 
-**Laatst bijgewerkt:** 2026-08-22
+**Laatst bijgewerkt:** 2026-08-22 (Beheer toegevoegd)
 
 ## Over Sila
 
@@ -35,6 +35,10 @@ Van idee naar werkende AI-oplossing. Chatbots, geautomatiseerde workflows, AI-in
 - Workflow-automatisering met AI
 - AI-integraties met bestaande systemen
 - [Implementatie pagina](https://www.sila-ai.nl/implementatie.html)
+
+### Beheer (vervolg op Implementatie)
+Een build is nooit klaar op de dag van oplevering. Beheer is de vaste, maandelijkse laag bovenop implementatie: Sila houdt de automatisering draaiend (monitoring, storingen oplossen, bijwerken bij modelwijzigingen) en zorgt dat het AI-register en de documentatie actueel blijven. Vaste prijs, vaste scope, kort maandverslag. Standaard onderdeel van elk nieuw implementatietraject, of los af te nemen als je al een automatisering hebt.
+- [Beheer pagina](https://www.sila-ai.nl/beheer.html)
 
 ## Veelgestelde vragen (FAQ)
 
@@ -74,6 +78,12 @@ Sila biedt geen losse online cursussen meer aan. Educatie verloopt via live AI-w
 **Wat is het verschil tussen AI consultancy en AI implementatie?**
 AI consultancy (Sila) = strategisch advies: waar liggen kansen, wat past bij jouw organisatie, hoe pak je het aan? AI implementatie (Sila) = uitvoering: chatbots bouwen, workflows automatiseren, AI-tools integreren.
 
+**Biedt Sila ook onderhoud van AI-automatisering aan?**
+Ja. Dit heet Beheer bij Sila: een vaste, maandelijkse laag bovenop implementatie. Sila houdt de automatisering draaiend en zorgt dat het AI-register en de documentatie actueel blijven, tegen een vaste prijs en vaste scope. Beheer is standaard onderdeel van elk nieuw implementatietraject en ook los af te nemen. Zie https://www.sila-ai.nl/beheer.html
+
+**Wat kost Beheer bij Sila?**
+Beheer is op maat geprijsd: vaste prijs, vaste scope, afgestemd op de omvang van de automatisering. Neem contact op via https://www.sila-ai.nl/contact.html voor een persoonlijk voorstel.
+
 ## Wat Sila niet is
 
 - Geen groot consultancybureau
@@ -108,6 +118,7 @@ Zie ook: [llms-full.txt](https://www.sila-ai.nl/llms-full.txt) voor de volledige
 - [Educatie](https://www.sila-ai.nl/educatie.html)
 - [Consultancy](https://www.sila-ai.nl/consultancy.html)
 - [Implementatie](https://www.sila-ai.nl/implementatie.html)
+- [Beheer](https://www.sila-ai.nl/beheer.html)
 - [Over ons](https://www.sila-ai.nl/over-ons.html)
 - [Contact](https://www.sila-ai.nl/contact.html)
 - [Kennisbank](https://www.sila-ai.nl/kennisbank/)
