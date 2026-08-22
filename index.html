@@ -702,19 +702,6 @@
 
     /* ── Pillar Cards ──────────────────────────────── */
     .pillars-stage { position: relative; }
-    #pillars-flow-svg {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      overflow: visible; pointer-events: none; z-index: 0;
-    }
-    .pf-line { stroke: var(--border); stroke-width: 1.5; }
-    .pf-flow {
-      stroke: var(--primary); stroke-width: 2; stroke-linecap: round;
-      stroke-dasharray: 3 11; opacity: .6;
-      animation: pfFlow 2.4s linear infinite;
-    }
-    @keyframes pfFlow { to { stroke-dashoffset: -140; } }
-    @media (prefers-reduced-motion: reduce) { .pf-flow { animation: none; opacity: .35; } }
-    @media (max-width: 900px) { #pillars-flow-svg { display: none; } }
     .pillars-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(278px, 1fr));
@@ -1823,19 +1810,6 @@
     </div>
 
     <div class="pillars-stage">
-    <svg id="pillars-flow-svg" aria-hidden="true">
-      <defs>
-        <marker id="pf-arrow" viewBox="0 0 8 8" refX="6.5" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-          <path d="M0,0 L8,4 L0,8 Z" fill="var(--primary)"/>
-        </marker>
-      </defs>
-      <path id="pf-path-1" class="pf-line" fill="none"/>
-      <path id="pf-path-2" class="pf-line" fill="none"/>
-      <path id="pf-path-3" class="pf-line" fill="none"/>
-      <path id="pf-flow-1" class="pf-flow" fill="none" marker-end="url(#pf-arrow)"/>
-      <path id="pf-flow-2" class="pf-flow" fill="none" marker-end="url(#pf-arrow)"/>
-      <path id="pf-flow-3" class="pf-flow" fill="none" marker-end="url(#pf-arrow)"/>
-    </svg>
     <div class="pillars-grid">
 
       <article class="pillar-card reveal reveal-left" id="pillar-edu" style="display:flex;flex-direction:column;">
@@ -4016,54 +3990,5 @@ setTimeout(() => {
   });
 })();
 </script>
-<script>
-/* ── Verbindingspijlen tussen Educatie / Consultancy / Implementatie ── */
-(function () {
-  var stage = document.querySelector('.pillars-stage');
-  var svg   = document.getElementById('pillars-flow-svg');
-  if (!stage || !svg) return;
-  var edu  = document.getElementById('pillar-edu');
-  var cons = document.getElementById('pillar-cons');
-  var impl = document.getElementById('pillar-impl');
-  if (!edu || !cons || !impl) return;
-
-  function arc(x1, y1, x2, y2, bulge) {
-    var mx = (x1 + x2) / 2, my = (y1 + y2) / 2 + bulge;
-    return 'M' + x1 + ',' + y1 + ' Q' + mx + ',' + my + ' ' + x2 + ',' + y2;
-  }
-
-  function draw() {
-    if (window.innerWidth <= 900) return;
-    var stageBox = stage.getBoundingClientRect();
-    var cards = [edu, cons, impl].map(function (c) {
-      var r = c.getBoundingClientRect();
-      return { top: r.top - stageBox.top, bottom: r.bottom - stageBox.top, cx: r.left - stageBox.left + r.width / 2 };
-    });
-    // Alleen tekenen als de kaarten echt op één rij staan
-    if (Math.abs(cards[0].top - cards[1].top) > 4 || Math.abs(cards[1].top - cards[2].top) > 4) {
-      svg.style.opacity = '0';
-      return;
-    }
-    svg.style.opacity = '1';
-    var bY = cards[0].bottom;
-    var d1 = arc(cards[0].cx, bY, cards[1].cx, bY, 34);
-    var d2 = arc(cards[1].cx, bY, cards[2].cx, bY, 34);
-    var d3 = arc(cards[2].cx, bY, cards[0].cx, bY, 78);
-    document.getElementById('pf-path-1').setAttribute('d', d1);
-    document.getElementById('pf-path-2').setAttribute('d', d2);
-    document.getElementById('pf-path-3').setAttribute('d', d3);
-    document.getElementById('pf-flow-1').setAttribute('d', d1);
-    document.getElementById('pf-flow-2').setAttribute('d', d2);
-    document.getElementById('pf-flow-3').setAttribute('d', d3);
-  }
-
-  draw();
-  window.addEventListener('resize', draw);
-  window.addEventListener('load', draw);
-  setTimeout(draw, 400); // na reveal-animaties en font-load
-})();
-</script>
-
-
 </body>
 </html>
