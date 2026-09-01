@@ -109,6 +109,7 @@ Heldere artikelen over AI voor het Nederlandse MKB, geschreven door Jamal Allam.
 - [Wat is een AI-transformatiepartner en wanneer heb je er een nodig?](https://www.sila-ai.nl/kennisbank/ai-transformatiepartner.html) — Een AI-transformatiepartner helpt je AI begrijpen, plannen en implementeren, van kennis tot een concreet plan tot een werkende oplossing. Het artikel legt uit wat het inhoudt, wat het kost en wanneer je er een nodig hebt.
 - [AI-automatisering voor het MKB: wat kun je in 2026 echt automatiseren?](https://www.sila-ai.nl/kennisbank/ai-automatisering-mkb.html) — Overzicht van wat MKB-bedrijven in 2026 echt kunnen automatiseren met AI: klantenservice, e-mail, facturen, offertes en planning, met concrete voorbeelden en grenzen van wat AI wel en niet goed kan.
 - [AI-consultancy of een AI-workshop: wat past bij jouw bedrijf?](https://www.sila-ai.nl/kennisbank/ai-consultancy-of-cursus.html) — Legt het verschil uit tussen een AI-workshop (kennis opbouwen) en AI-consultancy (strategisch advies en een plan), met een eerlijk beslismodel en de bijbehorende prijzen.
+- [AI-bureau Amsterdam: waar moet je op letten voordat je een AI-partner kiest?](https://www.sila-ai.nl/kennisbank/ai-bureau-amsterdam.html) — Legt uit waar je op moet letten bij het kiezen van een AI-bureau in Amsterdam: bouwen ze zelf, kennen ze het Nederlandse MKB, is de prijs transparant, en wat het gemiddeld kost.
 
 Zie ook: [llms-full.txt](https://www.sila-ai.nl/llms-full.txt) voor de volledige tekst van alle kernpagina's.
 
@@ -125,3 +126,4 @@ Zie ook: [llms-full.txt](https://www.sila-ai.nl/llms-full.txt) voor de volledige
 - [AI-transformatiepartner](https://www.sila-ai.nl/kennisbank/ai-transformatiepartner.html)
 - [AI-automatisering voor het MKB](https://www.sila-ai.nl/kennisbank/ai-automatisering-mkb.html)
 - [AI-consultancy of een AI-workshop](https://www.sila-ai.nl/kennisbank/ai-consultancy-of-cursus.html)
+- [AI-bureau Amsterdam](https://www.sila-ai.nl/kennisbank/ai-bureau-amsterdam.html)

@@ -90,4 +90,12 @@
     <xhtml:link rel="alternate" hreflang="nl" href="https://www.sila-ai.nl/kennisbank/ai-consultancy-of-cursus.html"/>
   </url>
 
+  <url>
+    <loc>https://www.sila-ai.nl/kennisbank/ai-bureau-amsterdam.html</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.sila-ai.nl/kennisbank/ai-bureau-amsterdam.html"/>
+  </url>
+
 </urlset>
