@@ -5,7 +5,9 @@ import { next, waitUntil } from '@vercel/functions';
 // Geen IP-adres, geen cookies. Faalt altijd stil: logging mag de site nooit vertragen of breken.
 // Vercel-env vars: LLM_LOG_WEBHOOK_URL en LLM_LOG_WEBHOOK_SECRET (waarden staan in Sleutels/.env).
 
-type Soort = 'crawler' | 'llm-bezoeker' | 'onbekende-bot';
+// onbekende-herkomst = mens via een externe bron die we niet als LLM herkennen (bijv. x.com, t.co, LinkedIn).
+// Bedoeld om te ontdekken wat LLM's zoals Grok meesturen; later kan dit smaller.
+type Soort = 'crawler' | 'llm-bezoeker' | 'onbekende-bot' | 'onbekende-herkomst';
 
 // Bekende AI-bots. Specifiekste patroon eerst.
 const AI_BOTS: Array<[RegExp, string]> = [
@@ -71,7 +73,24 @@ function hostMatch(referrer: string): string {
   }
 }
 
-function classificeer(ua: string, referrer: string, utm: string): { soort: Soort; bron: string } | null {
+// Gewone zoekmachines horen niet bij "onbekende herkomst": dat is al het normale zoekverkeer.
+const ZOEKMACHINES =
+  /(^|\.)(google\.[a-z.]+|bing\.com|duckduckgo\.com|ecosia\.org|yahoo\.com|startpage\.com|qwant\.com|yandex\.[a-z]+|baidu\.com|brave\.com)$/i;
+
+// Externe referrer-host (http/https), zonder eigen site, previews en zoekmachines. Anders leeg.
+function externeHost(referrer: string, eigenHost: string): string {
+  try {
+    const r = new URL(referrer);
+    if (r.protocol !== 'http:' && r.protocol !== 'https:') return '';
+    const host = r.hostname.toLowerCase();
+    if (host === eigenHost.toLowerCase() || host.endsWith('sila-ai.nl') || host.endsWith('.vercel.app')) return '';
+    return ZOEKMACHINES.test(host) ? '' : host;
+  } catch {
+    return '';
+  }
+}
+
+function classificeer(ua: string, referrer: string, utm: string, eigenHost: string): { soort: Soort; bron: string } | null {
   for (const [patroon, label] of AI_BOTS) if (patroon.test(ua)) return { soort: 'crawler', bron: label };
   if (NEGEREN.test(ua)) return null;
   if (ua === '') return { soort: 'onbekende-bot', bron: 'Geen user-agent' };
@@ -79,6 +98,9 @@ function classificeer(ua: string, referrer: string, utm: string): { soort: Soort
   const host = hostMatch(referrer);
   if (host) return { soort: 'llm-bezoeker', bron: host };
   if (utm && LLM_UTM.test(utm)) return { soort: 'llm-bezoeker', bron: 'utm: ' + utm };
+  if (utm) return { soort: 'onbekende-herkomst', bron: 'utm: ' + utm };
+  const extern = externeHost(referrer, eigenHost);
+  if (extern) return { soort: 'onbekende-herkomst', bron: extern };
   return null;
 }
 
@@ -91,9 +113,9 @@ export default function middleware(request: Request) {
       const ua = request.headers.get('user-agent') ?? '';
       const referrer = request.headers.get('referer') ?? '';
       const utm = url.searchParams.get('utm_source') ?? '';
-      const hit = classificeer(ua, referrer, utm);
+      const hit = classificeer(ua, referrer, utm, url.hostname);
       if (hit) {
-        const mens = hit.soort === 'llm-bezoeker';
+        const mens = hit.soort === 'llm-bezoeker' || hit.soort === 'onbekende-herkomst';
         waitUntil(
           fetch(logUrl, {
             method: 'POST',
