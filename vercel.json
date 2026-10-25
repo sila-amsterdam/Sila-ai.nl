@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/customarticle", "destination": "/customarticle.html" }
+  ]
+}
