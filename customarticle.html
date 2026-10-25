@@ -149,6 +149,7 @@
     .melding { border-radius: 12px; padding: 12px 16px; font-size: 15px; line-height: 1.55; margin: 0; }
     .melding.fout { background: var(--fout-bg); color: var(--fout-tekst); }
     .melding.goed { background: var(--goed-bg); color: var(--goed-tekst); }
+    .hint-melding { background: var(--let-bg); color: var(--let-tekst); margin-top: 12px; font-size: 14.5px; }
     .veldfout { color: var(--fout-tekst); font-size: 14px; font-weight: 500; margin: 6px 0 0; }
     .heeft-fout input, .heeft-fout textarea, .heeft-fout select { border-color: var(--fout-tekst); }
 
@@ -312,6 +313,7 @@
             </div>
             <span class="hint">Alleen deze mogen worden aanbevolen. Leeg betekent dat niets wordt aanbevolen.</span>
             <div class="chips" id="productChips"></div>
+            <p class="melding hint-melding" id="productHint" role="status" hidden>Producten worden alleen aanbevolen bij intensiteit Licht of Sterk of bij insteek Commercieel.</p>
           </div>
 
           <div class="veld" data-veld="affiliate">
@@ -386,6 +388,31 @@
   const MIN_WOORDEN = 150;
   const VERVERS_MS = 15000;
   const TOEGESTAAN = { pdf: 1, txt: 1, md: 1, png: 1, jpg: 1, jpeg: 1 };
+
+  // BEGIN-LOGICA (zuivere functies, door test/tropos.test.js uit dit bestand gehaald en getest)
+  const MAX_BODY_BYTES = Math.round(4.2 * 1024 * 1024);
+  const REDEN_MAX = 300;
+
+  // Omvang van de JSON die naar de server gaat (base64 is ruim 1/3 zwaarder dan het bestand zelf).
+  function bodyBytes(body) { return new TextEncoder().encode(JSON.stringify(body)).length; }
+
+  // Reden als gewone tekst, maximaal 300 tekens, met een beletselteken als er iets is weggelaten.
+  function kortReden(tekst) {
+    const t = typeof tekst === 'string' ? tekst.trim() : '';
+    return t.length > REDEN_MAX ? t.slice(0, REDEN_MAX).trimEnd() + '\u2026' : t;
+  }
+
+  // Alleen https-links naar een Doc worden een link; alles anders blijft tekst of valt weg.
+  function veiligeDocUrl(url) {
+    if (typeof url !== 'string' || !url.startsWith('https://')) return null;
+    try { return new URL(url).href; } catch (e) { return null; }
+  }
+
+  // Waarschuwing (geen blokkade) als opgegeven producten niet worden aanbevolen door insteek en intensiteit.
+  function toonProductHint(producten, insteek, intensiteit) {
+    return producten.length > 0 && insteek !== 'Commercieel' && intensiteit === 'Geen';
+  }
+  // EINDE-LOGICA
 
   const $ = (id) => document.getElementById(id);
   const inlog = $('inlogscherm');
@@ -505,6 +532,13 @@
   }
   $('affiliatetoevoegen').addEventListener('click', () => voegAffiliateToe().focus());
 
+  // ---------- Hint bij producten ----------
+  function werkProductHintBij() {
+    const i = document.querySelector('input[name=insteek]:checked');
+    const n = document.querySelector('input[name=intensiteit]:checked');
+    $('productHint').hidden = !toonProductHint(producten, i ? i.value : '', n ? n.value : 'Geen');
+  }
+
   // ---------- Producten (chips) ----------
   function renderProducten() {
     const c = $('productChips');
@@ -518,6 +552,7 @@
       b.addEventListener('click', () => { producten.splice(i, 1); renderProducten(); });
       chip.appendChild(t); chip.appendChild(b); c.appendChild(chip);
     });
+    werkProductHintBij();
   }
   function voegProductToe() {
     const inp = $('productInvoer');
@@ -580,6 +615,7 @@
     const v = standaardIntensiteit(r.value);
     document.querySelector('input[name=intensiteit][value=' + v + ']').checked = true;
   }));
+  document.querySelectorAll('input[name=insteek], input[name=intensiteit]').forEach((r) => r.addEventListener('change', werkProductHintBij));
   document.querySelectorAll('input[name=intensiteit]').forEach((r) => r.addEventListener('change', () => {
     intensiteitAangeraakt = true;
     $('intensiteitHint').textContent = 'Zelf gekozen. De insteek past dit niet meer aan.';
@@ -661,7 +697,8 @@
     limiet: 'Je hebt vandaag al 2 artikelen aangevraagd voor deze klant. Morgen kan er weer een bij.',
     bezig: 'Er loopt al een aanvraag voor deze klant. Wacht tot die klaar is en probeer het dan opnieuw.',
     'nog niet beschikbaar': 'Voor deze klant kunnen nog geen artikelen worden aangevraagd.',
-    ongeldig: 'De aanvraag is niet compleet. Controleer de velden en probeer het opnieuw.'
+    ongeldig: 'De aanvraag is niet compleet. Controleer de velden en probeer het opnieuw.',
+    bron: 'De schrijf-workflow was niet bereikbaar. Probeer het zo opnieuw.'
   };
 
   $('formulier').addEventListener('submit', async (e) => {
@@ -708,6 +745,10 @@
         zoekterm: $('zoekterm').value.trim(),
         metAfbeeldingen: $('metAfbeeldingen').checked
       };
+      if (bodyBytes(body) > MAX_BODY_BYTES) {
+        zetFout($('formfout'), 'De bijlagen zijn samen te groot. Verklein of verdeel ze over twee aanvragen.');
+        return;
+      }
       const r = await api(body);
       if (r.status === 401) { toonInlog('Je sessie is verlopen. Log opnieuw in. Je invoer blijft staan.'); return; }
       if (r.data.ok) {
@@ -737,6 +778,7 @@
     intensiteitAangeraakt = false;
     $('intensiteitHint').textContent = 'Volgt de insteek tot je zelf iets kiest.';
     $('metAfbeeldingen').checked = true;
+    werkProductHintBij();
   }
 
   // ---------- Lijst met aanvragen ----------
@@ -770,10 +812,11 @@
       meta.textContent = [KLANT_NAAM[r.klant] || r.klant, fmtTijd(r.aangemaakt || r.createdAt), r.aanvraagId].filter(Boolean).join(' · ');
       li.appendChild(meta);
       if (r.reden && (r.status === 'mislukt' || r.status === 'klaar met waarschuwing')) {
-        const p = document.createElement('p'); p.className = 'aanvraag-reden'; p.textContent = r.reden; li.appendChild(p);
+        const p = document.createElement('p'); p.className = 'aanvraag-reden'; p.textContent = kortReden(r.reden); li.appendChild(p);
       }
-      if (r.docUrl && /^https:\/\//.test(r.docUrl)) {
-        const a = document.createElement('a'); a.className = 'aanvraag-link'; a.href = r.docUrl; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = 'Open het Google Doc';
+      const docHref = veiligeDocUrl(r.docUrl);
+      if (docHref) {
+        const a = document.createElement('a'); a.className = 'aanvraag-link'; a.href = docHref; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = 'Open het Google Doc';
         li.appendChild(a);
       }
       ul.appendChild(li);

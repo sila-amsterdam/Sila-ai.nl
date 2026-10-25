@@ -15,7 +15,8 @@ const NIEUW_VELDEN = ['klant', 'onderwerp', 'punten', 'bronnen', 'insteek', 'int
   'interneLink', 'nietNoemen', 'publicatiedatum', 'geldigTot', 'invalshoek', 'cluster', 'zoekterm', 'metAfbeeldingen'];
 
 // Status per foutcode die n8n teruggeeft bij een afgewezen nieuwe aanvraag.
-const FOUT_STATUS = { limiet: 429, bezig: 409, ongeldig: 400, 'nog niet beschikbaar': 400 };
+const FOUT_STATUS = { limiet: 429, bezig: 409, ongeldig: 400, 'nog niet beschikbaar': 400, bron: 502 };
+const BRON_BERICHT = 'De schrijf-workflow was niet bereikbaar. Probeer het zo opnieuw.';
 
 const sha256 = (s) => crypto.createHash('sha256').update(s).digest();
 
@@ -136,7 +137,10 @@ function maakHandler(deps = {}) {
       const payload = { actie: 'nieuw' };
       for (const veld of NIEUW_VELDEN) if (body[veld] !== undefined) payload[veld] = body[veld];
       const antwoord = await naarN8n(payload);
-      if (antwoord && antwoord.ok === false) return stuur(FOUT_STATUS[antwoord.fout] || 400, antwoord);
+      if (antwoord && antwoord.ok === false) {
+        if (antwoord.fout === 'bron') return stuur(502, { ok: false, fout: 'bron', bericht: BRON_BERICHT });
+        return stuur(FOUT_STATUS[antwoord.fout] || 400, antwoord);
+      }
       return stuur(200, antwoord);
     } catch (e) {
       return bronFout();

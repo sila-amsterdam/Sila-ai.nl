@@ -335,3 +335,66 @@ test('handler: onbekende actie geeft 400, ontbrekende omgeving geeft 500', async
   assert.strictEqual(res.statusCode, 500);
   assert.strictEqual(res.headers['x-robots-tag'], 'noindex');
 });
+
+// ---------- fixronde: bron-fout en pagina-logica ----------
+test('handler: n8n-foutcode bron wordt 502 met begrijpelijke melding', async () => {
+  const { handler } = maak({ json: { ok: false, fout: 'bron', bericht: 'interne n8n tekst' } });
+  const res = await roep(handler, { body: { actie: 'nieuw', ...basis() }, cookie: geldigeCookie() });
+  assert.strictEqual(res.statusCode, 502);
+  assert.strictEqual(res.json().fout, 'bron');
+  assert.strictEqual(res.json().bericht, 'De schrijf-workflow was niet bereikbaar. Probeer het zo opnieuw.');
+});
+
+// De zuivere functies van de pagina staan tussen BEGIN-LOGICA en EINDE-LOGICA in customarticle.html.
+const fs = require('node:fs');
+const path = require('node:path');
+const html = fs.readFileSync(path.join(__dirname, '..', 'customarticle.html'), 'utf8');
+const blok = html.slice(html.indexOf('// BEGIN-LOGICA'), html.indexOf('// EINDE-LOGICA'));
+assert.ok(blok.length > 100, 'logica-blok niet gevonden in de pagina');
+const pagina = new Function(`${blok}; return { bodyBytes, kortReden, veiligeDocUrl, toonProductHint, MAX_BODY_BYTES, REDEN_MAX };`)();
+
+test('pagina: bodyBytes telt base64 mee en meer dan de bestandsgrootte', () => {
+  const bestand = Buffer.alloc(3 * 1024 * 1024, 65);
+  const body = { actie: 'nieuw', bronnen: [{ type: 'bestand', naam: 'a.pdf', inhoudBase64: bestand.toString('base64') }] };
+  const n = pagina.bodyBytes(body);
+  assert.ok(n > bestand.length * 4 / 3, 'base64 telt ruim 1/3 zwaarder');
+  assert.ok(n < bestand.length * 4 / 3 + 500);
+  assert.strictEqual(pagina.bodyBytes({ a: 'é' }), Buffer.byteLength(JSON.stringify({ a: 'é' })));
+});
+test('pagina: limiet van 4,2 MB op de body en 3 MB op bestanden werken naast elkaar', () => {
+  assert.strictEqual(pagina.MAX_BODY_BYTES, Math.round(4.2 * 1024 * 1024));
+  const klein = { bronnen: [{ inhoudBase64: Buffer.alloc(3 * 1024 * 1024, 1).toString('base64') }] };
+  assert.ok(pagina.bodyBytes(klein) <= pagina.MAX_BODY_BYTES, '3 MB aan bestanden past nog');
+  const plak = { bronnen: [klein.bronnen[0], { type: 'tekst', waarde: 'x'.repeat(400000) }] };
+  assert.ok(pagina.bodyBytes(plak) > pagina.MAX_BODY_BYTES, '3 MB bestanden plus veel plaktekst is te groot');
+});
+test('pagina: kortReden kort in tot 300 tekens met beletselteken', () => {
+  assert.strictEqual(pagina.kortReden('kort'), 'kort');
+  assert.strictEqual(pagina.kortReden(undefined), '');
+  const lang = 'a'.repeat(600);
+  const r = pagina.kortReden(lang);
+  assert.strictEqual(r.length, 301);
+  assert.ok(r.endsWith('…'));
+  assert.strictEqual(pagina.kortReden('b'.repeat(300)), 'b'.repeat(300));
+});
+test('pagina: veiligeDocUrl laat alleen https toe', () => {
+  assert.strictEqual(pagina.veiligeDocUrl('https://docs.google.com/document/d/abc'), 'https://docs.google.com/document/d/abc');
+  for (const u of ['http://docs.google.com/x', 'javascript:alert(1)', 'data:text/html,x', '//evil.nl', '', null, undefined, 5, 'https://']) {
+    assert.strictEqual(pagina.veiligeDocUrl(u), null, String(u));
+  }
+});
+test('pagina: productHint alleen bij producten zonder Commercieel en met intensiteit Geen', () => {
+  assert.strictEqual(pagina.toonProductHint(['X'], 'Informatief', 'Geen'), true);
+  assert.strictEqual(pagina.toonProductHint(['X'], 'Technisch', 'Geen'), true);
+  assert.strictEqual(pagina.toonProductHint(['X'], '', 'Geen'), true);
+  assert.strictEqual(pagina.toonProductHint([], 'Informatief', 'Geen'), false);
+  assert.strictEqual(pagina.toonProductHint(['X'], 'Commercieel', 'Geen'), false);
+  assert.strictEqual(pagina.toonProductHint(['X'], 'Informatief', 'Licht'), false);
+  assert.strictEqual(pagina.toonProductHint(['X'], 'Technisch', 'Sterk'), false);
+});
+test('pagina: de reden wordt als tekst geplaatst, niet als HTML', () => {
+  const lijst = html.slice(html.indexOf('function renderLijst'), html.indexOf('function stopTimer'));
+  assert.ok(!/innerHTML|insertAdjacentHTML|outerHTML/.test(html.replace(/\/\/.*$/gm, '')), 'geen HTML-injectie op de pagina');
+  assert.match(lijst, /aanvraag-reden[^;]*;\s*p\.textContent = kortReden\(r\.reden\)/);
+  assert.match(lijst, /veiligeDocUrl\(r\.docUrl\)/);
+});
