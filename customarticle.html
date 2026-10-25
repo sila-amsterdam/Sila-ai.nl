@@ -218,9 +218,10 @@
           <div class="veld">
             <span class="label" id="l-klant">Klant</span>
             <div class="keuzes" role="radiogroup" aria-labelledby="l-klant" style="grid-template-columns: repeat(2, 1fr)">
-              <label class="keuze"><input type="radio" name="klant" value="kleidi" checked /><span>Kleidi</span></label>
-              <label class="keuze"><input type="radio" name="klant" value="optinsight" disabled /><span>OptInsight<small>Nog niet beschikbaar</small></span></label>
+              <label class="keuze"><input type="radio" name="klant" value="kleidi" checked /><span>Kleidi<small>Alle insteken</small></span></label>
+              <label class="keuze"><input type="radio" name="klant" value="optinsight" /><span>OptInsight<small>Techniek en privacy</small></span></label>
             </div>
+            <span class="hint" id="taalHint" hidden></span>
           </div>
 
           <div class="veld" data-veld="onderwerp">
@@ -291,11 +292,11 @@
             <div class="keuzes" role="radiogroup" aria-labelledby="l-insteek">
               <label class="keuze"><input type="radio" name="insteek" value="Informatief" /><span>Informatief<small>Uitleggen, niets aanbevelen</small></span></label>
               <label class="keuze"><input type="radio" name="insteek" value="Technisch" /><span>Technisch<small>Werking en instellingen</small></span></label>
-              <label class="keuze"><input type="radio" name="insteek" value="Commercieel" /><span>Commercieel<small>Met een zachte aanbeveling</small></span></label>
+              <label class="keuze" data-commercieel><input type="radio" name="insteek" value="Commercieel" /><span>Commercieel<small>Met een zachte aanbeveling</small></span></label>
             </div>
           </div>
 
-          <div class="veld">
+          <div class="veld" data-commercieel>
             <span class="label" id="l-intensiteit">Commerciële intensiteit</span>
             <div class="keuzes" role="radiogroup" aria-labelledby="l-intensiteit">
               <label class="keuze"><input type="radio" name="intensiteit" value="Geen" checked /><span>Geen</span></label>
@@ -305,7 +306,7 @@
             <span class="hint" id="intensiteitHint">Volgt de insteek tot je zelf iets kiest.</span>
           </div>
 
-          <div class="veld" data-veld="producten">
+          <div class="veld" data-veld="producten" data-commercieel>
             <label for="productInvoer">Aan te bevelen producten of merken</label>
             <div class="stapelrij">
               <input type="text" id="productInvoer" maxlength="120" autocomplete="off" />
@@ -316,7 +317,7 @@
             <p class="melding hint-melding" id="productHint" role="status" hidden>Producten worden alleen aanbevolen bij intensiteit Licht of Sterk of bij insteek Commercieel.</p>
           </div>
 
-          <div class="veld" data-veld="affiliate">
+          <div class="veld" data-veld="affiliate" data-commercieel>
             <span class="label">Affiliatelinks of referrallinks</span>
             <div class="stapel" id="affiliatevelden"></div>
             <button type="button" class="plus" id="affiliatetoevoegen">+ Link met naam toevoegen</button>
@@ -337,7 +338,7 @@
           <div class="veld" data-veld="interneLink">
             <label for="interneLink">Interne link naar</label>
             <input type="url" id="interneLink" placeholder="https://www.kleidi.nl/" autocomplete="off" />
-            <span class="hint">Een pagina op kleidi.nl. Leeg betekent: de hoofdpagina van het cluster.</span>
+            <span class="hint" id="interneHint">Een pagina op kleidi.nl. Leeg betekent: de hoofdpagina van het cluster.</span>
           </div>
 
           <div class="rij">
@@ -345,7 +346,7 @@
               <label for="publicatiedatum">Publicatiedatum</label>
               <input type="date" id="publicatiedatum" />
             </div>
-            <div class="veld" data-veld="geldigTot">
+            <div class="veld" data-veld="geldigTot" data-commercieel>
               <label for="geldigTot">Geldig tot</label>
               <input type="date" id="geldigTot" />
               <span class="hint">Bij een tijdelijke actie noemt het artikel deze datum.</span>
@@ -412,6 +413,24 @@
   function toonProductHint(producten, insteek, intensiteit) {
     return producten.length > 0 && insteek !== 'Commercieel' && intensiteit === 'Geen';
   }
+
+  // Instellingen per klant. OptInsight kent alleen de insteken Informatief en Technisch en geen commerciële velden.
+  const KLANT_INSTELLINGEN = {
+    kleidi: { naam: 'Kleidi', insteken: ['Informatief', 'Technisch', 'Commercieel'], commercieleVelden: true, interneHosts: ['kleidi.nl', 'www.kleidi.nl'],
+      interneNaam: 'kleidi.nl', interneVoorbeeld: 'https://www.kleidi.nl/', taalHint: '' },
+    optinsight: { naam: 'OptInsight', insteken: ['Informatief', 'Technisch'], commercieleVelden: false, interneHosts: ['opt-insight.com', 'www.opt-insight.com'],
+      interneNaam: 'opt-insight.com', interneVoorbeeld: 'https://www.opt-insight.com/', taalHint: 'Het artikel wordt in het Engels geschreven.' }
+  };
+  function klantInstelling(klant) { return KLANT_INSTELLINGEN[klant] || KLANT_INSTELLINGEN.kleidi; }
+
+  // Haalt de velden weg die bij de gekozen klant niet bestaan (het origineel blijft ongemoeid).
+  function pasBodyAanKlant(body) {
+    const uit = Object.assign({}, body);
+    if (!klantInstelling(uit.klant).commercieleVelden) {
+      ['producten', 'affiliateLinks', 'intensiteit', 'geldigTot'].forEach((v) => { delete uit[v]; });
+    }
+    return uit;
+  }
   // EINDE-LOGICA
 
   const $ = (id) => document.getElementById(id);
@@ -453,6 +472,7 @@
     if (r.status === 200) {
       toonHoofd();
       renderLijst(r.data.aanvragen || []);
+      pasKlantToe(false);
       laadClusters();
     } else {
       toonInlog(r.status === 401 ? '' : (r.data.bericht || ''));
@@ -485,9 +505,11 @@
   // ---------- Clusters ----------
   async function laadClusters() {
     const sel = $('cluster');
-    const r = await api({ actie: 'clusters', klant: 'kleidi' });
-    if (r.status !== 200 || !Array.isArray(r.data.clusters)) return;
+    const klant = huidigeKlant();
     sel.length = 1;
+    const r = await api({ actie: 'clusters', klant });
+    if (klant !== huidigeKlant()) return;   // intussen een andere klant gekozen: dit antwoord is verouderd
+    if (r.status !== 200 || !Array.isArray(r.data.clusters)) return;
     r.data.clusters.forEach((c) => {
       const o = document.createElement('option');
       o.value = String(c.nr);
@@ -495,6 +517,34 @@
       sel.appendChild(o);
     });
   }
+
+  // ---------- Klantkeuze ----------
+  function huidigeKlant() { return document.querySelector('input[name=klant]:checked').value; }
+  function pasKlantToe(reset) {
+    const k = klantInstelling(huidigeKlant());
+    document.querySelectorAll('[data-commercieel]').forEach((el) => { el.hidden = !k.commercieleVelden; });
+    $('taalHint').textContent = k.taalHint; $('taalHint').hidden = !k.taalHint;
+    $('interneLink').placeholder = k.interneVoorbeeld;
+    $('interneHint').textContent = 'Een pagina op ' + k.interneNaam + '. Leeg betekent: de hoofdpagina van het cluster.';
+    if (reset) {
+      // Wat niet bij de nieuwe klant past wordt leeggemaakt, zodat het ook niet wordt meegestuurd.
+      const gekozen = document.querySelector('input[name=insteek]:checked');
+      if (gekozen && !k.insteken.includes(gekozen.value)) gekozen.checked = false;
+      $('interneLink').value = '';
+      $('cluster').value = '';
+      if (!k.commercieleVelden) {
+        producten = []; $('productInvoer').value = ''; renderProducten();
+        $('affiliatevelden').textContent = '';
+        $('geldigTot').value = '';
+        document.querySelector('input[name=intensiteit][value=Geen]').checked = true;
+        intensiteitAangeraakt = false;
+        $('intensiteitHint').textContent = 'Volgt de insteek tot je zelf iets kiest.';
+      }
+      wisVeldFouten();
+      laadClusters();
+    }
+  }
+  document.querySelectorAll('input[name=klant]').forEach((r) => r.addEventListener('change', () => pasKlantToe(true)));
 
   // ---------- Dynamische velden: links ----------
   function maakRondeKnop(label, onClick) {
@@ -669,19 +719,20 @@
     }
     if (bronFout) fouten.push(['*bron', bronFout]);
 
+    const k = klantInstelling(huidigeKlant());
     const affiliate = verzamelAffiliate();
-    for (const a of affiliate.rijen) {
+    for (const a of (k.commercieleVelden ? affiliate.rijen : [])) {
       if ((a.naam || a.url) && !a.naam) { fouten.push(['affiliate', 'Geef elke affiliatelink een naam.']); break; }
       if ((a.naam || a.url) && !isHttp(a.url)) { fouten.push(['affiliate', 'De link bij "' + a.naam + '" is geen geldige weblink. Begin met https://.']); break; }
     }
     const intern = $('interneLink').value.trim();
     if (intern) {
       let ok = false;
-      try { const h = new URL(intern).hostname.toLowerCase(); ok = isHttp(intern) && (h === 'kleidi.nl' || h === 'www.kleidi.nl'); } catch (e) { /* ongeldig */ }
-      if (!ok) fouten.push(['interneLink', 'Dit moet een pagina op kleidi.nl zijn.']);
+      try { const h = new URL(intern).hostname.toLowerCase(); ok = isHttp(intern) && k.interneHosts.includes(h); } catch (e) { /* ongeldig */ }
+      if (!ok) fouten.push(['interneLink', 'Dit moet een pagina op ' + k.interneNaam + ' zijn.']);
     }
     const pub = $('publicatiedatum').value, tot = $('geldigTot').value;
-    if (pub && tot && tot < pub) fouten.push(['geldigTot', '"Geldig tot" ligt voor de publicatiedatum.']);
+    if (k.commercieleVelden && pub && tot && tot < pub) fouten.push(['geldigTot', '"Geldig tot" ligt voor de publicatiedatum.']);
     return fouten;
   }
 
@@ -728,7 +779,7 @@
         if (x === 'png' || x === 'jpg' || x === 'jpeg') bronnen.push({ type: 'afbeelding', naam: f.name, mime: x === 'png' ? 'image/png' : 'image/jpeg', inhoudBase64 });
         else bronnen.push({ type: 'bestand', naam: f.name, inhoudBase64 });
       }
-      const body = {
+      const body = pasBodyAanKlant({
         actie: 'nieuw',
         klant: document.querySelector('input[name=klant]:checked').value,
         onderwerp: $('onderwerp').value.trim(),
@@ -746,7 +797,7 @@
         cluster: $('cluster').value,
         zoekterm: $('zoekterm').value.trim(),
         metAfbeeldingen: $('metAfbeeldingen').checked
-      };
+      });
       if (bodyBytes(body) > MAX_BODY_BYTES) {
         zetFout($('formfout'), 'De bijlagen zijn samen te groot. Verklein of verdeel ze over twee aanvragen.');
         return;

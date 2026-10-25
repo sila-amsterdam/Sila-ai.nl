@@ -14,6 +14,8 @@ const KLANTEN = ['kleidi', 'optinsight'];
 const NIEUW_VELDEN = ['klant', 'onderwerp', 'punten', 'bronnen', 'insteek', 'intensiteit', 'producten', 'affiliateLinks',
   'interneLink', 'nietNoemen', 'publicatiedatum', 'geldigTot', 'invalshoek', 'cluster', 'zoekterm', 'metAfbeeldingen'];
 
+const NIET_BIJ_OPTINSIGHT = ['producten', 'affiliateLinks', 'intensiteit', 'geldigTot'];
+
 // Status per foutcode die n8n teruggeeft bij een afgewezen nieuwe aanvraag.
 const FOUT_STATUS = { limiet: 429, bezig: 409, ongeldig: 400, 'nog niet beschikbaar': 400, bron: 502 };
 const BRON_BERICHT = 'De schrijf-workflow was niet bereikbaar. Probeer het zo opnieuw.';
@@ -136,6 +138,8 @@ function maakHandler(deps = {}) {
       if (!v.ok) return stuur(400, { ok: false, fout: 'ongeldig', bericht: v.fout });
       const payload = { actie: 'nieuw' };
       for (const veld of NIEUW_VELDEN) if (body[veld] !== undefined) payload[veld] = body[veld];
+      // OptInsight kent geen commerciële velden: die gaan nooit mee, ook niet als de pagina ze toch zou sturen.
+      if (body.klant === 'optinsight') for (const veld of NIET_BIJ_OPTINSIGHT) delete payload[veld];
       const antwoord = await naarN8n(payload);
       if (antwoord && antwoord.ok === false) {
         if (antwoord.fout === 'bron') return stuur(502, { ok: false, fout: 'bron', bericht: BRON_BERICHT });

@@ -351,7 +351,7 @@ const path = require('node:path');
 const html = fs.readFileSync(path.join(__dirname, '..', 'customarticle.html'), 'utf8');
 const blok = html.slice(html.indexOf('// BEGIN-LOGICA'), html.indexOf('// EINDE-LOGICA'));
 assert.ok(blok.length > 100, 'logica-blok niet gevonden in de pagina');
-const pagina = new Function(`${blok}; return { bodyBytes, kortReden, veiligeDocUrl, toonProductHint, MAX_BODY_BYTES, REDEN_MAX };`)();
+const pagina = new Function(`${blok}; return { bodyBytes, kortReden, veiligeDocUrl, toonProductHint, klantInstelling, pasBodyAanKlant, MAX_BODY_BYTES, REDEN_MAX };`)();
 
 test('pagina: bodyBytes telt base64 mee en meer dan de bestandsgrootte', () => {
   const bestand = Buffer.alloc(3 * 1024 * 1024, 65);
@@ -397,4 +397,100 @@ test('pagina: de reden wordt als tekst geplaatst, niet als HTML', () => {
   assert.ok(!/innerHTML|insertAdjacentHTML|outerHTML/.test(html.replace(/\/\/.*$/gm, '')), 'geen HTML-injectie op de pagina');
   assert.match(lijst, /aanvraag-reden[^;]*;\s*p\.textContent = kortReden\(r\.reden\)/);
   assert.match(lijst, /veiligeDocUrl\(r\.docUrl\)/);
+});
+
+// ---------- OptInsight (fase 2) ----------
+const oi = () => ({ ...basis(), klant: 'optinsight' });
+
+test('valideer optinsight: insteek alleen Informatief of Technisch', () => {
+  for (const i of ['Informatief', 'Technisch']) { const a = oi(); a.insteek = i; assert.strictEqual(valideerAanvraag(a).ok, true, i); }
+  const a = oi(); a.insteek = 'Commercieel';
+  const r = valideerAanvraag(a);
+  assert.strictEqual(r.ok, false);
+  assert.match(r.fout, /informatief of technisch/);
+  assert.ok(!/[\u2013\u2014]| - /.test(r.fout), 'geen streepjes als leesteken');
+  a.insteek = 'Reclame'; assert.strictEqual(valideerAanvraag(a).ok, false);
+  delete a.insteek; assert.strictEqual(valideerAanvraag(a).ok, false);
+});
+test('valideer optinsight: producten, affiliatelinks, intensiteit en geldigTot worden genegeerd', () => {
+  const a = oi();
+  a.producten = ['x'.repeat(500)]; a.affiliateLinks = [{ naam: '', url: 'rommel' }]; a.intensiteit = 'Zwaar'; a.geldigTot = 'niet-een-datum';
+  assert.deepStrictEqual(valideerAanvraag(a), { ok: true });
+  // bij Kleidi blijven dezelfde velden wel streng
+  const k = { ...a, klant: 'kleidi' };
+  assert.strictEqual(valideerAanvraag(k).ok, false);
+});
+test('valideer optinsight: de overige regels gelden ook (150 woorden of een bron, 3 MB, 8 bronnen, onderwerp)', () => {
+  let a = oi(); a.bronnen = []; assert.strictEqual(valideerAanvraag(a).ok, false);
+  a.punten = Array(160).fill('woord').join(' '); assert.strictEqual(valideerAanvraag(a).ok, true);
+  a = oi(); a.bronnen = Array(9).fill({ type: 'link', waarde: 'https://example.com/a' }); assert.strictEqual(valideerAanvraag(a).ok, false);
+  a = oi(); a.bronnen = [{ type: 'bestand', naam: 'a.pdf', inhoudBase64: b64(MAX_UPLOAD_BYTES + 1024) }]; assert.strictEqual(valideerAanvraag(a).ok, false);
+  a = oi(); a.onderwerp = 'abc'; assert.strictEqual(valideerAanvraag(a).ok, false);
+});
+test('valideer optinsight: interne link staat op opt-insight.com, niet op kleidi.nl', () => {
+  const a = oi();
+  for (const u of ['https://www.opt-insight.com/consent-collection/', 'https://opt-insight.com/']) { a.interneLink = u; assert.strictEqual(valideerAanvraag(a).ok, true, u); }
+  for (const u of ['https://kleidi.nl/', 'https://opt-insight.com.evil.nl/', 'https://example.com/x']) { a.interneLink = u; assert.strictEqual(valideerAanvraag(a).ok, false, u); }
+  const k = basis(); k.interneLink = 'https://www.opt-insight.com/'; assert.strictEqual(valideerAanvraag(k).ok, false);
+});
+test('handler: optinsight stuurt geen producten, affiliatelinks, intensiteit of geldigTot door', async () => {
+  const { handler, fetch } = maak({ json: { ok: true, id: 'HAND-20261030-1' } });
+  const a = { actie: 'nieuw', ...oi(), insteek: 'Technisch', intensiteit: 'Sterk', producten: ['X'], affiliateLinks: [{ naam: 'X', url: 'https://a.nl' }], geldigTot: '2026-12-31', publicatiedatum: '2026-11-02', cluster: 'T3', nietNoemen: 'prijzen' };
+  const res = await roep(handler, { body: a, cookie: geldigeCookie() });
+  assert.strictEqual(res.statusCode, 200);
+  const door = fetch.calls[0].body;
+  assert.strictEqual(door.klant, 'optinsight');
+  for (const v of ['producten', 'affiliateLinks', 'intensiteit', 'geldigTot']) assert.strictEqual(door[v], undefined, v);
+  assert.strictEqual(door.insteek, 'Technisch');
+  assert.strictEqual(door.cluster, 'T3');
+  assert.strictEqual(door.publicatiedatum, '2026-11-02');
+  assert.strictEqual(door.nietNoemen, 'prijzen');
+});
+test('handler: optinsight met insteek Commercieel geeft 400 zonder n8n-aanroep', async () => {
+  const { handler, fetch } = maak();
+  const res = await roep(handler, { body: { actie: 'nieuw', ...oi(), insteek: 'Commercieel' }, cookie: geldigeCookie() });
+  assert.strictEqual(res.statusCode, 400);
+  assert.strictEqual(res.json().fout, 'ongeldig');
+  assert.strictEqual(fetch.calls.length, 0);
+});
+test('handler: clusters voor optinsight worden doorgestuurd met klant optinsight', async () => {
+  const { handler, fetch } = maak({ json: { clusters: [{ nr: 'T1', naam: 'Consent' }] } });
+  const res = await roep(handler, { body: { actie: 'clusters', klant: 'optinsight' }, cookie: geldigeCookie() });
+  assert.strictEqual(res.statusCode, 200);
+  assert.deepStrictEqual(fetch.calls[0].body, { actie: 'clusters', klant: 'optinsight' });
+});
+test('pagina: instellingen per klant (insteken, commerciele velden, taalhint)', () => {
+  const k = pagina.klantInstelling('kleidi'), o = pagina.klantInstelling('optinsight');
+  assert.deepStrictEqual(k.insteken, ['Informatief', 'Technisch', 'Commercieel']);
+  assert.strictEqual(k.commercieleVelden, true);
+  assert.strictEqual(k.taalHint, '');
+  assert.deepStrictEqual(o.insteken, ['Informatief', 'Technisch']);
+  assert.strictEqual(o.commercieleVelden, false);
+  assert.strictEqual(o.taalHint, 'Het artikel wordt in het Engels geschreven.');
+  assert.ok(o.interneHosts.includes('www.opt-insight.com') && !o.interneHosts.includes('kleidi.nl'));
+  assert.strictEqual(pagina.klantInstelling('onbekend').naam, 'Kleidi');
+});
+test('pagina: klantwissel naar optinsight laat producten, affiliate, intensiteit en geldigTot weg uit het verzoek', () => {
+  const body = { klant: 'optinsight', onderwerp: 'x', insteek: 'Technisch', intensiteit: 'Licht', producten: ['A'], affiliateLinks: [{ naam: 'A', url: 'https://a.nl' }], geldigTot: '2026-12-01', cluster: 'T2' };
+  const schoon = pagina.pasBodyAanKlant(body);
+  for (const v of ['producten', 'affiliateLinks', 'intensiteit', 'geldigTot']) assert.ok(!(v in schoon), v);
+  assert.strictEqual(schoon.cluster, 'T2');
+  assert.ok('producten' in body, 'het origineel blijft ongemoeid');
+  const k = pagina.pasBodyAanKlant({ ...body, klant: 'kleidi' });
+  assert.deepStrictEqual(k.producten, ['A']);
+});
+test('pagina: de klantkeuze OptInsight is kiesbaar, de commerciele velden hangen aan de klant en de taalhint staat er', () => {
+  const radio = /<input type="radio" name="klant" value="optinsight"[^>]*>/.exec(html)[0];
+  assert.ok(!/disabled/.test(radio), 'optinsight is niet uitgeschakeld');
+  assert.ok(!/Nog niet beschikbaar/.test(html));
+  for (const veld of ['data-veld="producten"', 'data-veld="affiliate"', 'data-veld="geldigTot"']) assert.match(html, new RegExp(veld + '[^>]*data-commercieel'), veld);
+  assert.match(html, /id="l-intensiteit"/);
+  assert.match(html, /id="taalHint"/);
+  assert.match(html, /actie: 'clusters', klant\b/);
+  assert.ok(!/actie: 'clusters', klant: 'kleidi'/.test(html), 'klant is niet meer hard op kleidi gezet');
+});
+test('pagina: het verzoek gaat door pasBodyAanKlant en een klantwissel maakt de niet passende velden leeg', () => {
+  assert.match(html, /const body = pasBodyAanKlant\(\{/);
+  const wissel = html.slice(html.indexOf('function pasKlantToe'), html.indexOf('// ---------- Dynamische velden: links'));
+  for (const deel of ['producten = []', "affiliatevelden').textContent = ''", "geldigTot').value = ''", 'intensiteit][value=Geen]', 'gekozen.checked = false', "interneLink').value = ''", 'laadClusters()']) assert.ok(wissel.includes(deel), deel);
 });
