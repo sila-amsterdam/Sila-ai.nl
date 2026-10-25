@@ -50,8 +50,8 @@
 
     /* Kop */
     .kop { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 4px 0 40px; }
-    .merk { font-family: 'Lora', serif; font-weight: 700; font-size: 26px; letter-spacing: -0.02em; color: var(--tekst); text-decoration: none; }
-    .merk::after { content: ''; display: inline-block; width: 7px; height: 7px; margin-left: 3px; border-radius: 50%; background: var(--oranje); }
+    .merk { display: inline-flex; align-items: center; text-decoration: none; }
+    .merk img { display: block; height: 38px; width: auto; }
     .tekstknop { font: inherit; font-size: 14px; font-weight: 500; color: var(--gedempt); background: none; border: 0; padding: 8px 4px; cursor: pointer; border-radius: 6px; }
     .tekstknop:hover { color: var(--oranje-hover); }
     .tekstknop:active { transform: translateY(1px); }
@@ -185,7 +185,7 @@
 <body>
   <div class="pagina">
     <header class="kop">
-      <a class="merk" href="/" aria-label="Sila">sila</a>
+      <a class="merk" href="/" aria-label="Sila"><img src="/assets/sila-logo-donker.png" alt="Sila" width="66" height="38"></a>
       <button type="button" class="tekstknop" id="uitloggen" hidden>Uitloggen</button>
     </header>
 
