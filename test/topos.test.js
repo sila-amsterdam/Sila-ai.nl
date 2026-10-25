@@ -1,9 +1,9 @@
-// Tests voor Tropos: serverfunctie voor /customarticle. Draaien met: node --test test/tropos.test.js
+// Tests voor Topos: serverfunctie voor /customarticle. Draaien met: node --test test/topos.test.js
 const test = require('node:test');
 const assert = require('node:assert');
 const crypto = require('node:crypto');
-const { maakSessie, controleerSessie } = require('../api/_tropos/sessie.js');
-const { valideerAanvraag, MAX_UPLOAD_BYTES } = require('../api/_tropos/valideer.js');
+const { maakSessie, controleerSessie } = require('../api/_topos/sessie.js');
+const { valideerAanvraag, MAX_UPLOAD_BYTES } = require('../api/_topos/valideer.js');
 const { maakHandler } = require('../api/customarticle.js');
 
 const GEHEIM = 'test-sessiegeheim';
@@ -176,7 +176,7 @@ test('valideer: geen object is ongeldig', () => {
 });
 
 // ---------- handler ----------
-const ENV = { TROPOS_TOEGANGSCODE: 'juiste-code', TROPOS_WEBHOOK_SECRET: 'wh-geheim', TROPOS_SESSIE_SECRET: GEHEIM };
+const ENV = { TOPOS_TOEGANGSCODE: 'juiste-code', TOPOS_WEBHOOK_SECRET: 'wh-geheim', TOPOS_SESSIE_SECRET: GEHEIM };
 const NU = 1_800_000_000_000;
 
 function maakRes() {
@@ -202,7 +202,7 @@ async function roep(handler, { method = 'POST', body, cookie, ip = '1.2.3.4' } =
   await handler(req, res);
   return res;
 }
-const geldigeCookie = () => `tropos_sessie=${maakSessie(GEHEIM, NU)}`;
+const geldigeCookie = () => `topos_sessie=${maakSessie(GEHEIM, NU)}`;
 const maak = (antwoord = { json: { ok: true } }) => {
   const fetch = maakFetch(antwoord);
   return { fetch, handler: maakHandler({ fetch, env: ENV, nu: () => NU }) };
@@ -226,9 +226,9 @@ test('handler: lijst en nieuw zonder cookie geven 401 en roepen n8n niet aan', a
 });
 test('handler: verlopen of vervalste cookie geeft 401', async () => {
   const { handler } = maak();
-  const oud = `tropos_sessie=${maakSessie(GEHEIM, NU - 13 * UUR)}`;
+  const oud = `topos_sessie=${maakSessie(GEHEIM, NU - 13 * UUR)}`;
   assert.strictEqual((await roep(handler, { body: { actie: 'lijst' }, cookie: oud })).statusCode, 401);
-  assert.strictEqual((await roep(handler, { body: { actie: 'lijst' }, cookie: 'tropos_sessie=1.abc' })).statusCode, 401);
+  assert.strictEqual((await roep(handler, { body: { actie: 'lijst' }, cookie: 'topos_sessie=1.abc' })).statusCode, 401);
 });
 test('handler: inloggen met foute code roept pogingen_check en pogingen_fout aan en zet geen cookie', async () => {
   const { handler, fetch } = maak((c) => ({ json: c.body.actie === 'pogingen_check' ? { geblokkeerd: false, minuten: 0 } : { geblokkeerd: false, minuten: 0 } }));
@@ -238,8 +238,8 @@ test('handler: inloggen met foute code roept pogingen_check en pogingen_fout aan
   assert.strictEqual(res.headers['set-cookie'], undefined);
   const verwacht = crypto.createHash('sha256').update('1.2.3.4' + GEHEIM).digest('hex');
   assert.strictEqual(fetch.calls[1].body.sleutel, verwacht);
-  assert.strictEqual(fetch.calls[0].url, 'https://n8n.sila-ai.nl/webhook/tropos-api');
-  assert.strictEqual(fetch.calls[0].opties.headers['X-Tropos-Secret'], 'wh-geheim');
+  assert.strictEqual(fetch.calls[0].url, 'https://n8n.sila-ai.nl/webhook/topos-api');
+  assert.strictEqual(fetch.calls[0].opties.headers['X-Topos-Secret'], 'wh-geheim');
   assert.strictEqual(res.headers['x-robots-tag'], 'noindex');
 });
 test('handler: vijfde foute poging geeft 429 met minuten', async () => {
@@ -261,7 +261,7 @@ test('handler: inloggen met juiste code reset de teller en zet een veilige cooki
   assert.strictEqual(res.statusCode, 200);
   assert.deepStrictEqual(fetch.calls.map((c) => c.body.actie), ['pogingen_check', 'pogingen_reset']);
   const cookie = res.headers['set-cookie'];
-  assert.match(cookie, /^tropos_sessie=/);
+  assert.match(cookie, /^topos_sessie=/);
   for (const stuk of ['HttpOnly', 'Secure', 'SameSite=Strict', 'Path=/', 'Max-Age=43200']) assert.ok(cookie.includes(stuk), stuk);
   const token = cookie.split(';')[0].split('=')[1];
   assert.strictEqual(controleerSessie(token, GEHEIM, NU + UUR), true);
@@ -284,7 +284,7 @@ test('handler: lijst en clusters worden doorgestuurd met geheim', async () => {
   const res = await roep(handler, { body: { actie: 'lijst' }, cookie: geldigeCookie() });
   assert.strictEqual(res.statusCode, 200);
   assert.deepStrictEqual(fetch.calls[0].body, { actie: 'lijst' });
-  assert.strictEqual(fetch.calls[0].opties.headers['X-Tropos-Secret'], 'wh-geheim');
+  assert.strictEqual(fetch.calls[0].opties.headers['X-Topos-Secret'], 'wh-geheim');
   await roep(handler, { body: { actie: 'clusters', klant: 'kleidi', extra: 'x' }, cookie: geldigeCookie() });
   assert.deepStrictEqual(fetch.calls[1].body, { actie: 'clusters', klant: 'kleidi' });
   const slecht = await roep(handler, { body: { actie: 'clusters', klant: 'rommel' }, cookie: geldigeCookie() });

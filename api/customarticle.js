@@ -1,13 +1,13 @@
 // Serverfunctie voor de besloten pagina met handmatige artikelen (POST /api/customarticle).
-// Inloggen met een toegangscode, daarna doorsturen naar de n8n-workflow "Tropos: API".
-// Omgevingsvariabelen (Vercel): TROPOS_TOEGANGSCODE, TROPOS_WEBHOOK_SECRET, TROPOS_SESSIE_SECRET.
+// Inloggen met een toegangscode, daarna doorsturen naar de n8n-workflow "Topos: API".
+// Omgevingsvariabelen (Vercel): TOPOS_TOEGANGSCODE, TOPOS_WEBHOOK_SECRET, TOPOS_SESSIE_SECRET.
 const crypto = require('node:crypto');
-const { maakSessie, controleerSessie, GELDIG_MS } = require('./_tropos/sessie.js');
-const { valideerAanvraag } = require('./_tropos/valideer.js');
+const { maakSessie, controleerSessie, GELDIG_MS } = require('./_topos/sessie.js');
+const { valideerAanvraag } = require('./_topos/valideer.js');
 
-const N8N_URL = 'https://n8n.sila-ai.nl/webhook/tropos-api';
+const N8N_URL = 'https://n8n.sila-ai.nl/webhook/topos-api';
 const N8N_TIMEOUT_MS = 9000;
-const COOKIE = 'tropos_sessie';
+const COOKIE = 'topos_sessie';
 const KLANTEN = ['kleidi', 'optinsight'];
 
 // Velden die naar n8n gaan bij een nieuwe aanvraag (alles daarbuiten wordt weggelaten).
@@ -59,7 +59,7 @@ function maakHandler(deps = {}) {
   async function naarN8n(payload) {
     const antwoord = await doeFetch(N8N_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Tropos-Secret': env.TROPOS_WEBHOOK_SECRET },
+      headers: { 'Content-Type': 'application/json', 'X-Topos-Secret': env.TOPOS_WEBHOOK_SECRET },
       body: JSON.stringify(payload),
       signal: AbortSignal.timeout(N8N_TIMEOUT_MS)
     });
@@ -80,7 +80,7 @@ function maakHandler(deps = {}) {
 
     if (req.method !== 'POST') return stuur(405, { ok: false, fout: 'methode', bericht: 'Alleen POST is toegestaan.' }, { Allow: 'POST' });
 
-    if (!env.TROPOS_TOEGANGSCODE || !env.TROPOS_WEBHOOK_SECRET || !env.TROPOS_SESSIE_SECRET) {
+    if (!env.TOPOS_TOEGANGSCODE || !env.TOPOS_WEBHOOK_SECRET || !env.TOPOS_SESSIE_SECRET) {
       return stuur(500, { ok: false, fout: 'configuratie', bericht: 'De pagina is nog niet ingesteld. Neem contact op met Jamal.' });
     }
 
@@ -89,15 +89,15 @@ function maakHandler(deps = {}) {
     const actie = body.actie;
 
     if (actie === 'inloggen') {
-      const sleutel = crypto.createHash('sha256').update(clientIp(req) + env.TROPOS_SESSIE_SECRET).digest('hex');
+      const sleutel = crypto.createHash('sha256').update(clientIp(req) + env.TOPOS_SESSIE_SECRET).digest('hex');
       try {
         const check = await naarN8n({ actie: 'pogingen_check', sleutel });
         if (check && check.geblokkeerd) {
           return stuur(429, { ok: false, fout: 'geblokkeerd', minuten: check.minuten, bericht: `Te veel pogingen. Probeer het over ${check.minuten} minuten opnieuw.` });
         }
-        if (typeof body.code === 'string' && body.code.length > 0 && body.code.length <= 200 && gelijk(body.code, env.TROPOS_TOEGANGSCODE)) {
+        if (typeof body.code === 'string' && body.code.length > 0 && body.code.length <= 200 && gelijk(body.code, env.TOPOS_TOEGANGSCODE)) {
           await naarN8n({ actie: 'pogingen_reset', sleutel });
-          const token = maakSessie(env.TROPOS_SESSIE_SECRET, nu());
+          const token = maakSessie(env.TOPOS_SESSIE_SECRET, nu());
           return stuur(200, { ok: true }, {
             'Set-Cookie': `${COOKIE}=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${GELDIG_MS / 1000}`
           });
@@ -120,7 +120,7 @@ function maakHandler(deps = {}) {
       return stuur(400, { ok: false, fout: 'ongeldig', bericht: 'Onbekende actie.' });
     }
 
-    if (!controleerSessie(leesCookie(req.headers.cookie, COOKIE), env.TROPOS_SESSIE_SECRET, nu())) {
+    if (!controleerSessie(leesCookie(req.headers.cookie, COOKIE), env.TOPOS_SESSIE_SECRET, nu())) {
       return stuur(401, { ok: false, fout: 'niet ingelogd', bericht: 'Je bent niet ingelogd of je sessie is verlopen. Log opnieuw in.' });
     }
 

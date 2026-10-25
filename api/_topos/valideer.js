@@ -1,4 +1,4 @@
-// Snelle validatie voor een nieuwe aanvraag (spiegel van de n8n-validatie in "Tropos: API").
+// Snelle validatie voor een nieuwe aanvraag (spiegel van de n8n-validatie in "Topos: API").
 // De n8n-kant blijft leidend: hier alleen om snel en duidelijk feedback te geven en rommel te weren.
 const MAX_UPLOAD_BYTES = 3 * 1024 * 1024; // pdf, tekst en afbeeldingen samen
 const MAX_BRONNEN = 8;
