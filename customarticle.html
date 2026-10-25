@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artikelen op aanvraag | Sila</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600&family=Lora:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --oranje: #DC5A14;
+      --oranje-hover: #C85210;
+      --oranje-licht: #F5E6DD;
+      --bg: #F9F7F4;
+      --vlak: #FDFCFA;
+      --tekst: #231D18;
+      --gedempt: #7A7167;
+      --border: #E3DDD5;
+      --fout-tekst: #9A2A1B;
+      --fout-bg: #F9E1DD;
+      --goed-tekst: #1F6B33;
+      --goed-bg: #E1F2E4;
+      --let-tekst: #7A5A07;
+      --let-bg: #FAEFCF;
+      --bezig-tekst: #A8420C;
+      --schaduw: 0 1px 2px rgba(35, 29, 24, .05), 0 8px 24px -12px rgba(220, 90, 20, .14);
+      --spring: cubic-bezier(.2, .9, .3, 1.2);
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      font-family: 'Karla', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--tekst);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(900px 420px at 12% -8%, rgba(245, 230, 221, .9), transparent 70%),
+        radial-gradient(700px 360px at 100% 0%, rgba(245, 230, 221, .5), transparent 70%);
+      background-repeat: no-repeat;
+      min-height: 100vh;
+    }
+    h1, h2, h3 { font-family: 'Lora', Georgia, serif; line-height: 1.2; letter-spacing: -0.015em; margin: 0; }
+    .pagina { max-width: 760px; margin: 0 auto; padding: 24px 16px 96px; }
+    [hidden] { display: none !important; }
+
+    /* Kop */
+    .kop { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 4px 0 40px; }
+    .merk { font-family: 'Lora', serif; font-weight: 700; font-size: 26px; letter-spacing: -0.02em; color: var(--tekst); text-decoration: none; }
+    .merk::after { content: ''; display: inline-block; width: 7px; height: 7px; margin-left: 3px; border-radius: 50%; background: var(--oranje); }
+    .tekstknop { font: inherit; font-size: 14px; font-weight: 500; color: var(--gedempt); background: none; border: 0; padding: 8px 4px; cursor: pointer; border-radius: 6px; }
+    .tekstknop:hover { color: var(--oranje-hover); }
+    .tekstknop:active { transform: translateY(1px); }
+
+    .oog { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--oranje); margin: 0 0 10px; }
+    .titel { font-size: clamp(32px, 6vw, 44px); font-weight: 700; letter-spacing: -0.03em; }
+    .intro { color: var(--gedempt); font-size: 18px; margin: 12px 0 0; max-width: 56ch; }
+
+    /* Vlakken */
+    .vlak { background: var(--vlak); border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: var(--schaduw); }
+    .vlak + .vlak { margin-top: 20px; }
+    .vlak h2 { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+    .vlak-tekst { margin: 0 0 22px; color: var(--gedempt); font-size: 15px; }
+
+    /* Velden */
+    .veld { margin-top: 20px; min-width: 0; }
+    .veld:first-of-type { margin-top: 0; }
+    label, .label { display: block; font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+    .hint { display: block; font-weight: 400; font-size: 14px; color: var(--gedempt); margin-top: 2px; line-height: 1.5; }
+    .verplicht { color: var(--oranje); }
+    input[type=text], input[type=url], input[type=password], input[type=date], textarea, select {
+      width: 100%; min-width: 0; font: inherit; font-size: 16px; color: var(--tekst);
+      background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 11px 14px;
+    }
+    textarea { min-height: 112px; resize: vertical; line-height: 1.55; }
+    input:hover, textarea:hover, select:hover { border-color: #cfc6bb; }
+    input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible, summary:focus-visible, .keuze input:focus-visible + span {
+      outline: 3px solid rgba(220, 90, 20, .35); outline-offset: 2px; border-color: var(--oranje);
+    }
+    .rij { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+    .rij > .veld { margin-top: 0; }
+    .veld.ingeklapt-marge { margin-top: 20px; }
+    @media (max-width: 600px) { .rij { grid-template-columns: 1fr; gap: 20px; } .vlak { padding: 22px 18px; } .aanvraag-kop { flex-direction: column-reverse; align-items: flex-start; gap: 8px; } }
+
+    /* Keuzekaarten (radio) */
+    .keuzes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    @media (max-width: 600px) { .keuzes { grid-template-columns: 1fr; } }
+    .keuze { position: relative; display: block; margin: 0; cursor: pointer; }
+    .keuze input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+    .keuze span { display: block; height: 100%; border: 1.5px solid var(--border); border-radius: 14px; padding: 12px 14px; background: #fff; font-weight: 600; font-size: 15px; line-height: 1.4; }
+    .keuze span small { display: block; font-weight: 400; font-size: 13.5px; color: var(--gedempt); margin-top: 2px; }
+    .keuze:hover span { border-color: #cfc6bb; }
+    .keuze input:checked + span { border-color: var(--oranje); background: var(--oranje-licht); box-shadow: inset 0 0 0 1px var(--oranje); }
+    .keuze input:disabled + span { opacity: .55; cursor: not-allowed; background: #f3f0eb; }
+    .keuze input:disabled { cursor: not-allowed; }
+    .keuze:active span { transform: scale(.985); }
+
+    /* Lijsten met velden (links, affiliate) */
+    .stapel { display: grid; gap: 10px; }
+    .stapelrij { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+    .stapelrij.twee { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr) auto; }
+    @media (max-width: 600px) {
+      .stapelrij.twee { grid-template-columns: 1fr auto; }
+      .stapelrij.twee input:first-child { grid-column: 1 / -1; }
+    }
+    .rond { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--border); background: #fff; color: var(--gedempt); font-size: 20px; line-height: 1; cursor: pointer; flex: none; }
+    .rond:hover { border-color: var(--oranje); color: var(--oranje); }
+    .rond:active { transform: scale(.94); }
+    .plus { font: inherit; font-size: 15px; font-weight: 600; color: var(--oranje); background: none; border: 0; padding: 8px 0 0; cursor: pointer; border-radius: 6px; }
+    .plus:hover { color: var(--oranje-hover); text-decoration: underline; text-underline-offset: 3px; }
+    .plus:active { transform: translateY(1px); }
+
+    /* Chips */
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .chip { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; background: var(--oranje-licht); color: var(--tekst); border-radius: 999px; padding: 4px 6px 4px 14px; font-size: 14.5px; font-weight: 500; }
+    .chip span { overflow-wrap: anywhere; }
+    .chip button { width: 24px; height: 24px; border-radius: 50%; border: 0; background: rgba(35, 29, 24, .08); color: var(--tekst); cursor: pointer; font-size: 15px; line-height: 1; padding: 0; flex: none; }
+    .chip button:hover { background: rgba(220, 90, 20, .22); }
+    .chip button:active { transform: scale(.92); }
+
+    /* Bestanden */
+    .bestandskeuze { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .bestandslijst { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; }
+    .bestandslijst li { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 6px 8px 6px 12px; font-size: 14.5px; }
+    .bestandslijst li span { overflow-wrap: anywhere; min-width: 0; }
+    .bestandslijst li small { color: var(--gedempt); white-space: nowrap; }
+    .teller { margin: 14px 0 0; font-size: 14px; color: var(--gedempt); }
+    .teller.over { color: var(--fout-tekst); font-weight: 600; }
+
+    .vink { display: flex; align-items: flex-start; gap: 12px; font-weight: 600; cursor: pointer; margin: 0; }
+    .vink input { width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--oranje); flex: none; cursor: pointer; }
+
+    /* Knoppen */
+    .knop { font: inherit; font-size: 16px; font-weight: 600; color: #fff; background: var(--oranje); border: 0; border-radius: 9999px; padding: 14px 32px; cursor: pointer; box-shadow: 0 1px 1px rgba(168, 66, 12, .3), 0 10px 20px -10px rgba(220, 90, 20, .6); }
+    .knop:hover { background: var(--oranje-hover); }
+    .knop:active { transform: translateY(1px) scale(.99); }
+    .knop:disabled { opacity: .55; cursor: wait; box-shadow: none; }
+    .knop.breed { width: 100%; }
+    .knop-rij { margin-top: 28px; display: flex; flex-direction: column; gap: 14px; }
+    .secundair { font: inherit; font-size: 15px; font-weight: 600; color: var(--oranje); background: transparent; border: 2px solid var(--oranje); border-radius: 9999px; padding: 8px 20px; cursor: pointer; }
+    .secundair:hover { background: var(--oranje-licht); }
+    .secundair:active { transform: translateY(1px); }
+
+    /* Meldingen */
+    .melding { border-radius: 12px; padding: 12px 16px; font-size: 15px; line-height: 1.55; margin: 0; }
+    .melding.fout { background: var(--fout-bg); color: var(--fout-tekst); }
+    .melding.goed { background: var(--goed-bg); color: var(--goed-tekst); }
+    .veldfout { color: var(--fout-tekst); font-size: 14px; font-weight: 500; margin: 6px 0 0; }
+    .heeft-fout input, .heeft-fout textarea, .heeft-fout select { border-color: var(--fout-tekst); }
+
+    /* Inloggen */
+    .inlog { max-width: 440px; margin: 24px auto 0; }
+    .inlog .knop { margin-top: 20px; }
+
+    /* Aanvragen */
+    .lijstkop { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 56px 0 16px; }
+    .lijstkop h2 { font-size: 28px; font-weight: 600; }
+    .lijstkop small { color: var(--gedempt); font-size: 14px; }
+    .aanvragen { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+    .aanvraag { background: var(--vlak); border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px; box-shadow: var(--schaduw); min-width: 0; }
+    .aanvraag-kop { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .aanvraag h3 { font-size: 18px; font-weight: 600; overflow-wrap: anywhere; letter-spacing: -0.01em; }
+    .aanvraag-meta { margin: 4px 0 0; color: var(--gedempt); font-size: 14px; }
+    .aanvraag-reden { margin: 10px 0 0; font-size: 14.5px; line-height: 1.55; color: var(--tekst); overflow-wrap: anywhere; }
+    .aanvraag-link { display: inline-block; margin-top: 10px; font-weight: 600; font-size: 15px; color: var(--oranje); text-underline-offset: 3px; }
+    .aanvraag-link:hover { color: var(--oranje-hover); }
+    .status { flex: none; display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; padding: 3px 12px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+    .status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .status.bezig { background: var(--oranje-licht); color: var(--bezig-tekst); }
+    .status.bezig::before { animation: ademen 1.6s ease-in-out infinite; }
+    .status.klaar { background: var(--goed-bg); color: var(--goed-tekst); }
+    .status.waarschuwing { background: var(--let-bg); color: var(--let-tekst); }
+    .status.mislukt { background: var(--fout-bg); color: var(--fout-tekst); }
+    @keyframes ademen { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .3; transform: scale(.6); } }
+    .leeg { background: transparent; border: 1.5px dashed var(--border); border-radius: 16px; padding: 28px; text-align: center; color: var(--gedempt); box-shadow: none; }
+    .verversen-rij { margin-top: 14px; }
+    @media (prefers-reduced-motion: reduce) { .status.bezig::before { animation: none; } * { scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+  <div class="pagina">
+    <header class="kop">
+      <a class="merk" href="/" aria-label="Sila">sila</a>
+      <button type="button" class="tekstknop" id="uitloggen" hidden>Uitloggen</button>
+    </header>
+
+    <!-- Inloggen -->
+    <main id="inlogscherm" hidden>
+      <p class="oog">Artikelen op aanvraag</p>
+      <h1 class="titel">Inloggen</h1>
+      <p class="intro">Vul de toegangscode in om artikelen aan te vragen.</p>
+      <form class="vlak inlog" id="inlogformulier" novalidate>
+        <div class="veld" id="veld-code">
+          <label for="code">Toegangscode</label>
+          <input type="password" id="code" autocomplete="current-password" required />
+          <p class="veldfout" id="inlogfout" role="alert" hidden></p>
+        </div>
+        <button type="submit" class="knop breed" id="inlogknop">Inloggen</button>
+      </form>
+    </main>
+
+    <!-- Hoofdscherm -->
+    <main id="hoofdscherm" hidden>
+      <p class="oog">Artikelen op aanvraag</p>
+      <h1 class="titel">Nieuw artikel</h1>
+      <p class="intro">Geef het onderwerp en de bronnen. Het systeem schrijft het artikel en zet het als Google Doc klaar voor review.</p>
+
+      <form id="formulier" novalidate style="margin-top: 36px">
+        <section class="vlak" aria-labelledby="h-artikel">
+          <h2 id="h-artikel">Het artikel</h2>
+          <p class="vlak-tekst">Waar gaat het over en voor wie schrijven we het?</p>
+
+          <div class="veld">
+            <span class="label" id="l-klant">Klant</span>
+            <div class="keuzes" role="radiogroup" aria-labelledby="l-klant" style="grid-template-columns: repeat(2, 1fr)">
+              <label class="keuze"><input type="radio" name="klant" value="kleidi" checked /><span>Kleidi</span></label>
+              <label class="keuze"><input type="radio" name="klant" value="optinsight" disabled /><span>OptInsight<small>Nog niet beschikbaar</small></span></label>
+            </div>
+          </div>
+
+          <div class="veld" data-veld="onderwerp">
+            <label for="onderwerp">Onderwerp <span class="verplicht" aria-hidden="true">*</span></label>
+            <input type="text" id="onderwerp" maxlength="200" autocomplete="off" aria-required="true" />
+            <span class="hint">Eén zin of titelidee, minstens 5 tekens.</span>
+          </div>
+
+          <div class="veld">
+            <label for="punten">Punten die erin moeten komen</label>
+            <textarea id="punten" maxlength="10000"></textarea>
+            <span class="hint">Eén punt per regel is prima. Laat leeg als de bronnen genoeg zijn.</span>
+          </div>
+
+          <div class="rij">
+            <div class="veld">
+              <label for="zoekterm">Zoekterm (focuskeyword)</label>
+              <input type="text" id="zoekterm" maxlength="150" autocomplete="off" />
+            </div>
+            <div class="veld">
+              <label for="cluster">Cluster</label>
+              <select id="cluster"><option value="">Laat het systeem kiezen</option></select>
+            </div>
+          </div>
+
+          <div class="veld">
+            <label for="invalshoek">Invalshoek</label>
+            <input type="text" id="invalshoek" maxlength="1000" autocomplete="off" />
+            <span class="hint">Bijvoorbeeld: voor beginners, of vanuit een fout die vaak voorkomt.</span>
+          </div>
+        </section>
+
+        <section class="vlak" aria-labelledby="h-bronnen">
+          <h2 id="h-bronnen">Bronnen</h2>
+          <p class="vlak-tekst">Links, geplakte tekst en bestanden. Samen maximaal 8 bronnen en 3 MB aan bestanden.</p>
+
+          <div class="veld" data-veld="bronnen">
+            <span class="label">Links</span>
+            <div class="stapel" id="linkvelden"></div>
+            <button type="button" class="plus" id="linktoevoegen">+ Nog een link</button>
+          </div>
+
+          <div class="veld">
+            <label for="bronTekst">Geplakte tekst</label>
+            <textarea id="bronTekst" maxlength="200000"></textarea>
+            <span class="hint">Bijvoorbeeld een mail, een persbericht of notities. Telt als één bron.</span>
+          </div>
+
+          <div class="veld">
+            <span class="label">Bestanden</span>
+            <div class="bestandskeuze">
+              <button type="button" class="secundair" id="bestandsknop">Bestanden kiezen</button>
+              <span class="hint" style="margin: 0">pdf, txt, md, png of jpg</span>
+            </div>
+            <input type="file" id="bestanden" accept=".pdf,.txt,.md,.png,.jpg,.jpeg,application/pdf,text/plain,text/markdown,image/png,image/jpeg" multiple hidden />
+            <ul class="bestandslijst" id="bestandslijst"></ul>
+          </div>
+          <p class="teller" id="teller" aria-live="polite"></p>
+          <p class="veldfout" id="bronfout" role="alert" hidden></p>
+        </section>
+
+        <section class="vlak" aria-labelledby="h-richting">
+          <h2 id="h-richting">Richting</h2>
+          <p class="vlak-tekst">Hoe zakelijk of commercieel mag het artikel zijn?</p>
+
+          <div class="veld" data-veld="insteek">
+            <span class="label" id="l-insteek">Primaire insteek <span class="verplicht" aria-hidden="true">*</span></span>
+            <div class="keuzes" role="radiogroup" aria-labelledby="l-insteek">
+              <label class="keuze"><input type="radio" name="insteek" value="Informatief" /><span>Informatief<small>Uitleggen, niets aanbevelen</small></span></label>
+              <label class="keuze"><input type="radio" name="insteek" value="Technisch" /><span>Technisch<small>Werking en instellingen</small></span></label>
+              <label class="keuze"><input type="radio" name="insteek" value="Commercieel" /><span>Commercieel<small>Met een zachte aanbeveling</small></span></label>
+            </div>
+          </div>
+
+          <div class="veld">
+            <span class="label" id="l-intensiteit">Commerciële intensiteit</span>
+            <div class="keuzes" role="radiogroup" aria-labelledby="l-intensiteit">
+              <label class="keuze"><input type="radio" name="intensiteit" value="Geen" checked /><span>Geen</span></label>
+              <label class="keuze"><input type="radio" name="intensiteit" value="Licht" /><span>Licht</span></label>
+              <label class="keuze"><input type="radio" name="intensiteit" value="Sterk" /><span>Sterk</span></label>
+            </div>
+            <span class="hint" id="intensiteitHint">Volgt de insteek tot je zelf iets kiest.</span>
+          </div>
+
+          <div class="veld" data-veld="producten">
+            <label for="productInvoer">Aan te bevelen producten of merken</label>
+            <div class="stapelrij">
+              <input type="text" id="productInvoer" maxlength="120" autocomplete="off" />
+              <button type="button" class="secundair" id="productToevoegen">Toevoegen</button>
+            </div>
+            <span class="hint">Alleen deze mogen worden aanbevolen. Leeg betekent dat niets wordt aanbevolen.</span>
+            <div class="chips" id="productChips"></div>
+          </div>
+
+          <div class="veld" data-veld="affiliate">
+            <span class="label">Affiliatelinks of referrallinks</span>
+            <div class="stapel" id="affiliatevelden"></div>
+            <button type="button" class="plus" id="affiliatetoevoegen">+ Link met naam toevoegen</button>
+            <span class="hint" style="margin-top: 8px">Elke link komt maximaal 2 keer in het artikel. Gebruik dezelfde naam als bij het product.</span>
+          </div>
+
+          <div class="veld">
+            <label for="nietNoemen">Niet noemen</label>
+            <textarea id="nietNoemen" maxlength="2000" style="min-height: 76px"></textarea>
+            <span class="hint">Bijvoorbeeld: prijzen, tenzij ze in een bron staan.</span>
+          </div>
+        </section>
+
+        <section class="vlak" aria-labelledby="h-links">
+          <h2 id="h-links">Links en data</h2>
+          <p class="vlak-tekst">Allemaal optioneel.</p>
+
+          <div class="veld" data-veld="interneLink">
+            <label for="interneLink">Interne link naar</label>
+            <input type="url" id="interneLink" placeholder="https://www.kleidi.nl/" autocomplete="off" />
+            <span class="hint">Een pagina op kleidi.nl. Leeg betekent: de hoofdpagina van het cluster.</span>
+          </div>
+
+          <div class="rij">
+            <div class="veld" data-veld="publicatiedatum">
+              <label for="publicatiedatum">Publicatiedatum</label>
+              <input type="date" id="publicatiedatum" />
+            </div>
+            <div class="veld" data-veld="geldigTot">
+              <label for="geldigTot">Geldig tot</label>
+              <input type="date" id="geldigTot" />
+              <span class="hint">Bij een tijdelijke actie noemt het artikel deze datum.</span>
+            </div>
+          </div>
+
+          <div class="veld" style="margin-top: 28px">
+            <label class="vink" for="metAfbeeldingen">
+              <input type="checkbox" id="metAfbeeldingen" checked />
+              <span>Met afbeeldingen<span class="hint">Een foto en een infographic bij het artikel.</span></span>
+            </label>
+          </div>
+
+          <div class="knop-rij">
+            <p class="melding fout" id="formfout" role="alert" hidden></p>
+            <p class="melding goed" id="formgoed" role="status" hidden></p>
+            <button type="submit" class="knop breed" id="verstuurknop">Artikel aanvragen</button>
+          </div>
+        </section>
+      </form>
+
+      <div class="lijstkop">
+        <h2>Aanvragen</h2>
+        <small id="verversingstekst"></small>
+      </div>
+      <ul class="aanvragen" id="aanvragen" aria-live="polite"></ul>
+      <div class="verversen-rij"><button type="button" class="tekstknop" id="verversen">Lijst verversen</button></div>
+    </main>
+  </div>
+
+<script>
+(function () {
+  'use strict';
+
+  // Adres van deze pagina op één plek. De serverfunctie heet hetzelfde onder /api (api/customarticle.js).
+  const PAD = '/customarticle';
+  const API = '/api' + PAD;
+  const MAX_BYTES = 3 * 1024 * 1024;
+  const MAX_BRONNEN = 8;
+  const MIN_WOORDEN = 150;
+  const VERVERS_MS = 15000;
+  const TOEGESTAAN = { pdf: 1, txt: 1, md: 1, png: 1, jpg: 1, jpeg: 1 };
+
+  const $ = (id) => document.getElementById(id);
+  const inlog = $('inlogscherm');
+  const hoofd = $('hoofdscherm');
+  let bestanden = [];
+  let producten = [];
+  let intensiteitAangeraakt = false;
+  let timer = null;
+  let verstuurt = false;
+
+  // ---------- API ----------
+  async function api(body) {
+    let r;
+    try {
+      r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin', body: JSON.stringify(body) });
+    } catch (e) {
+      return { status: 0, data: { ok: false, bericht: 'Geen verbinding. Controleer je internet en probeer het opnieuw.' } };
+    }
+    let data = null;
+    try { data = await r.json(); } catch (e) { /* geen JSON */ }
+    return { status: r.status, data: data || { ok: false, bericht: 'Er ging iets mis. Probeer het zo opnieuw.' } };
+  }
+
+  // ---------- Schermen ----------
+  function toonInlog(melding) {
+    stopTimer();
+    hoofd.hidden = true; inlog.hidden = false; $('uitloggen').hidden = true;
+    if (melding) zetFout($('inlogfout'), melding);
+    $('code').focus();
+  }
+  function toonHoofd() {
+    inlog.hidden = true; hoofd.hidden = false; $('uitloggen').hidden = false;
+  }
+  function zetFout(el, tekst) { el.textContent = tekst; el.hidden = !tekst; }
+
+  async function start() {
+    const r = await api({ actie: 'lijst' });
+    if (r.status === 200) {
+      toonHoofd();
+      renderLijst(r.data.aanvragen || []);
+      laadClusters();
+    } else {
+      toonInlog(r.status === 401 ? '' : (r.data.bericht || ''));
+    }
+  }
+
+  // ---------- Inloggen ----------
+  $('inlogformulier').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const knop = $('inlogknop');
+    zetFout($('inlogfout'), '');
+    const code = $('code').value;
+    if (!code) { zetFout($('inlogfout'), 'Vul de toegangscode in.'); return; }
+    knop.disabled = true;
+    const r = await api({ actie: 'inloggen', code });
+    knop.disabled = false;
+    if (r.status === 200 && r.data.ok) {
+      $('code').value = '';
+      await start();
+    } else {
+      zetFout($('inlogfout'), r.data.bericht || 'Inloggen is niet gelukt.');
+      $('code').select();
+    }
+  });
+  $('uitloggen').addEventListener('click', async () => {
+    await api({ actie: 'uitloggen' });
+    toonInlog('');
+  });
+
+  // ---------- Clusters ----------
+  async function laadClusters() {
+    const sel = $('cluster');
+    const r = await api({ actie: 'clusters', klant: 'kleidi' });
+    if (r.status !== 200 || !Array.isArray(r.data.clusters)) return;
+    sel.length = 1;
+    r.data.clusters.forEach((c) => {
+      const o = document.createElement('option');
+      o.value = String(c.nr);
+      o.textContent = c.naam;
+      sel.appendChild(o);
+    });
+  }
+
+  // ---------- Dynamische velden: links ----------
+  function maakRondeKnop(label, onClick) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'rond'; b.textContent = '×';
+    b.setAttribute('aria-label', label);
+    b.addEventListener('click', onClick);
+    return b;
+  }
+  function voegLinkToe() {
+    const rij = document.createElement('div');
+    rij.className = 'stapelrij';
+    const inp = document.createElement('input');
+    inp.type = 'url'; inp.placeholder = 'https://'; inp.setAttribute('aria-label', 'Link naar een bron'); inp.autocomplete = 'off';
+    inp.addEventListener('input', telBronnen);
+    rij.appendChild(inp);
+    rij.appendChild(maakRondeKnop('Link verwijderen', () => { rij.remove(); if (!$('linkvelden').children.length) voegLinkToe(); telBronnen(); }));
+    $('linkvelden').appendChild(rij);
+    return inp;
+  }
+  $('linktoevoegen').addEventListener('click', () => voegLinkToe().focus());
+
+  // ---------- Dynamische velden: affiliatelinks ----------
+  function voegAffiliateToe() {
+    const rij = document.createElement('div');
+    rij.className = 'stapelrij twee';
+    const naam = document.createElement('input');
+    naam.type = 'text'; naam.placeholder = 'Naam, bijvoorbeeld WP Optin Wheel'; naam.setAttribute('aria-label', 'Naam van de link'); naam.maxLength = 120; naam.autocomplete = 'off';
+    const url = document.createElement('input');
+    url.type = 'url'; url.placeholder = 'https://'; url.setAttribute('aria-label', 'Webadres van de link'); url.autocomplete = 'off';
+    rij.appendChild(naam); rij.appendChild(url);
+    rij.appendChild(maakRondeKnop('Link verwijderen', () => rij.remove()));
+    $('affiliatevelden').appendChild(rij);
+    return naam;
+  }
+  $('affiliatetoevoegen').addEventListener('click', () => voegAffiliateToe().focus());
+
+  // ---------- Producten (chips) ----------
+  function renderProducten() {
+    const c = $('productChips');
+    c.textContent = '';
+    producten.forEach((p, i) => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      const t = document.createElement('span'); t.textContent = p;
+      const b = document.createElement('button');
+      b.type = 'button'; b.textContent = '×'; b.setAttribute('aria-label', p + ' verwijderen');
+      b.addEventListener('click', () => { producten.splice(i, 1); renderProducten(); });
+      chip.appendChild(t); chip.appendChild(b); c.appendChild(chip);
+    });
+  }
+  function voegProductToe() {
+    const inp = $('productInvoer');
+    const v = inp.value.trim();
+    if (!v) return;
+    if (producten.length >= 20) return;
+    if (!producten.some((p) => p.toLowerCase() === v.toLowerCase())) { producten.push(v); renderProducten(); }
+    inp.value = ''; inp.focus();
+  }
+  $('productToevoegen').addEventListener('click', voegProductToe);
+  $('productInvoer').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); voegProductToe(); } });
+
+  // ---------- Bestanden ----------
+  function ext(naam) { const m = /\.([A-Za-z0-9]+)$/.exec(naam || ''); return m ? m[1].toLowerCase() : ''; }
+  function fmtMb(b) { return (b / 1048576).toLocaleString('nl-NL', { maximumFractionDigits: 1, minimumFractionDigits: 1 }) + ' MB'; }
+  $('bestandsknop').addEventListener('click', () => $('bestanden').click());
+  $('bestanden').addEventListener('change', (e) => {
+    const nieuw = Array.from(e.target.files);
+    const afgewezen = [];
+    nieuw.forEach((f) => {
+      if (!TOEGESTAAN[ext(f.name)]) afgewezen.push(f.name);
+      else if (!bestanden.some((x) => x.name === f.name && x.size === f.size)) bestanden.push(f);
+    });
+    e.target.value = '';
+    zetFout($('bronfout'), afgewezen.length ? 'Deze bestanden kunnen niet worden gebruikt: ' + afgewezen.join(', ') + '. Kies een pdf, txt, md, png of jpg.' : '');
+    renderBestanden();
+  });
+  function renderBestanden() {
+    const ul = $('bestandslijst');
+    ul.textContent = '';
+    bestanden.forEach((f, i) => {
+      const li = document.createElement('li');
+      const naam = document.createElement('span'); naam.textContent = f.name;
+      const grootte = document.createElement('small'); grootte.textContent = fmtMb(f.size);
+      const links = document.createElement('span'); links.style.display = 'flex'; links.style.gap = '10px'; links.style.alignItems = 'center';
+      links.appendChild(grootte);
+      links.appendChild(maakRondeKnop(f.name + ' verwijderen', () => { bestanden.splice(i, 1); renderBestanden(); }));
+      li.appendChild(naam); li.appendChild(links); ul.appendChild(li);
+    });
+    telBronnen();
+  }
+
+  function verzamelLinks() {
+    return Array.from($('linkvelden').querySelectorAll('input')).map((i) => i.value.trim()).filter(Boolean);
+  }
+  function telBronnen() {
+    const aantal = verzamelLinks().length + ($('bronTekst').value.trim() ? 1 : 0) + bestanden.length;
+    const bytes = bestanden.reduce((s, f) => s + f.size, 0);
+    const el = $('teller');
+    const over = aantal > MAX_BRONNEN || bytes > MAX_BYTES;
+    el.textContent = aantal + ' van ' + MAX_BRONNEN + ' bronnen. ' + fmtMb(bytes) + ' van 3 MB aan bestanden.' + (over ? ' Dat is te veel: haal een bron of bestand weg.' : '');
+    el.classList.toggle('over', over);
+  }
+  $('bronTekst').addEventListener('input', telBronnen);
+
+  // ---------- Insteek en intensiteit ----------
+  function standaardIntensiteit(insteek) { return insteek === 'Commercieel' ? 'Licht' : 'Geen'; }
+  document.querySelectorAll('input[name=insteek]').forEach((r) => r.addEventListener('change', () => {
+    if (intensiteitAangeraakt) return;
+    const v = standaardIntensiteit(r.value);
+    document.querySelector('input[name=intensiteit][value=' + v + ']').checked = true;
+  }));
+  document.querySelectorAll('input[name=intensiteit]').forEach((r) => r.addEventListener('change', () => {
+    intensiteitAangeraakt = true;
+    $('intensiteitHint').textContent = 'Zelf gekozen. De insteek past dit niet meer aan.';
+  }));
+
+  // ---------- Formulier ----------
+  function veldFout(naam, tekst) {
+    const veld = document.querySelector('[data-veld=' + naam + ']');
+    if (!veld) return;
+    veld.classList.add('heeft-fout');
+    let p = veld.querySelector('.veldfout');
+    if (!p) { p = document.createElement('p'); p.className = 'veldfout'; p.setAttribute('role', 'alert'); veld.appendChild(p); }
+    p.textContent = tekst;
+  }
+  function wisVeldFouten() {
+    document.querySelectorAll('.heeft-fout').forEach((v) => v.classList.remove('heeft-fout'));
+    document.querySelectorAll('[data-veld] > .veldfout').forEach((p) => p.remove());
+    zetFout($('formfout'), ''); zetFout($('formgoed'), ''); zetFout($('bronfout'), '');
+  }
+  const isHttp = (s) => { try { const u = new URL(s); return u.protocol === 'http:' || u.protocol === 'https:'; } catch (e) { return false; } };
+  const woorden = (t) => (t.trim() ? t.trim().split(/\s+/).length : 0);
+
+  function leesBestand(f) {
+    return new Promise((ok, mis) => {
+      const r = new FileReader();
+      r.onload = () => { const s = String(r.result); ok(s.slice(s.indexOf(',') + 1)); };
+      r.onerror = () => mis(new Error('Het bestand "' + f.name + '" kon niet worden gelezen.'));
+      r.readAsDataURL(f);
+    });
+  }
+
+  // Controleert wat de browser zelf kan weten. De server en n8n controleren daarna nog eens.
+  function controleer() {
+    const fouten = [];
+    const onderwerp = $('onderwerp').value.trim();
+    if (onderwerp.length < 5) fouten.push(['onderwerp', 'Het onderwerp is te kort. Gebruik minstens 5 tekens.']);
+    const insteek = document.querySelector('input[name=insteek]:checked');
+    if (!insteek) fouten.push(['insteek', 'Kies een primaire insteek.']);
+
+    const links = verzamelLinks();
+    const slecht = links.filter((l) => !isHttp(l));
+    if (slecht.length) fouten.push(['bronnen', 'Dit is geen geldige link: ' + slecht[0] + '. Begin met https://.']);
+    const tekst = $('bronTekst').value;
+    const aantal = links.length + (tekst.trim() ? 1 : 0) + bestanden.length;
+    const bytes = bestanden.reduce((s, f) => s + f.size, 0);
+    let bronFout = '';
+    if (aantal > MAX_BRONNEN) bronFout = 'Je kunt maximaal ' + MAX_BRONNEN + ' bronnen per aanvraag gebruiken.';
+    else if (bytes > MAX_BYTES) bronFout = 'De bestanden zijn samen groter dan 3 MB. Kies kleinere of minder bestanden.';
+    else if (!links.length && !bestanden.length && woorden($('punten').value) + woorden(tekst) < MIN_WOORDEN) {
+      bronFout = 'Er is te weinig invoer. Voeg een link, een bestand of een afbeelding toe, of schrijf minstens ' + MIN_WOORDEN + ' woorden aan punten of geplakte tekst.';
+    }
+    if (bronFout) fouten.push(['*bron', bronFout]);
+
+    const affiliate = verzamelAffiliate();
+    for (const a of affiliate.rijen) {
+      if ((a.naam || a.url) && !a.naam) { fouten.push(['affiliate', 'Geef elke affiliatelink een naam.']); break; }
+      if ((a.naam || a.url) && !isHttp(a.url)) { fouten.push(['affiliate', 'De link bij "' + a.naam + '" is geen geldige weblink. Begin met https://.']); break; }
+    }
+    const intern = $('interneLink').value.trim();
+    if (intern) {
+      let ok = false;
+      try { const h = new URL(intern).hostname.toLowerCase(); ok = isHttp(intern) && (h === 'kleidi.nl' || h === 'www.kleidi.nl'); } catch (e) { /* ongeldig */ }
+      if (!ok) fouten.push(['interneLink', 'Dit moet een pagina op kleidi.nl zijn.']);
+    }
+    const pub = $('publicatiedatum').value, tot = $('geldigTot').value;
+    if (pub && tot && tot < pub) fouten.push(['geldigTot', '"Geldig tot" ligt voor de publicatiedatum.']);
+    return fouten;
+  }
+
+  function verzamelAffiliate() {
+    const rijen = Array.from($('affiliatevelden').children).map((r) => {
+      const [n, u] = r.querySelectorAll('input');
+      return { naam: n.value.trim(), url: u.value.trim() };
+    });
+    return { rijen, geldig: rijen.filter((r) => r.naam && r.url) };
+  }
+
+  const FOUT_STANDAARD = {
+    limiet: 'Je hebt vandaag al 2 artikelen aangevraagd voor deze klant. Morgen kan er weer een bij.',
+    bezig: 'Er loopt al een aanvraag voor deze klant. Wacht tot die klaar is en probeer het dan opnieuw.',
+    'nog niet beschikbaar': 'Voor deze klant kunnen nog geen artikelen worden aangevraagd.',
+    ongeldig: 'De aanvraag is niet compleet. Controleer de velden en probeer het opnieuw.'
+  };
+
+  $('formulier').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (verstuurt) return;
+    wisVeldFouten();
+    const fouten = controleer();
+    if (fouten.length) {
+      fouten.forEach(([veld, tekst]) => { if (veld === '*bron') zetFout($('bronfout'), tekst); else veldFout(veld, tekst); });
+      zetFout($('formfout'), 'Er ontbreekt nog iets. Kijk bij de rood gemarkeerde velden.');
+      const eerste = document.querySelector('.heeft-fout') || (!$('bronfout').hidden ? $('bronfout') : null);
+      if (eerste) eerste.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    verstuurt = true;
+    const knop = $('verstuurknop');
+    knop.disabled = true; knop.textContent = 'Bezig met versturen';
+    try {
+      const bronnen = verzamelLinks().map((waarde) => ({ type: 'link', waarde }));
+      if ($('bronTekst').value.trim()) bronnen.push({ type: 'tekst', waarde: $('bronTekst').value.trim() });
+      for (const f of bestanden) {
+        const inhoudBase64 = await leesBestand(f);
+        const x = ext(f.name);
+        if (x === 'png' || x === 'jpg' || x === 'jpeg') bronnen.push({ type: 'afbeelding', naam: f.name, mime: x === 'png' ? 'image/png' : 'image/jpeg', inhoudBase64 });
+        else bronnen.push({ type: 'bestand', naam: f.name, inhoudBase64 });
+      }
+      const body = {
+        actie: 'nieuw',
+        klant: document.querySelector('input[name=klant]:checked').value,
+        onderwerp: $('onderwerp').value.trim(),
+        punten: $('punten').value.trim(),
+        bronnen,
+        insteek: document.querySelector('input[name=insteek]:checked').value,
+        intensiteit: document.querySelector('input[name=intensiteit]:checked').value,
+        producten: producten.slice(),
+        affiliateLinks: verzamelAffiliate().geldig,
+        interneLink: $('interneLink').value.trim(),
+        nietNoemen: $('nietNoemen').value.trim(),
+        publicatiedatum: $('publicatiedatum').value,
+        geldigTot: $('geldigTot').value,
+        invalshoek: $('invalshoek').value.trim(),
+        cluster: $('cluster').value,
+        zoekterm: $('zoekterm').value.trim(),
+        metAfbeeldingen: $('metAfbeeldingen').checked
+      };
+      const r = await api(body);
+      if (r.status === 401) { toonInlog('Je sessie is verlopen. Log opnieuw in. Je invoer blijft staan.'); return; }
+      if (r.data.ok) {
+        zetFout($('formgoed'), 'De aanvraag is gestart. Je ziet de voortgang hieronder bij Aanvragen.');
+        resetFormulier();
+        await ververs();
+        $('aanvragen').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        zetFout($('formfout'), r.data.bericht || FOUT_STANDAARD[r.data.fout] || 'Het versturen is niet gelukt. Probeer het zo opnieuw.');
+      }
+    } catch (err) {
+      zetFout($('formfout'), err && err.message ? err.message : 'Het versturen is niet gelukt. Probeer het zo opnieuw.');
+    } finally {
+      verstuurt = false;
+      knop.disabled = false; knop.textContent = 'Artikel aanvragen';
+    }
+  });
+
+  function resetFormulier() {
+    ['onderwerp', 'punten', 'zoekterm', 'invalshoek', 'bronTekst', 'nietNoemen', 'interneLink', 'publicatiedatum', 'geldigTot', 'productInvoer'].forEach((id) => { $(id).value = ''; });
+    $('cluster').value = '';
+    $('linkvelden').textContent = ''; voegLinkToe();
+    $('affiliatevelden').textContent = '';
+    bestanden = []; producten = []; renderBestanden(); renderProducten();
+    document.querySelectorAll('input[name=insteek]').forEach((r) => { r.checked = false; });
+    document.querySelector('input[name=intensiteit][value=Geen]').checked = true;
+    intensiteitAangeraakt = false;
+    $('intensiteitHint').textContent = 'Volgt de insteek tot je zelf iets kiest.';
+    $('metAfbeeldingen').checked = true;
+  }
+
+  // ---------- Lijst met aanvragen ----------
+  const STATUS = {
+    'bezig': ['bezig', 'Bezig'],
+    'klaar': ['klaar', 'Klaar'],
+    'klaar met waarschuwing': ['waarschuwing', 'Klaar met waarschuwing'],
+    'mislukt': ['mislukt', 'Mislukt']
+  };
+  const KLANT_NAAM = { kleidi: 'Kleidi', optinsight: 'OptInsight' };
+  function fmtTijd(iso) {
+    const d = new Date(iso);
+    if (!iso || isNaN(d)) return '';
+    return d.toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+  }
+  function renderLijst(rijen) {
+    const ul = $('aanvragen');
+    ul.textContent = '';
+    if (!rijen.length) {
+      const li = document.createElement('li'); li.className = 'aanvraag leeg'; li.textContent = 'Nog geen aanvragen. Je eerste verschijnt hier zodra je hem verstuurt.';
+      ul.appendChild(li);
+    }
+    rijen.forEach((r) => {
+      const li = document.createElement('li'); li.className = 'aanvraag';
+      const kop = document.createElement('div'); kop.className = 'aanvraag-kop';
+      const h = document.createElement('h3'); h.textContent = r.titel || r.onderwerp || 'Zonder titel';
+      const st = STATUS[r.status] || ['bezig', r.status || 'Onbekend'];
+      const badge = document.createElement('span'); badge.className = 'status ' + st[0]; badge.textContent = st[1];
+      kop.appendChild(h); kop.appendChild(badge); li.appendChild(kop);
+      const meta = document.createElement('p'); meta.className = 'aanvraag-meta';
+      meta.textContent = [KLANT_NAAM[r.klant] || r.klant, fmtTijd(r.aangemaakt || r.createdAt), r.aanvraagId].filter(Boolean).join(' · ');
+      li.appendChild(meta);
+      if (r.reden && (r.status === 'mislukt' || r.status === 'klaar met waarschuwing')) {
+        const p = document.createElement('p'); p.className = 'aanvraag-reden'; p.textContent = r.reden; li.appendChild(p);
+      }
+      if (r.docUrl && /^https:\/\//.test(r.docUrl)) {
+        const a = document.createElement('a'); a.className = 'aanvraag-link'; a.href = r.docUrl; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = 'Open het Google Doc';
+        li.appendChild(a);
+      }
+      ul.appendChild(li);
+    });
+    const loopt = rijen.some((r) => r.status === 'bezig');
+    $('verversingstekst').textContent = loopt ? 'Ververst elke 15 seconden' : '';
+    stopTimer();
+    if (loopt) timer = setTimeout(ververs, VERVERS_MS);
+  }
+  function stopTimer() { if (timer) { clearTimeout(timer); timer = null; } }
+  async function ververs() {
+    stopTimer();
+    const r = await api({ actie: 'lijst' });
+    if (r.status === 401) { toonInlog('Je sessie is verlopen. Log opnieuw in.'); return; }
+    if (r.status === 200) renderLijst(r.data.aanvragen || []);
+    else timer = setTimeout(ververs, VERVERS_MS);
+  }
+  $('verversen').addEventListener('click', ververs);
+
+  // ---------- Start ----------
+  voegLinkToe();
+  renderBestanden();
+  start();
+})();
+</script>
+</body>
+</html>
