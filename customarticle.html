@@ -554,15 +554,15 @@
     });
     werkProductHintBij();
   }
-  function voegProductToe() {
+  function voegProductToe(stil) {
     const inp = $('productInvoer');
     const v = inp.value.trim();
     if (!v) return;
     if (producten.length >= 20) return;
     if (!producten.some((p) => p.toLowerCase() === v.toLowerCase())) { producten.push(v); renderProducten(); }
-    inp.value = ''; inp.focus();
+    inp.value = ''; if (!stil) inp.focus();
   }
-  $('productToevoegen').addEventListener('click', voegProductToe);
+  $('productToevoegen').addEventListener('click', () => voegProductToe());
   $('productInvoer').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); voegProductToe(); } });
 
   // ---------- Bestanden ----------
@@ -704,6 +704,8 @@
   $('formulier').addEventListener('submit', async (e) => {
     e.preventDefault();
     if (verstuurt) return;
+    // Tekst die in het productenveld is getypt maar nog niet met Enter of de knop is toegevoegd, hoort er ook bij.
+    if ($('productInvoer').value.trim()) voegProductToe(true);
     wisVeldFouten();
     const fouten = controleer();
     if (fouten.length) {
