@@ -3,7 +3,7 @@
 const MAX_SCREENSHOT_BYTES = 2 * 1024 * 1024;
 const FEEDBACK_KLANTEN = ['kleidi', 'optinsight'];
 const SCREENSHOT_MIME = ['image/png', 'image/jpeg'];
-const FEEDBACK_VELDEN = ['klant', 'artikel', 'feedback', 'uitleg', 'link', 'screenshot'];
+const FEEDBACK_VELDEN = ['klant', 'artikel', 'artikelLink', 'feedback', 'uitleg', 'link', 'screenshot'];
 
 const fbFout = (tekst) => ({ ok: false, fout: tekst });
 const fbTekst = (x) => typeof x === 'string';
@@ -32,7 +32,10 @@ function valideerFeedback(body) {
   if (uitleg.length < 10) return fbFout('Leg kort uit wat je precies bedoelt, in minstens 10 tekens.');
   if (uitleg.length > 5000) return fbFout('De uitleg is te lang. Gebruik maximaal 5.000 tekens.');
 
-  if (body.artikel != null && (!fbTekst(body.artikel) || body.artikel.length > 300)) return fbFout('De naam van het artikel is te lang. Gebruik maximaal 300 tekens.');
+  const artikel = fbTekst(body.artikel) ? body.artikel.trim() : '';
+  if (!artikel) return fbFout('Kies een artikel, of kies "Algemeen" als het niet over één artikel gaat.');
+  if (artikel.length > 300) return fbFout('De naam van het artikel is te lang. Gebruik maximaal 300 tekens.');
+  if (body.artikelLink != null && body.artikelLink !== '' && !fbHttpUrl(body.artikelLink)) return fbFout('De link naar het artikel is geen geldige weblink.');
   if (body.link != null && body.link !== '' && !fbHttpUrl(body.link)) return fbFout('De link is geen geldige weblink. Begin met https://.');
 
   if (body.screenshot != null) {

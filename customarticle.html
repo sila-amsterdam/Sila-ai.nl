@@ -429,10 +429,10 @@
             </div>
 
             <div class="veld" data-veld="fbArtikel">
-              <label for="fbArtikel">Over welk artikel gaat het?</label>
-              <input type="text" id="fbArtikel" list="fbArtikelen" maxlength="300" autocomplete="off" />
-              <datalist id="fbArtikelen"></datalist>
-              <span class="hint">Kies een artikel uit de lijst of typ zelf iets. Laat leeg als het over alle artikelen of over de werkwijze gaat.</span>
+              <label for="fbArtikelKeuze">Over welk artikel gaat het? <span class="verplicht" aria-hidden="true">*</span></label>
+              <select id="fbArtikelKeuze" aria-required="true"><option value="">Kies een artikel</option></select>
+              <input type="text" id="fbArtikel" maxlength="300" autocomplete="off" placeholder="Titel of onderwerp van het artikel" style="margin-top: 10px" hidden />
+              <span class="hint">Kies "Algemeen" als het over alle artikelen of over de werkwijze gaat.</span>
             </div>
 
             <div class="veld" data-veld="fbFeedback">
@@ -1068,19 +1068,40 @@
     zetFout($('fbFout'), ''); zetFout($('fbGoed'), '');
   }
 
+  const ALGEMEEN = 'Algemeen, geen specifiek artikel';
+  let fbArtikelen = [];
   async function laadFeedbackArtikelen() {
     const klant = fbKlant();
-    const dl = $('fbArtikelen');
+    const sel = $('fbArtikelKeuze');
     const r = await api({ actie: 'feedback_artikelen', klant });
     if (klant !== fbKlant()) return;   // intussen een andere klant gekozen: dit antwoord is verouderd
-    dl.textContent = '';
-    if (r.status !== 200 || !Array.isArray(r.data.artikelen)) return;
-    r.data.artikelen.slice(0, 200).forEach((a) => {
-      if (!a || typeof a.titel !== 'string' || !a.titel) return;
-      const o = document.createElement('option'); o.value = a.titel; dl.appendChild(o);
-    });
+    fbArtikelen = r.status === 200 && Array.isArray(r.data.artikelen) ? r.data.artikelen.filter((a) => a && typeof a.titel === 'string' && a.titel).slice(0, 200) : [];
+    sel.textContent = '';
+    const voegToe = (waarde, tekst, uit) => { const o = document.createElement('option'); o.value = waarde; o.textContent = tekst; if (uit) o.disabled = true; sel.appendChild(o); };
+    voegToe('', 'Kies een artikel');
+    fbArtikelen.forEach((a, i) => voegToe('a:' + i, a.titel + (a.datum ? ' (' + a.datum + ')' : '')));
+    voegToe('__algemeen', ALGEMEEN);
+    voegToe('__ander', 'Een ander artikel of onderwerp');
+    toonArtikelVeld();
   }
-  document.querySelectorAll('input[name=fbKlant]').forEach((r) => r.addEventListener('change', () => { $('fbArtikel').value = ''; laadFeedbackArtikelen(); }));
+  function toonArtikelVeld() {
+    const ander = $('fbArtikelKeuze').value === '__ander';
+    $('fbArtikel').hidden = !ander;
+    if (!ander) $('fbArtikel').value = '';
+  }
+  $('fbArtikelKeuze').addEventListener('change', () => { toonArtikelVeld(); if ($('fbArtikelKeuze').value === '__ander') $('fbArtikel').focus(); });
+  // Wat er als artikel in de melding komt: titel (+ link naar het Doc als die er is), of Algemeen, of de eigen tekst.
+  function gekozenArtikel() {
+    const k = $('fbArtikelKeuze').value;
+    if (k === '__algemeen') return { artikel: ALGEMEEN };
+    if (k === '__ander') return { artikel: $('fbArtikel').value.trim() };
+    const m = /^a:(\d+)$/.exec(k);
+    const a = m ? fbArtikelen[Number(m[1])] : null;
+    if (!a) return { artikel: '' };
+    const doc = veiligeDocUrl(a.doc);
+    return doc ? { artikel: a.titel, artikelLink: doc } : { artikel: a.titel };
+  }
+  document.querySelectorAll('input[name=fbKlant]').forEach((r) => r.addEventListener('change', () => { laadFeedbackArtikelen(); }));
 
   $('fbFeedback').addEventListener('input', () => {
     const n = $('fbFeedback').value.length;
@@ -1116,20 +1137,22 @@
     e.preventDefault();
     if (fbVerstuurt) return;
     wisFbFouten();
-    const artikel = $('fbArtikel').value.trim();
+    const gekozen = gekozenArtikel();
+    const artikel = gekozen.artikel;
     const feedback = $('fbFeedback').value.trim();
     const uitleg = $('fbUitleg').value.trim();
     const link = $('fbLink').value.trim();
     let eerste = null;
     const fout = (naam, tekst) => { veldFout(naam, tekst); if (!eerste) eerste = naam; };
+    if (!artikel) fout('fbArtikel', $('fbArtikelKeuze').value === '__ander' ? 'Vul de titel of het onderwerp van het artikel in.' : 'Kies een artikel, of kies Algemeen.');
     if (feedback.length < 5) fout('fbFeedback', 'Beschrijf de feedback in minstens 5 tekens.');
     else if (feedback.length > 200) fout('fbFeedback', 'Maximaal 200 tekens. Zet de rest bij de uitleg.');
     if (uitleg.length < 10) fout('fbUitleg', 'Leg kort uit wat je precies bedoelt, in minstens 10 tekens.');
     if (link && !isHttp(link)) fout('fbLink', 'Dit is geen geldige weblink. Begin met https://.');
-    if (eerste) { const el = document.querySelector('[data-veld=' + eerste + '] input, [data-veld=' + eerste + '] textarea'); if (el) el.focus(); return; }
+    if (eerste) { const el = document.querySelector('[data-veld=' + eerste + '] select:not([hidden]), [data-veld=' + eerste + '] input:not([hidden]), [data-veld=' + eerste + '] textarea'); if (el) el.focus(); return; }
 
-    const body = { actie: 'feedback_nieuw', klant: fbKlant(), feedback, uitleg };
-    if (artikel) body.artikel = artikel;
+    const body = { actie: 'feedback_nieuw', klant: fbKlant(), artikel, feedback, uitleg };
+    if (gekozen.artikelLink) body.artikelLink = gekozen.artikelLink;
     if (link) body.link = link;
     const knop = $('fbVerstuur');
     fbVerstuurt = true; knop.disabled = true; knop.textContent = 'Versturen…';
@@ -1143,6 +1166,7 @@
       if (r.status === 200 && r.data.ok) {
         zetFout($('fbGoed'), 'Bedankt. Je feedback staat in de lijst' + (r.data.id ? ' als ' + r.data.id : '') + '.');
         ['fbArtikel', 'fbFeedback', 'fbUitleg', 'fbLink'].forEach((id) => { $(id).value = ''; });
+        $('fbArtikelKeuze').value = ''; toonArtikelVeld();
         $('fbTekens').textContent = '0 / 200'; fbScherm = null; renderFbScherm();
         fbFilter = 'open'; markeerFilter();
         await ververFeedback();
@@ -1173,13 +1197,14 @@
     rijen.forEach((r) => {
       const li = document.createElement('li'); li.className = 'aanvraag';
       const kop = document.createElement('div'); kop.className = 'aanvraag-kop';
-      const meta = document.createElement('p'); meta.className = 'aanvraag-meta'; meta.style.margin = '0';
-      meta.textContent = [KLANT_NAAM[r.klant] || r.klant, r.datum, r.id].filter(Boolean).join(' · ');
+      const h = document.createElement('h3'); h.textContent = r.artikel || 'Geen artikel opgegeven';
       const st = feedbackStatus(r.status);
       const badge = document.createElement('span'); badge.className = 'status ' + st[0]; badge.textContent = st[1];
-      kop.appendChild(meta); kop.appendChild(badge); li.appendChild(kop);
+      kop.appendChild(h); kop.appendChild(badge); li.appendChild(kop);
+      const meta = document.createElement('p'); meta.className = 'aanvraag-meta';
+      meta.textContent = [KLANT_NAAM[r.klant] || r.klant, r.datum, r.id].filter(Boolean).join(' \u00b7 ');
+      li.appendChild(meta);
       const f = document.createElement('p'); f.className = 'fb-feedback'; f.textContent = r.feedback || ''; li.appendChild(f);
-      if (r.artikel) { const a = document.createElement('p'); a.className = 'fb-artikel'; a.textContent = r.artikel; li.appendChild(a); }
       if (r.uitleg) {
         const d = document.createElement('details'); d.className = 'fb-details';
         const s = document.createElement('summary'); s.textContent = 'Uitleg bekijken'; d.appendChild(s);
@@ -1188,6 +1213,7 @@
       }
       const links = document.createElement('div'); links.className = 'fb-links';
       const maakLink = (href, tekst) => { const a = document.createElement('a'); a.className = 'aanvraag-link'; a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = tekst; links.appendChild(a); };
+      const l0 = veiligeDocUrl(r.artikelLink); if (l0) maakLink(l0, 'Open het artikel');
       const l1 = veiligeDocUrl(r.link); if (l1) maakLink(l1, 'Open de link');
       const l2 = veiligeDocUrl(r.schermafbeelding); if (l2) maakLink(l2, 'Open de schermafbeelding');
       if (links.childNodes.length) li.appendChild(links);

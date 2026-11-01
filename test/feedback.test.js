@@ -24,10 +24,22 @@ const basis = () => ({
 test('feedback: een complete melding is geldig', () => {
   assert.deepStrictEqual(valideerFeedback(basis()), { ok: true });
 });
-test('feedback: artikel, link en screenshot zijn optioneel', () => {
-  const b = basis(); delete b.artikel; delete b.link;
+test('feedback: link, artikellink en screenshot zijn optioneel', () => {
+  const b = basis(); delete b.link;
   assert.strictEqual(valideerFeedback(b).ok, true);
-  assert.strictEqual(valideerFeedback({ ...b, artikel: '', link: '' }).ok, true);
+  assert.strictEqual(valideerFeedback({ ...b, link: '', artikelLink: '' }).ok, true);
+  assert.strictEqual(valideerFeedback({ ...b, artikelLink: 'https://docs.google.com/document/d/abc/edit' }).ok, true);
+});
+test('feedback: het artikel is verplicht, zodat altijd duidelijk is waarover het gaat', () => {
+  const b = basis(); delete b.artikel;
+  assert.strictEqual(valideerFeedback(b).ok, false);
+  assert.match(valideerFeedback(b).fout, /artikel/i);
+  assert.strictEqual(valideerFeedback({ ...basis(), artikel: '   ' }).ok, false);
+  assert.strictEqual(valideerFeedback({ ...basis(), artikel: 'Algemeen, geen specifiek artikel' }).ok, true);
+});
+test('feedback: de artikellink moet een http(s)-adres zijn', () => {
+  assert.strictEqual(valideerFeedback({ ...basis(), artikelLink: 'javascript:alert(1)' }).ok, false);
+  assert.strictEqual(valideerFeedback({ ...basis(), artikelLink: 'niet-een-url' }).ok, false);
 });
 test('feedback: klant moet kleidi of optinsight zijn', () => {
   assert.strictEqual(valideerFeedback({ ...basis(), klant: 'sila' }).ok, false);
@@ -119,6 +131,9 @@ test('handler: geldige feedback gaat met geheim naar n8n, alleen de toegestane v
   const b = fetch.calls[0].body;
   assert.strictEqual(b.actie, 'feedback_nieuw');
   assert.deepStrictEqual(Object.keys(b).sort(), ['actie', 'artikel', 'feedback', 'klant', 'link', 'uitleg']);
+  const mLink = await roep(h, { body: { ...basis(), artikelLink: 'https://docs.google.com/document/d/abc/edit' }, cookie: cookie() });
+  assert.strictEqual(mLink.status, 200);
+  assert.strictEqual(fetch.calls[1].body.artikelLink, 'https://docs.google.com/document/d/abc/edit');
 });
 test('handler: feedback_lijst en feedback_artikelen worden doorgestuurd', async () => {
   const fetch = nepFetch({ feedback_lijst: { feedback: [] }, feedback_artikelen: { artikelen: [{ titel: 'A' }] } });
