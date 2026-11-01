@@ -4,6 +4,7 @@
 const crypto = require('node:crypto');
 const { maakSessie, controleerSessie, GELDIG_MS } = require('./_topos/sessie.js');
 const { valideerAanvraag } = require('./_topos/valideer.js');
+const { valideerFeedback, FEEDBACK_VELDEN } = require('./_topos/feedback.js');
 
 const N8N_URL = 'https://n8n.sila-ai.nl/webhook/topos-api';
 const N8N_TIMEOUT_MS = 9000;
@@ -118,7 +119,7 @@ function maakHandler(deps = {}) {
       return stuur(200, { ok: true }, { 'Set-Cookie': `${COOKIE}=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0` });
     }
 
-    if (!['clusters', 'lijst', 'nieuw'].includes(actie)) {
+    if (!['clusters', 'lijst', 'nieuw', 'feedback_nieuw', 'feedback_lijst', 'feedback_artikelen'].includes(actie)) {
       return stuur(400, { ok: false, fout: 'ongeldig', bericht: 'Onbekende actie.' });
     }
 
@@ -128,6 +129,23 @@ function maakHandler(deps = {}) {
 
     try {
       if (actie === 'lijst') return stuur(200, await naarN8n({ actie: 'lijst' }));
+
+      if (actie === 'feedback_lijst') return stuur(200, await naarN8n({ actie: 'feedback_lijst' }));
+
+      if (actie === 'feedback_artikelen') {
+        if (!KLANTEN.includes(body.klant)) return stuur(400, { ok: false, fout: 'ongeldig', bericht: 'Kies een klant.' });
+        return stuur(200, await naarN8n({ actie: 'feedback_artikelen', klant: body.klant }));
+      }
+
+      if (actie === 'feedback_nieuw') {
+        const fv = valideerFeedback(body);
+        if (!fv.ok) return stuur(400, { ok: false, fout: 'ongeldig', bericht: fv.fout });
+        const fbPayload = { actie: 'feedback_nieuw' };
+        for (const veld of FEEDBACK_VELDEN) if (body[veld] !== undefined) fbPayload[veld] = body[veld];
+        const fbAntwoord = await naarN8n(fbPayload);
+        if (fbAntwoord && fbAntwoord.ok === false) return stuur(FOUT_STATUS[fbAntwoord.fout] || 400, fbAntwoord);
+        return stuur(200, fbAntwoord);
+      }
 
       if (actie === 'clusters') {
         if (!KLANTEN.includes(body.klant)) return stuur(400, { ok: false, fout: 'ongeldig', bericht: 'Kies een klant.' });
