@@ -1,10 +1,8 @@
 {
   "rewrites": [
-    { "source": "/toposadmin", "destination": "/customarticle.html" },
-    { "source": "/customarticle", "destination": "/customarticle.html" }
+    { "source": "/toposadmin", "destination": "/toposadmin.html" }
   ],
   "headers": [
-    { "source": "/toposadmin", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
-    { "source": "/customarticle", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
+    { "source": "/toposadmin", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
   ]
 }

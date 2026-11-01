@@ -1,10 +1,10 @@
-// Tests voor Topos: serverfunctie voor /customarticle. Draaien met: node --test test/topos.test.js
+// Tests voor Topos: serverfunctie voor /toposadmin. Draaien met: node --test test/topos.test.js
 const test = require('node:test');
 const assert = require('node:assert');
 const crypto = require('node:crypto');
 const { maakSessie, controleerSessie } = require('../api/_topos/sessie.js');
 const { valideerAanvraag, MAX_UPLOAD_BYTES } = require('../api/_topos/valideer.js');
-const { maakHandler } = require('../api/customarticle.js');
+const { maakHandler } = require('../api/toposadmin.js');
 
 const GEHEIM = 'test-sessiegeheim';
 const UUR = 3600 * 1000;
@@ -345,10 +345,10 @@ test('handler: n8n-foutcode bron wordt 502 met begrijpelijke melding', async () 
   assert.strictEqual(res.json().bericht, 'De schrijf-workflow was niet bereikbaar. Probeer het zo opnieuw.');
 });
 
-// De zuivere functies van de pagina staan tussen BEGIN-LOGICA en EINDE-LOGICA in customarticle.html.
+// De zuivere functies van de pagina staan tussen BEGIN-LOGICA en EINDE-LOGICA in toposadmin.html.
 const fs = require('node:fs');
 const path = require('node:path');
-const html = fs.readFileSync(path.join(__dirname, '..', 'customarticle.html'), 'utf8');
+const html = fs.readFileSync(path.join(__dirname, '..', 'toposadmin.html'), 'utf8');
 const blok = html.slice(html.indexOf('// BEGIN-LOGICA'), html.indexOf('// EINDE-LOGICA'));
 assert.ok(blok.length > 100, 'logica-blok niet gevonden in de pagina');
 const pagina = new Function(`${blok}; return { bodyBytes, kortReden, veiligeDocUrl, toonProductHint, klantInstelling, pasBodyAanKlant, MAX_BODY_BYTES, REDEN_MAX };`)();

@@ -4,8 +4,7 @@ const test = require('node:test');
 const assert = require('node:assert');
 const { valideerFeedback, MAX_SCREENSHOT_BYTES } = require('../api/_topos/feedback.js');
 const { maakSessie } = require('../api/_topos/sessie.js');
-const { maakHandler } = require('../api/customarticle.js');
-const toposadmin = require('../api/toposadmin.js');
+const { maakHandler } = require('../api/toposadmin.js');
 
 const GEHEIM = 'test-sessiegeheim';
 const ENV = { TOPOS_TOEGANGSCODE: 'geheim-code', TOPOS_WEBHOOK_SECRET: 'webhook-geheim', TOPOS_SESSIE_SECRET: GEHEIM };
@@ -159,16 +158,20 @@ test('handler: als n8n niet antwoordt geeft de pagina een nette 502', async () =
   assert.strictEqual(r.data.fout, 'bron');
 });
 
-// ---------- alias /api/toposadmin ----------
-test('toposadmin: de nieuwe API-route is dezelfde serverfunctie als customarticle', () => {
-  assert.strictEqual(typeof toposadmin, 'function');
-  assert.strictEqual(toposadmin, require('../api/customarticle.js'));
+// ---------- geen oude route meer ----------
+test('de oude naam customarticle bestaat niet meer: geen bestand, geen route', () => {
+  const fs0 = require('node:fs'), path0 = require('node:path');
+  assert.strictEqual(fs0.existsSync(path0.join(__dirname, '..', 'api', 'customarticle.js')), false);
+  assert.strictEqual(fs0.existsSync(path0.join(__dirname, '..', 'customarticle.html')), false);
+  const v = JSON.parse(fs0.readFileSync(path0.join(__dirname, '..', 'vercel.json'), 'utf8'));
+  assert.ok(!JSON.stringify(v).includes('customarticle'));
+  assert.deepStrictEqual(v.rewrites.map((r) => r.source), ['/toposadmin']);
 });
 
-// ---------- zuivere functies van de pagina (BEGIN-LOGICA in customarticle.html) ----------
+// ---------- zuivere functies van de pagina (BEGIN-LOGICA in toposadmin.html) ----------
 const fs = require('node:fs');
 const path = require('node:path');
-const html = fs.readFileSync(path.join(__dirname, '..', 'customarticle.html'), 'utf8');
+const html = fs.readFileSync(path.join(__dirname, '..', 'toposadmin.html'), 'utf8');
 const blok = html.slice(html.indexOf('// BEGIN-LOGICA'), html.indexOf('// EINDE-LOGICA'));
 const pagina = new Function(`${blok}; return { feedbackStatus, filterFeedback, aantalOpen };`)();
 
@@ -189,10 +192,10 @@ test('pagina: filter open toont nieuw en in behandeling, nieuwste eerst', () => 
   assert.strictEqual(pagina.aantalOpen(rijen), 3);
   assert.deepStrictEqual(pagina.filterFeedback(undefined, 'open'), []);
 });
-test('pagina: de tabs en de aliasroute staan erin', () => {
+test('pagina: de tabs en de route /toposadmin staan erin', () => {
   assert.ok(html.includes("const PAD = '/toposadmin'"));
   assert.ok(html.includes('id="tab-feedback"') && html.includes('id="paneel-feedback"'));
   const vercel = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'vercel.json'), 'utf8'));
   const bronnen = vercel.rewrites.map((r) => r.source);
-  assert.ok(bronnen.includes('/toposadmin') && bronnen.includes('/customarticle'));
+  assert.ok(bronnen.includes('/toposadmin'));
 });

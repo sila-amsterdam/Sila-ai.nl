@@ -1,4 +1,4 @@
-// Sessietoken voor /customarticle: "<verlooptijd in ms>.<HMAC-SHA256 hex>". Geldig 12 uur.
+// Sessietoken voor /toposadmin: "<verlooptijd in ms>.<HMAC-SHA256 hex>". Geldig 12 uur.
 const crypto = require('node:crypto');
 
 const GELDIG_MS = 12 * 60 * 60 * 1000;
