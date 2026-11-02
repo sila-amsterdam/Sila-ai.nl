@@ -279,6 +279,7 @@
   <style>
     /* ── Variables ─────────────────────────────────── */
     :root {
+      --veil: 250,247,244;
       --primary:        hsl(16, 82%, 54%);
       --primary-h:      hsl(16, 82%, 48%);
       --primary-light:  hsl(16, 85%, 96%);
@@ -530,18 +531,12 @@
 
     /* ── Hero ──────────────────────────────────────── */
     .hero {
-      min-height: 100svh;
+      min-height: 100vh; min-height: 100svh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 7rem 1.5rem 6.5rem;
-      background: linear-gradient(
-        180deg,
-        hsl(280, 26%, 93%) 0%,
-        hsl(30, 22%, 97%) 55%,
-        hsl(0, 0%, 100%)  100%
-      );
       position: relative;
       overflow: hidden;
     }
@@ -671,43 +666,6 @@
       color: var(--muted);
       margin: 0 auto;
     }
-
-    /* ── Bewegende aanbod-banner ──────────────────────── */
-    .hp-ticker {
-      background: var(--dark);
-      overflow: hidden;
-      padding: 1.05rem 0;
-    }
-    .hp-ticker-track {
-      display: flex;
-      width: max-content;
-      animation: hpTickerScroll 32s linear infinite;
-    }
-    .hp-ticker-track:hover { animation-play-state: paused; }
-    @media (prefers-reduced-motion: reduce) {
-      .hp-ticker-track { animation-duration: 90s; }
-    }
-    @keyframes hpTickerScroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    .hp-ticker-set { display: flex; align-items: center; flex-shrink: 0; }
-    .hp-ticker-item {
-      display: inline-block;
-      padding: 0 1.5rem;
-      font: 800 0.8rem/1 'Karla', sans-serif;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: #fff;
-      white-space: nowrap;
-    }
-    .hp-ticker-dot {
-      width: 15px; height: 15px;
-      color: var(--primary);
-      flex-shrink: 0;
-    }
-    .hp-ticker-dot svg { width: 100%; height: 100%; }
-
 
     /* ── Pillar Cards ──────────────────────────────── */
     .pillars-stage { position: relative; }
@@ -1531,12 +1489,13 @@
 
     /* ── Hero WebGL Canvas ──────────────────────────── */
     #hero-canvas {
-      position: absolute;
+      position: fixed;
       top: 0; left: 0;
-      width: 100%; height: 100%;
+      width: 100%; height: 100vh; height: 100svh;
+      background: linear-gradient(180deg, hsl(280,26%,93%) 0%, hsl(30,22%,97%) 55%, #fff 100%);
       z-index: 0;
       pointer-events: none;
-      opacity: 0.28;
+      opacity: 1;
     }
 
     /* ── Hero Orbs (CSS-only, GPU-accelerated) ──────── */
@@ -1579,6 +1538,49 @@
       33%      { transform: translate(-12px, 10px); }
       66%      { transform: translate(14px,-8px); }
     }
+
+    /* ── Netwerk-achtergrond: secties laten het netwerk doorschemeren ── */
+    body > .hero, body > section, body > footer { position: relative; z-index: 1; }
+    body > .hero { background: none !important; }
+    body > section:not(.newsletter-section):not(.hero) {
+      background: linear-gradient(180deg,
+        rgba(var(--veil),0) 0, rgba(var(--veil),.72) 14%,
+        rgba(var(--veil),.72) 86%, rgba(var(--veil),0) 100%) !important;
+    }
+    .newsletter-section {
+      background: linear-gradient(180deg, rgba(var(--veil),0) 0, rgba(var(--veil),.72) 14%,
+        rgba(var(--veil),.72) 100%) !important;
+    }
+    /* tekstvlakken: koppen en tekst staan los van het netwerk */
+    body > section .section-header,
+    .newsletter-section .wrap {
+      background: radial-gradient(ellipse closest-side, rgba(var(--veil),.96) 62%, rgba(var(--veil),0) 100%);
+      padding-top: 1.75rem; padding-bottom: 1.75rem;
+    }
+    .over-ons .wrap {
+      max-width: 880px;
+      padding: 3rem 2.5rem;
+      border-radius: 2rem;
+      background: rgba(255,255,255,.9);
+      border: 1px solid hsl(16,60%,90%);
+      box-shadow: 0 2px 6px rgba(120,50,10,.05), 0 18px 48px rgba(120,50,10,.12);
+    }
+    .over-ons-title { font-size: clamp(2rem, 4.4vw, 2.9rem); }
+    .over-ons-eyebrow { color: hsl(16,70%,42%); font-size: 1rem; font-weight: 600; }
+    .over-ons-body { color: hsl(20,12%,22%); }
+    @media (max-width: 640px) { .over-ons .wrap { padding: 2rem 1.25rem; margin: 0 .75rem; } }
+
+    /* voortgangslijn: een neuronpad dat met je scroll meegroeit */
+    #net-progress { position: fixed; right: 14px; top: 50%; height: 34vh; width: 2px; transform: translateY(-50%);
+      background: rgba(220,90,20,.16); border-radius: 2px; z-index: 85; pointer-events: none; transition: opacity .3s; }
+    #net-progress .np-fill { position: absolute; inset: 0; background: linear-gradient(180deg, hsl(16,82%,54%), hsl(24,90%,60%));
+      transform-origin: top; transform: scaleY(0); border-radius: 2px; will-change: transform; }
+    #net-progress .np-dot { position: absolute; left: 50%; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%;
+      background: #f4e3d8; border: 1.5px solid rgba(220,90,20,.35); transition: background .3s, border-color .3s, transform .3s; }
+    #net-progress .np-dot.on { background: hsl(16,82%,54%); border-color: #fff; transform: scale(1.15); }
+    @media (max-width: 520px) { #net-progress { right: 6px; height: 28vh; } }
+    @media (prefers-reduced-motion: reduce) { #net-progress .np-fill, #net-progress .np-dot { transition: none; } }
+    @media (prefers-reduced-motion: reduce) { #hero-canvas { position: absolute; height: 100svh; } }
 
     /* ── Button interactive hover ───────────────────── */
     /* Gradient-shift approach: no pseudo-elements covering text */
@@ -1731,6 +1733,7 @@
   </style>
 </head>
 <body>
+<canvas id="hero-canvas" aria-hidden="true"></canvas>
 
 <div id="scroll-progress" aria-hidden="true"></div>
 
@@ -1777,10 +1780,6 @@
      HERO
 ════════════════════════════════════════════════════════ -->
 <section class="hero" id="hero-section" aria-label="Hero">
-  <canvas id="hero-canvas" aria-hidden="true"></canvas>
-  <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
-  <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
-  <div class="hero-orb hero-orb-3" aria-hidden="true"></div>
 
   <div class="wrap" style="position:relative;z-index:1;max-width:700px;">
 
@@ -1794,7 +1793,7 @@
     </p>
 
     <p class="hero-desc" data-i18n="hero.desc">
-      Sila geeft je begeleiding en persoonlijke aandacht in een wereld waarin AI razendsnel verandert.
+      Sila is je transformatiepartner in AI. Wij zorgen dat AI op jouw manier bij je past, ook als de wereld verandert.
     </p>
 
     <div class="scroll-indicator" aria-hidden="true">
@@ -1893,50 +1892,6 @@
     </div>
   </div>
 </section>
-
-<!-- ═══════════════════════════════════════════════════════
-     BEWEGENDE AANBOD-BANNER
-════════════════════════════════════════════════════════ -->
-<div class="hp-ticker" aria-label="Wat Sila voor je bouwt">
-  <div class="hp-ticker-track">
-    <div class="hp-ticker-set" aria-hidden="false">
-      <span class="hp-ticker-item" data-i18n="ticker.i1">Claude Code Workshop</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i2">AI-bedrijfsonderzoek in 3 uur</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i3">Chatbots op maat gebouwd</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i4">Automatisering Workshop</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i5">Procesanalyse voor jouw team</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i6">Workflows die zichzelf runnen</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i7">AI voor zelfstandigen</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i8">Eén AI-systeem, op maat gebouwd</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-    </div>
-    <div class="hp-ticker-set" aria-hidden="true">
-      <span class="hp-ticker-item" data-i18n="ticker.i1">Claude Code Workshop</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i2">AI-bedrijfsonderzoek in 3 uur</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i3">Chatbots op maat gebouwd</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i4">Automatisering Workshop</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i5">Procesanalyse voor jouw team</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i6">Workflows die zichzelf runnen</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i7">AI voor zelfstandigen</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-      <span class="hp-ticker-item" data-i18n="ticker.i8">Eén AI-systeem, op maat gebouwd</span>
-      <span class="hp-ticker-dot" aria-hidden="true"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M5 0c.4 2.2 0.8 3.6 5 5-4.2 1.4-4.6 2.8-5 5-.4-2.2-.8-3.6-5-5C4.2 3.6 4.6 2.2 5 0z"/></svg></span>
-    </div>
-  </div>
-</div>
 
 <!-- ═══════════════════════════════════════════════════════
      ORBITAL TIMELINE / QUIZ CTA
@@ -2233,7 +2188,7 @@
         Al meer dan 3 jaar bouwen we bruggen tussen mens en AI. Onze missie is om relaties te versterken en hulp te bieden via innovatieve AI-oplossingen die mensen begrijpen en écht nodig hebben.
       </p>
       <div style="margin-top:2.25rem;text-align:center;">
-        <a href="over-ons.html" class="conv-btn conv-btn--secondary">
+        <a href="over-ons.html" class="conv-btn conv-btn--primary">
           <span data-i18n="about.more">Meer weten</span>
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
@@ -2589,7 +2544,7 @@ const T = {
     'ticker.i6':    'Workflows die zichzelf runnen',
     'ticker.i7':    'AI voor zelfstandigen',
     'ticker.i8':    'Eén AI-systeem, op maat gebouwd',
-    'hero.desc':    'Sila geeft je begeleiding en persoonlijke aandacht in een wereld waarin AI razendsnel verandert.',
+    'hero.desc':    'Sila is je transformatiepartner in AI. Wij zorgen dat AI op jouw manier bij je past, ook als de wereld verandert.',
     'pillars.chip': 'Onze missie',
     'pillars.title':    'Individuen en bedrijven helpen AI te omarmen',
     'pillars.sub':      'Dat doen we op 3 manieren:',
@@ -2722,7 +2677,7 @@ const T = {
     'ticker.i6':    'Workflows that run themselves',
     'ticker.i7':    'AI for the self-employed',
     'ticker.i8':    'One AI system, built for you',
-    'hero.desc':    'Sila gives you guidance and personal attention in a world where AI is changing at lightning speed.',
+    'hero.desc':    'Sila is your transformation partner in AI. We make sure AI fits you in your own way, even as the world changes.',
     'pillars.chip': 'Our mission',
     'pillars.title':    'Helping individuals and businesses embrace AI',
     'pillars.sub':      'We do this in 3 ways:',
@@ -3808,151 +3763,545 @@ function closeMobMenu() {
   });
 })();
 
-// ── GLSL Hills Hero Background ───────────────────────
-(function initHeroHills() {
+// ── Neuraal netwerk: per sectie een eigen deel van het netwerk, eigen kleur ──────────
+(function initHeroOrb() {
   const canvas = document.getElementById('hero-canvas');
-  if (!canvas || typeof THREE === 'undefined') return;
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const content = document.querySelector('#hero-section .wrap');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const renderer = new THREE.WebGLRenderer({
-    canvas,
-    antialias: false,
-    alpha: true,
-    powerPreference: 'low-power'
-  });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderer.setClearColor(0x000000, 0);
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const smooth = (a, b, v) => { const x = clamp((v - a) / (b - a), 0, 1); return x * x * (3 - 2 * x); };
+  const lerp = (a, b, k) => a + (b - a) * k;
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, 1, 1, 10000);
-  camera.position.set(0, 16, 125);
-  camera.lookAt(new THREE.Vector3(0, 28, 0));
+  // Extra effecten: elk apart uit te zetten (lokaal via het paneeltje linksonder)
+  const FX = { pijlers: true, roi: true, golf: true, snelheid: true, voortgang: true, quiz: true };
+  window.__netFX = FX;
+    const state = {
+    hub: [0, 0, 0], hubT: [0, 0, 0], amp: 0.3, ampT: 0.3, spd: 1.5, spdT: 1.5, wavT: 0,
+    speedBoost: 0, typeBoost: 0, wave: [], quiz: -1, quizF: 0, flowT: 0, flowT5: 0, lastNow: 0, lastY: window.scrollY
+  };
 
-  const clock = new THREE.Clock();
-  const SPEED = 0.5;
-  const PLANE = 256;
 
-  const uniforms = { time: { type: 'f', value: 0 } };
+  // zones: 1 missie, 2 "weet jij waar je staat", 3 praktijk, 4 effectiviteit, 5 referenties + nieuwsbrief
+  const SECTIONS = ['#diensten', '#quiz', '.conv-section', '#over-ons', '#referenties'].map(s => document.querySelector(s));
+  const FORM = document.getElementById('nl-email');
+  const ZL = 7, Z0 = 2.8;                       // lengte per zone en diepte van de bolhuid (in R)
+  const zc = k => -(Z0 + (k - 0.5) * ZL + (k < 5 ? 4 : 0.5)); // middelpunt van zone k, ruim vóór je zodat hij zichtbaar nadert
+  const FILL_Z = -(Z0 + 5.7 * ZL + 9);
 
-  const mesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(PLANE, PLANE, PLANE, PLANE),
-    new THREE.RawShaderMaterial({
-      uniforms,
-      transparent: true,
-      vertexShader: `
-        #define GLSLIFY 1
-        attribute vec3 position;
-        uniform mat4 projectionMatrix;
-        uniform mat4 modelViewMatrix;
-        uniform float time;
-        varying vec3 vPosition;
+  // achtergrondkleur per voortgang 0..6 (boven, onder)
+  const PAL = [
+    [[236,229,242],[255,255,255]], // hero: lila
+    [[250,236,226],[255,250,245]], // missie: perzik
+    [[236,228,248],[250,247,252]], // waar sta je: lavendel
+    [[252,243,220],[255,251,240]], // praktijk: amber
+    [[250,228,222],[255,248,244]], // effectief: terracotta-roze
+    [[253,240,225],[255,252,247]], // referenties: warm crème
+    [[253,241,226],[255,252,247]]  // einde
+  ];
 
-        mat4 rotateMatrixX(float r) {
-          return mat4(1,0,0,0, 0,cos(r),-sin(r),0, 0,sin(r),cos(r),0, 0,0,0,1);
+  let W = 0, H = 0, dpr = 1, cx = 0, cy = 0, R = 0, F = 0, D = 0;
+  let N = 0, P = null;
+  let nodes = [], edges = [];
+  const mouse = { x: -9999, y: -9999, tx: -9999, ty: -9999 };
+  const par = { x: 0, y: 0, tx: 0, ty: 0 };
+
+  let seed = 7;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+  function build() {
+    seed = 7;
+    const small = W < 700, f = small ? 0.6 : 1, SX = small ? 0.72 : 1;
+
+    // ── bolhuid
+    N = small ? 9000 : 19000;
+    P = new Float32Array(N * 8);
+    for (let i = 0; i < N; i++) {
+      const u = rnd() * 2 - 1, th = rnd() * Math.PI * 2;
+      const rim = 0.55 + 0.45 * Math.pow(rnd(), 0.22);
+      const o = i * 8;
+      P[o] = th; P[o + 1] = Math.acos(u); P[o + 2] = rim; P[o + 3] = rnd();
+    }
+
+    // ── netwerk
+    nodes = []; edges = [];
+    const add = (x, y, z, r, c, am) => {
+      nodes.push({ x: x * SX, y: y * SX, z, r, c, am: am || 1, px: 0, py: 0, ps: 1, pa: 0, pulse: 1, upd: null, grp: -1, boost: 0, ang: 0, zring: false });
+      return nodes.length - 1;
+    };
+    const link = (a, b, o) => edges.push(Object.assign({ a, b, ph: rnd(), sig: rnd() < 0.4, w: 1.5, spd: 0.32, k: 1, np: 1 }, o || {}));
+    const nearest = (ids, per) => {
+      ids.forEach(i => {
+        const d = ids.filter(j => j !== i).map(j => {
+          const A = nodes[i], B = nodes[j];
+          return [(A.x - B.x) ** 2 + (A.y - B.y) ** 2 + ((A.z - B.z) * 0.6) ** 2, j];
+        }).sort((p, q) => p[0] - q[0]);
+        for (let k = 0; k < per && k < d.length; k++) {
+          const j = d[k][1];
+          if (!edges.some(e => (e.a === i && e.b === j) || (e.a === j && e.b === i))) link(i, j);
         }
+      });
+    };
+    const disc = rad => { const a = rnd() * 6.283, r = Math.sqrt(rnd()) * rad; return [Math.cos(a) * r, Math.sin(a) * r]; };
 
-        vec3 mod289v3(vec3 x){return x-floor(x*(1./289.))*289.;}
-        vec4 mod289v4(vec4 x){return x-floor(x*(1./289.))*289.;}
-        vec4 permute(vec4 x){return mod289v4(((x*34.)+1.)*x);}
-        vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
-        vec3 fade(vec3 t){return t*t*t*(t*(t*6.-15.)+10.);}
+    // vulling: ijle ruimte tussen de zones
+    const fill = [];
+    for (let i = 0, n = Math.round(110 * f); i < n; i++) {
+      const [x, y] = disc(1.9);
+      fill.push(add(x, y, 0.7 + rnd() * (FILL_Z - 0.7), 0.55 + rnd() * 0.9, [226, 100, 48], 0.5));
+    }
+    nearest(fill, 2);
 
-        float cnoise(vec3 P){
-          vec3 Pi0=floor(P),Pi1=Pi0+1.;
-          Pi0=mod289v3(Pi0);Pi1=mod289v3(Pi1);
-          vec3 Pf0=fract(P),Pf1=Pf0-1.;
-          vec4 ix=vec4(Pi0.x,Pi1.x,Pi0.x,Pi1.x);
-          vec4 iy=vec4(Pi0.yy,Pi1.yy);
-          vec4 iz0=Pi0.zzzz,iz1=Pi1.zzzz;
-          vec4 ixy=permute(permute(ix)+iy);
-          vec4 ixy0=permute(ixy+iz0),ixy1=permute(ixy+iz1);
-          vec4 gx0=ixy0*(1./7.),gy0=fract(floor(gx0)*(1./7.))-.5;
-          gx0=fract(gx0);
-          vec4 gz0=vec4(.5)-abs(gx0)-abs(gy0);
-          vec4 sz0=step(gz0,vec4(0.));
-          gx0-=sz0*(step(0.,gx0)-.5);gy0-=sz0*(step(0.,gy0)-.5);
-          vec4 gx1=ixy1*(1./7.),gy1=fract(floor(gx1)*(1./7.))-.5;
-          gx1=fract(gx1);
-          vec4 gz1=vec4(.5)-abs(gx1)-abs(gy1);
-          vec4 sz1=step(gz1,vec4(0.));
-          gx1-=sz1*(step(0.,gx1)-.5);gy1-=sz1*(step(0.,gy1)-.5);
-          vec3 g000=vec3(gx0.x,gy0.x,gz0.x),g100=vec3(gx0.y,gy0.y,gz0.y);
-          vec3 g010=vec3(gx0.z,gy0.z,gz0.z),g110=vec3(gx0.w,gy0.w,gz0.w);
-          vec3 g001=vec3(gx1.x,gy1.x,gz1.x),g101=vec3(gx1.y,gy1.y,gz1.y);
-          vec3 g011=vec3(gx1.z,gy1.z,gz1.z),g111=vec3(gx1.w,gy1.w,gz1.w);
-          vec4 norm0=taylorInvSqrt(vec4(dot(g000,g000),dot(g010,g010),dot(g100,g100),dot(g110,g110)));
-          g000*=norm0.x;g010*=norm0.y;g100*=norm0.z;g110*=norm0.w;
-          vec4 norm1=taylorInvSqrt(vec4(dot(g001,g001),dot(g011,g011),dot(g101,g101),dot(g111,g111)));
-          g001*=norm1.x;g011*=norm1.y;g101*=norm1.z;g111*=norm1.w;
-          float n000=dot(g000,Pf0),n100=dot(g100,vec3(Pf1.x,Pf0.yz));
-          float n010=dot(g010,vec3(Pf0.x,Pf1.y,Pf0.z)),n110=dot(g110,vec3(Pf1.xy,Pf0.z));
-          float n001=dot(g001,vec3(Pf0.xy,Pf1.z)),n101=dot(g101,vec3(Pf1.x,Pf0.y,Pf1.z));
-          float n011=dot(g011,vec3(Pf0.x,Pf1.yz)),n111=dot(g111,Pf1);
-          vec3 fade_xyz=fade(Pf0);
-          vec4 n_z=mix(vec4(n000,n100,n010,n110),vec4(n001,n101,n011,n111),fade_xyz.z);
-          vec2 n_yz=mix(n_z.xy,n_z.zw,fade_xyz.y);
-          return 2.2*mix(n_yz.x,n_yz.y,fade_xyz.x);
-        }
+    // zone 1: drie clusters, één per pijler
+    const HUBS = [
+      { x: -1.0, y: 0.4,  z: zc(1) + 2.4, c: [226, 100, 48] },
+      { x: 1.05, y: -0.1, z: zc(1),       c: [205, 150, 80] },
+      { x: -0.1, y: -0.95, z: zc(1) - 2.4, c: [150, 120, 200] }
+    ];
+    const cores = HUBS.map((h, hi) => {
+      const core = add(h.x, h.y, h.z, 2.1, h.c, 1), ids = [core];
+      for (let i = 0, n = Math.round(34 * f); i < n; i++) {
+        const [dx, dy] = disc(0.55);
+        ids.push(add(h.x + dx, h.y + dy, h.z + (rnd() - 0.5) * 1.5, 0.5 + rnd() * 0.6, h.c));
+      }
+      ids.forEach(i => { nodes[i].grp = hi; });
+      nearest(ids, 2);
+      ids.forEach(i => { if (i !== core && rnd() < 0.3) link(core, i, { sig: true }); });
+      return core;
+    });
+    link(cores[0], cores[1], { sig: true, w: 1.6 }); link(cores[1], cores[2], { sig: true, w: 1.6 }); link(cores[0], cores[2], { sig: true, w: 1.6 });
 
-        void main(void){
-          vec3 p=(rotateMatrixX(radians(90.))*vec4(position,1.)).xyz;
-          float s1=sin(radians(p.x/128.*90.));
-          vec3 np=p+vec3(0.,0.,time*-30.);
-          float n1=cnoise(np*0.08),n2=cnoise(np*0.06),n3=cnoise(np*0.4);
-          vec3 last=p+vec3(0.,
-            n1*s1*8.+n2*s1*8.+n3*(abs(s1)*2.+.5)+pow(s1,2.)*40.
-          ,0.);
-          vPosition=last;
-          gl_Position=projectionMatrix*modelViewMatrix*vec4(last,1.);
+    // zone 2: ringen die om je heen draaien
+    const RN = Math.round(14 * f), RCOL = [140, 100, 190];
+    let prev = null;
+    for (let i = 0; i < 5; i++) {
+      const z = zc(2) + 3.0 - i * 1.4, rad = 0.95 + (i % 2) * 0.4 + i * 0.03, dir = i % 2 ? 1 : -1, ids = [];
+      for (let j = 0; j < RN; j++) {
+        const id = add(0, 0, z, 0.7, RCOL, 0.65), n = nodes[id], a0 = j / RN * 6.283;
+        n.upd = t => { const a = a0 + dir * t * 0.06; n.ang = a; n.x = Math.cos(a) * rad * SX; n.y = Math.sin(a) * rad * SX; };
+        n.zring = true;
+        n.upd(0);
+        ids.push(id);
+      }
+      for (let j = 0; j < RN; j++) {
+        link(ids[j], ids[(j + 1) % RN], { sig: false });
+        if (prev && j % 2 === 0) link(prev[j], ids[j], { sig: false });
+      }
+      prev = ids;
+    }
+
+    // zone 3: een route die oplicht, pakketjes rennen erlangs
+    const lat = [];
+    for (let i = 0, n = Math.round(56 * f); i < n; i++) {
+      const [x, y] = disc(2.0);
+      lat.push(add(x, y * 0.7, zc(3) + (rnd() - 0.5) * 6.8, 0.6 + rnd() * 0.6, [226, 150, 30], 0.8));
+    }
+    nearest(lat, 2);
+    const chain = [];
+    for (let i = 0; i < 9; i++) {
+      chain.push(add(Math.sin(i * 1.3) * 0.9, Math.cos(i * 1.7) * 0.5, zc(3) + 3.4 - i * 0.85, 1.3, [240, 125, 20], 1));
+    }
+    for (let i = 0; i < 8; i++) link(chain[i], chain[i + 1], { w: 2.6, sig: true, spd: 0.9, k: 2, np: 3 });
+    chain.forEach(c => {
+      const d = lat.map(j => [(nodes[c].x - nodes[j].x) ** 2 + (nodes[c].y - nodes[j].y) ** 2 + (nodes[c].z - nodes[j].z) ** 2, j]).sort((p, q) => p[0] - q[0]);
+      link(c, d[0][1]); link(c, d[1][1]);
+    });
+
+    // zone 4: golvend datalandschap, boven en onder je
+    const GC = Math.round(10 * (small ? 0.7 : 1)), GR = Math.round(8 * (small ? 0.75 : 1));
+    [-1, 1].forEach(s => {
+      const grid = [];
+      for (let i = 0; i < GC; i++) {
+        grid[i] = [];
+        for (let j = 0; j < GR; j++) {
+          const bx = (i / (GC - 1) - 0.5) * 5.0, bz = zc(4) + (0.5 - j / (GR - 1)) * 6.6;
+          const id = add(bx, s * 0.95, bz, 0.7, [200, 72, 56], 0.9), n = nodes[id];
+          n.upd = t => {
+            const w = Math.sin(bx * 1.3 + bz * 0.9 - state.wavT + (s > 0 ? 3.14 : 0));
+            n.y = (s * 0.95 + s * state.amp * w) * SX; n.pulse = 1 + 0.4 * w;
+          };
+          n.upd(0);
+          grid[i][j] = id;
         }
-      `,
-      fragmentShader: `
-        precision highp float;
-        varying vec3 vPosition;
-        void main(void){
-          float opacity=(96.-length(vPosition))/256.*0.5;
-          vec3 color=vec3(0.82,0.48,0.22);
-          gl_FragColor=vec4(color,max(opacity,0.));
-        }
-      `
-    })
-  );
-  scene.add(mesh);
+      }
+      for (let i = 0; i < GC; i++) for (let j = 0; j < GR; j++) {
+        if (i < GC - 1) link(grid[i][j], grid[i + 1][j], { sig: (i + j) % 5 === 0 });
+        if (j < GR - 1) link(grid[i][j], grid[i][j + 1], { sig: (i + j) % 4 === 0 });
+      }
+    });
+
+    // zone 5: alles stroomt samen naar één punt
+    const RAYS = small ? 9 : 14, DEPTH = 8, rays = [];
+    for (let j = 0; j < RAYS; j++) {
+      const a = j / RAYS * 6.283 + 0.2, ids = [];
+      for (let i = 0; i < DEPTH; i++) {
+        const u = i / (DEPTH - 1), rad = 1.9 * Math.pow(1 - u, 1.5) + 0.06;
+        ids.push(add(Math.cos(a) * rad, Math.sin(a) * rad, zc(5) + 3.5 - u * 11.9, 0.6 + rnd() * 0.4, [232, 150, 80], 1));
+      }
+      for (let i = 0; i < DEPTH - 1; i++) link(ids[i], ids[i + 1], { sig: true, spd: 0.5, w: 1.3, z5: true });
+      rays.push(ids);
+    }
+    for (let j = 0; j < RAYS; j++) for (let i = 1; i < DEPTH - 1; i += 2) link(rays[j][i], rays[(j + 1) % RAYS][i]);
+  }
 
   function resize() {
-    const hero = canvas.parentElement;
-    const w = hero.offsetWidth;
-    const h = hero.offsetHeight;
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setSize(w, h);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const nw = window.innerWidth, nh = window.innerHeight;
+    if (W && nw === W && Math.abs(nh - H) < 140) return; // adresbalk op mobiel
+    W = nw; H = nh;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = W / 2; cy = H / 2 - H * 0.01;
+    R = Math.min(W * 0.3, H * 0.34);
+    if (W < 700) R = Math.min(W * 0.4, H * 0.3);
+    D = R * 6; F = D;
+    build();
+    frame(performance.now());
   }
 
-  let animating = false;
-  let raf;
+  const COLORS = ['rgba(240,176,138,', 'rgba(232,134,88,', 'rgba(226,100,48,', 'rgba(204,74,26,'];
+  const ALPHA = [0.22, 0.34, 0.46, 0.58];
 
-  function tick() {
-    uniforms.time.value += clock.getDelta() * SPEED;
-    renderer.render(scene, camera);
-    raf = requestAnimationFrame(tick);
-  }
+  let smoothY = window.scrollY, lastVeil = '';
 
-  // Pause when hero scrolls out of view — saves GPU/battery
-  const observer = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) {
-      if (!animating) {
-        animating = true;
-        clock.start();
-        tick();
-      }
-    } else {
-      animating = false;
-      cancelAnimationFrame(raf);
+  // voortgang door de pagina: p1 = duik in de bol, pu = zone (0..6)
+  function scrollState() {
+    if (reduced) return { p1: 0, pu: 0, fx: null };
+    smoothY += (window.scrollY - smoothY) * 0.12;
+    if (Math.abs(window.scrollY - smoothY) < 0.5) smoothY = window.scrollY;
+    const sy = window.scrollY, c = smoothY + H * 0.5;
+    const A = [0];
+    SECTIONS.forEach(el => A.push(el ? sy + el.getBoundingClientRect().top : A[A.length - 1] + 1));
+    let fx = null, y6 = A[A.length - 1] + 400;
+    if (FORM) {
+      const r = FORM.getBoundingClientRect();
+      fx = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+      y6 = sy + r.top + r.height / 2;
     }
-  }, { threshold: 0.01 });
+    A.push(Math.min(y6, document.documentElement.scrollHeight - H * 0.5));
+    for (let i = 1; i < A.length; i++) if (A[i] <= A[i - 1]) A[i] = A[i - 1] + 1;
+    let pu = 6;
+    for (let i = 0; i < A.length - 1; i++) {
+      if (c < A[i + 1]) { pu = i + clamp((c - A[i]) / (A[i + 1] - A[i]), 0, 1); break; }
+    }
+    return { p1: clamp(smoothY / (H * 1.1), 0, 1), pu, fx };
+  }
 
-  observer.observe(canvas.parentElement);
+  function drawNetwork(t, camZ, camX, camY, VX, VY, roll, netA) {
+    const ca = Math.cos(roll), sa = Math.sin(roll);
+    const diag = Math.max(W, H);
+    const qf = FX.quiz ? state.quizF : 0;
+    const qa = -1.5708 + Math.max(state.quiz, 0) * 2.0944;
+
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      if (n.upd) n.upd(t);
+      const dz = camZ - n.z * R;
+      if (dz < 0.35 * R) { n.pa = 0; n.boost = 0; continue; }
+      const x = n.x * R, y = n.y * R, s = F / dz;
+      n.px = VX + (x * ca - y * sa - camX) * s;
+      n.py = VY + (x * sa + y * ca - camY) * s;
+      n.ps = s;
+      const fog = Math.pow(clamp(1 - (dz - 0.6 * R) / (9.5 * R), 0, 1), 1.3);
+      n.pa = fog * smooth(0.35 * R, 1.1 * R, dz) * netA * n.am;
+
+      let b = 0;
+      if (FX.pijlers && n.grp >= 0) b = state.hub[n.grp];
+      if (qf > 0.01 && n.zring) {
+        let d = (n.ang - qa + 3.1416) % 6.2832; if (d < 0) d += 6.2832;
+        b = Math.max(b, qf * clamp(1 - Math.abs(d - 3.1416) / 0.9, 0, 1));
+      }
+      if (FX.golf && state.wave.length) {
+        const dd = Math.hypot(n.px - VX, n.py - VY);
+        for (let k = 0; k < state.wave.length; k++) {
+          const rW = (t - state.wave[k].t0) * diag * 0.55;
+          if (rW < 0) continue;
+          const xx = (dd - rW) / (diag * 0.07);
+          b = Math.max(b, Math.exp(-xx * xx) * (1 - clamp(rW / (diag * 1.1), 0, 1)));
+        }
+      }
+      n.boost = b;
+      n.pa = Math.min(1, n.pa * (1 + 1.4 * b));
+    }
+
+    for (let k = 0; k < edges.length; k++) {
+      const e = edges[k], A = nodes[e.a], B = nodes[e.b];
+      const al = Math.min(A.pa, B.pa);
+      if (al < 0.01) continue;
+      if ((A.px < -60 && B.px < -60) || (A.px > W + 60 && B.px > W + 60) || (A.py < -60 && B.py < -60) || (A.py > H + 60 && B.py > H + 60)) continue;
+      const c = A.c, s = (A.ps + B.ps) * 0.5, bo = Math.max(A.boost, B.boost);
+      const lit = FX.pijlers && A.grp >= 0 && A.grp === B.grp ? state.hub[A.grp] : 0;
+      ctx.lineWidth = e.w * clamp(0.5 + s * 0.5, 0.7, 2.2) * (1 + 0.8 * bo);
+      ctx.strokeStyle = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + Math.min(0.95, al * (e.k === 2 ? 1.3 : 1.05) * (1 + bo)).toFixed(3) + ')';
+      ctx.beginPath(); ctx.moveTo(A.px, A.py); ctx.lineTo(B.px, B.py); ctx.stroke();
+      if (e.sig || lit > 0.3) {
+        const np = lit > 0.3 ? 3 : e.np, rr = clamp(1.6 * s * (e.k === 2 ? 1.5 : 1), 1.2, 5);
+        const ft = (e.z5 ? state.flowT5 : state.flowT) * 0.6 * (lit > 0.3 ? e.spd * 1.8 : e.spd);
+        ctx.fillStyle = 'rgba(255,170,110,' + Math.min(1, al * 1.6).toFixed(3) + ')';
+        for (let q = 0; q < np; q++) {
+          const u = (ft + e.ph + q / np) % 1;
+          const px = A.px + (B.px - A.px) * u, py = A.py + (B.py - A.py) * u;
+          ctx.beginPath(); ctx.arc(px, py, rr, 0, 6.283); ctx.fill();
+        }
+      }
+    }
+
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i], al = n.pa;
+      if (al < 0.01 || n.px < -40 || n.px > W + 40 || n.py < -40 || n.py > H + 40) continue;
+      const pulse = Math.max(0.35, n.pulse) * (1 + 0.18 * Math.sin(t * 1.6 + i)) * (1 + 0.6 * n.boost);
+      const r = clamp(n.r * R * 0.02 * n.ps, 1.4, 16) * pulse, c = n.c;
+      ctx.fillStyle = 'rgba(' + c[0] + ',' + (c[1] + 50 > 255 ? 255 : c[1] + 50) + ',' + (c[2] + 70 > 255 ? 255 : c[2] + 70) + ',' + (al * (0.22 + 0.3 * n.boost)).toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(n.px, n.py, r * (2.6 + 1.2 * n.boost), 0, 6.283); ctx.fill();
+      ctx.fillStyle = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + Math.min(1, al * 1.3).toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(n.px, n.py, r, 0, 6.283); ctx.fill();
+    }
+  }
+
+  function draw(t, pp, pu, fx) {
+    // achtergrond kleurt mee met de zone
+    const zi = Math.min(5, Math.floor(pu)), zf = smooth(0, 1, pu - zi);
+    const c0 = PAL[zi], c1 = PAL[zi + 1];
+    const mix = (a, b) => [lerp(a[0], b[0], zf), lerp(a[1], b[1], zf), lerp(a[2], b[2], zf)];
+    const top = mix(c0[0], c1[0]), bot = mix(c0[1], c1[1]);
+    const rgb = v => 'rgb(' + (v[0] | 0) + ',' + (v[1] | 0) + ',' + (v[2] | 0) + ')';
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, rgb(top)); bg.addColorStop(0.55, rgb(mix(c0[1], c1[1]).map((v, i) => lerp(v, top[i], 0.35)))); bg.addColorStop(1, rgb(bot));
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+    // secties gebruiken dezelfde tint als doorschijnende sluier
+    const veil = [lerp(bot[0], 250, 0.4) | 0, lerp(bot[1], 247, 0.4) | 0, lerp(bot[2], 244, 0.4) | 0].join(',');
+    if (veil !== lastVeil) { document.documentElement.style.setProperty('--veil', veil); lastVeil = veil; }
+
+    const e = 0.35 * pp + 0.65 * smooth(0, 1, pp);
+    const u = clamp(pu, 1, 6);
+    let camZ = D - (D + Z0 * R) * e - ZL * R * (u - 1);
+    const deep = smooth(0.3, 0.85, pp);
+    let camX = par.x * R * 0.3 * deep, camY = par.y * R * 0.2 * deep;
+    // quiz: de camera vliegt richting de gekozen fase
+    const qf = FX.quiz ? state.quizF : 0;
+    if (qf > 0.001) {
+      const qa = -1.5708 + Math.max(state.quiz, 0) * 2.0944;
+      camZ -= qf * 1.0 * R; camX += Math.cos(qa) * 0.25 * R * qf; camY += Math.sin(qa) * 0.25 * R * qf;
+    }
+    const netA = smooth(0.08, 0.45, pp);
+    const w = fx ? smooth(5.05, 6, pu) : 0;
+    const VX = fx ? lerp(cx, fx.x, w) : cx, VY = fx ? lerp(cy, fx.y, w) : cy;
+    const roll = 0.22 * Math.min(pu, 5) + t * 0.008 * (1 - w);
+
+    // gloed: eerst om de bol, daarna warm licht dat naar het inschrijfveld trekt
+    const gR = R * (1.45 + pp * 2.2);
+    const g = ctx.createRadialGradient(VX, VY, R * 0.2, VX, VY, gR);
+    g.addColorStop(0, 'rgba(255,' + (214 - 24 * w | 0) + ',' + (190 - 50 * w | 0) + ',' + (0.28 + 0.1 * netA + 0.2 * w).toFixed(3) + ')');
+    g.addColorStop(0.6, 'rgba(244,170,130,0.14)');
+    g.addColorStop(1, 'rgba(244,170,130,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+
+    if (netA > 0.01) drawNetwork(t, camZ, camX, camY, VX, VY, roll, netA);
+
+    // inschrijf-golf: lichtring die door het netwerk trekt
+    if (FX.golf && state.wave.length) {
+      const diag = Math.max(W, H);
+      state.wave = state.wave.filter(w => (t - w.t0) * diag * 0.55 < diag * 1.2);
+      state.wave.forEach(w => {
+        const rW = (t - w.t0) * diag * 0.55;
+        if (rW < 0) return;
+        ctx.strokeStyle = 'rgba(240,120,50,' + (0.35 * (1 - clamp(rW / (diag * 1.1), 0, 1))).toFixed(3) + ')';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.arc(VX, VY, rW, 0, 6.283); ctx.stroke();
+      });
+    }
+
+    mouse.x += (mouse.tx - mouse.x) * 0.07;
+    mouse.y += (mouse.ty - mouse.y) * 0.07;
+    par.x += (par.tx - par.x) * 0.025;
+    par.y += (par.ty - par.y) * 0.025;
+    if (e > 0.82) return; // camera is al door de bolhuid heen
+
+    const breathe = 1 + Math.sin(t * 0.7) * 0.025;
+    const rotY = t * 0.16, cY = Math.cos(rotY), sY = Math.sin(rotY);
+    const tilt = -0.32, cX = Math.cos(tilt), sX = Math.sin(tilt);
+    const pr = R * 0.34, push = 1 - smooth(0, 0.25, pp);
+    const buckets = [[], [], [], []];
+    const near = 0.3 * R;
+    const shellA = 1 - 0.78 * smooth(0.22, 0.65, pp);
+
+    for (let i = 0; i < N; i++) {
+      const o = i * 8;
+      const th = P[o], ph = P[o + 1], rf = P[o + 2];
+      const wob = 1 + 0.022 * Math.sin(th * 3 + t * 0.9 + ph * 2) + 0.016 * Math.sin(ph * 5 - t * 0.6);
+      const r = R * rf * wob * breathe;
+      const x = r * Math.sin(ph) * Math.cos(th);
+      const y = r * Math.cos(ph);
+      const z = r * Math.sin(ph) * Math.sin(th);
+      const x1 = x * cY - z * sY, z1 = x * sY + z * cY;
+      const y1 = y * cX - z1 * sX, z2 = y * sX + z1 * cX;
+
+      const dz = camZ - z2;
+      if (dz < near) continue;
+      const s = F / dz;
+      const sx = cx + (x1 - camX) * s + P[o + 4], sy = cy + (y1 - camY) * s + P[o + 5];
+      if (sx < -20 || sx > W + 20 || sy < -20 || sy > H + 20) continue;
+
+      if (push > 0.01) {
+        const dx = sx - mouse.x, dy = sy - mouse.y, d2 = dx * dx + dy * dy;
+        if (d2 < pr * pr) {
+          const d = Math.sqrt(d2) + 0.001, f = (1 - d / pr) * 3 * push;
+          P[o + 6] += (dx / d) * f; P[o + 7] += (dy / d) * f;
+        }
+      }
+      P[o + 6] = (P[o + 6] - P[o + 4] * 0.06) * 0.88;
+      P[o + 7] = (P[o + 7] - P[o + 5] * 0.06) * 0.88;
+      P[o + 4] += P[o + 6]; P[o + 5] += P[o + 7];
+
+      const depth = (z2 / R + 1) / 2;
+      const b = depth < 0.28 ? 0 : depth < 0.55 ? 1 : depth < 0.8 ? 2 : 3;
+      const fade = smooth(near, near * 3, dz);
+      buckets[b].push(sx, sy, P[o + 3], Math.min(s, 3) * fade);
+    }
+
+    for (let b = 0; b < 4; b++) {
+      const arr = buckets[b], a = ALPHA[b] * shellA;
+      ctx.fillStyle = COLORS[b] + a + ')';
+      for (let k = 0; k < arr.length; k += 4) {
+        const sc = arr[k + 3];
+        if (sc < 0.9) {
+          ctx.fillStyle = COLORS[b] + (a * sc).toFixed(3) + ')';
+          const sz = (0.8 + arr[k + 2] * 1.1 + b * 0.12) * Math.max(sc, 0.4);
+          ctx.fillRect(arr[k], arr[k + 1], sz, sz);
+          ctx.fillStyle = COLORS[b] + a + ')';
+          continue;
+        }
+        const sz = (0.8 + arr[k + 2] * 1.1 + b * 0.12) * sc;
+        ctx.fillRect(arr[k], arr[k + 1], sz, sz);
+      }
+    }
+
+    // lichte waas achter de tekst
+    const vA = 1 - smooth(0, 0.18, pp);
+    if (vA > 0.01) {
+      const v = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 0.85);
+      v.addColorStop(0, 'rgba(250,246,243,' + (0.82 * vA).toFixed(3) + ')');
+      v.addColorStop(0.55, 'rgba(250,246,243,' + (0.55 * vA).toFixed(3) + ')');
+      v.addColorStop(1, 'rgba(250,246,243,0)');
+      ctx.fillStyle = v;
+      ctx.fillRect(cx - R, cy - R, R * 2, R * 2);
+    }
+  }
+
+  function frame(now) {
+    const st = scrollState();
+    const dt = Math.min(0.1, (now - state.lastNow) / 1000 || 0);
+    state.lastNow = now;
+
+    // scroll-snelheid laat de signalen sneller reizen
+    const v = dt > 0 ? Math.abs(window.scrollY - state.lastY) / dt : 0;
+    state.lastY = window.scrollY;
+    state.speedBoost += ((FX.snelheid ? clamp(v / 2500, 0, 1) : 0) - state.speedBoost) * 0.08;
+    state.typeBoost *= 0.985;
+    state.flowT += dt * (1 + 2 * state.speedBoost);
+    state.flowT5 += dt * (1 + 2 * state.speedBoost + 2 * state.typeBoost);
+    state.amp += (state.ampT - state.amp) * 0.06;
+    state.spd += (state.spdT - state.spd) * 0.06;
+    state.wavT += dt * state.spd;
+    for (let i = 0; i < 3; i++) state.hub[i] += (state.hubT[i] - state.hub[i]) * 0.12;
+    state.quizF += ((state.quiz >= 0 ? 1 : 0) - state.quizF) * 0.06;
+
+    draw(reduced ? 2.4 : now / 1000, st.p1, st.pu, st.fx);
+    const tOut = smooth(0, 0.3, st.p1);
+    content.style.opacity = String(1 - tOut);
+    content.style.visibility = tOut >= 1 ? 'hidden' : 'visible';
+
+    if (progEl) {
+      progEl.style.display = FX.voortgang ? '' : 'none';
+      if (FX.voortgang) {
+        progEl.style.opacity = String(smooth(0.05, 0.4, st.pu));
+        progFill.style.transform = 'scaleY(' + clamp(st.pu / 6, 0, 1).toFixed(3) + ')';
+        progDots.forEach((d, i) => d.classList.toggle('on', st.pu >= i + 0.02));
+      }
+    }
+  }
+
+  let raf = 0, running = false;
+  function loop(now) {
+    try { frame(now); } catch (err) { console.warn('netwerk-frame', err); }
+    raf = requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('pointermove', e => {
+    mouse.tx = e.clientX; mouse.ty = e.clientY;
+    par.tx = (e.clientX / window.innerWidth - 0.5) * 2;
+    par.ty = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+  document.addEventListener('pointerleave', () => { mouse.tx = mouse.ty = -9999; par.tx = par.ty = 0; });
+
+  // ── extra effecten: koppeling met de pagina ──
+  let progEl = null, progFill = null, progDots = [];
+  (function setupFX() {
+    // 6. voortgangslijn
+    progEl = document.createElement('div');
+    progEl.id = 'net-progress'; progEl.setAttribute('aria-hidden', 'true');
+    progEl.innerHTML = '<i class="np-fill"></i>' + [0, 1, 2, 3, 4, 5].map(i => '<b class="np-dot" style="top:' + (i / 5 * 100) + '%"></b>').join('');
+    document.body.appendChild(progEl);
+    progFill = progEl.querySelector('.np-fill');
+    progDots = [...progEl.querySelectorAll('.np-dot')];
+
+    // 1. pijlers lichten hun cluster op
+    [['#pillar-edu', 0], ['#pillar-cons', 1], ['#pillar-impl', 2]].forEach(([sel, i]) => {
+      const el = document.querySelector(sel); if (!el) return;
+      let tm = 0;
+      const on = () => { state.hubT[i] = 1; };
+      const off = () => { state.hubT[i] = 0; };
+      el.addEventListener('mouseenter', on); el.addEventListener('mouseleave', off);
+      el.addEventListener('focusin', on); el.addEventListener('focusout', off);
+      el.addEventListener('touchstart', () => { on(); clearTimeout(tm); tm = setTimeout(off, 2200); }, { passive: true });
+    });
+
+    // 2. rekentool bepaalt hoogte en snelheid van de golven
+    const sl = ['roi-team', 'roi-hours', 'roi-cost'].map(id => document.getElementById(id));
+    const roi = (snap) => {
+      if (sl.some(x => !x)) return;
+      const v = (+sl[0].value) * (+sl[1].value) * (+sl[2].value);
+      const k = clamp((Math.log(v) - Math.log(15)) / (Math.log(36000) - Math.log(15)), 0, 1);
+      state.ampT = 0.1 + 0.26 * k; state.spdT = 0.5 + 0.9 * k;
+      if (snap) { state.amp = state.ampT; state.spd = state.spdT; }
+    };
+    sl.forEach(x => x && x.addEventListener('input', () => roi(false)));
+    roi(true);
+
+    // 3. inschrijf-golf en versnelde signalen tijdens het typen
+    const fire = () => {
+      if (reduced) return;
+      const t = performance.now() / 1000;
+      state.wave.push({ t0: t }, { t0: t + 0.5 });
+    };
+    const done = document.getElementById('newsletter-success');
+    if (done) new MutationObserver(() => { if (FX.golf && done.style.display === 'block') fire(); }).observe(done, { attributes: true, attributeFilter: ['style'] });
+    ['nl-voornaam', 'nl-achternaam', 'nl-email'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', () => { if (FX.golf) state.typeBoost = 1; });
+    });
+
+    // 7. quiz: gekozen fase stuurt de camera
+    const orb = document.getElementById('orb-canvas');
+    if (orb) new MutationObserver(() => {
+      const list = [...orb.querySelectorAll('.orb-node')];
+      state.quiz = list.findIndex(n => n.classList.contains('orb-active'));
+    }).observe(orb, { subtree: true, attributes: true, attributeFilter: ['class'] });
+  })();
+
   window.addEventListener('resize', resize);
   resize();
+  if (reduced) return;
+
+  running = true; raf = requestAnimationFrame(loop);
+  document.addEventListener('visibilitychange', () => {
+    cancelAnimationFrame(raf); running = false;
+    if (!document.hidden) { running = true; raf = requestAnimationFrame(loop); }
+  });
 })();
 
 // Show welcome badge after 3s if chat hasn't been opened
