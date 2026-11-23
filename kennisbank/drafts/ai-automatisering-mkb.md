@@ -23,7 +23,7 @@ Niet elk proces leent zich even goed voor automatisering. De taken die de meeste
 
 ### Klantenservice en chatbots
 
-Een chatbot op je website beantwoordt veelgestelde vragen dag en nacht: openingstijden, levertijden, prijzen, retourbeleid. Voor een webshop of dienstverlener scheelt dit tientallen mails en telefoontjes per week. De chatbot kan doorverwijzen naar een medewerker zodra een vraag te specifiek of gevoelig wordt.
+Een chatbot op je website beantwoordt veelgestelde vragen dag en nacht: openingstijden, prijzen, afspraken, werkwijze. Voor een dienstverlener scheelt dit tientallen mails en telefoontjes per week. De chatbot kan doorverwijzen naar een medewerker zodra een vraag te specifiek of gevoelig wordt.
 
 ### E-mailafhandeling
 
@@ -39,7 +39,7 @@ Voor bedrijven die veel vergelijkbare offertes maken, kan AI een groot deel van 
 
 ### Planning en roosters
 
-Voor de zorg, horeca of retail kan AI helpen bij het maken van roosters die rekening houden met beschikbaarheid, wetgeving en drukte, en bij het automatisch verplaatsen van afspraken bij wijzigingen.
+Voor de zorg of horeca kan AI helpen bij het maken van roosters die rekening houden met beschikbaarheid, wetgeving en drukte, en bij het automatisch verplaatsen van afspraken bij wijzigingen.
 
 ### Interne kennisbanken
 

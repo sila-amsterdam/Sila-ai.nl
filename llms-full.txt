@@ -136,7 +136,7 @@ Voor jouw bedrijf betekent dit concreet: processen die je nu handmatig doet, of 
 
 Niet elk proces leent zich even goed voor automatisering. De taken die de meeste tijd besparen, zijn meestal repetitief, volgen een herkenbaar patroon en komen vaak voor. Dit zijn de voorbeelden die Sila het meest tegenkomt in het MKB.
 
-Klantenservice en chatbots: een chatbot op je website beantwoordt veelgestelde vragen dag en nacht, openingstijden, levertijden, prijzen, retourbeleid. Voor een webshop of dienstverlener scheelt dit tientallen mails en telefoontjes per week. De chatbot kan doorverwijzen naar een medewerker zodra een vraag te specifiek of gevoelig wordt.
+Klantenservice en chatbots: een chatbot op je website beantwoordt veelgestelde vragen dag en nacht, openingstijden, prijzen, afspraken, werkwijze. Voor een dienstverlener scheelt dit tientallen mails en telefoontjes per week. De chatbot kan doorverwijzen naar een medewerker zodra een vraag te specifiek of gevoelig wordt.
 
 E-mailafhandeling: veel bedrijven krijgen dagelijks mails die in een paar herkenbare categorieën vallen, offerteaanvragen, klachten, facturen, sollicitaties. AI kan die mails lezen, categoriseren en soms al een conceptantwoord schrijven.
 
@@ -144,7 +144,7 @@ Facturen en administratie: facturen die binnenkomen via de mail, kunnen automati
 
 Offertes opstellen: voor bedrijven die veel vergelijkbare offertes maken, kan AI een groot deel van het werk voorbereiden op basis van eerdere offertes en de wensen van de klant.
 
-Planning en roosters: voor de zorg, horeca of retail kan AI helpen bij het maken van roosters die rekening houden met beschikbaarheid, wetgeving en drukte, en bij het automatisch verplaatsen van afspraken bij wijzigingen.
+Planning en roosters: voor de zorg of horeca kan AI helpen bij het maken van roosters die rekening houden met beschikbaarheid, wetgeving en drukte, en bij het automatisch verplaatsen van afspraken bij wijzigingen.
 
 Interne kennisbanken: een interne AI-assistent die getraind is op handleidingen, procedures en eerdere klantvragen, geeft nieuwe medewerkers direct een antwoord in plaats van dat ze een collega moeten storen.
 
