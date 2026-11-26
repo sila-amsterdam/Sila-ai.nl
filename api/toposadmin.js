@@ -18,7 +18,7 @@ const NIEUW_VELDEN = ['klant', 'onderwerp', 'punten', 'bronnen', 'insteek', 'int
 const NIET_BIJ_OPTINSIGHT = ['producten', 'affiliateLinks', 'intensiteit', 'geldigTot'];
 
 // Status per foutcode die n8n teruggeeft bij een afgewezen nieuwe aanvraag.
-const FOUT_STATUS = { limiet: 429, bezig: 409, ongeldig: 400, 'nog niet beschikbaar': 400, bron: 502 };
+const FOUT_STATUS = { limiet: 429, bezig: 409, planning: 409, ongeldig: 400, 'nog niet beschikbaar': 400, bron: 502 };
 const BRON_BERICHT = 'De schrijf-workflow was niet bereikbaar. Probeer het zo opnieuw.';
 
 const sha256 = (s) => crypto.createHash('sha256').update(s).digest();
@@ -119,7 +119,7 @@ function maakHandler(deps = {}) {
       return stuur(200, { ok: true }, { 'Set-Cookie': `${COOKIE}=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0` });
     }
 
-    if (!['clusters', 'lijst', 'nieuw', 'feedback_nieuw', 'feedback_lijst', 'feedback_artikelen'].includes(actie)) {
+    if (!['clusters', 'lijst', 'nieuw', 'feedback_nieuw', 'feedback_lijst', 'feedback_artikelen', 'extra_status', 'extra_start'].includes(actie)) {
       return stuur(400, { ok: false, fout: 'ongeldig', bericht: 'Onbekende actie.' });
     }
 
@@ -131,6 +131,16 @@ function maakHandler(deps = {}) {
       if (actie === 'lijst') return stuur(200, await naarN8n({ actie: 'lijst' }));
 
       if (actie === 'feedback_lijst') return stuur(200, await naarN8n({ actie: 'feedback_lijst' }));
+
+      if (actie === 'extra_status') return stuur(200, await naarN8n({ actie: 'extra_status' }));
+
+      // Extra run: n8n bewaakt de weeklimiet; hier alleen controleren dat klant en artikelnummer bestaan.
+      if (actie === 'extra_start') {
+        if (!KLANTEN.includes(body.klant) || ![1, 2, 3].includes(body.artikel)) return stuur(400, { ok: false, fout: 'ongeldig', bericht: 'Kies een klant en een artikel.' });
+        const extraAntwoord = await naarN8n({ actie: 'extra_start', klant: body.klant, artikel: body.artikel });
+        if (extraAntwoord && extraAntwoord.ok === false) return stuur(FOUT_STATUS[extraAntwoord.fout] || 400, extraAntwoord);
+        return stuur(200, extraAntwoord);
+      }
 
       if (actie === 'feedback_artikelen') {
         if (!KLANTEN.includes(body.klant)) return stuur(400, { ok: false, fout: 'ongeldig', bericht: 'Kies een klant.' });

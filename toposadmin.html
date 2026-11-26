@@ -186,7 +186,7 @@
     .tab:active { transform: translateY(1px); }
     .tab[aria-selected="true"] { color: var(--oranje-hover); border-bottom-color: var(--oranje); }
     .tel { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 999px; background: var(--oranje); color: #fff; font-size: 12.5px; font-weight: 700; line-height: 22px; text-align: center; }
-    @media (max-width: 600px) { .tab { flex: 1; justify-content: center; padding: 12px 8px 14px; } }
+    @media (max-width: 600px) { .tab { flex: 1 1 auto; justify-content: center; padding: 12px 4px 14px; font-size: 15px; white-space: nowrap; } }
 
     /* Feedback */
     .keuzes.twee { grid-template-columns: repeat(2, 1fr); }
@@ -211,6 +211,24 @@
     .fb-links { display: flex; flex-wrap: wrap; gap: 4px 18px; }
     .fb-reactie { margin: 12px 0 0; padding: 12px 14px; border-radius: 12px; background: var(--goed-bg); color: var(--goed-tekst); font-size: 14.5px; line-height: 1.55; overflow-wrap: anywhere; white-space: pre-wrap; }
     .fb-reactie strong { display: block; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 2px; }
+
+    /* Extra run: per klant een vlak, per artikel een regel */
+    .extra-klanten { display: grid; gap: 16px; }
+    .extra-klanten .vlak { margin: 0; }
+    .extra-regels { list-style: none; margin: 14px 0 0; padding: 0; }
+    .extra-regel { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 6px 16px; padding: 14px 0; border-top: 1px solid var(--border); }
+    .extra-regel:last-child { padding-bottom: 0; }
+    .extra-naam { margin: 0; font-weight: 600; font-size: 16px; }
+    .extra-stand { margin: 2px 0 0; font-size: 14.5px; line-height: 1.55; color: var(--gedempt); overflow-wrap: anywhere; }
+    .extra-stand.let { color: var(--fout-tekst); }
+    .extra-regel .aanvraag-link { grid-column: 1 / -1; margin-top: 0; justify-self: start; }
+    .extra-regel .secundair:disabled { opacity: .45; cursor: not-allowed; background: transparent; }
+    .extra-bevestig { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; background: var(--oranje-licht); border-radius: 12px; padding: 12px 14px; }
+    .extra-bevestig p { margin: 0; flex: 1 1 220px; font-size: 14.5px; font-weight: 600; color: var(--bezig-tekst); }
+    .extra-bevestig .knop { padding: 9px 22px; font-size: 15px; }
+    .extra-voet { margin: 18px 0 0; font-size: 14.5px; color: var(--gedempt); }
+    #extraMelding { margin-bottom: 16px; }
+    @media (max-width: 600px) { .extra-regel > .secundair, .extra-regel > .status { grid-column: 1 / -1; justify-self: start; } }
     @media (prefers-reduced-motion: reduce) { .status.bezig::before { animation: none; } * { scroll-behavior: auto !important; } }
   </style>
 </head>
@@ -244,7 +262,15 @@
 
       <div class="tabs" role="tablist" aria-label="Onderdelen van Topos">
         <button type="button" class="tab" role="tab" id="tab-artikel" aria-controls="paneel-artikel" aria-selected="true">Nieuw artikel</button>
+        <button type="button" class="tab" role="tab" id="tab-extra" aria-controls="paneel-extra" aria-selected="false" tabindex="-1">Extra run</button>
         <button type="button" class="tab" role="tab" id="tab-feedback" aria-controls="paneel-feedback" aria-selected="false" tabindex="-1">Feedback <span class="tel" id="fb-tel" hidden></span></button>
+      </div>
+
+      <div id="paneel-extra" role="tabpanel" aria-labelledby="tab-extra" hidden>
+        <p class="melding" id="extraMelding" role="status" hidden></p>
+        <div class="extra-klanten" id="extraKlanten"></div>
+        <p class="extra-voet">Schrijven duurt meestal ongeveer vijf minuten. Zodra het klaar is, krijg je een mail met de link.</p>
+        <div class="verversen-rij"><button type="button" class="tekstknop" id="extraVerversen">Stand verversen</button></div>
       </div>
 
       <div id="paneel-artikel" role="tabpanel" aria-labelledby="tab-artikel">
@@ -555,6 +581,15 @@
   }
   // Aantal meldingen dat nog open staat (nieuw of in behandeling).
   function aantalOpen(rijen) { return filterFeedback(rijen, 'open').length; }
+  // Extra run: wat een regel toont. knop = er staat een knop, uit = de knop is niet te gebruiken.
+  function extraRegel(artikel, klantLoopt, pauze) {
+    const a = artikel || {};
+    if (a.status === 'bezig') return { badge: ['bezig', 'Wordt geschreven'], tekst: '', let: false, knop: false, uit: false };
+    if (a.status === 'klaar') return { badge: ['klaar', 'Gebruikt deze week'], tekst: String(a.titel || ''), let: false, knop: false, uit: false };
+    if (klantLoopt) return { badge: null, tekst: 'Wacht tot het lopende artikel klaar is.', let: false, knop: true, uit: true };
+    if (a.mislukt) return { badge: null, tekst: 'De vorige poging is niet gelukt. Je kunt het opnieuw proberen.', let: true, knop: true, uit: !!pauze };
+    return { badge: null, tekst: 'Nog vrij deze week', let: false, knop: true, uit: !!pauze };
+  }
   // EINDE-LOGICA
 
   const $ = (id) => document.getElementById(id);
@@ -581,7 +616,7 @@
 
   // ---------- Schermen ----------
   function toonInlog(melding) {
-    stopTimer();
+    stopTimer(); stopExtraTimer();
     hoofd.hidden = true; inlog.hidden = false; $('uitloggen').hidden = true;
     if (melding) zetFout($('inlogfout'), melding);
     $('code').focus();
@@ -598,7 +633,7 @@
       renderLijst(r.data.aanvragen || []);
       pasKlantToe(false);
       laadClusters();
-      const gewenst = location.hash === '#feedback' ? 'feedback' : 'artikel';
+      const gewenst = location.hash.slice(1) || 'artikel';   // kiesTab valt bij onbekend terug op artikel
       kiesTab(gewenst, false);
       if (gewenst !== 'feedback') ververFeedback();   // alleen voor het getal bij het tabblad
     } else {
@@ -1019,9 +1054,10 @@
   // ---------- Tabs ----------
   const TABS = {
     artikel: { titel: 'Nieuw artikel', intro: 'Geef het onderwerp en de bronnen. Het systeem schrijft het artikel en zet het als Google Doc klaar voor review.' },
+    extra: { titel: 'Extra run', intro: 'Is er buiten de woensdag om een artikel nodig? Elk artikel kun je één keer per week extra laten schrijven. Het onderwerp komt uit de planning.' },
     feedback: { titel: 'Feedback', intro: 'Geef feedback op een artikel of op de werkwijze. Alles komt op één plek, met de status erbij zodra het is opgepakt.' }
   };
-  const TAB_VOLGORDE = ['artikel', 'feedback'];
+  const TAB_VOLGORDE = ['artikel', 'extra', 'feedback'];
   let fbRijen = [];
   let fbFilter = 'open';
   let fbScherm = null;
@@ -1040,6 +1076,7 @@
     try { history.replaceState(null, '', location.pathname + (naam === 'artikel' ? '' : '#' + naam)); } catch (e) { /* adresbalk bijwerken is niet essentieel */ }
     if (focus) $('tab-' + naam).focus();
     if (naam === 'feedback') { laadFeedbackArtikelen(); ververFeedback(); }
+    if (naam === 'extra') { extraVraag = null; ververExtra(); } else stopExtraTimer();
   }
   TAB_VOLGORDE.forEach((n) => {
     $('tab-' + n).addEventListener('click', () => kiesTab(n, false));
@@ -1053,6 +1090,97 @@
       if (doel) { e.preventDefault(); kiesTab(doel, true); }
     });
   });
+
+  // ---------- Extra run ----------
+  const EXTRA_VERVERS_MS = 30000;
+  let extraStand = null;
+  let extraVraag = null;        // 'klant:artikel' waarvoor de bevestiging openstaat
+  let extraBezig = false;       // er is net op "Ja, start" gedrukt
+  let extraTimer = null;
+  function stopExtraTimer() { if (extraTimer) { clearTimeout(extraTimer); extraTimer = null; } }
+  function extraMelding(soort, tekst) {
+    const el = $('extraMelding');
+    el.className = 'melding ' + soort; zetFout(el, tekst);
+  }
+  function maak(tag, klasse, tekst) {
+    const el = document.createElement(tag);
+    if (klasse) el.className = klasse;
+    if (tekst !== undefined) el.textContent = tekst;
+    return el;
+  }
+  function renderExtra() {
+    const doel = $('extraKlanten'); doel.textContent = '';
+    if (!extraStand) { doel.appendChild(maak('p', 'aanvraag leeg', 'De stand wordt opgehaald.')); return; }
+    extraStand.klanten.forEach((k) => {
+      const vlak = maak('section', 'vlak');
+      vlak.appendChild(maak('h2', '', k.naam));
+      vlak.appendChild(maak('p', 'vlak-tekst', 'Week ' + extraStand.week));
+      const ul = maak('ul', 'extra-regels');
+      k.artikelen.forEach((a) => {
+        const sleutel = k.klant + ':' + a.artikel;
+        const r = extraRegel(a, k.loopt, extraStand.pauze);
+        const li = maak('li', 'extra-regel');
+        const links = maak('div');
+        links.appendChild(maak('p', 'extra-naam', a.label));
+        if (r.tekst) links.appendChild(maak('p', r.let ? 'extra-stand let' : 'extra-stand', r.tekst));
+        li.appendChild(links);
+        if (r.badge) li.appendChild(maak('span', 'status ' + r.badge[0], r.badge[1]));
+        if (r.knop && extraVraag !== sleutel) {
+          const knop = maak('button', 'secundair', 'Extra artikel maken'); knop.type = 'button'; knop.disabled = r.uit || extraBezig;
+          knop.setAttribute('aria-label', 'Extra artikel maken: ' + k.naam + ', ' + a.label);
+          knop.addEventListener('click', () => { extraVraag = sleutel; extraMelding('', ''); renderExtra(); const ja = doel.querySelector('.extra-bevestig .knop'); if (ja) ja.focus(); });
+          li.appendChild(knop);
+        }
+        if (r.knop && !r.uit && extraVraag === sleutel) {
+          const blok = maak('div', 'extra-bevestig');
+          blok.appendChild(maak('p', '', 'Hiermee wordt nu een echt artikel geschreven.'));
+          const ja = maak('button', 'knop', extraBezig ? 'Starten…' : 'Ja, start'); ja.type = 'button'; ja.disabled = extraBezig;
+          ja.addEventListener('click', () => startExtra(k.klant, a.artikel));
+          const nee = maak('button', 'tekstknop', 'Annuleren'); nee.type = 'button'; nee.disabled = extraBezig;
+          nee.addEventListener('click', () => { extraVraag = null; renderExtra(); });
+          blok.appendChild(ja); blok.appendChild(nee); li.appendChild(blok);
+        }
+        const href = veiligeDocUrl(a.docUrl);
+        if (a.status === 'klaar' && href) {
+          const link = maak('a', 'aanvraag-link', 'Open het Google Doc'); link.href = href; link.target = '_blank'; link.rel = 'noopener noreferrer';
+          li.appendChild(link);
+        }
+        ul.appendChild(li);
+      });
+      vlak.appendChild(ul); doel.appendChild(vlak);
+    });
+    if (extraStand.pauze) extraMelding('hint-melding', extraStand.pauzeTekst);
+  }
+  async function ververExtra() {
+    stopExtraTimer();
+    if (!extraStand) renderExtra();
+    const r = await api({ actie: 'extra_status' });
+    if (r.status === 401) { toonInlog('Je sessie is verlopen. Log opnieuw in.'); return; }
+    if ($('paneel-extra').hidden) return;
+    if (r.status === 200 && r.data.ok && Array.isArray(r.data.klanten)) {
+      if (extraStand && extraStand.pauze && !r.data.pauze) extraMelding('', '');
+      extraStand = r.data; renderExtra();
+      if (extraStand.klanten.some((k) => k.loopt)) extraTimer = setTimeout(ververExtra, EXTRA_VERVERS_MS);
+    } else {
+      extraMelding('fout', r.data.bericht || 'De stand kon niet worden opgehaald. Probeer het zo opnieuw.');
+      if (!extraStand) $('extraKlanten').textContent = '';
+      extraTimer = setTimeout(ververExtra, EXTRA_VERVERS_MS);
+    }
+  }
+  async function startExtra(klant, artikel) {
+    if (extraBezig) return;
+    extraBezig = true; extraMelding('', ''); renderExtra();
+    try {
+      const r = await api({ actie: 'extra_start', klant, artikel });
+      if (r.status === 401) { toonInlog('Je sessie is verlopen. Log opnieuw in.'); return; }
+      if (r.status === 200 && r.data.ok) extraMelding('goed', 'Gestart. Je krijgt een mail zodra het artikel klaar is.');
+      else extraMelding('fout', r.data.bericht || 'Starten is niet gelukt. Controleer de stand hieronder voordat je het opnieuw probeert.');
+    } finally {
+      extraBezig = false; extraVraag = null;
+    }
+    await ververExtra();
+  }
+  $('extraVerversen').addEventListener('click', () => { extraMelding('', ''); ververExtra(); });
 
   // ---------- Feedback ----------
   const FB_SCHERM_MAX = 2 * 1024 * 1024;

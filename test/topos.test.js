@@ -351,7 +351,7 @@ const path = require('node:path');
 const html = fs.readFileSync(path.join(__dirname, '..', 'toposadmin.html'), 'utf8');
 const blok = html.slice(html.indexOf('// BEGIN-LOGICA'), html.indexOf('// EINDE-LOGICA'));
 assert.ok(blok.length > 100, 'logica-blok niet gevonden in de pagina');
-const pagina = new Function(`${blok}; return { bodyBytes, kortReden, veiligeDocUrl, toonProductHint, klantInstelling, pasBodyAanKlant, MAX_BODY_BYTES, REDEN_MAX };`)();
+const pagina = new Function(`${blok}; return { bodyBytes, kortReden, veiligeDocUrl, toonProductHint, klantInstelling, pasBodyAanKlant, extraRegel, MAX_BODY_BYTES, REDEN_MAX };`)();
 
 test('pagina: bodyBytes telt base64 mee en meer dan de bestandsgrootte', () => {
   const bestand = Buffer.alloc(3 * 1024 * 1024, 65);
@@ -493,4 +493,41 @@ test('pagina: het verzoek gaat door pasBodyAanKlant en een klantwissel maakt de 
   assert.match(html, /const body = pasBodyAanKlant\(\{/);
   const wissel = html.slice(html.indexOf('function pasKlantToe'), html.indexOf('// ---------- Dynamische velden: links'));
   for (const deel of ['producten = []', "affiliatevelden').textContent = ''", "geldigTot').value = ''", 'intensiteit][value=Geen]', 'gekozen.checked = false', "interneLink').value = ''", 'laadClusters()']) assert.ok(wissel.includes(deel), deel);
+});
+
+// ---------- extra run ----------
+test('handler: extra run zonder cookie geeft 401 en roept n8n niet aan', async () => {
+  for (const actie of ['extra_status', 'extra_start']) {
+    const { handler, fetch } = maak();
+    assert.strictEqual((await roep(handler, { body: { actie, klant: 'kleidi', artikel: 1 } })).statusCode, 401, actie);
+    assert.strictEqual(fetch.calls.length, 0);
+  }
+});
+test('handler: extra_start stuurt alleen klant en artikel door', async () => {
+  const { handler, fetch } = maak();
+  const res = await roep(handler, { body: { actie: 'extra_start', klant: 'optinsight', artikel: 3, extraPauze: false }, cookie: geldigeCookie() });
+  assert.strictEqual(res.statusCode, 200);
+  assert.deepStrictEqual(fetch.calls[0].body, { actie: 'extra_start', klant: 'optinsight', artikel: 3 });
+});
+test('handler: extra_start met onbekende klant of nummer bereikt n8n niet', async () => {
+  for (const invoer of [{ klant: 'sila', artikel: 1 }, { klant: 'kleidi', artikel: 4 }, { klant: 'kleidi', artikel: '1' }]) {
+    const { handler, fetch } = maak();
+    assert.strictEqual((await roep(handler, { body: { actie: 'extra_start', ...invoer }, cookie: geldigeCookie() })).statusCode, 400, JSON.stringify(invoer));
+    assert.strictEqual(fetch.calls.length, 0);
+  }
+});
+test('handler: weeklimiet en woensdagpauze krijgen hun eigen status', async () => {
+  for (const [fout, status] of [['limiet', 429], ['bezig', 409], ['planning', 409]]) {
+    const { handler } = maak({ json: { ok: false, fout, bericht: 'x' } });
+    assert.strictEqual((await roep(handler, { body: { actie: 'extra_start', klant: 'kleidi', artikel: 1 }, cookie: geldigeCookie() })).statusCode, status, fout);
+  }
+});
+test('pagina: een regel van de extra run per stand', () => {
+  const r = (a, loopt = false, pauze = false) => pagina.extraRegel(a, loopt, pauze);
+  assert.deepStrictEqual([r({ status: 'vrij' }).knop, r({ status: 'vrij' }).uit], [true, false]);
+  assert.strictEqual(r({ status: 'klaar', titel: 'T' }).knop, false);
+  assert.strictEqual(r({ status: 'bezig' }, true).knop, false);
+  assert.strictEqual(r({ status: 'vrij' }, true).uit, true);
+  assert.strictEqual(r({ status: 'vrij' }, false, true).uit, true);
+  assert.strictEqual(r({ status: 'vrij', mislukt: true }).let, true);
 });
