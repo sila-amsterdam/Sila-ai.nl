@@ -211,20 +211,41 @@
     .laag { --p-tekst: #35546E; --p-bg: #E2EBF2; --p-rand: #6E8FAB; }
     .stip { width: 9px; height: 9px; border-radius: 50%; background: var(--p-rand); flex: none; }
 
-    /* Filters */
-    .fb-filters { background: var(--vlak); border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px; box-shadow: var(--schaduw); display: grid; gap: 10px; }
-    .filterrij { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-    .filterrij > .prio-label { min-width: 70px; }
-    .filter { display: inline-flex; align-items: center; gap: 7px; font: inherit; font-size: 14px; font-weight: 600; line-height: 1.5; color: var(--gedempt); background: #fff; border: 1.5px solid var(--border); border-radius: 999px; padding: 5px 13px; cursor: pointer; }
+    /* Filters: statustegels met aantallen, een prioriteitsbalk, zoeken en klant */
+    .fb-filters { background: var(--vlak); border: 1px solid var(--border); border-radius: 18px; padding: 18px; box-shadow: var(--schaduw); display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+    .filterkop { display: block; margin-bottom: 7px; }
+    .filter { font: inherit; font-size: 13.5px; font-weight: 600; line-height: 1.3; color: var(--gedempt); background: #fff; border: 1.5px solid var(--border); border-radius: 12px; cursor: pointer; min-width: 0; }
     .filter:hover { border-color: #cfc6bb; color: var(--tekst); }
     .filter:active { transform: translateY(1px); }
-    .filter[aria-pressed="true"] { background: var(--oranje-licht); border-color: var(--oranje); color: var(--bezig-tekst); }
-    .filter.hoog[aria-pressed="true"], .filter.midden[aria-pressed="true"], .filter.laag[aria-pressed="true"] { background: var(--p-bg); border-color: var(--p-rand); color: var(--p-tekst); }
-    .filter .aantal { font-size: 12.5px; font-variant-numeric: tabular-nums; opacity: .75; }
+    .filter[aria-pressed="true"] { background: var(--oranje-licht); border-color: var(--oranje); color: var(--tekst); }
+    .filter-naam { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+    .filter .aantal { font-variant-numeric: tabular-nums; }
+    .st-nieuw { --p-rand: #DC5A14; }
+    .st-wachten { --p-rand: #7A5BA8; }
+    .st-meebezig { --p-rand: #2C8580; }
+    .st-klaar { --p-rand: #2E8B47; }
+    .statustegels { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.65fr) minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+    .statustegels .filter { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 3px; padding: 10px 4px 9px; text-align: center; }
+    .statustegels .aantal { order: -1; font-family: 'Lora', Georgia, serif; font-size: 22px; font-weight: 600; line-height: 1.15; color: var(--tekst); }
+    .statustegels .filter-naam { font-size: 12.5px; }
+    .statustegels .stip { position: absolute; top: 8px; right: 8px; width: 7px; height: 7px; }
+    .priobalk { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; background: #fff; border: 1.5px solid var(--border); border-radius: 14px; padding: 4px; }
+    .priobalk .filter { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 7px 6px; border-color: transparent; border-radius: 10px; }
+    .priobalk .filter:hover { background: var(--bg); }
+    .priobalk .filter[aria-pressed="true"] { background: var(--oranje-licht); border-color: var(--oranje); }
+    .priobalk .filter.hoog[aria-pressed="true"], .priobalk .filter.midden[aria-pressed="true"], .priobalk .filter.laag[aria-pressed="true"] { background: var(--p-bg); border-color: var(--p-rand); color: var(--p-tekst); }
+    .priobalk .aantal { font-size: 12.5px; opacity: .75; }
     .zoekrij { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 190px); gap: 8px; }
-    .zoekrij input[type=search], .zoekrij select { width: 100%; min-width: 0; font: inherit; font-size: 15px; color: var(--tekst); background: #fff; border: 1.5px solid var(--border); border-radius: 10px; padding: 7px 12px; }
+    .zoekrij input[type=search], .zoekrij select { width: 100%; min-width: 0; height: 42px; font: inherit; font-size: 15px; color: var(--tekst); background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 0 14px; }
+    .zoekrij select { -webkit-appearance: none; appearance: none; padding-right: 36px; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%237A7167' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+    .zoekrij input[type=search]:hover, .zoekrij select:hover { border-color: #cfc6bb; }
     .zoekrij input[type=search]:focus-visible { outline: 3px solid rgba(220, 90, 20, .35); outline-offset: 2px; border-color: var(--oranje); }
-    @media (max-width: 600px) { .zoekrij { grid-template-columns: 1fr; } .filterrij > .prio-label { flex-basis: 100%; } }
+    @media (max-width: 600px) {
+      .fb-filters { padding: 14px; }
+      .statustegels { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .priobalk { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .zoekrij { grid-template-columns: 1fr; }
+    }
 
     /* Lijst: een groep per prioriteit, een regel per melding */
     .fb-lijst { margin-top: 20px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
@@ -591,8 +612,14 @@
 
         <p class="melding goed" id="fbMelding" role="status" hidden></p>
         <div class="fb-filters">
-          <div class="filterrij" role="group" aria-label="Filter op status" id="fbFilterStatus"></div>
-          <div class="filterrij" role="group" aria-label="Filter op prioriteit" id="fbFilterPrio"></div>
+          <div>
+            <span class="prio-label filterkop" aria-hidden="true">Status</span>
+            <div class="statustegels" role="group" aria-label="Filter op status" id="fbFilterStatus"></div>
+          </div>
+          <div>
+            <span class="prio-label filterkop" aria-hidden="true">Prioriteit</span>
+            <div class="priobalk" role="group" aria-label="Filter op prioriteit" id="fbFilterPrio"></div>
+          </div>
           <div class="zoekrij">
             <input type="search" id="fbZoek" placeholder="Zoek op woord, artikel of nummer" aria-label="Zoek in de meldingen" autocomplete="off" />
             <select id="fbFilterKlant" aria-label="Filter op klant"><option value="">Alle klanten</option><option value="kleidi">Kleidi</option><option value="optinsight">OptInsight</option></select>
@@ -1722,19 +1749,21 @@
   function filterKnop(label, aantal, ingedrukt, klik, sleutel, klasse) {
     const knop = maak('button', klasse ? 'filter ' + klasse : 'filter'); knop.type = 'button';
     knop.setAttribute('aria-pressed', String(ingedrukt)); knop.dataset.focus = sleutel;
-    if (klasse) { const stip = maak('span', 'stip'); stip.setAttribute('aria-hidden', 'true'); knop.appendChild(stip); }
-    knop.appendChild(maak('span', '', label)); knop.appendChild(maak('span', 'aantal', String(aantal)));
+    const naam = maak('span', 'filter-naam');
+    if (klasse) { const stip = maak('span', 'stip'); stip.setAttribute('aria-hidden', 'true'); naam.appendChild(stip); }
+    naam.appendChild(maak('span', '', label)); knop.appendChild(naam); knop.appendChild(maak('span', 'aantal', String(aantal)));
     knop.addEventListener('click', () => { klik(); renderFeedback(); focusOp(sleutel); });
     return knop;
   }
   // De aantallen op de filterknoppen tellen mee met de andere filters.
   function renderFilters() {
     const f = fbFilter;
-    const s = $('fbFilterStatus'); s.textContent = ''; s.appendChild(maak('span', 'prio-label', 'Status'));
+    const s = $('fbFilterStatus'); s.textContent = '';
     STATUS_FILTERS.forEach(([w, label]) => {
-      s.appendChild(filterKnop(label, filterFeedback(fbRijen, w, f).length, f.status === w, () => { f.status = w; }, 'fstatus:' + w));
+      const kleur = w === 'open' || w === 'alles' ? '' : 'st-' + (w === 'verwerkt' ? 'klaar' : w);
+      s.appendChild(filterKnop(label, filterFeedback(fbRijen, w, f).length, f.status === w, () => { f.status = w; }, 'fstatus:' + w, kleur));
     });
-    const p = $('fbFilterPrio'); p.textContent = ''; p.appendChild(maak('span', 'prio-label', 'Prioriteit'));
+    const p = $('fbFilterPrio'); p.textContent = '';
     const aantal = (w) => filterFeedback(fbRijen, f.status, Object.assign({}, f, { prioriteit: w })).length;
     p.appendChild(filterKnop('Alle', aantal(''), !f.prioriteit, () => { f.prioriteit = ''; }, 'fprio:alle'));
     PRIORITEITEN.forEach((w) => {
