@@ -3,7 +3,11 @@
 const MAX_SCREENSHOT_BYTES = 2 * 1024 * 1024;
 const FEEDBACK_KLANTEN = ['kleidi', 'optinsight'];
 const SCREENSHOT_MIME = ['image/png', 'image/jpeg'];
-const FEEDBACK_VELDEN = ['klant', 'artikel', 'artikelLink', 'feedback', 'uitleg', 'link', 'screenshot'];
+const FEEDBACK_VELDEN = ['klant', 'artikel', 'artikelLink', 'feedback', 'uitleg', 'link', 'screenshot', 'prioriteit'];
+const PRIORITEITEN = ['Hoog', 'Midden', 'Laag'];
+const PRIORITEIT_VELDEN = ['klant', 'id', 'prioriteit'];
+const NOTITIE_VELDEN = ['klant', 'id', 'van', 'notitie', 'screenshot'];
+const NOTITIE_NAMEN = ['Tes', 'Jamal'];
 
 const fbFout = (tekst) => ({ ok: false, fout: tekst });
 const fbTekst = (x) => typeof x === 'string';
@@ -37,18 +41,46 @@ function valideerFeedback(body) {
   if (artikel.length > 300) return fbFout('De naam van het artikel is te lang. Gebruik maximaal 300 tekens.');
   if (body.artikelLink != null && body.artikelLink !== '' && !fbHttpUrl(body.artikelLink)) return fbFout('De link naar het artikel is geen geldige weblink.');
   if (body.link != null && body.link !== '' && !fbHttpUrl(body.link)) return fbFout('De link is geen geldige weblink. Begin met https://.');
+  if (body.prioriteit != null && !PRIORITEITEN.includes(body.prioriteit)) return fbFout('Kies als prioriteit Hoog, Midden of Laag.');
 
-  if (body.screenshot != null) {
-    const s = body.screenshot;
-    if (!s || typeof s !== 'object' || Array.isArray(s)) return fbFout('De schermafbeelding is niet geldig.');
-    const naam = fbTekst(s.naam) ? s.naam : 'Schermafbeelding';
-    if (!SCREENSHOT_MIME.includes(s.mime)) return fbFout(`"${naam}" kan niet worden gebruikt. Kies een png of jpg.`);
-    const n = fbBase64Bytes(s.inhoudBase64);
-    if (n < 0) return fbFout(`"${naam}" kon niet worden gelezen.`);
-    if (n === 0) return fbFout(`"${naam}" is leeg.`);
-    if (n > MAX_SCREENSHOT_BYTES) return fbFout('De schermafbeelding is groter dan 2 MB. Kies een kleinere afbeelding.');
-  }
+  return fbScreenshot(body.screenshot);
+}
+
+function fbScreenshot(s) {
+  if (s == null) return { ok: true };
+  if (typeof s !== 'object' || Array.isArray(s)) return fbFout('De schermafbeelding is niet geldig.');
+  const naam = fbTekst(s.naam) ? s.naam : 'Schermafbeelding';
+  if (!SCREENSHOT_MIME.includes(s.mime)) return fbFout(`"${naam}" kan niet worden gebruikt. Kies een png of jpg.`);
+  const n = fbBase64Bytes(s.inhoudBase64);
+  if (n < 0) return fbFout(`"${naam}" kon niet worden gelezen.`);
+  if (n === 0) return fbFout(`"${naam}" is leeg.`);
+  if (n > MAX_SCREENSHOT_BYTES) return fbFout('De schermafbeelding is groter dan 2 MB. Kies een kleinere afbeelding.');
   return { ok: true };
 }
 
-module.exports = { valideerFeedback, MAX_SCREENSHOT_BYTES, FEEDBACK_VELDEN };
+// Een verzoek over een bestaande melding: leesbaar, bekende klant en een nummer als FB-20261125-4.
+function fbBestaande(body) {
+  if (!body || typeof body !== 'object' || Array.isArray(body)) return fbFout('Het verzoek is niet leesbaar.');
+  if (!FEEDBACK_KLANTEN.includes(body.klant)) return fbFout('Kies een klant.');
+  if (!fbTekst(body.id) || !/^FB-\d{8}-\d{1,4}$/.test(body.id)) return fbFout('Deze melding is niet herkend. Ververs de lijst en probeer het opnieuw.');
+  return { ok: true };
+}
+
+function valideerPrioriteit(body) {
+  const b = fbBestaande(body);
+  if (!b.ok) return b;
+  if (!PRIORITEITEN.includes(body.prioriteit)) return fbFout('Kies als prioriteit Hoog, Midden of Laag.');
+  return { ok: true };
+}
+
+function valideerNotitie(body) {
+  const b = fbBestaande(body);
+  if (!b.ok) return b;
+  if (!NOTITIE_NAMEN.includes(body.van)) return fbFout('Kies van wie de notitie is.');
+  const notitie = fbTekst(body.notitie) ? body.notitie.trim() : '';
+  if (notitie.length < 2) return fbFout('Schrijf eerst je notitie.');
+  if (notitie.length > 5000) return fbFout('De notitie is te lang. Gebruik maximaal 5.000 tekens.');
+  return fbScreenshot(body.screenshot);
+}
+
+module.exports = { valideerFeedback, valideerPrioriteit, valideerNotitie, MAX_SCREENSHOT_BYTES, FEEDBACK_VELDEN, PRIORITEIT_VELDEN, NOTITIE_VELDEN };

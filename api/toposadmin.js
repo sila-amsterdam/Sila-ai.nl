@@ -4,10 +4,13 @@
 const crypto = require('node:crypto');
 const { maakSessie, controleerSessie, GELDIG_MS } = require('./_topos/sessie.js');
 const { valideerAanvraag } = require('./_topos/valideer.js');
-const { valideerFeedback, FEEDBACK_VELDEN } = require('./_topos/feedback.js');
+const { valideerFeedback, valideerPrioriteit, valideerNotitie, FEEDBACK_VELDEN, PRIORITEIT_VELDEN, NOTITIE_VELDEN } = require('./_topos/feedback.js');
 
 const N8N_URL = 'https://n8n.sila-ai.nl/webhook/topos-api';
 const N8N_TIMEOUT_MS = 9000;
+// Feedback opslaan duurt langer (Drive en Sheets). Een te korte wachttijd gaf een foutmelding terwijl de melding wel was opgeslagen,
+// waarna dezelfde melding opnieuw werd verstuurd. Blijft onder maxDuration in vercel.json.
+const N8N_TIMEOUT_SCHRIJVEN_MS = 25000;
 const COOKIE = 'topos_sessie';
 const KLANTEN = ['kleidi', 'optinsight'];
 
@@ -16,6 +19,13 @@ const NIEUW_VELDEN = ['klant', 'onderwerp', 'punten', 'bronnen', 'insteek', 'int
   'interneLink', 'nietNoemen', 'publicatiedatum', 'geldigTot', 'invalshoek', 'cluster', 'zoekterm', 'metAfbeeldingen'];
 
 const NIET_BIJ_OPTINSIGHT = ['producten', 'affiliateLinks', 'intensiteit', 'geldigTot'];
+
+// Acties die iets in het feedback-sheet schrijven: eigen controle en alleen de toegestane velden.
+const FEEDBACK_SCHRIJF = {
+  feedback_nieuw: [valideerFeedback, FEEDBACK_VELDEN],
+  feedback_prioriteit: [valideerPrioriteit, PRIORITEIT_VELDEN],
+  feedback_notitie: [valideerNotitie, NOTITIE_VELDEN]
+};
 
 // Status per foutcode die n8n teruggeeft bij een afgewezen nieuwe aanvraag.
 const FOUT_STATUS = { limiet: 429, bezig: 409, planning: 409, ongeldig: 400, 'nog niet beschikbaar': 400, bron: 502 };
@@ -59,12 +69,12 @@ function maakHandler(deps = {}) {
   const env = deps.env || process.env;
   const nu = deps.nu || (() => Date.now());
 
-  async function naarN8n(payload) {
+  async function naarN8n(payload, wachttijd = N8N_TIMEOUT_MS) {
     const antwoord = await doeFetch(N8N_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Topos-Secret': env.TOPOS_WEBHOOK_SECRET },
       body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(N8N_TIMEOUT_MS)
+      signal: AbortSignal.timeout(wachttijd)
     });
     if (!antwoord.ok) throw new Error('n8n antwoordde met status ' + antwoord.status);
     return antwoord.json();
@@ -119,7 +129,7 @@ function maakHandler(deps = {}) {
       return stuur(200, { ok: true }, { 'Set-Cookie': `${COOKIE}=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0` });
     }
 
-    if (!['clusters', 'lijst', 'nieuw', 'feedback_nieuw', 'feedback_lijst', 'feedback_artikelen', 'extra_status', 'extra_start'].includes(actie)) {
+    if (!['clusters', 'lijst', 'nieuw', 'feedback_nieuw', 'feedback_lijst', 'feedback_artikelen', 'feedback_prioriteit', 'feedback_notitie', 'extra_status', 'extra_start'].includes(actie)) {
       return stuur(400, { ok: false, fout: 'ongeldig', bericht: 'Onbekende actie.' });
     }
 
@@ -147,12 +157,13 @@ function maakHandler(deps = {}) {
         return stuur(200, await naarN8n({ actie: 'feedback_artikelen', klant: body.klant }));
       }
 
-      if (actie === 'feedback_nieuw') {
-        const fv = valideerFeedback(body);
+      if (Object.prototype.hasOwnProperty.call(FEEDBACK_SCHRIJF, actie)) {
+        const [valideer, velden] = FEEDBACK_SCHRIJF[actie];
+        const fv = valideer(body);
         if (!fv.ok) return stuur(400, { ok: false, fout: 'ongeldig', bericht: fv.fout });
-        const fbPayload = { actie: 'feedback_nieuw' };
-        for (const veld of FEEDBACK_VELDEN) if (body[veld] !== undefined) fbPayload[veld] = body[veld];
-        const fbAntwoord = await naarN8n(fbPayload);
+        const fbPayload = { actie };
+        for (const veld of velden) if (body[veld] !== undefined) fbPayload[veld] = body[veld];
+        const fbAntwoord = await naarN8n(fbPayload, N8N_TIMEOUT_SCHRIJVEN_MS);
         if (fbAntwoord && fbAntwoord.ok === false) return stuur(FOUT_STATUS[fbAntwoord.fout] || 400, fbAntwoord);
         return stuur(200, fbAntwoord);
       }

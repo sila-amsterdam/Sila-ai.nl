@@ -212,6 +212,39 @@
     .fb-reactie { margin: 12px 0 0; padding: 12px 14px; border-radius: 12px; background: var(--goed-bg); color: var(--goed-tekst); font-size: 14.5px; line-height: 1.55; overflow-wrap: anywhere; white-space: pre-wrap; }
     .fb-reactie strong { display: block; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 2px; }
 
+    /* Prioriteit */
+    .prio { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 12px 0 0; }
+    .prio-label { font-size: 13px; font-weight: 600; color: var(--gedempt); }
+    .prio-groep { display: inline-flex; background: #fff; border: 1.5px solid var(--border); border-radius: 999px; padding: 2px; gap: 2px; }
+    .prio-knop { font: inherit; font-size: 13px; font-weight: 600; line-height: 1.4; color: var(--gedempt); background: none; border: 0; border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+    .prio-knop:hover { background: var(--bg); color: var(--tekst); }
+    .prio-knop:active { transform: scale(.96); }
+    .prio-knop[aria-pressed="true"] { cursor: default; }
+    .prio-knop.hoog[aria-pressed="true"] { background: var(--fout-bg); color: var(--fout-tekst); }
+    .prio-knop.midden[aria-pressed="true"] { background: var(--let-bg); color: var(--let-tekst); }
+    .prio-knop.laag[aria-pressed="true"] { background: #ECE8E2; color: var(--tekst); }
+    .prio-knop:disabled { cursor: wait; opacity: .7; }
+    .aanvraag.prio-hoog { border-left: 4px solid var(--fout-tekst); }
+
+    /* Notities */
+    .notities { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+    .notitie { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; min-width: 0; }
+    .notitie-kop { margin: 0; font-size: 13px; font-weight: 600; color: var(--gedempt); }
+    .notitie-tekst { margin: 2px 0 0; font-size: 14.5px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .notitie .aanvraag-link { margin-top: 4px; font-size: 14px; }
+    .notitie-open { margin-top: 8px; }
+    .notitie-vorm { margin-top: 14px; padding: 16px; background: var(--oranje-licht); border-radius: 14px; }
+    .notitie-vorm .veld { margin-top: 14px; }
+    .notitie-vorm .veld:first-of-type { margin-top: 0; }
+    .notitie-vorm textarea { min-height: 96px; }
+    .wie { display: flex; gap: 8px; }
+    .wie .keuze span { border-radius: 999px; padding: 6px 18px; text-align: center; }
+    .wie .keuze input:checked + span { background: var(--oranje); color: #fff; }
+    .notitie-knoppen { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 16px; }
+    .notitie-knoppen .knop { padding: 9px 22px; font-size: 15px; }
+    .notitie-vorm .secundair { background: #fff; }
+    .notitie-vorm .melding { margin-top: 12px; }
+
     /* Extra run: per klant een vlak, per artikel een regel */
     .extra-klanten { display: grid; gap: 16px; }
     .extra-klanten .vlak { margin: 0; }
@@ -472,6 +505,15 @@
               <span class="hint">Wat zie je nu, en wat zou je liever zien? Een voorbeeld uit de tekst helpt.</span>
             </div>
 
+            <div class="veld">
+              <span class="label" id="l-fbprio">Prioriteit<span class="hint">Je kunt dit later nog aanpassen in de lijst.</span></span>
+              <div class="keuzes" role="radiogroup" aria-labelledby="l-fbprio">
+                <label class="keuze"><input type="radio" name="fbPrio" value="Hoog" /><span>Hoog<small>Als eerste oppakken</small></span></label>
+                <label class="keuze"><input type="radio" name="fbPrio" value="Midden" checked /><span>Midden<small>Daarna</small></span></label>
+                <label class="keuze"><input type="radio" name="fbPrio" value="Laag" /><span>Laag<small>Kan wachten</small></span></label>
+              </div>
+            </div>
+
             <div class="rij">
               <div class="veld" data-veld="fbLink">
                 <label for="fbLink">Link</label>
@@ -506,6 +548,7 @@
           <button type="button" class="filter" data-filter="verwerkt" aria-pressed="false">Verwerkt</button>
           <button type="button" class="filter" data-filter="alles" aria-pressed="false">Alles</button>
         </div>
+        <p class="melding fout" id="fbLijstFout" role="alert" hidden style="margin-bottom: 14px"></p>
         <ul class="aanvragen" id="fbLijst" aria-live="polite"></ul>
         <div class="verversen-rij"><button type="button" class="tekstknop" id="fbVerversen">Lijst verversen</button></div>
       </div>
@@ -572,12 +615,19 @@
     const sleutel = typeof status === 'string' ? status.trim().toLowerCase() : '';
     return FB_STATUS[sleutel] || FB_STATUS.nieuw;
   }
-  // Filter op de feedbacklijst: open = nieuw of in behandeling, verwerkt = verwerkt, alles = alles. Nieuwste eerst.
+  // Prioriteit: Hoog, Midden of Laag. Leeg of onbekend geldt als Midden.
+  const PRIORITEITEN = ['Hoog', 'Midden', 'Laag'];
+  function prioriteitVan(rij) {
+    const t = String((rij && rij.prioriteit) || '').trim().toLowerCase();
+    return PRIORITEITEN.find((p) => p.toLowerCase() === t) || 'Midden';
+  }
+  // Filter op de feedbacklijst: open = nieuw of in behandeling, verwerkt = verwerkt, alles = alles. Hoogste prioriteit eerst, daarbinnen nieuwste eerst.
   function filterFeedback(rijen, filter) {
     const lijst = Array.isArray(rijen) ? rijen.filter((r) => r && typeof r === 'object') : [];
     const open = (r) => feedbackStatus(r.status)[0] !== 'klaar';
     const gefilterd = filter === 'verwerkt' ? lijst.filter((r) => !open(r)) : filter === 'alles' ? lijst : lijst.filter(open);
-    return gefilterd.slice().sort((a, b) => String(b.id || '').localeCompare(String(a.id || ''), 'en', { numeric: true }));
+    const rang = (r) => PRIORITEITEN.indexOf(prioriteitVan(r));
+    return gefilterd.slice().sort((a, b) => rang(a) - rang(b) || String(b.id || '').localeCompare(String(a.id || ''), 'en', { numeric: true }));
   }
   // Aantal meldingen dat nog open staat (nieuw of in behandeling).
   function aantalOpen(rijen) { return filterFeedback(rijen, 'open').length; }
@@ -1278,7 +1328,7 @@
     if (link && !isHttp(link)) fout('fbLink', 'Dit is geen geldige weblink. Begin met https://.');
     if (eerste) { const el = document.querySelector('[data-veld=' + eerste + '] select:not([hidden]), [data-veld=' + eerste + '] input:not([hidden]), [data-veld=' + eerste + '] textarea'); if (el) el.focus(); return; }
 
-    const body = { actie: 'feedback_nieuw', klant: fbKlant(), artikel, feedback, uitleg };
+    const body = { actie: 'feedback_nieuw', klant: fbKlant(), artikel, feedback, uitleg, prioriteit: document.querySelector('input[name=fbPrio]:checked').value };
     if (gekozen.artikelLink) body.artikelLink = gekozen.artikelLink;
     if (link) body.link = link;
     const knop = $('fbVerstuur');
@@ -1291,12 +1341,18 @@
       const r = await api(body);
       if (r.status === 401) { toonInlog('Je sessie is verlopen. Log opnieuw in.'); return; }
       if (r.status === 200 && r.data.ok) {
-        zetFout($('fbGoed'), 'Bedankt. Je feedback staat in de lijst' + (r.data.id ? ' als ' + r.data.id : '') + '.');
+        zetFout($('fbGoed'), r.data.bestond
+          ? 'Deze melding stond al in de lijst als ' + r.data.id + '. Er is niets dubbel aangemaakt. Wil je iets toevoegen, gebruik dan "Notitie toevoegen" bij die melding.'
+          : 'Bedankt. Je feedback staat in de lijst' + (r.data.id ? ' als ' + r.data.id : '') + '.');
         ['fbArtikel', 'fbFeedback', 'fbUitleg', 'fbLink'].forEach((id) => { $(id).value = ''; });
         $('fbArtikelKeuze').value = ''; toonArtikelVeld();
         $('fbTekens').textContent = '0 / 200'; fbScherm = null; renderFbScherm();
+        document.querySelector('input[name=fbPrio][value=Midden]').checked = true;
         fbFilter = 'open'; markeerFilter();
         await ververFeedback();
+      } else if (onzeker(r)) {
+        await ververFeedback();
+        zetFout($('fbFout'), 'Er kwam geen bevestiging terug. Kijk eerst in de lijst hieronder of je melding er al staat voordat je opnieuw verstuurt.');
       } else {
         zetFout($('fbFout'), r.data.bericht || 'Versturen is niet gelukt. Probeer het zo opnieuw.');
       }
@@ -1310,7 +1366,138 @@
   }
   document.querySelectorAll('.filter').forEach((b) => b.addEventListener('click', () => { fbFilter = b.dataset.filter; markeerFilter(); renderFeedback(); }));
 
+  // Geen antwoord of een serverfout: dan is niet zeker of er iets is opgeslagen.
+  function onzeker(r) { return r.status === 0 || r.status >= 500; }
+
+  const fbOpen = new Set();     // meldingen waarvan de uitleg openstaat (blijft zo bij opnieuw tekenen)
+  let fbNotitie = null;         // het ene openstaande notitieformulier: { id, klant, tekst, bestand, fout, bezig }
+  const fbPrioBezig = new Set();
+  const onthoud = (naam) => { try { return localStorage.getItem(naam) || ''; } catch (e) { return ''; } };
+  let fbWie = onthoud('topos_wie');
+
+  async function zetPrioriteit(rij, prioriteit) {
+    if (fbPrioBezig.has(rij.id) || prioriteitVan(rij) === prioriteit) return;
+    const id = rij.id;
+    const oud = rij.prioriteit;
+    fbPrioBezig.add(id); rij.prioriteit = prioriteit; zetFout($('fbLijstFout'), '');
+    renderFeedback(); focusPrio(id, prioriteit);
+    const r = await api({ actie: 'feedback_prioriteit', klant: rij.klant, id, prioriteit });
+    fbPrioBezig.delete(id);
+    if (r.status === 401) { toonInlog('Je sessie is verlopen. Log opnieuw in.'); return; }
+    if (!(r.status === 200 && r.data.ok)) {
+      const nuRij = fbRijen.find((x) => x.id === id); if (nuRij) nuRij.prioriteit = oud;
+      zetFout($('fbLijstFout'), 'De prioriteit van ' + id + ' is niet opgeslagen. ' + (r.data.bericht || 'Probeer het zo opnieuw.'));
+    }
+    renderFeedback(); focusPrio(id, prioriteit);
+  }
+  // Na het opnieuw tekenen verhuist een kaart in de volgorde: de toetsenbordfocus gaat mee.
+  function focusPrio(id, prioriteit) {
+    const knop = document.querySelector('[data-prio="' + id + ':' + prioriteit + '"]');
+    if (knop && (document.activeElement === document.body || document.activeElement === null)) knop.focus({ preventScroll: true });
+  }
+
+  function prioKiezer(r) {
+    const vak = maak('div', 'prio');
+    vak.appendChild(maak('span', 'prio-label', 'Prioriteit'));
+    const groep = maak('div', 'prio-groep'); groep.setAttribute('role', 'group'); groep.setAttribute('aria-label', 'Prioriteit van ' + r.id);
+    PRIORITEITEN.forEach((p) => {
+      const knop = maak('button', 'prio-knop ' + p.toLowerCase(), p); knop.type = 'button';
+      knop.setAttribute('aria-pressed', String(prioriteitVan(r) === p));
+      knop.dataset.prio = r.id + ':' + p;
+      knop.disabled = fbPrioBezig.has(r.id);
+      knop.addEventListener('click', () => zetPrioriteit(r, p));
+      groep.appendChild(knop);
+    });
+    vak.appendChild(groep);
+    return vak;
+  }
+
+  function notitieLijst(r) {
+    const ul = maak('ul', 'notities'); ul.setAttribute('aria-label', 'Notities bij ' + r.id);
+    r.notities.forEach((n) => {
+      const li = maak('li', 'notitie');
+      li.appendChild(maak('p', 'notitie-kop', ['Notitie van ' + (n.van || 'onbekend'), n.datum].filter(Boolean).join(' \u00b7 ')));
+      li.appendChild(maak('p', 'notitie-tekst', n.tekst || ''));
+      const href = veiligeDocUrl(n.schermafbeelding);
+      if (href) { const a = maak('a', 'aanvraag-link', 'Open de schermafbeelding'); a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer'; li.appendChild(a); }
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  function notitieVorm(r) {
+    const n = fbNotitie;
+    const vorm = maak('form', 'notitie-vorm'); vorm.noValidate = true;
+    const wieVeld = maak('div', 'veld');
+    const wieLabel = maak('span', 'label', 'Van wie is de notitie?'); wieLabel.id = 'l-wie'; wieVeld.appendChild(wieLabel);
+    const wie = maak('div', 'wie'); wie.setAttribute('role', 'radiogroup'); wie.setAttribute('aria-labelledby', 'l-wie');
+    ['Tes', 'Jamal'].forEach((naam) => {
+      const l = maak('label', 'keuze');
+      const i = document.createElement('input'); i.type = 'radio'; i.name = 'notitieWie'; i.value = naam; i.checked = fbWie === naam; i.disabled = n.bezig;
+      i.addEventListener('change', () => { fbWie = naam; try { localStorage.setItem('topos_wie', naam); } catch (e) { /* onthouden is niet essentieel */ } });
+      l.appendChild(i); l.appendChild(maak('span', '', naam)); wie.appendChild(l);
+    });
+    wieVeld.appendChild(wie); vorm.appendChild(wieVeld);
+
+    const tekstVeld = maak('div', 'veld');
+    const label = maak('label', '', 'Wat wil je toevoegen?'); label.htmlFor = 'notitieTekst'; tekstVeld.appendChild(label);
+    const ta = document.createElement('textarea'); ta.id = 'notitieTekst'; ta.maxLength = 5000; ta.value = n.tekst; ta.disabled = n.bezig;
+    ta.addEventListener('input', () => { n.tekst = ta.value; });
+    tekstVeld.appendChild(ta); vorm.appendChild(tekstVeld);
+
+    const schermVeld = maak('div', 'veld');
+    const keuze = maak('div', 'schermkeuze');
+    const kies = maak('button', 'secundair', n.bestand ? 'Andere afbeelding kiezen' : 'Afbeelding toevoegen'); kies.type = 'button'; kies.disabled = n.bezig;
+    const invoer = document.createElement('input'); invoer.type = 'file'; invoer.accept = 'image/png,image/jpeg'; invoer.hidden = true;
+    kies.addEventListener('click', () => invoer.click());
+    invoer.addEventListener('change', () => {
+      const f = invoer.files && invoer.files[0];
+      if (!f) return;
+      if (f.type !== 'image/png' && f.type !== 'image/jpeg') n.fout = 'Kies een png of jpg.';
+      else if (f.size > FB_SCHERM_MAX) n.fout = 'Deze afbeelding is groter dan 2 MB. Kies een kleinere.';
+      else { n.bestand = f; n.fout = ''; }
+      renderFeedback();
+    });
+    keuze.appendChild(kies); keuze.appendChild(invoer);
+    keuze.appendChild(maak('span', 'hint', n.bestand ? n.bestand.name + ' (' + fmtMb(n.bestand.size) + ')' : 'Optioneel: png of jpg, maximaal 2 MB.'));
+    if (n.bestand && !n.bezig) { const weg = maak('button', 'tekstknop', 'Afbeelding weghalen'); weg.type = 'button'; weg.addEventListener('click', () => { n.bestand = null; renderFeedback(); }); keuze.appendChild(weg); }
+    schermVeld.appendChild(keuze); vorm.appendChild(schermVeld);
+
+    if (n.fout) { const p = maak('p', 'melding fout', n.fout); p.setAttribute('role', 'alert'); vorm.appendChild(p); }
+    const knoppen = maak('div', 'notitie-knoppen');
+    const ok = maak('button', 'knop', n.bezig ? 'Opslaan\u2026' : 'Notitie opslaan'); ok.type = 'submit'; ok.disabled = n.bezig;
+    const nee = maak('button', 'tekstknop', 'Annuleren'); nee.type = 'button'; nee.disabled = n.bezig;
+    nee.addEventListener('click', () => { fbNotitie = null; renderFeedback(); });
+    knoppen.appendChild(ok); knoppen.appendChild(nee); vorm.appendChild(knoppen);
+    vorm.addEventListener('submit', (e) => { e.preventDefault(); bewaarNotitie(); });
+    return vorm;
+  }
+
+  async function bewaarNotitie() {
+    const n = fbNotitie;
+    if (!n || n.bezig) return;
+    const tekst = n.tekst.trim();
+    n.fout = !fbWie ? 'Kies eerst van wie de notitie is.' : tekst.length < 2 ? 'Schrijf eerst je notitie.' : '';
+    if (n.fout) { renderFeedback(); return; }
+    const body = { actie: 'feedback_notitie', klant: n.klant, id: n.id, van: fbWie, notitie: tekst };
+    n.bezig = true; renderFeedback();
+    if (n.bestand) {
+      try { body.screenshot = { naam: n.bestand.name, mime: n.bestand.type, inhoudBase64: await leesBestand(n.bestand) }; }
+      catch (err) { n.bezig = false; n.fout = err.message; renderFeedback(); return; }
+    }
+    const r = await api(body);
+    if (r.status === 401) { n.bezig = false; toonInlog('Je sessie is verlopen. Log opnieuw in.'); return; }
+    if (r.status === 200 && r.data.ok) { if (fbNotitie === n) fbNotitie = null; await ververFeedback(); return; }
+    if (onzeker(r)) await ververFeedback();
+    n.bezig = false;
+    n.fout = onzeker(r) ? 'Er kwam geen bevestiging terug. Kijk eerst of je notitie er al staat voordat je opnieuw opslaat.' : (r.data.bericht || 'Opslaan is niet gelukt. Probeer het zo opnieuw.');
+    renderFeedback();
+  }
+
   function renderFeedback() {
+    // Staat de cursor in het notitieveld, dan blijft die daar na het opnieuw tekenen.
+    const actief = document.activeElement;
+    const cursor = actief && actief.id === 'notitieTekst' ? [actief.selectionStart, actief.selectionEnd] : null;
     const ul = $('fbLijst'); ul.textContent = '';
     const open = aantalOpen(fbRijen);
     $('fb-tel').hidden = open === 0; $('fb-tel').textContent = String(open);
@@ -1322,7 +1509,7 @@
       ul.appendChild(li); return;
     }
     rijen.forEach((r) => {
-      const li = document.createElement('li'); li.className = 'aanvraag';
+      const li = document.createElement('li'); li.className = prioriteitVan(r) === 'Hoog' ? 'aanvraag prio-hoog' : 'aanvraag';
       const kop = document.createElement('div'); kop.className = 'aanvraag-kop';
       const h = document.createElement('h3'); h.textContent = r.artikel || 'Geen artikel opgegeven';
       const st = feedbackStatus(r.status);
@@ -1331,11 +1518,14 @@
       const meta = document.createElement('p'); meta.className = 'aanvraag-meta';
       meta.textContent = [KLANT_NAAM[r.klant] || r.klant, r.datum, r.id].filter(Boolean).join(' \u00b7 ');
       li.appendChild(meta);
+      li.appendChild(prioKiezer(r));
       const f = document.createElement('p'); f.className = 'fb-feedback'; f.textContent = r.feedback || ''; li.appendChild(f);
       if (r.uitleg) {
         const d = document.createElement('details'); d.className = 'fb-details';
         const s = document.createElement('summary'); s.textContent = 'Uitleg bekijken'; d.appendChild(s);
         const p = document.createElement('p'); p.className = 'fb-uitleg'; p.textContent = r.uitleg; d.appendChild(p);
+        d.open = fbOpen.has(r.id);
+        d.addEventListener('toggle', () => { if (d.open) fbOpen.add(r.id); else fbOpen.delete(r.id); });
         li.appendChild(d);
       }
       const links = document.createElement('div'); links.className = 'fb-links';
@@ -1350,8 +1540,19 @@
         rb.appendChild(document.createTextNode(r.reactie));
         li.appendChild(rb);
       }
+      if (Array.isArray(r.notities) && r.notities.length) li.appendChild(notitieLijst(r));
+      if (fbNotitie && fbNotitie.id === r.id) li.appendChild(notitieVorm(r));
+      else {
+        const open = maak('button', 'plus notitie-open', '+ Notitie toevoegen'); open.type = 'button';
+        open.setAttribute('aria-label', 'Notitie toevoegen bij ' + r.id);
+        open.disabled = !!(fbNotitie && fbNotitie.bezig);
+        open.addEventListener('click', () => { fbNotitie = { id: r.id, klant: r.klant, tekst: '', bestand: null, fout: '', bezig: false }; renderFeedback(); const t = $('notitieTekst'); if (t) t.focus(); });
+        li.appendChild(open);
+      }
       ul.appendChild(li);
     });
+    const veld = cursor && $('notitieTekst');
+    if (veld) { veld.focus({ preventScroll: true }); veld.setSelectionRange(cursor[0], cursor[1]); }
   }
   async function ververFeedback() {
     const r = await api({ actie: 'feedback_lijst' });
