@@ -177,11 +177,13 @@ const pagina = new Function(`${blok}; return { feedbackStatus, filterFeedback, a
 
 test('pagina: feedbackstatus kent drie statussen en valt terug op nieuw', () => {
   assert.deepStrictEqual(pagina.feedbackStatus('Nieuw'), ['nieuw', 'Nieuw']);
-  assert.deepStrictEqual(pagina.feedbackStatus('In behandeling'), ['behandeling', 'In behandeling']);
+  assert.deepStrictEqual(pagina.feedbackStatus('Mee bezig'), ['meebezig', 'Mee bezig']);
+  assert.deepStrictEqual(pagina.feedbackStatus('In behandeling'), ['meebezig', 'Mee bezig']);
+  assert.deepStrictEqual(pagina.feedbackStatus(' wachten op informatie '), ['wachten', 'Wachten op informatie']);
   assert.deepStrictEqual(pagina.feedbackStatus(' verwerkt '), ['klaar', 'Verwerkt']);
   for (const x of ['', undefined, null, 'iets anders', 7]) assert.deepStrictEqual(pagina.feedbackStatus(x), ['nieuw', 'Nieuw']);
 });
-test('pagina: filter open toont nieuw en in behandeling, nieuwste eerst', () => {
+test('pagina: filter open toont alles wat niet verwerkt is, nieuwste eerst', () => {
   const rijen = [
     { id: 'FB-20261101-1', status: 'Verwerkt' }, { id: 'FB-20261101-2', status: 'Nieuw' },
     { id: 'FB-20261102-1', status: 'In behandeling' }, { id: 'FB-20261101-10', status: '' }, null, 'rommel'

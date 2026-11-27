@@ -4,7 +4,9 @@ const MAX_SCREENSHOT_BYTES = 2 * 1024 * 1024;
 const FEEDBACK_KLANTEN = ['kleidi', 'optinsight'];
 const SCREENSHOT_MIME = ['image/png', 'image/jpeg'];
 const FEEDBACK_VELDEN = ['klant', 'artikel', 'artikelLink', 'feedback', 'uitleg', 'link', 'screenshot', 'bijlagen', 'prioriteit'];
-const STATUSSEN = ['Nieuw', 'In behandeling', 'Verwerkt'];
+const STATUSSEN = ['Nieuw', 'Wachten op informatie', 'Mee bezig', 'Verwerkt'];
+// "In behandeling" heet sinds 28-11-2026 "Mee bezig"; een pagina die nog openstond mag de oude naam blijven sturen.
+const fbStatus = (s) => (s === 'In behandeling' ? 'Mee bezig' : s);
 const STATUS_VELDEN = ['klant', 'id', 'status', 'reactie'];
 // Bijlagen: maximaal 5 bestanden en samen 3 MB (het verzoek naar de server mag niet groter dan ongeveer 4,5 MB zijn).
 const MAX_BIJLAGEN = 5;
@@ -148,10 +150,10 @@ function valideerNotitie(body) {
 function valideerStatus(body) {
   const b = fbBestaande(body);
   if (!b.ok) return b;
-  if (!STATUSSEN.includes(body.status)) return fbFout('Kies als status Nieuw, In behandeling of Verwerkt.');
+  if (!STATUSSEN.includes(fbStatus(body.status))) return fbFout('Kies als status Nieuw, Wachten op informatie, Mee bezig of Verwerkt.');
   if (!fbTekst(body.reactie)) return fbFout('De reactie is niet leesbaar.');
   if (body.reactie.trim().length > 3000) return fbFout('De reactie is te lang. Gebruik maximaal 3.000 tekens.');
   return { ok: true };
 }
 
-module.exports = { valideerFeedback, valideerPrioriteit, valideerNotitie, valideerStatus, fbBestanden, MAX_SCREENSHOT_BYTES, MAX_BIJLAGEN, MAX_BIJLAGEN_BYTES, BIJLAGE_TYPES, FEEDBACK_VELDEN, PRIORITEIT_VELDEN, NOTITIE_VELDEN, STATUS_VELDEN };
+module.exports = { STATUSSEN, fbStatus, valideerFeedback, valideerPrioriteit, valideerNotitie, valideerStatus, fbBestanden, MAX_SCREENSHOT_BYTES, MAX_BIJLAGEN, MAX_BIJLAGEN_BYTES, BIJLAGE_TYPES, FEEDBACK_VELDEN, PRIORITEIT_VELDEN, NOTITIE_VELDEN, STATUS_VELDEN };

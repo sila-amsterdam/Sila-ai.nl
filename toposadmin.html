@@ -196,7 +196,8 @@
     .tekens.over { color: var(--fout-tekst); font-weight: 600; }
     .schermkeuze { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
     .status.nieuw { background: var(--oranje-licht); color: var(--bezig-tekst); }
-    .status.behandeling { background: var(--let-bg); color: var(--let-tekst); }
+    .status.wachten { background: #ECE6F4; color: #5A3F82; }
+    .status.meebezig { background: #DCEFEE; color: #1C5F5B; }
     .fb-balk { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; margin-bottom: 16px; }
     .fb-balk h2 { font-size: 28px; font-weight: 600; }
     .fb-balk .knop { padding: 11px 24px; font-size: 15px; }
@@ -268,6 +269,7 @@
     .prio-knop[aria-pressed="true"] { background: var(--p-bg, var(--oranje)); color: var(--p-tekst, #fff); }
     .status-keuze .prio-knop[aria-pressed="true"] { background: var(--oranje); color: #fff; }
     .prio-knop:disabled { cursor: wait; opacity: .7; }
+    @media (max-width: 600px) { .status-keuze .prio-groep { display: grid; grid-template-columns: 1fr 1fr; width: 100%; border-radius: 14px; } }
 
     /* Afhandelen */
     .afhandelen { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
@@ -658,7 +660,11 @@
     return uit;
   }
   // Feedback: status uit het sheet naar een label en stijl. Onbekend of leeg geldt als nieuw.
-  const FB_STATUS = { 'nieuw': ['nieuw', 'Nieuw'], 'in behandeling': ['behandeling', 'In behandeling'], 'verwerkt': ['klaar', 'Verwerkt'] };
+  const FB_STATUS = { 'nieuw': ['nieuw', 'Nieuw'], 'wachten op informatie': ['wachten', 'Wachten op informatie'], 'mee bezig': ['meebezig', 'Mee bezig'], 'verwerkt': ['klaar', 'Verwerkt'] };
+  FB_STATUS['in behandeling'] = FB_STATUS['mee bezig'];   // oude naam
+  const STATUS_NAMEN = ['Nieuw', 'Wachten op informatie', 'Mee bezig', 'Verwerkt'];
+  // Filterknoppen: open is alles wat niet verwerkt is, daarna elke status apart.
+  const STATUS_FILTERS = [['open', 'Open'], ['nieuw', 'Nieuw'], ['wachten', 'Wachten op informatie'], ['meebezig', 'Mee bezig'], ['verwerkt', 'Verwerkt'], ['alles', 'Alles']];
   function feedbackStatus(status) {
     const sleutel = typeof status === 'string' ? status.trim().toLowerCase() : '';
     return FB_STATUS[sleutel] || FB_STATUS.nieuw;
@@ -669,14 +675,16 @@
     const t = String((rij && rij.prioriteit) || '').trim().toLowerCase();
     return PRIORITEITEN.find((p) => p.toLowerCase() === t) || 'Midden';
   }
-  // Filter op de feedbacklijst. Status: open = nieuw of in behandeling, verwerkt, alles. Daarnaast optioneel op prioriteit, klant en zoektekst.
+  // Filter op de feedbacklijst. Status: open (niet verwerkt), nieuw, wachten, meebezig, verwerkt of alles. Daarnaast optioneel op prioriteit, klant en zoektekst.
   // Hoogste prioriteit eerst, daarbinnen nieuwste eerst.
   function filterFeedback(rijen, filter, extra) {
     const e = extra || {};
     const lijst = Array.isArray(rijen) ? rijen.filter((r) => r && typeof r === 'object') : [];
-    const open = (r) => feedbackStatus(r.status)[0] !== 'klaar';
+    const soort = (r) => feedbackStatus(r.status)[0];
+    const past = (r) => filter === 'alles' ? true : filter === 'verwerkt' ? soort(r) === 'klaar'
+      : filter === 'nieuw' || filter === 'wachten' || filter === 'meebezig' ? soort(r) === filter : soort(r) !== 'klaar';
     const woorden = String(e.zoek || '').toLowerCase().split(/\s+/).filter(Boolean);
-    const gefilterd = (filter === 'verwerkt' ? lijst.filter((r) => !open(r)) : filter === 'alles' ? lijst : lijst.filter(open))
+    const gefilterd = lijst.filter(past)
       .filter((r) => !e.klant || r.klant === e.klant)
       .filter((r) => !e.prioriteit || prioriteitVan(r) === e.prioriteit)
       .filter((r) => {
@@ -687,7 +695,7 @@
     const rang = (r) => PRIORITEITEN.indexOf(prioriteitVan(r));
     return gefilterd.slice().sort((a, b) => rang(a) - rang(b) || String(b.id || '').localeCompare(String(a.id || ''), 'en', { numeric: true }));
   }
-  // Aantal meldingen dat nog open staat (nieuw of in behandeling).
+  // Aantal meldingen dat nog open staat (alles wat niet verwerkt is).
   function aantalOpen(rijen) { return filterFeedback(rijen, 'open').length; }
   // Alle bestanden van een melding of notitie, inclusief een oude schermafbeelding.
   function bijlagenVan(x) {
@@ -1616,7 +1624,7 @@
     const wijzig = () => { if (!fbAfhandel.has(r.id)) fbAfhandel.set(r.id, c); return c; };
     const vorm = maak('form', 'afhandelen'); vorm.noValidate = true;
     vorm.appendChild(maak('h4', '', 'Afhandelen'));
-    vorm.appendChild(knoppenKeuze('Status', 'Status van ' + r.id, ['Nieuw', 'In behandeling', 'Verwerkt'], c.status,
+    vorm.appendChild(knoppenKeuze('Status', 'Status van ' + r.id, STATUS_NAMEN, c.status,
       (s) => { wijzig().status = s; c.fout = ''; renderFeedback(); focusOp('status:' + r.id + ':' + s); }, c.bezig, 'status:' + r.id));
     const label = maak('label', '', 'Wat is er gedaan of gefixt?'); label.htmlFor = 'reactie-' + r.id; vorm.appendChild(label);
     const ta = document.createElement('textarea'); ta.id = 'reactie-' + r.id; ta.maxLength = 3000; ta.value = c.reactie; ta.disabled = c.bezig;
@@ -1723,7 +1731,7 @@
   function renderFilters() {
     const f = fbFilter;
     const s = $('fbFilterStatus'); s.textContent = ''; s.appendChild(maak('span', 'prio-label', 'Status'));
-    [['open', 'Open'], ['verwerkt', 'Verwerkt'], ['alles', 'Alles']].forEach(([w, label]) => {
+    STATUS_FILTERS.forEach(([w, label]) => {
       s.appendChild(filterKnop(label, filterFeedback(fbRijen, w, f).length, f.status === w, () => { f.status = w; }, 'fstatus:' + w));
     });
     const p = $('fbFilterPrio'); p.textContent = ''; p.appendChild(maak('span', 'prio-label', 'Prioriteit'));
@@ -1752,7 +1760,7 @@
     if (!rijen.length) {
       const gefilterd = fbFilter.prioriteit || fbFilter.klant || fbFilter.zoek.trim();
       const leeg = maak('div', 'aanvraag leeg leeg-rij');
-      leeg.appendChild(maak('p', '', gefilterd ? 'Geen meldingen bij deze filters.' : fbFilter.status === 'open' ? 'Er staat niets open. Nieuwe feedback verschijnt hier.' : fbFilter.status === 'verwerkt' ? 'Nog niets verwerkt.' : 'Nog geen feedback.'));
+      leeg.appendChild(maak('p', '', gefilterd ? 'Geen meldingen bij deze filters.' : fbFilter.status === 'open' ? 'Er staat niets open. Nieuwe feedback verschijnt hier.' : fbFilter.status === 'verwerkt' ? 'Nog niets verwerkt.' : fbFilter.status === 'alles' ? 'Nog geen feedback.' : 'Geen meldingen met deze status.'));
       if (gefilterd) {
         const wis = maak('button', 'secundair', 'Filters wissen'); wis.type = 'button';
         wis.addEventListener('click', () => { wisFilters(fbFilter.status); renderFeedback(); });

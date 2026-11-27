@@ -120,6 +120,14 @@ test('afhandelen: status en reactie', () => {
   assert.strictEqual(valideerStatus({ ...status(), reactie: '' }).ok, true);
   for (const x of [{ status: 'Weg' }, { status: undefined }, { reactie: undefined }, { reactie: 'x'.repeat(3001) }, { id: 'x' }, { klant: 'x' }]) assert.strictEqual(valideerStatus({ ...status(), ...x }).ok, false, JSON.stringify(x).slice(0, 50));
 });
+test('vier statussen, de oude naam wordt nog geaccepteerd', () => {
+  for (const s of ['Nieuw', 'Wachten op informatie', 'Mee bezig', 'Verwerkt', 'In behandeling']) assert.strictEqual(valideerStatus({ ...status(), status: s }).ok, true, s);
+  const { STATUSSEN } = require('../api/_topos/feedback.js');
+  const rijen = STATUSSEN.map((s, i) => ({ id: 'FB-20261125-' + (i + 1), status: s }));
+  const ids = (f) => pagina.filterFeedback(rijen, f).map((r) => r.id.slice(-1)).sort().join('');
+  assert.deepStrictEqual(['open', 'nieuw', 'wachten', 'meebezig', 'verwerkt', 'alles'].map(ids), ['123', '1', '2', '3', '4', '1234']);
+  assert.ok(html.includes("const STATUS_NAMEN = ['Nieuw', 'Wachten op informatie', 'Mee bezig', 'Verwerkt'];"));
+});
 test('handler: afhandelen en bijlagen gaan met alleen de toegestane velden naar n8n', async () => {
   const f = nepFetch({}); const h = maak(f);
   assert.strictEqual((await roep(h, status(), false)).status, 401);
