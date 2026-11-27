@@ -4,13 +4,13 @@
 const crypto = require('node:crypto');
 const { maakSessie, controleerSessie, GELDIG_MS } = require('./_topos/sessie.js');
 const { valideerAanvraag } = require('./_topos/valideer.js');
-const { valideerFeedback, valideerPrioriteit, valideerNotitie, FEEDBACK_VELDEN, PRIORITEIT_VELDEN, NOTITIE_VELDEN } = require('./_topos/feedback.js');
+const { valideerFeedback, valideerPrioriteit, valideerNotitie, valideerStatus, FEEDBACK_VELDEN, PRIORITEIT_VELDEN, NOTITIE_VELDEN, STATUS_VELDEN } = require('./_topos/feedback.js');
 
 const N8N_URL = 'https://n8n.sila-ai.nl/webhook/topos-api';
 const N8N_TIMEOUT_MS = 9000;
-// Feedback opslaan duurt langer (Drive en Sheets). Een te korte wachttijd gaf een foutmelding terwijl de melding wel was opgeslagen,
+// Feedback opslaan duurt langer (Drive en Sheets; met 5 bijlagen ongeveer 20 seconden). Een te korte wachttijd gaf een foutmelding terwijl de melding wel was opgeslagen,
 // waarna dezelfde melding opnieuw werd verstuurd. Blijft onder maxDuration in vercel.json.
-const N8N_TIMEOUT_SCHRIJVEN_MS = 25000;
+const N8N_TIMEOUT_SCHRIJVEN_MS = 50000;
 const COOKIE = 'topos_sessie';
 const KLANTEN = ['kleidi', 'optinsight'];
 
@@ -24,7 +24,8 @@ const NIET_BIJ_OPTINSIGHT = ['producten', 'affiliateLinks', 'intensiteit', 'geld
 const FEEDBACK_SCHRIJF = {
   feedback_nieuw: [valideerFeedback, FEEDBACK_VELDEN],
   feedback_prioriteit: [valideerPrioriteit, PRIORITEIT_VELDEN],
-  feedback_notitie: [valideerNotitie, NOTITIE_VELDEN]
+  feedback_notitie: [valideerNotitie, NOTITIE_VELDEN],
+  feedback_status: [valideerStatus, STATUS_VELDEN]
 };
 
 // Status per foutcode die n8n teruggeeft bij een afgewezen nieuwe aanvraag.
@@ -129,7 +130,7 @@ function maakHandler(deps = {}) {
       return stuur(200, { ok: true }, { 'Set-Cookie': `${COOKIE}=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0` });
     }
 
-    if (!['clusters', 'lijst', 'nieuw', 'feedback_nieuw', 'feedback_lijst', 'feedback_artikelen', 'feedback_prioriteit', 'feedback_notitie', 'extra_status', 'extra_start'].includes(actie)) {
+    if (!['clusters', 'lijst', 'nieuw', 'feedback_nieuw', 'feedback_lijst', 'feedback_artikelen', 'feedback_prioriteit', 'feedback_notitie', 'feedback_status', 'extra_status', 'extra_start'].includes(actie)) {
       return stuur(400, { ok: false, fout: 'ongeldig', bericht: 'Onbekende actie.' });
     }
 

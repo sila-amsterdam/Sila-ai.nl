@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/toposadmin.js": { "maxDuration": 30 }
+    "api/toposadmin.js": { "maxDuration": 60 }
   },
   "rewrites": [
     { "source": "/toposadmin", "destination": "/toposadmin.html" }
