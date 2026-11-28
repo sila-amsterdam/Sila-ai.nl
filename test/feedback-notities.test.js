@@ -82,7 +82,7 @@ test('vercel geeft de serverfunctie langer dan de wachttijd op n8n', () => {
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'toposadmin.html'), 'utf8');
 const blok = html.slice(html.indexOf('// BEGIN-LOGICA'), html.indexOf('// EINDE-LOGICA'));
-const pagina = new Function(`${blok}; return { prioriteitVan, filterFeedback, bijlagenVan, bijlageFout, BIJLAGE_EXT, BIJLAGE_MAX_BYTES };`)();
+const pagina = new Function(`${blok}; return { prioriteitVan, filterFeedback, ticketNr, ticketNaam, ticketZoek, bijlagenVan, bijlageFout, BIJLAGE_EXT, BIJLAGE_MAX_BYTES };`)();
 test('pagina: sorteert op prioriteit, daarna nieuwste eerst; leeg geldt als midden', () => {
   assert.strictEqual(pagina.prioriteitVan({}), 'Midden');
   assert.strictEqual(pagina.prioriteitVan({ prioriteit: ' hoog ' }), 'Hoog');
@@ -156,4 +156,19 @@ test('pagina: filter op prioriteit, klant en zoektekst', () => {
   assert.strictEqual(ids('open', { zoek: ' excel INFOgraphic ' }), '2');
   assert.strictEqual(ids('open', { zoek: 'bestaat niet' }), '');
   assert.deepStrictEqual(pagina.bijlagenVan({ schermafbeelding: 'https://x', bijlagen: [{ naam: 'a.pdf', url: '' }, null] }).map((b) => b.naam), ['Schermafbeelding', 'a.pdf']);
+});
+
+test('pagina: ticketnummer is het getal achter de datum', () => {
+  assert.strictEqual(pagina.ticketNr('FB-20261125-14'), 14);
+  assert.strictEqual(pagina.ticketNaam('FB-20261128-19'), 'Ticket 19');
+  assert.strictEqual(pagina.ticketNr('FB-x'), null);
+  assert.strictEqual(pagina.ticketNaam('FB-x'), 'FB-x');
+  for (const z of ['14', ' #14 ', 'ticket 14', 'Ticket14']) assert.strictEqual(pagina.ticketZoek(z), 14, z);
+  for (const z of ['', '2026', 'ticket', '14 weken', 'cijfer 14']) assert.strictEqual(pagina.ticketZoek(z), null, z);
+});
+
+test('pagina: zoeken op ticketnummer vindt precies dat ticket, ook buiten het gekozen filter', () => {
+  const rijen = [{ id: 'FB-20261125-14', status: 'Verwerkt', klant: 'optinsight', prioriteit: 'Laag' }, { id: 'FB-20261125-1', klant: 'kleidi', feedback: '14 keer' }, { id: 'FB-20261214-3', klant: 'kleidi' }];
+  assert.deepStrictEqual(pagina.filterFeedback(rijen, 'open', { zoek: 'ticket 14', klant: 'kleidi', prioriteit: 'Hoog' }).map((r) => r.id), ['FB-20261125-14']);
+  assert.deepStrictEqual(pagina.filterFeedback(rijen, 'open', { zoek: '99' }), []);
 });

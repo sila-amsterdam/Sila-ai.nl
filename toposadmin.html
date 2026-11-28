@@ -261,6 +261,7 @@
     .rij-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 10px; margin-top: 3px; font-size: 13px; line-height: 1.5; color: var(--gedempt); min-width: 0; }
     .rij-meta > span { overflow-wrap: anywhere; min-width: 0; }
     .prio-tag { background: var(--p-bg); color: var(--p-tekst); border-radius: 6px; padding: 0 7px; font-weight: 600; }
+    .rij-meta > .ticket-nr { color: var(--tekst); border: 1px solid var(--border); border-radius: 6px; padding: 0 7px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .pijl { width: 8px; height: 8px; border-right: 2px solid var(--gedempt); border-bottom: 2px solid var(--gedempt); transform: rotate(45deg); transition: transform .2s var(--spring); justify-self: center; }
     .rij-kop[aria-expanded="true"] .pijl { transform: rotate(225deg); }
     .rij-inhoud { border-top: 1px solid var(--border); padding: 4px 16px 16px; min-width: 0; }
@@ -621,7 +622,7 @@
             <div class="priobalk" role="group" aria-label="Filter op prioriteit" id="fbFilterPrio"></div>
           </div>
           <div class="zoekrij">
-            <input type="search" id="fbZoek" placeholder="Zoek op woord, artikel of nummer" aria-label="Zoek in de meldingen" autocomplete="off" />
+            <input type="search" id="fbZoek" placeholder="Zoek op woord, artikel of ticketnummer" aria-label="Zoek in de meldingen" autocomplete="off" />
             <select id="fbFilterKlant" aria-label="Filter op klant"><option value="">Alle klanten</option><option value="kleidi">Kleidi</option><option value="optinsight">OptInsight</option></select>
           </div>
         </div>
@@ -702,11 +703,18 @@
     const t = String((rij && rij.prioriteit) || '').trim().toLowerCase();
     return PRIORITEITEN.find((p) => p.toLowerCase() === t) || 'Midden';
   }
+  // Ticketnummer: het getal achter de datum in FB-20261125-14. Het loopt door, dus is overal uniek.
+  function ticketNr(id) { const m = /^FB-\d{8}-(\d+)$/.exec(String(id || '')); return m ? Number(m[1]) : null; }
+  function ticketNaam(id) { const n = ticketNr(id); return n === null ? String(id || '') : 'Ticket ' + n; }
+  // "14", "#14" of "ticket 14" in het zoekveld zoekt precies dat ticket. Langere getallen (zoals een jaartal) zijn gewone zoektekst.
+  function ticketZoek(zoek) { const m = /^\s*(?:(?:ticket\s*|#)(\d+)|(\d{1,3}))\s*$/i.exec(String(zoek || '')); return m ? Number(m[1] || m[2]) : null; }
   // Filter op de feedbacklijst. Status: open (niet verwerkt), nieuw, wachten, meebezig, verwerkt of alles. Daarnaast optioneel op prioriteit, klant en zoektekst.
-  // Hoogste prioriteit eerst, daarbinnen nieuwste eerst.
+  // Hoogste prioriteit eerst, daarbinnen nieuwste eerst. Zoeken op een ticketnummer vindt het ticket ongeacht de andere filters.
   function filterFeedback(rijen, filter, extra) {
     const e = extra || {};
     const lijst = Array.isArray(rijen) ? rijen.filter((r) => r && typeof r === 'object') : [];
+    const nummer = ticketZoek(e.zoek);
+    if (nummer !== null) return lijst.filter((r) => ticketNr(r.id) === nummer);
     const soort = (r) => feedbackStatus(r.status)[0];
     const past = (r) => filter === 'alles' ? true : filter === 'verwerkt' ? soort(r) === 'klaar'
       : filter === 'nieuw' || filter === 'wachten' || filter === 'meebezig' ? soort(r) === filter : soort(r) !== 'klaar';
@@ -1493,8 +1501,8 @@
         if (r.data.id) fbUit.add(r.data.id);
         await ververFeedback();
         zetFout($('fbMelding'), (r.data.bestond
-          ? 'Deze melding stond al in de lijst als ' + r.data.id + '. Er is niets dubbel aangemaakt. Wil je iets toevoegen, gebruik dan "Notitie toevoegen" bij die melding.'
-          : 'Bedankt. Je feedback staat in de lijst' + (r.data.id ? ' als ' + r.data.id : '') + '.') + misluktTekst(r));
+          ? 'Deze melding stond al in de lijst als ' + ticketNaam(r.data.id).toLowerCase() + '. Er is niets dubbel aangemaakt. Wil je iets toevoegen, gebruik dan "Notitie toevoegen" bij die melding.'
+          : 'Bedankt. Je feedback staat in de lijst' + (r.data.id ? ' als ' + ticketNaam(r.data.id).toLowerCase() : '') + '.') + misluktTekst(r));
       } else if (onzeker(r)) {
         await ververFeedback();
         zetFout($('fbFout'), 'Er kwam geen bevestiging terug. Kijk eerst in de lijst hieronder of je melding er al staat voordat je opnieuw verstuurt.');
@@ -1572,7 +1580,7 @@
   }
 
   function notitieLijst(r) {
-    const ul = maak('ul', 'notities'); ul.setAttribute('aria-label', 'Notities bij ' + r.id);
+    const ul = maak('ul', 'notities'); ul.setAttribute('aria-label', 'Notities bij ' + ticketNaam(r.id).toLowerCase());
     r.notities.forEach((n) => {
       const li = maak('li', 'notitie');
       li.appendChild(maak('p', 'notitie-kop', ['Notitie van ' + (n.van || 'onbekend'), n.datum].filter(Boolean).join(' · ')));
@@ -1651,7 +1659,7 @@
     const wijzig = () => { if (!fbAfhandel.has(r.id)) fbAfhandel.set(r.id, c); return c; };
     const vorm = maak('form', 'afhandelen'); vorm.noValidate = true;
     vorm.appendChild(maak('h4', '', 'Afhandelen'));
-    vorm.appendChild(knoppenKeuze('Status', 'Status van ' + r.id, STATUS_NAMEN, c.status,
+    vorm.appendChild(knoppenKeuze('Status', 'Status van ' + ticketNaam(r.id).toLowerCase(), STATUS_NAMEN, c.status,
       (s) => { wijzig().status = s; c.fout = ''; renderFeedback(); focusOp('status:' + r.id + ':' + s); }, c.bezig, 'status:' + r.id));
     const label = maak('label', '', 'Wat is er gedaan of gefixt?'); label.htmlFor = 'reactie-' + r.id; vorm.appendChild(label);
     const ta = document.createElement('textarea'); ta.id = 'reactie-' + r.id; ta.maxLength = 3000; ta.value = c.reactie; ta.disabled = c.bezig;
@@ -1693,7 +1701,7 @@
 
   function meldingInhoud(r) {
     const vak = maak('div', 'rij-inhoud'); vak.id = 'inhoud-' + r.id;
-    vak.appendChild(knoppenKeuze('Prioriteit', 'Prioriteit van ' + r.id, PRIORITEITEN, prioriteitVan(r), (p) => zetPrioriteit(r, p), fbPrioBezig.has(r.id), 'prio:' + r.id, true));
+    vak.appendChild(knoppenKeuze('Prioriteit', 'Prioriteit van ' + ticketNaam(r.id).toLowerCase(), PRIORITEITEN, prioriteitVan(r), (p) => zetPrioriteit(r, p), fbPrioBezig.has(r.id), 'prio:' + r.id, true));
     if (r.uitleg) vak.appendChild(maak('p', 'fb-uitleg', r.uitleg));
     const links = maak('div', 'fb-links');
     const maakLink = (href, tekst) => { const a = maak('a', 'aanvraag-link', tekst); a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer'; links.appendChild(a); };
@@ -1709,7 +1717,7 @@
     if (fbNotitie && fbNotitie.id === r.id) vak.appendChild(notitieVorm());
     else {
       const open = maak('button', 'plus notitie-open', '+ Notitie toevoegen'); open.type = 'button';
-      open.setAttribute('aria-label', 'Notitie toevoegen bij ' + r.id);
+      open.setAttribute('aria-label', 'Notitie toevoegen bij ' + ticketNaam(r.id).toLowerCase());
       open.disabled = !!(fbNotitie && fbNotitie.bezig);
       open.addEventListener('click', () => { fbNotitie = { id: r.id, klant: r.klant, tekst: '', bestanden: [], bestandFout: '', fout: '', bezig: false }; renderFeedback(); const t = $('notitieTekst'); if (t) t.focus(); });
       vak.appendChild(open);
@@ -1728,10 +1736,11 @@
     const links = maak('span', 'rij-tekst');
     links.appendChild(maak('span', 'rij-titel', r.feedback || 'Geen omschrijving'));
     const meta = maak('span', 'rij-meta');
+    meta.appendChild(maak('span', 'ticket-nr', ticketNaam(r.id)));
     meta.appendChild(maak('span', 'prio-tag', prio));
     meta.appendChild(maak('span', '', KLANT_NAAM[r.klant] || r.klant));
     if (r.artikel && r.artikel !== ALGEMEEN) meta.appendChild(maak('span', '', r.artikel));
-    meta.appendChild(maak('span', '', [r.datum, r.id].filter(Boolean).join(' · ')));
+    if (r.datum) meta.appendChild(maak('span', '', r.datum));
     const nn = (r.notities || []).length;
     const nb = bijlagenVan(r).length + (r.notities || []).reduce((t, n) => t + bijlagenVan(n).length, 0);
     if (nn) meta.appendChild(maak('span', '', nn === 1 ? '1 notitie' : nn + ' notities'));
@@ -1757,17 +1766,18 @@
   }
   // De aantallen op de filterknoppen tellen mee met de andere filters.
   function renderFilters() {
-    const f = fbFilter;
+    // Tijdens het zoeken op een ticketnummer blijven de aantallen op de tegels die van de hele lijst.
+    const f = ticketZoek(fbFilter.zoek) === null ? fbFilter : Object.assign({}, fbFilter, { zoek: '' });
     const s = $('fbFilterStatus'); s.textContent = '';
     STATUS_FILTERS.forEach(([w, label]) => {
       const kleur = w === 'open' || w === 'alles' ? '' : 'st-' + (w === 'verwerkt' ? 'klaar' : w);
-      s.appendChild(filterKnop(label, filterFeedback(fbRijen, w, f).length, f.status === w, () => { f.status = w; }, 'fstatus:' + w, kleur));
+      s.appendChild(filterKnop(label, filterFeedback(fbRijen, w, f).length, f.status === w, () => { fbFilter.status = w; }, 'fstatus:' + w, kleur));
     });
     const p = $('fbFilterPrio'); p.textContent = '';
     const aantal = (w) => filterFeedback(fbRijen, f.status, Object.assign({}, f, { prioriteit: w })).length;
-    p.appendChild(filterKnop('Alle', aantal(''), !f.prioriteit, () => { f.prioriteit = ''; }, 'fprio:alle'));
+    p.appendChild(filterKnop('Alle', aantal(''), !f.prioriteit, () => { fbFilter.prioriteit = ''; }, 'fprio:alle'));
     PRIORITEITEN.forEach((w) => {
-      p.appendChild(filterKnop(w, aantal(w), f.prioriteit === w, () => { f.prioriteit = f.prioriteit === w ? '' : w; }, 'fprio:' + w, w.toLowerCase()));
+      p.appendChild(filterKnop(w, aantal(w), f.prioriteit === w, () => { fbFilter.prioriteit = fbFilter.prioriteit === w ? '' : w; }, 'fprio:' + w, w.toLowerCase()));
     });
   }
   function wisFilters(status) {
